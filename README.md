@@ -1,16 +1,47 @@
-# lending_app
+# Leaf Lending App
 
-A new Flutter project.
+This is the Leaf Lending App Repository.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Leaf helps refugees to move money accross borders using blockchain technology.
 
-A few resources to get you started if this is your first Flutter project:
+# Prerequisites
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+-   Make sure you have [Flutter](https://flutter.dev) installed.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Installing
+
+-   In the terminal type `flutter pub get` to install all required packages
+
+# Commit Message Structure
+
+-   If you are committing a feature, add `feat:` prefix then add description of the message.
+
+```
+Example: feat: added readme file
+```
+
+-   If you are committing a fix, add `fix:` prefix then add description of the message
+
+```
+Example: fix: fixed typo in readme file
+```
+
+-   If you are committing an improvement of an existing code, add `impr:` prefix then add description of the message
+
+```
+Example: impr: added validating to if an id is a mongodb id on top of checking if the field is empty
+```
+
+-   If you are committing a refactor of an existing code, add `refact:` prefix then add description of the message
+
+```
+Example: refact: reduced code for checking for null values on array
+```
+
+-   **Tip**: You can combine commit prefixes like:
+
+```
+Example: feat&fix: added readme file, fixed typo in readme file
+```

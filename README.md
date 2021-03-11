@@ -1,6 +1,6 @@
-# Leaf Lending App
+# Leaf Loan App
 
-This is the Leaf Lending App Repository.
+This is the Leaf Loan App Repository.
 
 ## Getting Started
 

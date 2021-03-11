@@ -1,6 +1,6 @@
 {
-    "name": "lending_app",
-    "short_name": "lending_app",
+    "name": "loan_app",
+    "short_name": "loan_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

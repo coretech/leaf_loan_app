@@ -1,4 +1,4 @@
-package com.example.loan_app
+package com.leafglobalfintech.loanapp
 
 import io.flutter.embedding.android.FlutterActivity
 

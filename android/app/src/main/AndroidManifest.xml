@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.loan_app">
+    package="com.leafglobalfintech.loanapp">
    <application
         android:label="loan_app"
         android:icon="@mipmap/ic_launcher">

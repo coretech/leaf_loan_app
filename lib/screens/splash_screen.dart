@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/';
-  const SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
-    String _user = prefs.getString('username');
+    String? _user = prefs.getString('username');
 
     if (_seen && _user == null) {
       Navigator.of(context).pushReplacementNamed(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/components/custom_alert_dialog.dart';
 import 'package:loan_app/components/custom_dismiss_keyboard.dart';
 import 'package:loan_app/components/custom_loading_widget.dart';
-import 'package:loan_app/models/server_response.dart';
 import 'package:loan_app/models/user.dart';
 import 'package:loan_app/providers/auth.dart';
 import 'package:loan_app/screens/main_screen.dart';
@@ -11,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class SwitchAccountScreen extends StatefulWidget {
   static const routeName = '/switch-account';
-  const SwitchAccountScreen({Key key}) : super(key: key);
+  const SwitchAccountScreen({Key? key}) : super(key: key);
 
   @override
   _SwitchAccountScreenState createState() => _SwitchAccountScreenState();
@@ -26,10 +25,10 @@ class _SwitchAccountScreenState extends State<SwitchAccountScreen> {
   User _user = User();
 
   void _saveForm(BuildContext context) async {
-    final _isValid = _form.currentState.validate();
+    final _isValid = _form.currentState!.validate();
     if (!_isValid) return;
 
-    _form.currentState.save();
+    _form.currentState!.save();
 
     setState(() {
       _isLoading = true;
@@ -42,7 +41,7 @@ class _SwitchAccountScreenState extends State<SwitchAccountScreen> {
       _isLoading = false;
     });
 
-    if (response.status) {
+    if (response.status!) {
       Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
     } else {
       await showDialog(
@@ -61,7 +60,7 @@ class _SwitchAccountScreenState extends State<SwitchAccountScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final isFirstTime =
-        ModalRoute.of(context).settings.arguments as bool ?? false;
+        ModalRoute.of(context)!.settings.arguments as bool? ?? false;
 
     return Scaffold(
       body: _isLoading
@@ -104,7 +103,7 @@ class _SwitchAccountScreenState extends State<SwitchAccountScreen> {
                         onFieldSubmitted: (value) => FocusScope.of(context)
                             .requestFocus(_passwordFocusNode),
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return 'Enter username';
                           } else {
                             return null;
@@ -126,7 +125,7 @@ class _SwitchAccountScreenState extends State<SwitchAccountScreen> {
                         focusNode: _passwordFocusNode,
                         keyboardType: TextInputType.number,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return 'Enter 5-digit PIN';
                           } else if (value.length != 5) {
                             return 'Must be a 5-digit PIN';

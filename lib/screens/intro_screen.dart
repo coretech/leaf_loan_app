@@ -5,13 +5,13 @@ import 'package:loan_app/screens/switch_account_screen.dart';
 
 class IntroScreen extends StatelessWidget {
   static const routeName = '/intro';
-  const IntroScreen({Key key}) : super(key: key);
+  const IntroScreen({Key? key}) : super(key: key);
 
   Slide _buildSlide(
     BuildContext context, {
-    @required String title,
-    @required String description,
-    @required String image,
+    required String title,
+    required String description,
+    required String image,
   }) {
     return Slide(
       title: title,
@@ -23,7 +23,6 @@ class IntroScreen extends StatelessWidget {
       ),
       description: description,
       styleDescription: TextStyle(color: Colors.black),
-      // pathImage: image,
       backgroundColor: Colors.white,
     );
   }
@@ -72,13 +71,27 @@ class IntroScreen extends StatelessWidget {
       backgroundColorAllSlides: Colors.white,
       slides: _slides,
       colorActiveDot: Theme.of(context).primaryColor,
-      nameNextBtn: 'Next',
-      nameDoneBtn: 'Done',
-      colorDoneBtn: Theme.of(context).primaryColor,
-      styleNameDoneBtn: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-        fontSize: 16,
+      showNextBtn: true,
+      showDoneBtn: true,
+      nextButtonStyle: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
+        ),
+      ),
+      doneButtonStyle: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all(Theme.of(context).primaryColor),
+        textStyle: MaterialStateProperty.all(
+          TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
+        ),
       ),
       onDonePress: () {
         Navigator.of(context).pushReplacementNamed(
@@ -86,12 +99,15 @@ class IntroScreen extends StatelessWidget {
           arguments: true,
         );
       },
-      nameSkipBtn: 'Skip',
-      colorSkipBtn: Colors.grey,
-      styleNameSkipBtn: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-        fontSize: 16,
+      skipButtonStyle: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.grey),
+        textStyle: MaterialStateProperty.all(
+          TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
+        ),
       ),
       onSkipPress: () {
         Navigator.of(context).pushReplacementNamed(

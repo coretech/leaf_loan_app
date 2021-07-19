@@ -12,7 +12,7 @@ import 'package:loan_app/models/server_response.dart';
 import 'package:loan_app/models/user.dart';
 
 class AuthLogic with ChangeNotifier {
-  final String _uri = checkUrl();
+  final String? _uri = checkUrl();
 
   Future<ServerResponse> login(User user) async {
     final prefs = await SharedPreferences.getInstance();
@@ -23,7 +23,7 @@ class AuthLogic with ChangeNotifier {
 
     try {
       final response = await http.post(
-        uriConverter(_uri + '/auth/login'),
+        uriConverter(_uri! + '/auth/login'),
         body: jsonEncode({
           'username': user.username,
           'password': user.password,

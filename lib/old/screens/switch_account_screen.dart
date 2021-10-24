@@ -2,7 +2,7 @@
 // import 'package:loan_app/components/custom_alert_dialog.dart';
 // import 'package:loan_app/components/custom_dismiss_keyboard.dart';
 // import 'package:loan_app/components/custom_loading_widget.dart';
-// import 'package:loan_app/models/user.dart';
+// import 'package:loan_app/old/models/user.dart';
 // import 'package:loan_app/providers/auth.dart';
 // import 'package:loan_app/screens/main_screen.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';

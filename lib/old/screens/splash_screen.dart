@@ -3,9 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:loan_app/screens/intro_screen.dart';
-import 'package:loan_app/screens/login_screen.dart';
-import 'package:loan_app/screens/switch_account_screen.dart';
+import 'package:loan_app/old/screens/login_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

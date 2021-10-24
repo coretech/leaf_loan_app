@@ -7,9 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:loan_app/data/data.dart';
-import 'package:loan_app/models/server_response.dart';
-import 'package:loan_app/models/user.dart';
+import 'package:loan_app/old/data/data.dart';
+import 'package:loan_app/old/models/server_response.dart';
+import 'package:loan_app/old/models/user.dart';
 
 class AuthLogic with ChangeNotifier {
   final String? _uri = checkUrl();

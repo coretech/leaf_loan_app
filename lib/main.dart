@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:loan_app/providers/auth.dart';
-import 'package:loan_app/screens/login_screen.dart';
-import 'package:loan_app/screens/main_screen.dart';
-import 'package:loan_app/screens/splash_screen.dart';
+import 'package:loan_app/old/screens/login_screen.dart';
+import 'package:loan_app/old/screens/main_screen.dart';
+import 'package:loan_app/old/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

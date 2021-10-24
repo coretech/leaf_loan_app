@@ -11,4 +11,10 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     var seen = await onboardingStatusRepo.isOnboardingSeen();
     emit(OnboardingStateChecked(seen: seen));
   }
+
+  Future<void> updateOnboardingStatus({bool seen = true}) async {
+    emit(OnboardingStateInitial());
+    await onboardingStatusRepo.updateOnboardingStatus(viewed: true);
+    emit(OnboardingStateChecked(seen: seen));
+  }
 }

@@ -30,6 +30,7 @@ dependencies:
     hive: ^2.0.4
     hive_flutter: ^1.1.0
     http: ^0.13.3
+    intl: ^0.17.0
     intro_slider: ^3.0.2
     jwt_decoder: ^2.0.1
     permission_handler: ^8.1.4

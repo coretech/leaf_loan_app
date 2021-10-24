@@ -32,10 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
       bloc: splashCubit..initializeApp(),
       listener: (context, state) {
         if (state.onboardingSeen) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => Text('Temp home page'),
-            ),
+          Navigator.of(context).pushReplacementNamed(
+            MainScreen.routeName,
           );
         } else {
           Navigator.of(context).pushReplacementNamed(

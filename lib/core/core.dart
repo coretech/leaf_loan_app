@@ -5,3 +5,4 @@ export 'domain/domain.dart';
 export 'injectors/injectors.dart';
 export 'integrations/integrations.dart';
 export 'presentation/presentation.dart';
+export 'utils/utils.dart';

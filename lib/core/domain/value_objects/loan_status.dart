@@ -1,0 +1,4 @@
+enum LoanStatus {
+  open,
+  closed,
+}

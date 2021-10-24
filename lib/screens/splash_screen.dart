@@ -25,14 +25,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (_seen && _user == null) {
       Navigator.of(context).pushReplacementNamed(
-        SwitchAccountScreen.routeName,
+        LoginScreen.routeName,
         arguments: true,
       );
     } else if (_seen && _user != null) {
       Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     } else {
       await prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacementNamed(IntroScreen.routeName);
+      //TODO: replace this with intro
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     }
   }
 
@@ -71,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3), () async {
-      Navigator.of(context).pushReplacementNamed(SwitchAccountScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
 
       await _triggerCredoSdk();
 

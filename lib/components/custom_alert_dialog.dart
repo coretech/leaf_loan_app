@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String title;
@@ -36,7 +35,7 @@ class CustomAlertDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Icon(
-            status! ? MdiIcons.check : MdiIcons.closeCircle,
+            status! ? Icons.check : Icons.cancel_outlined,
             size: 50,
             color: status!
                 ? Theme.of(context).primaryColor

@@ -1,13 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:loan_app/old/screens/login_screen.dart';
-import 'package:loan_app/old/screens/main_screen.dart';
-import 'package:loan_app/old/screens/splash_screen.dart';
+import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/onboarding/onboarding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
+  await IntegrationInjector.init();
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -20,9 +22,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green,
       ),
       routes: {
+        OnboardingScreen.routeName: (ctx) => OnboardingScreen(),
         SplashScreen.routeName: (ctx) => SplashScreen(),
-        MainScreen.routeName: (ctx) => MainScreen(),
-        LoginScreen.routeName: (ctx) => LoginScreen(),
       },
     );
   }

@@ -22,9 +22,9 @@ import credoappsdk
         if let args = call.arguments as? Dictionary<String, Any>,
            let authKey = args["authKey"] as? String,
            let referenceNumber = args["referenceNumber"] as? String, 
-           let url = args["url"] as? String, {
+           let url = args["url"] as? String {
             self.collectData(result: result, authKey: authKey, referenceNumber: referenceNumber, url: url)
-        }else{
+        } else{
             result (FlutterError(code:"NO REF NUMBER", message: "No reference number is passed", details:""))
         }
     })
@@ -46,7 +46,7 @@ import credoappsdk
                 let errorType = error.getErrorType()
                 let errorMessage = error.getErrorMessage()
                 NSLog("ERROR: \(Date().timeIntervalSince1970); type - \(errorType); msg - \(String(describing: errorMessage)); rn - \(referenceNumber)")
-                result(FlutterError(code: String(describing: errorType), message: errorMessage, details: error))
+                result(FlutterError(code: String(describing: errorType), message: errorMessage, details: ""))
             } catch let error {
                 result(FlutterError(code: "UNKNOWN ERROR", message: error.localizedDescription, details: error))
             }

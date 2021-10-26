@@ -39,4 +39,4 @@ flutter run --dart-define CREDO_AUTH_KEY=CREDO_AUTH_KEY --dart-define CREDO_URL=
 
 # Contributing
 
-If you want to contru
+If you want to contribute to the project, check out our [Contribution Guidelines](https://github.com/LeafGlobalFintech/loan_app/blob/develop/CONTRIBUTING.md)

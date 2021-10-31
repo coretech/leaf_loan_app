@@ -62,7 +62,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
-                "Recent Payments",
+                "Recent Transactions",
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
@@ -74,7 +74,21 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                     PaymentCard(),
                     PaymentCard(),
                     PaymentCard(),
-                    TextButton(onPressed: () {}, child: Text("show more"))
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => LoanDetailScreen(
+                              dueDate: DateTime.now(),
+                              paidAmount: 234325,
+                              status: LoanStatus.due,
+                              totalAmount: 10234324,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text("show more"),
+                    )
                   ],
                 ),
               ),

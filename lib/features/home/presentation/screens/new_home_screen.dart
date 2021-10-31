@@ -25,7 +25,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               },
               icon: Icon(
                 Icons.history,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: _getAppBarTextColor(context),
               ),
             ),
             Expanded(
@@ -33,7 +33,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 child: Text(
                   'Leaf Loans',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: _getAppBarTextColor(context),
                   ),
                 ),
               ),
@@ -42,7 +42,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               onPressed: () {},
               icon: Icon(
                 Icons.person_outlined,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: _getAppBarTextColor(context),
               ),
             ),
           ],
@@ -82,6 +82,10 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
         ),
       ),
     );
+  }
+
+  Color _getAppBarTextColor(BuildContext context) {
+    return Theme.of(context).colorScheme.onSurface;
   }
 }
 
@@ -197,6 +201,15 @@ class LoanActionButtons extends StatelessWidget {
       ],
     );
   }
+
+  Color _getTextColor(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    if (isDarkMode) {
+      return Theme.of(context).colorScheme.onSurface;
+    } else {
+      return Theme.of(context).colorScheme.onPrimary;
+    }
+  }
 }
 
 class CurrentLoanInfo extends StatelessWidget {
@@ -236,7 +249,7 @@ class CurrentLoanInfo extends StatelessWidget {
                 Text(
                   "Pay before",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: _getTextColor(context),
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),
@@ -244,7 +257,7 @@ class CurrentLoanInfo extends StatelessWidget {
                 Text(
                   "January 15, 2022",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: _getTextColor(context),
                     fontSize: 24.0,
                     fontWeight: FontWeight.w800,
                   ),
@@ -255,7 +268,7 @@ class CurrentLoanInfo extends StatelessWidget {
                 Text(
                   "Remaining Amount",
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: _getTextColor(context),
                     fontSize: 16.0,
                     fontWeight: FontWeight.w300,
                   ),
@@ -269,13 +282,13 @@ class CurrentLoanInfo extends StatelessWidget {
                       TextSpan(
                         text: 'KSH ',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: _getTextColor(context),
                         ),
                       ),
                       TextSpan(
                         text: '12,960',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: _getTextColor(context),
                           fontSize: 31.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -299,7 +312,7 @@ class CurrentLoanInfo extends StatelessWidget {
                 onTap: () {},
                 child: Icon(
                   Icons.info,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: _getTextColor(context),
                 ),
               ),
             ),
@@ -307,5 +320,14 @@ class CurrentLoanInfo extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color _getTextColor(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    if (isDarkMode) {
+      return Theme.of(context).colorScheme.onSurface;
+    } else {
+      return Theme.of(context).colorScheme.onPrimary;
+    }
   }
 }

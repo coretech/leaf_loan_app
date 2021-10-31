@@ -5,7 +5,6 @@ import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 
-
 class LoanDetailScreen extends StatelessWidget {
   LoanDetailScreen({
     Key? key,
@@ -37,18 +36,6 @@ class LoanDetailScreen extends StatelessWidget {
             delegate: SliverChildListDelegate.fixed(
               [
                 Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.orange),
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).shadowColor.withOpacity(0.25),
-                        blurRadius: 2.5,
-                        offset: const Offset(1, 2),
-                      )
-                    ],
-                    color: _getCardColor(context),
-                  ),
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(20),
                   child: Wrap(
@@ -63,7 +50,14 @@ class LoanDetailScreen extends StatelessWidget {
                           TextSpan(
                             style: Theme.of(context).textTheme.headline6,
                             text:
-                                '${Formatter.formatMoney(totalAmount / 1.1)} RWF\n',
+                                '${Formatter.formatMoney(totalAmount / 1.1)} ',
+                          ),
+                          TextSpan(
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                            text: 'RWF\n',
                           ),
                           TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
@@ -202,6 +196,18 @@ class LoanDetailScreen extends StatelessWidget {
       return 'Closed'.toUpperCase();
     } else {
       return 'Open'.toUpperCase();
+    }
+  }
+
+  Color _getTextColor(BuildContext context) {
+    if (status == LoanStatus.open) {
+      return Theme.of(context).colorScheme.onSurface;
+    }
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    if (isDarkMode) {
+      return Theme.of(context).colorScheme.onSurface;
+    } else {
+      return Theme.of(context).colorScheme.onPrimary;
     }
   }
 

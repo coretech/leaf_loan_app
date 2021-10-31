@@ -249,9 +249,6 @@ class ActiveLoanCard extends StatelessWidget {
   }
 
   Color _getTextColor(BuildContext context) {
-    if (status == LoanStatus.open) {
-      return Theme.of(context).colorScheme.onSurface;
-    }
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     if (isDarkMode) {
       return Theme.of(context).colorScheme.onSurface;

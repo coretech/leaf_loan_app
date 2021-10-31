@@ -38,7 +38,7 @@ class LoanCard extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             border: Border.all(
-              color: _getBorderColor(),
+              color: _getBorderColor(context),
               width: _getBorderWidth(),
             ),
             borderRadius: BorderRadius.circular(15),
@@ -68,13 +68,35 @@ class LoanCard extends StatelessWidget {
                   ),
                   Icon(
                     _getIcon(),
-                    color: _getIconColor(),
+                    color: _getIconColor(context),
                   )
                 ],
               ),
               const SizedBox(
                 height: 10,
               ),
+              if (status == LoanStatus.open)
+                Text(
+                  "Pay before",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              if (status == LoanStatus.open)
+                Text(
+                  "January 15, 2022",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              if (status == LoanStatus.open)
+                SizedBox(
+                  height: 10,
+                ),
               if (status == LoanStatus.open)
                 RichText(
                   textAlign: TextAlign.center,
@@ -86,7 +108,14 @@ class LoanCard extends StatelessWidget {
                     TextSpan(
                       style: Theme.of(context).textTheme.headline6,
                       text:
-                          '${Formatter.formatMoney(totalAmount - paidAmount)} RWF',
+                          '${Formatter.formatMoney(totalAmount - paidAmount)}',
+                    ),
+                    TextSpan(
+                      style: TextStyle(
+                        color: Theme.of(context).hintColor,
+                        fontSize: 12,
+                      ),
+                      text: ' RWF',
                     )
                   ]),
                 ),
@@ -177,25 +206,25 @@ class LoanCard extends StatelessWidget {
     );
   }
 
-  Color _getBorderColor() {
+  Color _getBorderColor(BuildContext context) {
     if (status == LoanStatus.open) {
-      return Colors.blue;
+      return Theme.of(context).primaryColor;
     } else {
-      return Colors.green;
+      return Theme.of(context).scaffoldBackgroundColor;
     }
   }
 
   Color _getCardColor(BuildContext context) {
     if (status == LoanStatus.open) {
-      return Colors.lightBlue[50]!;
+      return Theme.of(context).primaryColorLight;
     } else {
       return Theme.of(context).cardColor;
     }
   }
 
-  Color _getIconColor() {
+  Color _getIconColor(BuildContext context) {
     if (status == LoanStatus.open) {
-      return Colors.red;
+      return Theme.of(context).colorScheme.secondary;
     } else {
       return Colors.green;
     }
@@ -203,9 +232,9 @@ class LoanCard extends StatelessWidget {
 
   IconData _getIcon() {
     if (status == LoanStatus.open) {
-      return Icons.warning_amber_outlined;
+      return Icons.info;
     } else {
-      return Icons.check_circle_outline;
+      return Icons.check_circle;
     }
   }
 
@@ -221,7 +250,7 @@ class LoanCard extends StatelessWidget {
     if (status == LoanStatus.closed) {
       return 110;
     } else {
-      return 225;
+      return 275;
     }
   }
 
@@ -236,7 +265,7 @@ class LoanCard extends StatelessWidget {
   TextStyle? _getAmountTextStyle(BuildContext context) {
     if (status == LoanStatus.closed) {
       return Theme.of(context).textTheme.bodyText2?.copyWith(
-            color: Colors.orange,
+            color: Colors.green,
           );
     } else {
       return Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -250,7 +279,7 @@ class LoanCard extends StatelessWidget {
       return Theme.of(context)
           .textTheme
           .bodyText2
-          ?.copyWith(color: Colors.green);
+          ?.copyWith(color: Theme.of(context).hintColor);
     } else {
       return Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.red);
     }
@@ -261,7 +290,7 @@ class LoanCard extends StatelessWidget {
       return Theme.of(context)
           .textTheme
           .bodyText2
-          ?.copyWith(color: Colors.green);
+          ?.copyWith(color: Theme.of(context).hintColor);
     } else {
       return Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.red);
     }

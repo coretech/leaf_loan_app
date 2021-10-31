@@ -17,11 +17,11 @@ class PayButton {
           ),
         ),
         fixedSize: MaterialStateProperty.all(
-          mini ? const Size(75, 30) : const Size(150, 50),
+          mini ? const Size.fromHeight(40) : const Size(150, 50),
         ),
       ),
       child: Text(
-        'Pay',
+        label,
         style: TextStyle(
           fontSize: mini ? 13 : 20,
         ),

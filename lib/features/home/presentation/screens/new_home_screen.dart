@@ -117,7 +117,7 @@ class PaymentCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Completed",
+                    "Payment",
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,

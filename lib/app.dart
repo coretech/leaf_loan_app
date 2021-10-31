@@ -20,6 +20,7 @@ class App extends StatelessWidget {
       },
       theme: ThemeData(
         primaryColor: Colors.green,
+        primarySwatch: Colors.green,
         colorScheme: ColorScheme.light(
           primary: Colors.green,
           secondary: Colors.orange,
@@ -32,7 +33,7 @@ class App extends StatelessWidget {
           secondary: Colors.orange,
         ),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
     );
   }
 }

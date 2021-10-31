@@ -28,10 +28,9 @@ class LoanHistoryScreen extends StatelessWidget {
         body: ListView.builder(
           itemBuilder: (context, index) {
             if (index == 0) {
-              return LoanCard(
+              return ActiveLoanCard(
                 dueDate: DateTime.now().add(const Duration(days: 10)),
                 paidAmount: 25000,
-                status: LoanStatus.open,
                 totalAmount: 50000,
               );
             } else {

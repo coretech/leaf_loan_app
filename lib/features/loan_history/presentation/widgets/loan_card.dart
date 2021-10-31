@@ -75,61 +75,6 @@ class LoanCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              if (status == LoanStatus.open)
-                Text(
-                  "Pay before",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              if (status == LoanStatus.open)
-                Text(
-                  "January 15, 2022",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              if (status == LoanStatus.open)
-                SizedBox(
-                  height: 10,
-                ),
-              if (status == LoanStatus.open)
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(children: [
-                    TextSpan(
-                      style: Theme.of(context).textTheme.caption,
-                      text: 'Remaining amount\n',
-                    ),
-                    TextSpan(
-                      style: Theme.of(context).textTheme.headline6,
-                      text:
-                          '${Formatter.formatMoney(totalAmount - paidAmount)}',
-                    ),
-                    TextSpan(
-                      style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontSize: 12,
-                      ),
-                      text: ' RWF',
-                    )
-                  ]),
-                ),
-              if (status == LoanStatus.open)
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0, bottom: 15),
-                  child: PayButton.labeled(
-                    context: context,
-                    label: 'Pay now',
-                    onTap: () {
-                      print('pay on loan history card tapped');
-                    },
-                  ),
-                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -207,103 +152,54 @@ class LoanCard extends StatelessWidget {
   }
 
   Color _getBorderColor(BuildContext context) {
-    if (status == LoanStatus.open) {
-      return Theme.of(context).primaryColor;
-    } else {
-      return Theme.of(context).scaffoldBackgroundColor;
-    }
+    return Theme.of(context).scaffoldBackgroundColor;
   }
 
   Color _getCardColor(BuildContext context) {
-    if (status == LoanStatus.open) {
-      return Theme.of(context).primaryColorLight;
-    } else {
-      return Theme.of(context).cardColor;
-    }
+    return Theme.of(context).cardColor;
   }
 
   Color _getIconColor(BuildContext context) {
-    if (status == LoanStatus.open) {
-      return Theme.of(context).colorScheme.secondary;
-    } else {
-      return Colors.green;
-    }
+    return Colors.green;
   }
 
   IconData _getIcon() {
-    if (status == LoanStatus.open) {
-      return Icons.info;
-    } else {
-      return Icons.check_circle;
-    }
+    return Icons.check_circle;
   }
 
   double _getBorderWidth() {
-    if (status == LoanStatus.open) {
-      return 3.5;
-    } else {
-      return 1;
-    }
+    return 1;
   }
 
   double _getCardHeight() {
-    if (status == LoanStatus.closed) {
-      return 110;
-    } else {
-      return 275;
-    }
+    return 110;
   }
 
   String _getLoanStatus() {
-    if (status == LoanStatus.closed) {
-      return 'Closed';
-    } else {
-      return 'Open';
-    }
+    return 'Closed';
   }
 
   TextStyle? _getAmountTextStyle(BuildContext context) {
-    if (status == LoanStatus.closed) {
-      return Theme.of(context).textTheme.bodyText2?.copyWith(
-            color: Colors.green,
-          );
-    } else {
-      return Theme.of(context).textTheme.bodyText1?.copyWith(
-            color: Colors.red,
-          );
-    }
+    return Theme.of(context).textTheme.bodyText2?.copyWith(
+          color: Colors.green,
+        );
   }
 
   TextStyle? _getDueDateTextStyle(BuildContext context) {
-    if (status == LoanStatus.closed) {
-      return Theme.of(context)
-          .textTheme
-          .bodyText2
-          ?.copyWith(color: Theme.of(context).hintColor);
-    } else {
-      return Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.red);
-    }
+    return Theme.of(context)
+        .textTheme
+        .bodyText2
+        ?.copyWith(color: Theme.of(context).hintColor);
   }
 
   TextStyle? _getPaidTextStyle(BuildContext context) {
-    if (status == LoanStatus.closed) {
-      return Theme.of(context)
-          .textTheme
-          .bodyText2
-          ?.copyWith(color: Theme.of(context).hintColor);
-    } else {
-      return Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.red);
-    }
+    return Theme.of(context)
+        .textTheme
+        .bodyText2
+        ?.copyWith(color: Theme.of(context).hintColor);
   }
 
   TextStyle? _getStatusTextStyle(BuildContext context) {
-    if (status == LoanStatus.closed) {
-      return Theme.of(context)
-          .textTheme
-          .bodyText2
-          ?.copyWith(color: Colors.green);
-    } else {
-      return Theme.of(context).textTheme.bodyText1?.copyWith(color: Colors.red);
-    }
+    return Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.green);
   }
 }

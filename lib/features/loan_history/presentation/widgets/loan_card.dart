@@ -85,8 +85,15 @@ class LoanCard extends StatelessWidget {
                           text: 'Amount: ',
                         ),
                         TextSpan(
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                          ),
+                          text: 'RWF ',
+                        ),
+                        TextSpan(
                           style: _getAmountTextStyle(context),
-                          text: '${Formatter.formatMoney(totalAmount)} RWF',
+                          text: '${Formatter.formatMoney(totalAmount)}',
                         ),
                       ],
                     ),
@@ -121,8 +128,15 @@ class LoanCard extends StatelessWidget {
                           text: 'Paid: ',
                         ),
                         TextSpan(
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 12,
+                          ),
+                          text: 'RWF ',
+                        ),
+                        TextSpan(
                           style: _getPaidTextStyle(context),
-                          text: '${Formatter.formatMoney(paidAmount)} RWF',
+                          text: '${Formatter.formatMoney(paidAmount)}',
                         ),
                       ],
                     ),

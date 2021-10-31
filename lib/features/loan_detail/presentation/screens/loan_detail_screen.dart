@@ -25,6 +25,7 @@ class LoanDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           LoanDetailAppBar(
             dueDate: dueDate,

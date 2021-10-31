@@ -30,8 +30,8 @@ class LoanDetailAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('[Category X] Loan'),
-            if (status == LoanStatus.open) const Spacer(),
-            if (status == LoanStatus.open)
+            if (status != LoanStatus.closed) const Spacer(),
+            if (status != LoanStatus.closed)
               Text(
                 '${_getRemainingDays()} days remaining',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
@@ -46,16 +46,16 @@ class LoanDetailAppBar extends StatelessWidget {
   }
 
   Color? _getBackgroundColor(BuildContext context) {
-    if (status == LoanStatus.open) {
+    if (status != LoanStatus.closed) {
       return Theme.of(context).colorScheme.secondary.withRed(210).withBlue(55);
     }
   }
 
   AppBar? _getRemainingAmount(context) {
-    if (status == LoanStatus.open) {
+    if (status != LoanStatus.closed) {
       return AppBar(
         actions: [
-          if (status == LoanStatus.open)
+          if (status != LoanStatus.closed)
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(5.0),

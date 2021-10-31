@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 
 class NewHomeScreen extends StatefulWidget {
@@ -201,7 +202,6 @@ class LoanActionButtons extends StatelessWidget {
       ],
     );
   }
-
 }
 
 class CurrentLoanInfo extends StatelessWidget {
@@ -211,105 +211,119 @@ class CurrentLoanInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).colorScheme.secondary,
-      ),
-      child: Stack(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-                colors: [
-                  Colors.white.withOpacity(0.25),
-                  Colors.black.withOpacity(0.25),
-                  Theme.of(context).colorScheme.secondary,
+    return InkWell(
+      borderRadius: BorderRadius.circular(15),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => LoanDetailScreen(
+              dueDate: DateTime.now(),
+              paidAmount: 234325,
+              status: LoanStatus.due,
+              totalAmount: 10234324,
+            ),
+          ),
+        );
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        child: Stack(
+          children: [
+            Ink(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                  colors: [
+                    Colors.white.withOpacity(0.25),
+                    Colors.black.withOpacity(0.25),
+                    Theme.of(context).colorScheme.secondary,
+                  ],
+                ),
+              ),
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Text(
+                    "Pay before",
+                    style: TextStyle(
+                      color: _getTextColor(context),
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    "January 15, 2022",
+                    style: TextStyle(
+                      color: _getTextColor(context),
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  Text(
+                    "Remaining Amount",
+                    style: TextStyle(
+                      color: _getTextColor(context),
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'KSH ',
+                          style: TextStyle(
+                            color: _getTextColor(context),
+                          ),
+                        ),
+                        TextSpan(
+                          text: '12,960',
+                          style: TextStyle(
+                            color: _getTextColor(context),
+                            fontSize: 31.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  ),
                 ],
               ),
             ),
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Text(
-                  "Pay before",
-                  style: TextStyle(
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.info,
                     color: _getTextColor(context),
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
                   ),
-                ),
-                Text(
-                  "January 15, 2022",
-                  style: TextStyle(
-                    color: _getTextColor(context),
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                Text(
-                  "Remaining Amount",
-                  style: TextStyle(
-                    color: _getTextColor(context),
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'KSH ',
-                        style: TextStyle(
-                          color: _getTextColor(context),
-                        ),
-                      ),
-                      TextSpan(
-                        text: '12,960',
-                        style: TextStyle(
-                          color: _getTextColor(context),
-                          fontSize: 31.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.info,
-                  color: _getTextColor(context),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

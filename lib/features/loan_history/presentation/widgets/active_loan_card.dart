@@ -56,7 +56,8 @@ class ActiveLoanCard extends StatelessWidget {
                 end: Alignment.topLeft,
                 colors: [
                   Colors.white.withOpacity(0.25),
-                  Colors.black.withOpacity(0.25),
+                  _getGradientColor(context).withRed(205),
+                  _getGradientColor(context).withRed(205).withGreen(150),
                   _getGradientColor(context),
                 ],
               ),

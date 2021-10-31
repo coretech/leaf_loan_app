@@ -108,7 +108,7 @@ class LoanDetailScreen extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          if (status == LoanStatus.open)
+                          if (status != LoanStatus.closed)
                             Text(
                               "Pay before",
                               style: TextStyle(
@@ -117,7 +117,7 @@ class LoanDetailScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                          if (status == LoanStatus.open)
+                          if (status != LoanStatus.closed)
                             Text(
                               "January 15, 2022",
                               style: TextStyle(
@@ -126,7 +126,7 @@ class LoanDetailScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                          if (status == LoanStatus.open)
+                          if (status != LoanStatus.closed)
                             Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 15, top: 15),
@@ -199,7 +199,7 @@ class LoanDetailScreen extends StatelessWidget {
   // }
 
   Color _getTextColor(BuildContext context) {
-    if (status == LoanStatus.open) {
+    if (status != LoanStatus.closed) {
       return Theme.of(context).colorScheme.onSurface;
     }
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;

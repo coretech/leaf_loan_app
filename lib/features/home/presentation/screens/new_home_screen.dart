@@ -202,14 +202,6 @@ class LoanActionButtons extends StatelessWidget {
     );
   }
 
-  Color _getTextColor(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    if (isDarkMode) {
-      return Theme.of(context).colorScheme.onSurface;
-    } else {
-      return Theme.of(context).colorScheme.onPrimary;
-    }
-  }
 }
 
 class CurrentLoanInfo extends StatelessWidget {

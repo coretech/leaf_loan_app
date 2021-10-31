@@ -20,32 +20,34 @@ class LoanDetailAppBar extends StatelessWidget {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       bottom: _getRemainingAmount(context),
-      backgroundColor: _getBackgroundColor(),
+      backgroundColor: _getBackgroundColor(context),
       centerTitle: true,
       floating: true,
       forceElevated: true,
       pinned: true,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('[Category X] Loan'),
-          if (status == LoanStatus.open) const Spacer(),
-          if (status == LoanStatus.open)
-            Text(
-              '${_getRemainingDays()} days remaining',
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: Theme.of(context).canvasColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-        ],
+      title: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('[Category X] Loan'),
+            if (status == LoanStatus.open) const Spacer(),
+            if (status == LoanStatus.open)
+              Text(
+                '${_getRemainingDays()} days remaining',
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: Theme.of(context).canvasColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+          ],
+        ),
       ),
     );
   }
 
-  Color? _getBackgroundColor() {
+  Color? _getBackgroundColor(BuildContext context) {
     if (status == LoanStatus.open) {
-      return Colors.orange;
+      return Theme.of(context).colorScheme.secondary.withRed(210).withBlue(55);
     }
   }
 
@@ -68,7 +70,7 @@ class LoanDetailAppBar extends StatelessWidget {
               ),
             )
         ],
-        backgroundColor: _getBackgroundColor(),
+        backgroundColor: _getBackgroundColor(context),
         centerTitle: true,
         elevation: 0,
         title: RichText(
@@ -81,17 +83,23 @@ class LoanDetailAppBar extends StatelessWidget {
               text: 'Remaining amount\n',
             ),
             TextSpan(
+              style: Theme.of(context).textTheme.caption?.copyWith(
+                    color: Theme.of(context).canvasColor,
+                  ),
+              text: 'RWF ',
+            ),
+            TextSpan(
               style: Theme.of(context).textTheme.headline6?.copyWith(
                     color: Theme.of(context).canvasColor,
                   ),
-              text: '${Formatter.formatMoney(totalAmount - paidAmount)} RWF',
+              text: '${Formatter.formatMoney(totalAmount - paidAmount)}',
             )
           ]),
         ),
       );
     } else {
       return AppBar(
-        backgroundColor: _getBackgroundColor(),
+        backgroundColor: _getBackgroundColor(context),
         centerTitle: true,
         elevation: 0,
         title: const Text('Completely Paid'),

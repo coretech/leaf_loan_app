@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 
-
 class PaymentDetailCard extends StatelessWidget {
   const PaymentDetailCard({
     Key? key,
@@ -13,61 +12,70 @@ class PaymentDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.25),
-            blurRadius: 2.5,
-            offset: const Offset(1, 2),
-          )
-        ],
-        color: Theme.of(context).cardColor,
-      ),
-      padding: const EdgeInsets.all(8),
-      child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              Formatter.formatDateMini(
-                DateTime.now().subtract(
-                  Duration(
-                    days: Random().nextInt(1000),
-                  ),
+          Text(
+            Formatter.formatDate(
+              DateTime.now().subtract(
+                Duration(
+                  days: Random().nextInt(1000),
                 ),
               ),
-              style:
-                  Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: 17),
+            ),
+            style: TextStyle(
+              color: Theme.of(context).hintColor,
+              fontWeight: FontWeight.w900,
+              fontSize: 16,
+              letterSpacing: 0.75,
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text(
-                disbursement ? 'Disbursement' : 'Payment',
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    ?.copyWith(fontSize: 17),
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 2.5),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    disbursement ? 'Disbursement' : 'Payment',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                      letterSpacing: 0.75,
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'RWF ',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              '${Formatter.formatMoney(Random().nextDouble() * 100000)}',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '${Formatter.formatMoney(Random().nextDouble() * 100000)} RWF',
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    ?.copyWith(fontSize: 17),
-              ),
-            ),
-          )
         ],
       ),
     );

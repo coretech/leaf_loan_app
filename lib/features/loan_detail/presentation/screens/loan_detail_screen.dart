@@ -48,16 +48,16 @@ class LoanDetailScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: TextSpan(children: [
                           TextSpan(
-                            style: Theme.of(context).textTheme.headline6,
-                            text:
-                                '${Formatter.formatMoney(totalAmount / 1.1)} ',
-                          ),
-                          TextSpan(
                             style:
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: 'RWF\n',
+                            text: 'RWF ',
+                          ),
+                          TextSpan(
+                            style: Theme.of(context).textTheme.headline6,
+                            text:
+                                '${Formatter.formatMoney(totalAmount / 1.1)}\n',
                           ),
                           TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
@@ -69,9 +69,16 @@ class LoanDetailScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: TextSpan(children: [
                           TextSpan(
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                            text: 'RWF ',
+                          ),
+                          TextSpan(
                             style: Theme.of(context).textTheme.headline6,
                             text:
-                                '${Formatter.formatMoney(totalAmount - (totalAmount / 1.1))} RWF\n',
+                                '${Formatter.formatMoney(totalAmount - (totalAmount / 1.1))}\n',
                           ),
                           TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
@@ -83,8 +90,15 @@ class LoanDetailScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: TextSpan(children: [
                           TextSpan(
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                            text: 'RWF ',
+                          ),
+                          TextSpan(
                             style: Theme.of(context).textTheme.headline6,
-                            text: '${Formatter.formatMoney(totalAmount)} RWF\n',
+                            text: '${Formatter.formatMoney(totalAmount)}\n',
                           ),
                           TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
@@ -95,63 +109,56 @@ class LoanDetailScreen extends StatelessWidget {
                       Column(
                         children: [
                           if (status == LoanStatus.open)
+                            Text(
+                              "Pay before",
+                              style: TextStyle(
+                                color: _getTextColor(context),
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          if (status == LoanStatus.open)
+                            Text(
+                              "January 15, 2022",
+                              style: TextStyle(
+                                color: _getTextColor(context),
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          if (status == LoanStatus.open)
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
+                              padding:
+                                  const EdgeInsets.only(bottom: 15, top: 15),
                               child: PayButton.labeled(
                                 context: context,
-                                label: 'Pay',
+                                label: 'Pay now',
                                 onTap: () {
                                   print('big pay button on detail card tapped');
                                 },
                               ),
                             ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1,
-                                          text: 'Status: ',
-                                        ),
-                                        TextSpan(
-                                          style: _getValueTextStyle(context),
-                                          text: _getLoanStatus(),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1,
-                                          text: 'Due: ',
-                                        ),
-                                        TextSpan(
-                                          style: _getValueTextStyle(context),
-                                          text: Formatter.formatDate(dueDate),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(5.0),
+                          //   child: Center(
+                          //     child: RichText(
+                          //       text: TextSpan(
+                          //         children: [
+                          //           TextSpan(
+                          //             style: Theme.of(context)
+                          //                 .textTheme
+                          //                 .subtitle1,
+                          //             text: 'Status: ',
+                          //           ),
+                          //           TextSpan(
+                          //             style: _getValueTextStyle(context),
+                          //             text: _getLoanStatus(),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       )
                     ],
@@ -183,21 +190,13 @@ class LoanDetailScreen extends StatelessWidget {
     );
   }
 
-  Color _getCardColor(BuildContext context) {
-    if (status == LoanStatus.open) {
-      return Theme.of(context).canvasColor;
-    } else {
-      return Colors.green;
-    }
-  }
-
-  String _getLoanStatus() {
-    if (status == LoanStatus.closed) {
-      return 'Closed'.toUpperCase();
-    } else {
-      return 'Open'.toUpperCase();
-    }
-  }
+  // String _getLoanStatus() {
+  //   if (status == LoanStatus.closed) {
+  //     return 'Closed'.toUpperCase();
+  //   } else {
+  //     return 'Open'.toUpperCase();
+  //   }
+  // }
 
   Color _getTextColor(BuildContext context) {
     if (status == LoanStatus.open) {
@@ -208,16 +207,6 @@ class LoanDetailScreen extends StatelessWidget {
       return Theme.of(context).colorScheme.onSurface;
     } else {
       return Theme.of(context).colorScheme.onPrimary;
-    }
-  }
-
-  TextStyle? _getValueTextStyle(BuildContext context) {
-    if (status == LoanStatus.closed) {
-      return Theme.of(context).textTheme.headline6?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
-          );
-    } else {
-      return Theme.of(context).textTheme.headline6?.copyWith(color: Colors.red);
     }
   }
 }

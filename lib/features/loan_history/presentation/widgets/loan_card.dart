@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
-import 'package:loan_app/features/loan_payment/loan_payment.dart';
 
 class LoanCard extends StatelessWidget {
   const LoanCard({

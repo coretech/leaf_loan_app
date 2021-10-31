@@ -101,16 +101,25 @@ class ActiveLoanCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(children: [
                     TextSpan(
-                      style: Theme.of(context).textTheme.caption?.copyWith(
-                            color: _getTextColor(context),
-                          ),
+                      style: TextStyle(
+                        color: _getTextColor(context),
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w400,
+                      ),
                       text: 'Remaining amount\n',
+                    ),
+                    TextSpan(
+                      style: TextStyle(
+                        color: _getTextColor(context),
+                        fontSize: 12,
+                      ),
+                      text: 'RWF ',
                     ),
                     TextSpan(
                       style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -119,13 +128,6 @@ class ActiveLoanCard extends StatelessWidget {
                       text:
                           '${Formatter.formatMoney(totalAmount - paidAmount)}',
                     ),
-                    TextSpan(
-                      style: TextStyle(
-                        color: _getTextColor(context),
-                        fontSize: 12,
-                      ),
-                      text: ' RWF',
-                    )
                   ]),
                 ),
                 Padding(
@@ -153,18 +155,18 @@ class ActiveLoanCard extends StatelessWidget {
                             text: 'Total Amount: ',
                           ),
                           TextSpan(
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                            text: 'RWF ',
+                          ),
+                          TextSpan(
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
                             text: '${Formatter.formatMoney(totalAmount)} ',
-                          ),
-                          TextSpan(
-                            text: 'RWF',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: _getTextColor(context),
-                            ),
                           ),
                         ],
                       ),
@@ -188,18 +190,18 @@ class ActiveLoanCard extends StatelessWidget {
                             text: 'Paid: ',
                           ),
                           TextSpan(
+                            style:
+                                Theme.of(context).textTheme.caption?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                            text: 'RWF ',
+                          ),
+                          TextSpan(
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: '${Formatter.formatMoney(paidAmount)} ',
-                          ),
-                          TextSpan(
-                            text: 'RWF',
-                            style: TextStyle(
-                              color: _getTextColor(context),
-                              fontSize: 10,
-                            ),
+                            text: '${Formatter.formatMoney(paidAmount)}',
                           ),
                         ],
                       ),

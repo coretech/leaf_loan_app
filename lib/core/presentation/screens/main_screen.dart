@@ -40,14 +40,15 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _getPage() {
     if (_currentPage == 0) {
-      return HomeScreen(
-        hasLoan: hasLoan,
-        onApply: () {
-          setState(() {
-            hasLoan = !hasLoan;
-          });
-        },
-      );
+      return NewHomeScreen();
+      // return HomeScreen(
+      //   hasLoan: hasLoan,
+      //   onApply: () {
+      //     setState(() {
+      //       hasLoan = !hasLoan;
+      //     });
+      //   },
+      // );
     } else if (_currentPage == 1) {
       return LoanHistoryScreen(
         hasLoan: hasLoan,

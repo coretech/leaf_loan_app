@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 class AuthTextField extends StatelessWidget {
   final String hintText;
-  final int? maxlines;
-  final validator, onsaved;
+  final TextEditingController controller;
 
-  const AuthTextField(
-      {required this.hintText, this.validator, this.onsaved, this.maxlines});
+  const AuthTextField({
+    Key? key,
+    required this.hintText,
+    required this.controller,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: validator,
-      onSaved: onsaved,
+      controller: controller,
       keyboardType: hintText == 'Username'
           ? TextInputType.emailAddress
           : TextInputType.text,
       obscureText: hintText == 'Password',
-      maxLines: maxlines ?? 1,
       decoration: InputDecoration(
           suffixIcon: hintText == "Username"
               ? Icon(Icons.check)
@@ -28,7 +28,9 @@ class AuthTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xFF0120F1), width: 0.7)),
           contentPadding: EdgeInsets.symmetric(
-              horizontal: 10, vertical: maxlines != null ? 10 : 0)),
+            horizontal: 10,
+            vertical: 10,
+          )),
     );
   }
 }

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:loan_app/features/authentication/authentication.dart';
+import 'package:loan_app/features/authentication/presentation/bloc/auth/auth.dart';
+import 'package:loan_app/features/home/home.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
 
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({
+    Key? key,
+    required this.authCubit,
+  }) : super(key: key);
+  final AuthCubit authCubit;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -12,6 +20,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +50,87 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               sizedBoxFifteen,
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    AuthTextField(hintText: 'Username'),
-                    sizedBoxFifteen,
-                    AuthTextField(hintText: 'Password'),
-                    sizedBoxFifteen,
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Log In',
-                          style: TextStyle(color: Colors.white),
+              BlocConsumer<AuthCubit, AuthState>(
+                bloc: widget.authCubit,
+                builder: (context, state) {
+                  return Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        AuthTextField(
+                          controller: usernameController,
+                          hintText: 'Username',
                         ),
-                        style: TextButton.styleFrom(
-                          fixedSize:
-                              Size(MediaQuery.of(context).size.width * 0.9, 50),
-                          primary: Colors.black,
-                          backgroundColor: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          side: BorderSide(color: Colors.black, width: 0.9),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 12),
-                        ))
-                  ],
-                ),
+                        sizedBoxFifteen,
+                        AuthTextField(
+                          controller: passwordController,
+                          hintText: 'Password',
+                        ),
+                        sizedBoxFifteen,
+                        TextButton(
+                            onPressed: !(state is Authenticating)
+                                ? () {
+                                    widget.authCubit.login(
+                                      username: usernameController.text,
+                                      password: passwordController.text,
+                                    );
+                                  }
+                                : null,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (state is Authenticating)
+                                  SizedBox(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                if (state is Authenticating)
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                Text(
+                                  'Log In',
+                                ),
+                              ],
+                            ),
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).primaryColorLight,
+                              fixedSize: Size(
+                                  MediaQuery.of(context).size.width * 0.9, 50),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 25, vertical: 12),
+                              primary: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              side: BorderSide(color: Colors.black, width: 0.9),
+                            ))
+                      ],
+                    ),
+                  );
+                },
+                listener: (context, state) {
+                  if (state is AuthenticationFailed) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Authentication Failed'),
+                      ),
+                    );
+                  } else if (state is Authenticated) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) {
+                        return NewHomeScreen();
+                      }),
+                      (route) => false,
+                    );
+                  }
+                },
               ),
               sizedBoxFifteen,
               Text(

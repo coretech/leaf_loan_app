@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/authentication/authentication.dart';
+import 'package:loan_app/features/authentication/presentation/bloc/auth/auth.dart';
 import 'package:loan_app/features/features.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
@@ -12,7 +13,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        LoginScreen.routeName: (context) => const LoginScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(
+              authCubit: AuthCubit(AuthenticationRemoteRepository()),
+            ),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
         MainScreen.routeName: (context) => const NewHomeScreen(),
         OnboardingScreen.routeName: (ctx) => OnboardingScreen(),

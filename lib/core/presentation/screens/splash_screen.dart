@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/authentication/authentication.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       listener: (context, state) {
         if (state.onboardingSeen) {
           Navigator.of(context).pushReplacementNamed(
-            MainScreen.routeName,
+            LoginScreen.routeName,
           );
         } else {
           Navigator.of(context).pushReplacementNamed(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/features/authentication/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -26,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
-          color: Colors.white,
         ),
         width: double.infinity,
         child: Padding(
@@ -44,14 +44,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextField(hintText: 'Email'),
+                    AuthTextField(hintText: 'Username'),
                     sizedBoxFifteen,
-                    TextField(hintText: 'Password'),
+                    AuthTextField(hintText: 'Password'),
                     sizedBoxFifteen,
                     TextButton(
                         onPressed: () {},
                         child: Text(
-                          'Sign In',
+                          'Log In',
                           style: TextStyle(color: Colors.white),
                         ),
                         style: TextButton.styleFrom(
@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(color: Color(0xFFA4A4A4)),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 8,
+                height: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -105,35 +105,3 @@ class _LoginScreenState extends State<LoginScreen> {
 Widget get sizedBoxFifteen => SizedBox(
       height: 15,
     );
-
-class TextField extends StatelessWidget {
-  final String hintText;
-  final int? maxlines;
-  final validator, onsaved;
-
-  const TextField(
-      {required this.hintText, this.validator, this.onsaved, this.maxlines});
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      validator: validator,
-      onSaved: onsaved,
-      keyboardType:
-          hintText == 'Email' ? TextInputType.emailAddress : TextInputType.text,
-      obscureText: hintText == 'Password',
-      maxLines: maxlines ?? 1,
-      decoration: InputDecoration(
-          suffixIcon: hintText == "Email"
-              ? Icon(Icons.check)
-              : Icon(Icons.remove_red_eye),
-          hintText: hintText,
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(width: 0.0)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF0120F1), width: 0.7)),
-          contentPadding: EdgeInsets.symmetric(
-              horizontal: 10, vertical: maxlines != null ? 10 : 0)),
-    );
-  }
-}

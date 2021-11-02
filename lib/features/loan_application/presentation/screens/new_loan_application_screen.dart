@@ -14,7 +14,6 @@ class NewLoanApplication extends StatefulWidget {
 
 class _NewLoanApplicationState extends State<NewLoanApplication> {
   String _currentCurrency = 'KES';
-  String? _currentReason;
 
   DateTime dueDate = DateTime.now().add(Duration(days: Random().nextInt(75)));
 

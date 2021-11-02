@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 
@@ -185,7 +186,13 @@ class LoanActionButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => NewLoanApplication(),
+              ),
+            );
+          },
           child: Text("Apply for a loan"),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(

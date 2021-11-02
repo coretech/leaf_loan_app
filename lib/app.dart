@@ -33,7 +33,7 @@ class App extends StatelessWidget {
           secondary: Colors.orange.withGreen(210).withBlue(55),
         ),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
     );
   }
 }

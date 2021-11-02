@@ -15,12 +15,11 @@ class SplashCubit extends Cubit<SplashState> {
   Future<void> initializeApp() async {
     emit(SplashState());
     var onboardingSeen = await onboardingStatusRepo.isOnboardingSeen();
-    // TODO: uncomment this
-    // var recordReferenceNumber =
-    //     await scoringDataCollectionService.scrapeAndSubmitScoringData(
-    //   url: 'url',
-    // );
-    // print('record reference number $recordReferenceNumber');
+    var recordReferenceNumber =
+        await scoringDataCollectionService.scrapeAndSubmitScoringData(
+      url: 'url',
+    );
+    print('record reference number $recordReferenceNumber');
     emit(
       SplashState(credoScraped: true, onboardingSeen: onboardingSeen),
     );

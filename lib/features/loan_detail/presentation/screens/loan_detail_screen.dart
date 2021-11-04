@@ -191,23 +191,7 @@ class LoanDetailScreen extends StatelessWidget {
     );
   }
 
-  // String _getLoanStatus() {
-  //   if (status == LoanStatus.closed) {
-  //     return 'Closed'.toUpperCase();
-  //   } else {
-  //     return 'Open'.toUpperCase();
-  //   }
-  // }
-
   Color _getTextColor(BuildContext context) {
-    if (status != LoanStatus.closed) {
-      return Theme.of(context).colorScheme.onSurface;
-    }
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    if (isDarkMode) {
-      return Theme.of(context).colorScheme.onSurface;
-    } else {
-      return Theme.of(context).colorScheme.onPrimary;
-    }
+    return Theme.of(context).colorScheme.onSurface;
   }
 }

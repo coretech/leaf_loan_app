@@ -43,7 +43,7 @@ class LoanCurrencyPicker extends StatelessWidget {
             child: Card(
               color: selectedCurrency == currency
                   ? Theme.of(context).primaryColorLight
-                  : Colors.white,
+                  : null,
               elevation: 4,
               margin: EdgeInsets.zero,
               child: InkWell(

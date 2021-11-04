@@ -22,6 +22,9 @@ class LoanDetailAppBar extends StatelessWidget {
       bottom: _getRemainingAmount(context),
       backgroundColor: _getBackgroundColor(context),
       centerTitle: true,
+      foregroundColor: status == LoanStatus.closed
+          ? Theme.of(context).colorScheme.onSurface
+          : Theme.of(context).colorScheme.onPrimary,
       floating: true,
       forceElevated: true,
       pinned: true,
@@ -72,6 +75,9 @@ class LoanDetailAppBar extends StatelessWidget {
         ],
         backgroundColor: _getBackgroundColor(context),
         centerTitle: true,
+        foregroundColor: status == LoanStatus.closed
+            ? Theme.of(context).colorScheme.onSurface
+            : Theme.of(context).colorScheme.onPrimary,
         elevation: 0,
         title: RichText(
           textAlign: TextAlign.center,

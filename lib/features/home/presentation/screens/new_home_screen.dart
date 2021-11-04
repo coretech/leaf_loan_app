@@ -137,7 +137,7 @@ class PaymentCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Payment",
+                    "Repayment",
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
@@ -209,7 +209,7 @@ class LoanActionButtons extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {},
-          child: Text("Pay your debts"),
+          child: Text("Pay your loan"),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
                 Theme.of(context).colorScheme.primary.withOpacity(0.5)),

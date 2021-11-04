@@ -14,10 +14,12 @@ class NewLoanApplication extends StatefulWidget {
 
 class _NewLoanApplicationState extends State<NewLoanApplication> {
   String _currentCurrency = 'KES';
+  String _selectedPurpose = 'Home Improvement';
 
   DateTime dueDate = DateTime.now().add(Duration(days: Random().nextInt(75)));
 
   double _loanAmount = 50;
+  LoanType _loanType = LoanType.personal;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,13 +38,72 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("WIP"),
-              LoanTypeSelector(),
+              LoanTypeSelection(
+                onSelection: (value) {
+                  setState(() {
+                    _loanType = value;
+                  });
+                },
+                selectedLoanType: _loanType,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
-                  'Loan Amount',
+                  'Loan currency',
                   style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
+                  ' sed do eiusmod tempor incididunt ut labore et dolore magna',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ),
+              LoanCurrencyPicker(
+                onChanged: (value) {
+                  setState(() {
+                    _currentCurrency = value;
+                  });
+                },
+                selectedCurrency: _currentCurrency,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Loan duration',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
+                  ' sed do eiusmod tempor incididunt ut labore et dolore magna',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ),
+              LoanDurationPicker(),
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Loan amount',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
+                  ' sed do eiusmod tempor incididunt ut labore et dolore magna',
+                  style: Theme.of(context).textTheme.caption,
                 ),
               ),
               Slider(
@@ -103,24 +164,60 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 ),
               ),
               const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Loan purpose',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
+                  ' sed do eiusmod tempor incididunt ut labore et dolore magna',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ),
+              SizedBox(height: 10),
+              LoanPurposePicker(
+                onChanged: (value) {
+                  setState(() {
+                    _selectedPurpose = value;
+                  });
+                },
+                selectedPurpose: _selectedPurpose,
+              ),
+              const SizedBox(
                 height: 20,
               ),
-              Center(
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.upload_file),
-                  label: const Text(
-                    'Submit',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
-                    Size(
-                      ScreenSize.of(context).width - 40,
-                      50,
-                    ),
-                  )),
+
+              //caption lorem ispum text
+              //richtext widget with children
+              TOCConfirmation(),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.upload_file),
+                label: const Text(
+                  'Submit',
+                  style: TextStyle(fontSize: 18),
                 ),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Loan application submitted'),
+                    ),
+                  );
+                  Navigator.of(context).pop();
+                },
+                style: ButtonStyle(
+                    fixedSize: MaterialStateProperty.all(
+                  Size(
+                    ScreenSize.of(context).width - 40,
+                    50,
+                  ),
+                )),
               ),
               TextButton(
                 onPressed: () {
@@ -135,6 +232,43 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TOCConfirmation extends StatelessWidget {
+  const TOCConfirmation({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'By clicking on the ',
+              style: Theme.of(context).textTheme.caption,
+            ),
+            TextSpan(
+              text: 'Submit Button ',
+              style: Theme.of(context).textTheme.button,
+            ),
+            TextSpan(
+              text: 'below, I hereby agree'
+                  ' to and accept the following terms and conditions governing my'
+                  'loan that are stated in the ',
+              style: Theme.of(context).textTheme.caption,
+            ),
+            TextSpan(
+              text: 'Terms and Conditions.',
+              style: Theme.of(context).textTheme.button,
+            ),
+          ],
         ),
       ),
     );

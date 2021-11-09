@@ -36,12 +36,12 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+              padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 'Fill in the details below to apply for a loan',
                 style: TextStyle(
@@ -55,7 +55,7 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
               indent: 40,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 'What is the loan for?',
                 style: Theme.of(context).textTheme.subtitle1,
@@ -66,11 +66,13 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                 return InputDecorator(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     contentPadding: const EdgeInsets.all(5),
                     errorStyle: const TextStyle(
-                        color: Colors.redAccent, fontSize: 16.0),
+                      color: Colors.redAccent,
+                      fontSize: 16,
+                    ),
                     hintText: 'Please select a reason',
                   ),
                   isEmpty: _currentReason == null,
@@ -100,7 +102,7 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 'What is the currency you want to use?',
                 style: Theme.of(context).textTheme.subtitle1,
@@ -111,11 +113,11 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                 return InputDecorator(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     contentPadding: const EdgeInsets.all(5),
-                    errorStyle: const TextStyle(
-                        color: Colors.redAccent, fontSize: 16.0),
+                    errorStyle:
+                        const TextStyle(color: Colors.redAccent, fontSize: 16),
                     hintText: 'Please select a currency',
                   ),
                   child: DropdownButtonHideUnderline(
@@ -146,7 +148,7 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 'Duration',
                 style: Theme.of(context).textTheme.subtitle1,
@@ -168,14 +170,15 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                            text: 'For: ',
-                            style: TextStyle(
-                              color: Theme.of(context).unselectedWidgetColor,
-                              fontSize: 16,
-                            )),
+                          text: 'For: ',
+                          style: TextStyle(
+                            color: Theme.of(context).unselectedWidgetColor,
+                            fontSize: 16,
+                          ),
+                        ),
                         TextSpan(
-                          text:
-                              '${dueDate.difference(DateTime.now()).inDays} days',
+                          text: '${dueDate.difference(DateTime.now()).inDays}'
+                              ' days',
                           style:
                               Theme.of(context).textTheme.bodyText1?.copyWith(
                                     fontSize: 16,
@@ -188,11 +191,12 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                            text: 'Due: ',
-                            style: TextStyle(
-                              color: Theme.of(context).unselectedWidgetColor,
-                              fontSize: 16,
-                            )),
+                          text: 'Due: ',
+                          style: TextStyle(
+                            color: Theme.of(context).unselectedWidgetColor,
+                            fontSize: 16,
+                          ),
+                        ),
                         TextSpan(
                           text: Formatter.formatDate(dueDate),
                           style:
@@ -210,7 +214,7 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 'Loan Amount',
                 style: Theme.of(context).textTheme.subtitle1,
@@ -254,7 +258,8 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                   Column(
                     children: [
                       Text(
-                        '${Formatter.formatMoney(_loanAmount * 0.1)} $_currentCurrency',
+                        '${Formatter.formatMoney(_loanAmount * 0.1)}'
+                        ' $_currentCurrency',
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       const Text('Interest (10%)'),
@@ -263,7 +268,8 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                   Column(
                     children: [
                       Text(
-                        '${Formatter.formatMoney(_loanAmount + (_loanAmount * 0.1))} $_currentCurrency',
+                        '${Formatter.formatMoney(_getTotalAmount(_loanAmount))}'
+                        ' $_currentCurrency',
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       const Text('Total Due'),
@@ -284,17 +290,22 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                 ),
                 onPressed: () {},
                 style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(
-                  Size(
-                    ScreenSize.of(context).width - 40,
-                    50,
+                  fixedSize: MaterialStateProperty.all(
+                    Size(
+                      ScreenSize.of(context).width - 40,
+                      50,
+                    ),
                   ),
-                )),
+                ),
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  double _getTotalAmount(double amount) {
+    return amount * 1.1;
   }
 }

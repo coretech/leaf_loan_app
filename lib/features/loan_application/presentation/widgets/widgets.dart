@@ -6,4 +6,3 @@ export 'loan_curreny_picker.dart';
 export 'loan_description.dart';
 export 'loan_duration_picker.dart';
 export 'loan_type_selection.dart';
-export 'loan_type_selector.dart';

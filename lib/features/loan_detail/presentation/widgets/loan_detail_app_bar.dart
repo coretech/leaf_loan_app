@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
@@ -28,22 +30,20 @@ class LoanDetailAppBar extends StatelessWidget {
       floating: true,
       forceElevated: true,
       pinned: true,
-      title: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('[Category X] Loan'),
-            if (status != LoanStatus.closed) const Spacer(),
-            if (status != LoanStatus.closed)
-              Text(
-                '${_getRemainingDays()} days remaining',
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      color: Theme.of(context).canvasColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-          ],
-        ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('[Category X] Loan'),
+          if (status != LoanStatus.closed) const Spacer(),
+          if (status != LoanStatus.closed)
+            Text(
+              '${_getRemainingDays()} days remaining',
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    color: Theme.of(context).canvasColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+        ],
       ),
     );
   }
@@ -61,13 +61,13 @@ class LoanDetailAppBar extends StatelessWidget {
           if (status != LoanStatus.closed)
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(5),
                 child: PayButton.labeled(
                   context: context,
                   label: 'Pay',
                   mini: true,
                   onTap: () {
-                    print('pay on loan detail app bar tapped');
+                    log('pay on loan detail app bar tapped');
                   },
                 ),
               ),
@@ -81,26 +81,28 @@ class LoanDetailAppBar extends StatelessWidget {
         elevation: 0,
         title: RichText(
           textAlign: TextAlign.center,
-          text: TextSpan(children: [
-            TextSpan(
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    color: Theme.of(context).canvasColor,
-                  ),
-              text: 'Remaining amount\n',
-            ),
-            TextSpan(
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    color: Theme.of(context).canvasColor,
-                  ),
-              text: 'RWF ',
-            ),
-            TextSpan(
-              style: Theme.of(context).textTheme.headline6?.copyWith(
-                    color: Theme.of(context).canvasColor,
-                  ),
-              text: '${Formatter.formatMoney(totalAmount - paidAmount)}',
-            )
-          ]),
+          text: TextSpan(
+            children: [
+              TextSpan(
+                style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: Theme.of(context).canvasColor,
+                    ),
+                text: 'Remaining amount\n',
+              ),
+              TextSpan(
+                style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: Theme.of(context).canvasColor,
+                    ),
+                text: 'RWF ',
+              ),
+              TextSpan(
+                style: Theme.of(context).textTheme.headline6?.copyWith(
+                      color: Theme.of(context).canvasColor,
+                    ),
+                text: Formatter.formatMoney(totalAmount - paidAmount),
+              )
+            ],
+          ),
         ),
       );
     } else {

@@ -33,10 +33,10 @@ class PaymentDetailCard extends StatelessWidget {
             ),
           ),
           Card(
-            margin: EdgeInsets.symmetric(vertical: 2.5),
+            margin: const EdgeInsets.symmetric(vertical: 2.5),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
+                horizontal: 10,
                 vertical: 15,
               ),
               child: Row(
@@ -44,7 +44,7 @@ class PaymentDetailCard extends StatelessWidget {
                 children: [
                   Text(
                     disbursement ? 'Disbursement' : 'Payment',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
                       letterSpacing: 0.75,
@@ -61,11 +61,12 @@ class PaymentDetailCard extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text:
-                              '${Formatter.formatMoney(Random().nextDouble() * 100000)}',
+                          text: Formatter.formatMoney(
+                            Random().nextDouble() * 100000,
+                          ),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
-                            fontSize: 16.0,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

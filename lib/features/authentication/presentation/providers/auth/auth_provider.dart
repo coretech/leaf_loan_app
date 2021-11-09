@@ -26,12 +26,14 @@ class AuthProvider extends ChangeNotifier {
   }
 
   bool loggedIn = false;
-  Future<void> login(
-      {required String username, required String password}) async {
+  Future<void> login({
+    required String username,
+    required String password,
+  }) async {
     loading = true;
     setErrorMessage('');
     notifyListeners();
-    var authEither = await _authenticationRepository.login(
+    final authEither = await _authenticationRepository.login(
       username: username,
       password: password,
     );

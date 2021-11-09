@@ -6,8 +6,9 @@ import 'package:loan_app/features/splash/presentation/providers/providers.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const routeName = '/';
   const SplashScreen({Key? key}) : super(key: key);
+
+  static const routeName = '/';
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -22,19 +23,20 @@ class _SplashScreenState extends State<SplashScreen> {
     onboardingStatusRepo = OnboardingStatusHiveRepo();
     scoringDataCollectionService = CredoDataCollectionService();
     _splashProvider = SplashProvider();
-    _splashProvider.addListener(() {
-      if (_splashProvider.onboardingSeen && !_splashProvider.loading) {
-        Navigator.of(context).pushReplacementNamed(
-          LoginScreen.routeName,
-        );
-      }
-      if (!_splashProvider.onboardingSeen && !_splashProvider.loading) {
-        Navigator.of(context).pushReplacementNamed(
-          OnboardingScreen.routeName,
-        );
-      }
-    });
-    _splashProvider.initializeApp();
+    _splashProvider
+      ..addListener(() {
+        if (_splashProvider.onboardingSeen && !_splashProvider.loading) {
+          Navigator.of(context).pushReplacementNamed(
+            LoginScreen.routeName,
+          );
+        }
+        if (!_splashProvider.onboardingSeen && !_splashProvider.loading) {
+          Navigator.of(context).pushReplacementNamed(
+            OnboardingScreen.routeName,
+          );
+        }
+      })
+      ..initializeApp();
     super.initState();
   }
 

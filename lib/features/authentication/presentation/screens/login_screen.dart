@@ -7,11 +7,10 @@ import 'package:loan_app/features/home/home.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String routeName = '/login';
-
   const LoginScreen({
     Key? key,
   }) : super(key: key);
+  static const String routeName = '/login';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -32,9 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
     _authProvider.addListener(() {
       if (_authProvider.loggedIn && !_authProvider.loading) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) {
-            return NewHomeScreen();
-          }),
+          MaterialPageRoute(
+            builder: (context) {
+              return const NewHomeScreen();
+            },
+          ),
           (route) => false,
         );
       }
@@ -57,7 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Spacer(),
               Image.asset(
@@ -84,14 +84,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   ),
                   color: Theme.of(context).scaffoldBackgroundColor,
                 ),
                 margin: const EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 width: double.infinity,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -138,29 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 15,
                             ),
                             TextButton(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  if (_authProvider.loading)
-                                    SizedBox(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 1,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                      ),
-                                      height: 20,
-                                      width: 20,
-                                    ),
-                                  if (_authProvider.loading)
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                  Text(
-                                    'Log In',
-                                  ),
-                                ],
-                              ),
                               onPressed: !_authProvider.loading
                                   ? () {
                                       _authProvider.login(
@@ -173,15 +150,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                 backgroundColor:
                                     Theme.of(context).colorScheme.secondary,
                                 fixedSize: Size(
-                                    MediaQuery.of(context).size.width * 0.9,
-                                    50),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 25, vertical: 12),
+                                  MediaQuery.of(context).size.width * 0.9,
+                                  50,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 25,
+                                  vertical: 12,
+                                ),
                                 primary:
                                     Theme.of(context).colorScheme.onPrimary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (_authProvider.loading)
+                                    SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 1,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                  if (_authProvider.loading)
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                  const Text(
+                                    'Log In',
+                                  ),
+                                ],
                               ),
                             )
                           ],
@@ -194,11 +197,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Don't have an account?",
                           style: TextStyle(color: Color(0xFFA4A4A4)),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         TextButton(
@@ -206,10 +209,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             await AppLinks.launchApp();
                           },
                           child: Text(
-                            "Sign up on Leaf Wallet",
+                            'Sign up on Leaf Wallet',
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontWeight: FontWeight.bold),
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       ],

@@ -27,14 +27,14 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
-        title: Text(
+        title: const Text(
           'Apply for a loan',
         ),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,14 +47,14 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 selectedLoanType: _loanType,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   'Loan currency',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
                   ' sed do eiusmod tempor incididunt ut labore et dolore magna',
@@ -69,37 +69,37 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 },
                 selectedCurrency: _currentCurrency,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   'Loan duration',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
                   ' sed do eiusmod tempor incididunt ut labore et dolore magna',
                   style: Theme.of(context).textTheme.caption,
                 ),
               ),
-              LoanDurationPicker(),
-              SizedBox(
+              const LoanDurationPicker(),
+              const SizedBox(
                 height: 5,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   'Loan amount',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
                   ' sed do eiusmod tempor incididunt ut labore et dolore magna',
@@ -145,7 +145,8 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                     Column(
                       children: [
                         Text(
-                          '${Formatter.formatMoney(_loanAmount * 0.1)} $_currentCurrency',
+                          '${Formatter.formatMoney(_loanAmount * 0.1)}'
+                          ' $_currentCurrency',
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         const Text('Interest (10%)'),
@@ -154,7 +155,8 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                     Column(
                       children: [
                         Text(
-                          '${Formatter.formatMoney(_loanAmount + (_loanAmount * 0.1))} $_currentCurrency',
+                          '${Formatter.formatMoney(_getTotal(_loanAmount))}'
+                          ' $_currentCurrency',
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         const Text('Total Due'),
@@ -167,21 +169,21 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 height: 5,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   'Loan purpose',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
                   ' sed do eiusmod tempor incididunt ut labore et dolore magna',
                   style: Theme.of(context).textTheme.caption,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               LoanPurposePicker(
                 onChanged: (value) {
                   setState(() {
@@ -193,10 +195,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
               const SizedBox(
                 height: 20,
               ),
-
-              //caption lorem ispum text
-              //richtext widget with children
-              TOCConfirmation(),
+              const TOCConfirmation(),
               ElevatedButton.icon(
                 icon: const Icon(Icons.upload_file),
                 label: const Text(
@@ -205,36 +204,41 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 ),
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Loan application submitted'),
                     ),
                   );
                   Navigator.of(context).pop();
                 },
                 style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(
-                  Size(
-                    ScreenSize.of(context).width - 40,
-                    50,
+                  fixedSize: MaterialStateProperty.all(
+                    Size(
+                      ScreenSize.of(context).width - 40,
+                      50,
+                    ),
                   ),
-                )),
+                ),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          LoanApplicationScreen(hasLoan: false),
+                          const LoanApplicationScreen(hasLoan: false),
                     ),
                   );
                 },
-                child: Text('Peek at the old one'),
+                child: const Text('Peek at the old one'),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  double _getTotal(double amount) {
+    return amount * 1.1;
   }
 }
 
@@ -246,7 +250,7 @@ class TOCConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       child: RichText(
         text: TextSpan(
           children: [
@@ -259,8 +263,8 @@ class TOCConfirmation extends StatelessWidget {
               style: Theme.of(context).textTheme.button,
             ),
             TextSpan(
-              text: 'below, I hereby agree'
-                  ' to and accept the following terms and conditions governing my'
+              text: 'below, I hereby agree to and accept the following'
+                  ' terms and conditions governing my '
                   'loan that are stated in the ',
               style: Theme.of(context).textTheme.caption,
             ),

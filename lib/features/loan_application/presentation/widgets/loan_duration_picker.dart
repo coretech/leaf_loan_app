@@ -13,7 +13,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   // a widget that shows a date and the difference in days between the date and
   // today
 
-  DateTime _selectedDate = DateTime.now().add(Duration(days: 3));
+  DateTime _selectedDate = DateTime.now().add(const Duration(days: 3));
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
                     DateFormat.yMMMMd().format(_selectedDate),
                     style: Theme.of(context).textTheme.subtitle1,
@@ -48,7 +48,8 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                  Theme.of(context).colorScheme.secondary),
+                Theme.of(context).colorScheme.secondary,
+              ),
               fixedSize: MaterialStateProperty.all(
                 Size(
                   ScreenSize.of(context).width - 40,
@@ -63,16 +64,19 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   }
 
   Widget _buildDayCount(BuildContext context, DateTime date) {
-    final String dayCount = date.difference(DateTime.now()).inDays.toString();
-    return Text("$dayCount days", style: Theme.of(context).textTheme.bodyText1);
+    final dayCount = date.difference(DateTime.now()).inDays.toString();
+    return Text(
+      '$dayCount days',
+      style: Theme.of(context).textTheme.bodyText1,
+    );
   }
 
   Future<void> _pickDate(BuildContext context) async {
-    final DateTime? date = await showDatePicker(
+    final date = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (date != null) {
       setState(() {

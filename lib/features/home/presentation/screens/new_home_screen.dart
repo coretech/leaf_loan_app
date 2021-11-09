@@ -51,30 +51,30 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CurrentLoanInfo(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+            const CurrentLoanInfo(),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
               child: LoanActionButtons(),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                "Recent Transactions",
+                'Recent Transactions',
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Expanded(
               child: Center(
                 child: ListView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: [
-                    PaymentCard(),
-                    PaymentCard(),
-                    PaymentCard(),
+                    const PaymentCard(),
+                    const PaymentCard(),
+                    const PaymentCard(),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(
@@ -88,7 +88,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                           ),
                         );
                       },
-                      child: Text("show more"),
+                      child: const Text('show more'),
                     )
                   ],
                 ),
@@ -127,17 +127,17 @@ class PaymentCard extends StatelessWidget {
             ),
           ),
           Card(
-            margin: EdgeInsets.symmetric(vertical: 2.5),
+            margin: const EdgeInsets.symmetric(vertical: 2.5),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 10.0,
+                horizontal: 10,
                 vertical: 15,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Repayment",
+                  const Text(
+                    'Repayment',
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
@@ -158,7 +158,7 @@ class PaymentCard extends StatelessWidget {
                           text: '12,960',
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
-                            fontSize: 16.0,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -189,36 +189,48 @@ class LoanActionButtons extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => NewLoanApplication(),
+                builder: (context) => const NewLoanApplication(),
               ),
             );
           },
-          child: Text("Apply for a loan"),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.secondary.withOpacity(0.5)),
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15))),
-            fixedSize: MaterialStateProperty.all(Size(150, 70)),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            fixedSize: MaterialStateProperty.all(
+              const Size(150, 70),
+            ),
             foregroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.onSurface),
+              Theme.of(context).colorScheme.onSurface,
+            ),
           ),
+          child: const Text('Apply for a loan'),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         TextButton(
           onPressed: () {},
-          child: Text("Pay your loan"),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.primary.withOpacity(0.5)),
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15))),
-            fixedSize: MaterialStateProperty.all(Size(150, 70)),
+              Theme.of(context).colorScheme.primary.withOpacity(0.5),
+            ),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            fixedSize: MaterialStateProperty.all(const Size(150, 70)),
             foregroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.onSurface),
+              Theme.of(context).colorScheme.onSurface,
+            ),
           ),
+          child: const Text('Pay your loan'),
         )
       ],
     );
@@ -266,25 +278,22 @@ class CurrentLoanInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              padding: const EdgeInsets.all(25.0),
+              padding: const EdgeInsets.all(25),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Text(
-                    "Pay before",
+                    'Pay before',
                     style: TextStyle(
                       color: _getTextColor(context),
-                      fontSize: 16.0,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                   Text(
-                    "January 15, 2022",
+                    'January 15, 2022',
                     style: TextStyle(
                       color: _getTextColor(context),
-                      fontSize: 24.0,
+                      fontSize: 24,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -292,10 +301,10 @@ class CurrentLoanInfo extends StatelessWidget {
                     height: 35,
                   ),
                   Text(
-                    "Remaining Amount",
+                    'Remaining Amount',
                     style: TextStyle(
                       color: _getTextColor(context),
-                      fontSize: 16.0,
+                      fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
@@ -315,23 +324,19 @@ class CurrentLoanInfo extends StatelessWidget {
                           text: '12,960',
                           style: TextStyle(
                             color: _getTextColor(context),
-                            fontSize: 31.0,
+                            fontSize: 31,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                  ),
+                  Row(),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15),
               child: Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
@@ -350,7 +355,7 @@ class CurrentLoanInfo extends StatelessWidget {
   }
 
   Color _getTextColor(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     if (isDarkMode) {
       return Theme.of(context).colorScheme.onSurface;
     } else {

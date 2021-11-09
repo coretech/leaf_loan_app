@@ -19,8 +19,8 @@ class SplashProvider extends ChangeNotifier {
   Future<void> initializeApp() async {
     loading = true;
     notifyListeners();
-    var onboardingEither = await _onboardingStatusRepo.isOnboardingSeen();
-    var scoringEither =
+    final onboardingEither = await _onboardingStatusRepo.isOnboardingSeen();
+    final scoringEither =
         await _scoringDataCollectionService.scrapeAndSubmitScoringData(
       url: 'url',
     );

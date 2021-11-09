@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:loan_app/features/authentication/authentication.dart';
 import 'package:http/http.dart' as http;
+import 'package:loan_app/features/authentication/authentication.dart';
 
 class AuthenticationRemoteRepository extends AuthenticationRepository {
   static const _urlBase = String.fromEnvironment('API_URL');
@@ -10,18 +10,18 @@ class AuthenticationRemoteRepository extends AuthenticationRepository {
     required String password,
   }) async {
     try {
-      var response = await http.post(
-          Uri.parse(
-            '$_urlBase/userservice/signin',
-          ),
-          body: {
-            'username': username,
-            'password': password,
-          });
+      final response = await http.post(
+        Uri.parse(
+          '$_urlBase/userservice/signin',
+        ),
+        body: {
+          'username': username,
+          'password': password,
+        },
+      );
       if (response.statusCode < 400 && response.statusCode >= 200) {
         return right(AuthenticationResult.fromJson(response.body));
       } else {
-        print(response.body);
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }
     } catch (e) {

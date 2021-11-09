@@ -5,7 +5,7 @@ import 'package:loan_app/features/onboarding/domain/domain.dart';
 class OnboardingIOC {
   static final _locator = GetIt.instance;
 
-  static init() async {
+  static Future<void> init() async {
     _locator.registerLazySingleton<OnboardingStatusRepo>(
       () => OnboardingStatusHiveRepo(),
     );

@@ -1,25 +1,28 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 
 class ActiveLoanCard extends StatelessWidget {
-  ActiveLoanCard({
+  const ActiveLoanCard({
     Key? key,
     required this.dueDate,
     required this.paidAmount,
     required this.totalAmount,
+    this.status = LoanStatus.open,
   }) : super(key: key);
 
   final DateTime dueDate;
   final double paidAmount;
   final double totalAmount;
-  final LoanStatus status = LoanStatus.open;
+  final LoanStatus status;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
@@ -63,7 +66,6 @@ class ActiveLoanCard extends StatelessWidget {
               ),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
@@ -86,59 +88,60 @@ class ActiveLoanCard extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "Pay before",
+                  'Pay before',
                   style: TextStyle(
                     color: _getTextColor(context),
-                    fontSize: 16.0,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 Text(
-                  "January 15, 2022",
+                  'January 15, 2022',
                   style: TextStyle(
                     color: _getTextColor(context),
-                    fontSize: 20.0,
+                    fontSize: 20,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 RichText(
                   textAlign: TextAlign.center,
-                  text: TextSpan(children: [
-                    TextSpan(
-                      style: TextStyle(
-                        color: _getTextColor(context),
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        style: TextStyle(
+                          color: _getTextColor(context),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        text: 'Remaining amount\n',
                       ),
-                      text: 'Remaining amount\n',
-                    ),
-                    TextSpan(
-                      style: TextStyle(
-                        color: _getTextColor(context),
-                        fontSize: 12,
+                      TextSpan(
+                        style: TextStyle(
+                          color: _getTextColor(context),
+                          fontSize: 12,
+                        ),
+                        text: 'RWF ',
                       ),
-                      text: 'RWF ',
-                    ),
-                    TextSpan(
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
-                            color: _getTextColor(context),
-                          ),
-                      text:
-                          '${Formatter.formatMoney(totalAmount - paidAmount)}',
-                    ),
-                  ]),
+                      TextSpan(
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                              color: _getTextColor(context),
+                            ),
+                        text: Formatter.formatMoney(totalAmount - paidAmount),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0, bottom: 15),
+                  padding: const EdgeInsets.only(top: 10, bottom: 15),
                   child: PayButton.labeled(
                     context: context,
                     label: 'Pay now',
                     mini: true,
                     onTap: () {
-                      print('pay on loan history card tapped');
+                      log('pay on loan history card tapped');
                     },
                   ),
                 ),
@@ -202,7 +205,7 @@ class ActiveLoanCard extends StatelessWidget {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: '${Formatter.formatMoney(paidAmount)}',
+                            text: Formatter.formatMoney(paidAmount),
                           ),
                         ],
                       ),
@@ -252,7 +255,7 @@ class ActiveLoanCard extends StatelessWidget {
   }
 
   Color _getTextColor(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     if (isDarkMode) {
       return Theme.of(context).colorScheme.onSurface;
     } else {

@@ -47,7 +47,7 @@ class ApplyButton {
     required VoidCallback onTap,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5),
       child: InkWell(
         borderRadius: BorderRadius.circular(200),
         onTap: onTap,
@@ -57,7 +57,6 @@ class ApplyButton {
               BoxShadow(
                 blurRadius: 25,
                 color: Theme.of(context).canvasColor,
-                offset: const Offset(0, 0),
                 spreadRadius: 0.5,
               )
             ],
@@ -77,7 +76,7 @@ class ApplyButton {
               ),
               const SizedBox(height: 5),
               Text(
-                "Apply",
+                'Apply',
                 style: Theme.of(context).textTheme.headline5?.copyWith(
                       color: Theme.of(context).canvasColor,
                     ),

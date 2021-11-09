@@ -10,10 +10,11 @@ abstract class AuthenticationRepository {
 }
 
 class AuthFailure {
-  final Reason reason;
   AuthFailure({
     required this.reason,
   });
+
+  final Reason reason;
 }
 
 enum Reason {

@@ -5,14 +5,15 @@ import 'package:loan_app/core/integrations/integrations.dart';
 class IntegrationIOC {
   static final _locator = GetIt.instance;
 
-  static init() async {
+  static Future<void> init() async {
     await HiveLocalStorage.init();
-    _locator.registerLazySingleton<LocalStorage>(
-      () => HiveLocalStorage.getInstance(),
-    );
-    _locator.registerLazySingleton<ScoringDataCollectionService>(
-      () => CredoDataCollectionService(),
-    );
+    _locator
+      ..registerLazySingleton<LocalStorage>(
+        HiveLocalStorage.getInstance,
+      )
+      ..registerLazySingleton<ScoringDataCollectionService>(
+        () => CredoDataCollectionService(),
+      );
   }
 
   static LocalStorage localStorage() {

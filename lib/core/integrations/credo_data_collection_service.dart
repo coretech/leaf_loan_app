@@ -9,12 +9,13 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
   Future<Either<ScoringFailure, String>> scrapeAndSubmitScoringData({
     required String url,
   }) async {
-    const String mode = String.fromEnvironment('MODE');
+    const mode = String.fromEnvironment('MODE');
     if (mode == 'debug') {
       return right('debug');
     }
     try {
-      var credoMethodChannel = MethodChannel(MethodChannelNames.credoScraping);
+      final credoMethodChannel =
+          MethodChannel(MethodChannelNames.credoScraping);
 
       await [
         Permission.location,
@@ -24,7 +25,7 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
         Permission.mediaLibrary,
       ].request();
 
-      var uuid = Uuid();
+      const uuid = Uuid();
       final referenceNumber = uuid.v4();
       const authKey = String.fromEnvironment('CREDO_AUTH_KEY');
       const credoUrl = String.fromEnvironment('CREDO_URL');

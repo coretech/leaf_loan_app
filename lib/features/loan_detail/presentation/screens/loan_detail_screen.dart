@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
@@ -19,13 +20,13 @@ class LoanDetailScreen extends StatelessWidget {
   final LoanStatus status;
   final double totalAmount;
 
-  final int paymentsCount = Random().nextInt(50);
+  final int paymentsCount = math.Random().nextInt(50);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           LoanDetailAppBar(
             dueDate: dueDate,
@@ -47,83 +48,91 @@ class LoanDetailScreen extends StatelessWidget {
                     children: [
                       RichText(
                         textAlign: TextAlign.center,
-                        text: TextSpan(children: [
-                          TextSpan(
-                            style:
-                                Theme.of(context).textTheme.caption?.copyWith(
-                                      color: _getTextColor(context),
-                                    ),
-                            text: 'RWF ',
-                          ),
-                          TextSpan(
-                            style: Theme.of(context).textTheme.headline6,
-                            text:
-                                '${Formatter.formatMoney(totalAmount / 1.1)}\n',
-                          ),
-                          TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            text: 'Amount',
-                          ),
-                        ]),
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: _getTextColor(context),
+                                      ),
+                              text: 'RWF ',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text:
+                                  '${Formatter.formatMoney(totalAmount / 1.1)}'
+                                  '\n',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              text: 'Amount',
+                            ),
+                          ],
+                        ),
                       ),
                       RichText(
                         textAlign: TextAlign.center,
-                        text: TextSpan(children: [
-                          TextSpan(
-                            style:
-                                Theme.of(context).textTheme.caption?.copyWith(
-                                      color: _getTextColor(context),
-                                    ),
-                            text: 'RWF ',
-                          ),
-                          TextSpan(
-                            style: Theme.of(context).textTheme.headline6,
-                            text:
-                                '${Formatter.formatMoney(totalAmount - (totalAmount / 1.1))}\n',
-                          ),
-                          TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            text: 'Interest',
-                          ),
-                        ]),
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: _getTextColor(context),
+                                      ),
+                              text: 'RWF ',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: '${Formatter.formatMoney(
+                                _getInterest(totalAmount),
+                              )}\n',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              text: 'Interest',
+                            ),
+                          ],
+                        ),
                       ),
                       RichText(
                         textAlign: TextAlign.center,
-                        text: TextSpan(children: [
-                          TextSpan(
-                            style:
-                                Theme.of(context).textTheme.caption?.copyWith(
-                                      color: _getTextColor(context),
-                                    ),
-                            text: 'RWF ',
-                          ),
-                          TextSpan(
-                            style: Theme.of(context).textTheme.headline6,
-                            text: '${Formatter.formatMoney(totalAmount)}\n',
-                          ),
-                          TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            text: 'Total',
-                          ),
-                        ]),
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: _getTextColor(context),
+                                      ),
+                              text: 'RWF ',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              text: '${Formatter.formatMoney(totalAmount)}\n',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              text: 'Total',
+                            ),
+                          ],
+                        ),
                       ),
                       Column(
                         children: [
                           if (status != LoanStatus.closed)
                             Text(
-                              "Pay before",
+                              'Pay before',
                               style: TextStyle(
                                 color: _getTextColor(context),
-                                fontSize: 16.0,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                           if (status != LoanStatus.closed)
                             Text(
-                              "January 15, 2022",
+                              'January 15, 2022',
                               style: TextStyle(
                                 color: _getTextColor(context),
-                                fontSize: 24.0,
+                                fontSize: 24,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -135,31 +144,10 @@ class LoanDetailScreen extends StatelessWidget {
                                 context: context,
                                 label: 'Pay now',
                                 onTap: () {
-                                  print('big pay button on detail card tapped');
+                                  log('big pay button on detail card tapped');
                                 },
                               ),
                             ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(5.0),
-                          //   child: Center(
-                          //     child: RichText(
-                          //       text: TextSpan(
-                          //         children: [
-                          //           TextSpan(
-                          //             style: Theme.of(context)
-                          //                 .textTheme
-                          //                 .subtitle1,
-                          //             text: 'Status: ',
-                          //           ),
-                          //           TextSpan(
-                          //             style: _getValueTextStyle(context),
-                          //             text: _getLoanStatus(),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       )
                     ],
@@ -193,5 +181,9 @@ class LoanDetailScreen extends StatelessWidget {
 
   Color _getTextColor(BuildContext context) {
     return Theme.of(context).colorScheme.onSurface;
+  }
+
+  double _getInterest(double totalAmount) {
+    return totalAmount * 0.1;
   }
 }

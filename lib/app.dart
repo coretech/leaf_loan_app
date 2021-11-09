@@ -13,16 +13,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        LoginScreen.routeName: (context) => LoginScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
         MainScreen.routeName: (context) => const NewHomeScreen(),
-        OnboardingScreen.routeName: (ctx) => OnboardingScreen(),
-        SplashScreen.routeName: (ctx) => SplashScreen(),
+        OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
+        SplashScreen.routeName: (ctx) => const SplashScreen(),
       },
       theme: ThemeData(
         primaryColor: Colors.green,
         primarySwatch: Colors.green,
-        colorScheme: ColorScheme.light(
+        colorScheme: const ColorScheme.light(
           primary: Colors.green,
           secondary: Colors.orange,
         ),

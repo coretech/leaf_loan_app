@@ -33,16 +33,17 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
 
   @override
   Widget build(BuildContext context) {
-    //a bottom sheet that shows a list of loan purposes and allows the user to select one
+    //a bottom sheet that shows a list of loan purposes and allows the
+    // user to select one
     // a button that opens a bottom modal sheet
     return ElevatedButton.icon(
       icon: const Icon(Icons.contact_support),
-      label: Text(
+      label: const Text(
         'Select loan purpose',
         style: TextStyle(fontSize: 18),
       ),
       onPressed: () async {
-        var purpose = await showModalBottomSheet(
+        final purpose = await showModalBottomSheet(
           context: context,
           builder: (context) {
             return Container(

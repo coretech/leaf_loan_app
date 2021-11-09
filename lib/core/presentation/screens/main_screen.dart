@@ -4,9 +4,9 @@ import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 
 class MainScreen extends StatefulWidget {
-  static const routeName = '/main';
-
   const MainScreen({Key? key}) : super(key: key);
+
+  static const routeName = '/main';
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -40,15 +40,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _getPage() {
     if (_currentPage == 0) {
-      return NewHomeScreen();
-      // return HomeScreen(
-      //   hasLoan: hasLoan,
-      //   onApply: () {
-      //     setState(() {
-      //       hasLoan = !hasLoan;
-      //     });
-      //   },
-      // );
+      return const NewHomeScreen();
     } else if (_currentPage == 1) {
       return LoanHistoryScreen(
         hasLoan: hasLoan,
@@ -59,11 +51,11 @@ class _MainScreenState extends State<MainScreen> {
 
   String _getTitle() {
     if (_currentPage == 0) {
-      return "LEAF LOANS";
+      return 'LEAF LOANS';
     } else if (_currentPage == 1) {
-      return "LOAN HISTORY";
+      return 'LOAN HISTORY';
     }
-    return "Other page";
+    return 'Other page';
   }
 
   double? _getElevation() {

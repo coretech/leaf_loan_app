@@ -5,7 +5,7 @@ import 'package:loan_app/features/authentication/domain/domain.dart';
 class AuthIOC {
   static final _locator = GetIt.instance;
 
-  static init() async {
+  static Future<void> init() async {
     _locator.registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRemoteRepository(),
     );

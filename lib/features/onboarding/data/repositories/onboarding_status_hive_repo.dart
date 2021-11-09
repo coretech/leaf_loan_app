@@ -7,7 +7,7 @@ class OnboardingStatusHiveRepo implements OnboardingStatusRepo {
   @override
   Future<Either<OnboardingFailure, bool>> isOnboardingSeen() async {
     try {
-      var seen =
+      final seen =
           await IntegrationIOC.localStorage().getBool(Keys.onboardingStatus);
       return right(seen ?? false);
     } catch (e) {
@@ -16,8 +16,9 @@ class OnboardingStatusHiveRepo implements OnboardingStatusRepo {
   }
 
   @override
-  Future<Either<OnboardingFailure, void>> updateOnboardingStatus(
-      {bool viewed = true}) async {
+  Future<Either<OnboardingFailure, void>> updateOnboardingStatus({
+    bool viewed = true,
+  }) async {
     try {
       await IntegrationIOC.localStorage()
           .setBool(Keys.onboardingStatus, viewed);

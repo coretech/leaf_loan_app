@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/features/features.dart';
 import 'package:loan_app/features/loan_application/domain/value_objects/value_objects.dart';
 
-//a widget to show three options laid out horizontally for choosing loan type of which one can betaken.
-// selected by the user. The options should be cards with an image and a text under it. The text should be a body text.
+//a widget to show three options laid out horizontally for choosing loan type 
+// of which one can be taken. selected by the user. The options should be cards 
+// with an image and a text under it. The text should be a body text.
 // the image should take up most of the height of the card.
 
 class LoanTypeSelection extends StatelessWidget {
@@ -71,7 +72,7 @@ class LoanTypeSelection extends StatelessWidget {
           child: InkWell(
             onTap: () => onSelection(loanType),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[

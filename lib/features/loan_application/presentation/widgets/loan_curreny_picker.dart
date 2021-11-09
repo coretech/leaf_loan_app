@@ -14,11 +14,11 @@ class LoanCurrencyPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: SizedBox(
         height: 110,
         child: ListView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             _buildCurrencyCard(context, 'KSH', FlagsCode.KE),
@@ -32,10 +32,13 @@ class LoanCurrencyPicker extends StatelessWidget {
     );
   }
 
-  _buildCurrencyCard(
-      BuildContext context, String currency, FlagsCode countryCode) {
+  Widget _buildCurrencyCard(
+    BuildContext context,
+    String currency,
+    FlagsCode countryCode,
+  ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Stack(
         children: [
           SizedBox(
@@ -51,7 +54,7 @@ class LoanCurrencyPicker extends StatelessWidget {
                   onChanged(currency);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -60,7 +63,7 @@ class LoanCurrencyPicker extends StatelessWidget {
                         height: 25,
                         width: 50,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(

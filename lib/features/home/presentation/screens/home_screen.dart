@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/home.dart';
@@ -42,9 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: ScreenSize.of(context).width,
           child: _getDashboard(),
         ),
-        const Spacer(
-          flex: 1,
-        ),
+        const Spacer(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context: context,
               label: 'Apply',
               onTap: () {
-                print('apply on home pressed');
+                log('apply on home pressed');
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
@@ -68,14 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
               context: context,
               label: 'Pay',
               onTap: () {
-                print('pay on home pressed');
+                log('pay on home pressed');
               },
             )
           ],
         ),
-        const Spacer(
-          flex: 1,
-        ),
+        const Spacer(),
       ],
     );
   }
@@ -88,13 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return Column(
         children: [
-          const Text("Loan amount: \$50"),
-          const Text("Interest: \$5"),
-          const Text("Total due: \$55"),
-          const Text("Amount paid: \$10"),
-          const Text("Amount remaining: \$45"),
-          const Text("Due date: 3/15/21"),
-          const Text("6 days remaining"),
+          const Text(r'Loan amount: $50'),
+          const Text(r'Interest: $5'),
+          const Text(r'Total due: $55'),
+          const Text(r'Amount paid: $10'),
+          const Text(r'Amount remaining: $45'),
+          const Text('Due date: 3/15/21'),
+          const Text('6 days remaining'),
           ElevatedButton(
             onPressed: widget.onApply,
             child: const Text('toggle back'),

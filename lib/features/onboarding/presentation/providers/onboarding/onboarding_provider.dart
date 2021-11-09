@@ -21,6 +21,7 @@ class OnboardingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ignore: avoid_positional_boolean_parameters
   Future<void> updateOnboardingStatus([bool viewed = true]) async {
     final onboardingEither =
         await _onboardingStatusRepo.updateOnboardingStatus(viewed: viewed);

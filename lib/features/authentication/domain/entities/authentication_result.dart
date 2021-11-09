@@ -1,16 +1,29 @@
 import 'dart:convert';
 
 class AuthenticationResult {
-  final bool status;
-  final String message;
-  final String type;
-  final String token;
   AuthenticationResult({
     required this.status,
     required this.message,
     required this.type,
     required this.token,
   });
+
+  factory AuthenticationResult.fromMap(Map<String, dynamic> map) {
+    return AuthenticationResult(
+      status: map['status'],
+      message: map['message'],
+      type: map['type'],
+      token: map['token'],
+    );
+  }
+
+  factory AuthenticationResult.fromJson(String source) =>
+      AuthenticationResult.fromMap(json.decode(source));
+
+  final bool status;
+  final String message;
+  final String type;
+  final String token;
 
   AuthenticationResult copyWith({
     bool? status,
@@ -35,23 +48,12 @@ class AuthenticationResult {
     };
   }
 
-  factory AuthenticationResult.fromMap(Map<String, dynamic> map) {
-    return AuthenticationResult(
-      status: map['status'],
-      message: map['message'],
-      type: map['type'],
-      token: map['token'],
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory AuthenticationResult.fromJson(String source) =>
-      AuthenticationResult.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'AuthenticationResult(status: $status, message: $message, type: $type, token: $token)';
+    return 'AuthenticationResult(status: $status, message: $message,'
+        ' type: $type, token: $token)';
   }
 
   @override

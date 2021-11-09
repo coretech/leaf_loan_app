@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -7,11 +8,12 @@ import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 
 class LoanHistoryScreen extends StatelessWidget {
-  static const String routeName = '/loan-history-screen';
   const LoanHistoryScreen({
     Key? key,
     this.hasLoan = true,
   }) : super(key: key);
+
+  static const String routeName = '/loan-history-screen';
 
   final bool hasLoan;
 
@@ -23,7 +25,7 @@ class LoanHistoryScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           foregroundColor: Theme.of(context).colorScheme.onSurface,
-          title: Text("Loans History"),
+          title: const Text('Loans History'),
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
@@ -54,7 +56,7 @@ class LoanHistoryScreen extends StatelessWidget {
           children: [
             Row(),
             Transform.rotate(
-              angle: pi / 2,
+              angle: math.pi / 2,
               child: Text(
                 ': )',
                 style: Theme.of(context).textTheme.headline3,
@@ -68,12 +70,12 @@ class LoanHistoryScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20),
               child: ApplyButton.labeled(
                 context: context,
                 label: 'Apply for a loan',
                 onTap: () {
-                  print('apply on no loans tapped');
+                  log('apply on no loans tapped');
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {

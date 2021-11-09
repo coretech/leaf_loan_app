@@ -1,119 +1,124 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:loan_app/core/core.dart';
-import 'package:loan_app/features/onboarding/onboarding.dart';
+import 'package:loan_app/features/onboarding/presentation/presentation.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  static const routeName = '/onboarding';
   const OnboardingScreen({Key? key}) : super(key: key);
+
+  static const routeName = '/onboarding';
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  late OnboardingCubit _onboardingCubit;
-  late OnboardingStatusRepo _onboardingStatusRepo;
+  late OnboardingProvider _onboardingProvider;
 
   @override
   void initState() {
-    _onboardingStatusRepo = OnboardingStatusHiveRepo();
-    _onboardingCubit =
-        OnboardingCubit(onboardingStatusRepo: _onboardingStatusRepo);
+    _onboardingProvider = OnboardingProvider();
+    _onboardingProvider.addListener(() {
+      if (_onboardingProvider.seen && _onboardingProvider.seen) {
+        Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Slide> _slides = [
+    final _slides = [
       _buildSlide(
         context,
         title: 'Store Money',
         description:
-            'Keep your money safe by storing it digitally with Leaf—for however long you need. Say goodbye to the risks of cash!',
+            'Keep your money safe by storing it digitally with Leaf—for however'
+            ' long you need. Say goodbye to the risks of cash!',
         image: 'assets/images/safe.png',
       ),
       _buildSlide(
         context,
         title: 'Send Money',
         description:
-            'Send and receive money instantly with your friends and family for free.',
+            'Send and receive money instantly with your friends and family for'
+            ' free.',
         image: 'assets/images/transfer.png',
       ),
       _buildSlide(
         context,
         title: 'Exchange Money',
         description:
-            'Hold and transact in any currency Leaf supports with great rates and instant exchange.',
+            'Hold and transact in any currency Leaf supports with great rates'
+            ' and instant exchange.',
         image: 'assets/images/exchange.png',
       ),
       _buildSlide(
         context,
         title: 'Pay with Leaf',
         description:
-            'Grow your business by using Leaf locally and across borders. Customers, merchants, and suppliers can save time and money by paying with Leaf.',
+            'Grow your business by using Leaf locally and across borders.'
+            ' Customers, merchants, and suppliers can save time and money'
+            ' by paying with Leaf.',
         image: 'assets/images/pay.png',
       ),
       _buildSlide(
         context,
         title: 'International Coverage',
         description:
-            'Tired of expensive international transfers? Send and receive money across borders, instantly and for free.',
+            'Tired of expensive international transfers? Send and receive money'
+            ' across borders, instantly and for free.',
         image: 'assets/images/international.png',
       ),
     ];
 
-    return BlocListener<OnboardingCubit, OnboardingState>(
-      bloc: _onboardingCubit,
-      listener: (context, state) {
-        if (state is OnboardingStateChecked && state.seen) {
-          Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
-        }
-      },
-      child: IntroSlider(
-        backgroundColorAllSlides: Colors.white,
-        slides: _slides,
-        colorActiveDot: Theme.of(context).primaryColor,
-        showNextBtn: true,
-        showDoneBtn: true,
-        nextButtonStyle: ButtonStyle(
-          textStyle: MaterialStateProperty.all(
-            TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
+    return Provider(
+      create: (context) => _onboardingProvider,
+      child: Builder(
+        builder: (context) {
+          return IntroSlider(
+            backgroundColorAllSlides: Colors.white,
+            slides: _slides,
+            colorActiveDot: Theme.of(context).primaryColor,
+            showNextBtn: true,
+            showDoneBtn: true,
+            nextButtonStyle: ButtonStyle(
+              textStyle: MaterialStateProperty.all(
+                const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
             ),
-          ),
-        ),
-        doneButtonStyle: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(Theme.of(context).primaryColor),
-          textStyle: MaterialStateProperty.all(
-            TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
+            doneButtonStyle: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Theme.of(context).primaryColor),
+              textStyle: MaterialStateProperty.all(
+                const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
             ),
-          ),
-        ),
-        onDonePress: () {
-          _onboardingCubit.updateOnboardingStatus(seen: true);
-        },
-        skipButtonStyle: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-              Theme.of(context).colorScheme.secondary),
-          textStyle: MaterialStateProperty.all(
-            TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
+            onDonePress: _updateOnboardingStatus,
+            skipButtonStyle: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                Theme.of(context).colorScheme.secondary,
+              ),
+              textStyle: MaterialStateProperty.all(
+                const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              ),
             ),
-          ),
-        ),
-        onSkipPress: () {
-          _onboardingCubit.updateOnboardingStatus(seen: true);
+            onSkipPress: _updateOnboardingStatus,
+          );
         },
       ),
     );
@@ -134,8 +139,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         fontSize: 25,
       ),
       description: description,
-      styleDescription: TextStyle(color: Colors.black),
+      styleDescription: const TextStyle(color: Colors.black),
       backgroundColor: Colors.white,
     );
+  }
+
+  Future<void> _updateOnboardingStatus() async {
+    await _onboardingProvider.updateOnboardingStatus();
   }
 }

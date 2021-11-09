@@ -14,11 +14,12 @@ class CustomLoadingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          isAndroid
-              ? CircularProgressIndicator()
-              : CupertinoActivityIndicator(),
-          SizedBox(height: 20),
-          Text(
+          if (isAndroid)
+            const CircularProgressIndicator()
+          else
+            const CupertinoActivityIndicator(),
+          const SizedBox(height: 20),
+          const Text(
             'Loading please wait',
             style: TextStyle(fontSize: 15),
           ),

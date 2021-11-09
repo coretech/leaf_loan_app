@@ -1,4 +1,5 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
@@ -8,14 +9,13 @@ class ActiveLoanPrompt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20),
           child: Transform.rotate(
-            angle: pi / 2,
+            angle: math.pi / 2,
             child: Text(
               ': (',
               style: Theme.of(context).textTheme.headline3,
@@ -23,7 +23,7 @@ class ActiveLoanPrompt extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.only(top: 15),
           child: Text(
             'You can only have one loan at a time.',
             style: Theme.of(context).textTheme.subtitle1,
@@ -32,7 +32,7 @@ class ActiveLoanPrompt extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: 15.0,
+            vertical: 15,
           ),
           child: Text(
             'Pay off your current loan and then you can apply for a new one.',
@@ -46,7 +46,7 @@ class ActiveLoanPrompt extends StatelessWidget {
           context: context,
           label: 'Pay now',
           onTap: () {
-            print('pay on active loan prompt tapped');
+            log('pay on active loan prompt tapped');
           },
         ),
       ],

@@ -16,7 +16,10 @@ class PaymentsHistoryColumnLabels extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -29,7 +32,7 @@ class PaymentsHistoryColumnLabels extends SliverPersistentHeaderDelegate {
       child: Text(
         'Transaction History',
         style: Theme.of(context).textTheme.headline5?.copyWith(
-              color: Colors.black,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
       ),
     );

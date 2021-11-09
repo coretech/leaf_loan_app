@@ -19,7 +19,7 @@ class LoanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
@@ -53,7 +53,6 @@ class LoanCard extends StatelessWidget {
           height: _getCardHeight(),
           padding: const EdgeInsets.all(15),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
@@ -93,7 +92,7 @@ class LoanCard extends StatelessWidget {
                         ),
                         TextSpan(
                           style: _getAmountTextStyle(context),
-                          text: '${Formatter.formatMoney(totalAmount)}',
+                          text: Formatter.formatMoney(totalAmount),
                         ),
                       ],
                     ),
@@ -136,7 +135,7 @@ class LoanCard extends StatelessWidget {
                         ),
                         TextSpan(
                           style: _getPaidTextStyle(context),
-                          text: '${Formatter.formatMoney(paidAmount)}',
+                          text: Formatter.formatMoney(paidAmount),
                         ),
                       ],
                     ),

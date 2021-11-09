@@ -1,18 +1,30 @@
+import 'package:dartz/dartz.dart';
 import 'package:loan_app/core/constants/keys.dart';
-import 'package:loan_app/core/core.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/features.dart';
 
 class OnboardingStatusHiveRepo implements OnboardingStatusRepo {
   @override
-  Future<bool> isOnboardingSeen() async {
-    return await IntegrationInjector.localStorage()
-            .getBool(Keys.onboardingStatus) ??
-        false;
+  Future<Either<OnboardingFailure, bool>> isOnboardingSeen() async {
+    try {
+      final seen =
+          await IntegrationIOC.localStorage().getBool(Keys.onboardingStatus);
+      return right(seen ?? false);
+    } catch (e) {
+      return left(OnboardingFailure());
+    }
   }
 
   @override
-  Future<void> updateOnboardingStatus({bool viewed = true}) {
-    return IntegrationInjector.localStorage()
-        .setBool(Keys.onboardingStatus, viewed);
+  Future<Either<OnboardingFailure, void>> updateOnboardingStatus({
+    bool viewed = true,
+  }) async {
+    try {
+      await IntegrationIOC.localStorage()
+          .setBool(Keys.onboardingStatus, viewed);
+      return right(null);
+    } catch (e) {
+      return left(OnboardingFailure());
+    }
   }
 }

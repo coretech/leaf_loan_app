@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomDismissKeyboard extends StatelessWidget {
+  const CustomDismissKeyboard({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+  
   final Widget child;
-
-  const CustomDismissKeyboard({required this.child});
 
   @override
   Widget build(BuildContext context) {

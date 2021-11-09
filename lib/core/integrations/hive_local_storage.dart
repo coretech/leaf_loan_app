@@ -8,12 +8,12 @@ class HiveLocalStorage implements LocalStorage {
 
   late Box box;
 
-  static init() async {
+  static Future<void> init() async {
     await Hive.initFlutter();
     await Hive.openBox<dynamic>('preferencesBox');
   }
 
-  static dispose() {
+  static void dispose() {
     Hive.close();
   }
 
@@ -23,8 +23,8 @@ class HiveLocalStorage implements LocalStorage {
   Future<void> _setValue<T>(dynamic key, T value) => box.put(key, value);
 
   static LocalStorage getInstance() {
-    Box _box = Hive.box<dynamic>('preferencesBox');
-    LocalStorage hive = HiveLocalStorage(box: _box);
+    final _box = Hive.box<dynamic>('preferencesBox');
+    final hive = HiveLocalStorage(box: _box);
     return hive;
   }
 

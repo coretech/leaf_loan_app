@@ -1,59 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:loan_app/features/authentication/authentication.dart';
-import 'package:loan_app/features/authentication/presentation/bloc/auth/auth.dart';
 import 'package:loan_app/features/home/home.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
 
   const LoginScreen({
     Key? key,
-    required this.authCubit,
   }) : super(key: key);
-  final AuthCubit authCubit;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late AuthProvider _authProvider;
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: SafeArea(
-        child: SingleChildScrollView(),
-      ),
-      extendBody: true,
-      bottomSheet: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+  void initState() {
+    _authProvider = AuthProvider();
+    _authProvider.addListener(() {
+      if (_authProvider.loggedIn && !_authProvider.loading) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) {
+            return NewHomeScreen();
+          }),
+          (route) => false,
+        );
+      }
+      if (!_authProvider.loading && _authProvider.errorMessage.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_authProvider.errorMessage),
           ),
+        );
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => _authProvider,
+      builder: (context, _) => Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        body: SafeArea(
+          child: SingleChildScrollView(),
         ),
-        width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Log in",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              sizedBoxFifteen,
-              BlocConsumer<AuthCubit, AuthState>(
-                bloc: widget.authCubit,
-                builder: (context, state) {
-                  return Form(
+        extendBody: true,
+        bottomSheet: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Log in",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                sizedBoxFifteen,
+                Consumer<AuthProvider>(
+                  builder: (context, _, __) => Form(
                     key: _formKey,
                     child: Column(
                       children: [
@@ -68,9 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         sizedBoxFifteen,
                         TextButton(
-                            onPressed: !(state is Authenticating)
+                            onPressed: !_authProvider.loading
                                 ? () {
-                                    widget.authCubit.login(
+                                    _authProvider.login(
                                       username: usernameController.text,
                                       password: passwordController.text,
                                     );
@@ -79,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (state is Authenticating)
+                                if (_authProvider.loading)
                                   SizedBox(
                                     child: CircularProgressIndicator(
                                       strokeWidth: 1,
@@ -90,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 20,
                                     width: 20,
                                   ),
-                                if (state is Authenticating)
+                                if (_authProvider.loading)
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -113,52 +135,36 @@ class _LoginScreenState extends State<LoginScreen> {
                             ))
                       ],
                     ),
-                  );
-                },
-                listener: (context, state) {
-                  if (state is AuthenticationFailed) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Authentication Failed'),
-                      ),
-                    );
-                  } else if (state is Authenticated) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                        return NewHomeScreen();
-                      }),
-                      (route) => false,
-                    );
-                  }
-                },
-              ),
-              sizedBoxFifteen,
-              Text(
-                "Forgot password",
-                style: TextStyle(color: Color(0xFFA4A4A4)),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account?",
-                    style: TextStyle(color: Color(0xFFA4A4A4)),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Sign up on Leaf Wallet",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              )
-            ],
+                ),
+                sizedBoxFifteen,
+                Text(
+                  "Forgot password",
+                  style: TextStyle(color: Color(0xFFA4A4A4)),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: TextStyle(color: Color(0xFFA4A4A4)),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Sign up on Leaf Wallet",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

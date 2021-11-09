@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+
 import 'package:loan_app/features/authentication/authentication.dart';
 
 abstract class AuthenticationRepository {
@@ -8,4 +9,16 @@ abstract class AuthenticationRepository {
   });
 }
 
-class AuthFailure {}
+class AuthFailure {
+  final Reason reason;
+  AuthFailure({
+    required this.reason,
+  });
+}
+
+enum Reason {
+  accountLocked,
+  invalidCredentials,
+  serverError,
+  userNotFound,
+}

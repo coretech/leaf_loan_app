@@ -12,7 +12,7 @@ class AuthenticationRemoteRepository extends AuthenticationRepository {
     try {
       var response = await http.post(
           Uri.parse(
-            '$_urlBase/auth/signin',
+            '$_urlBase/userservice/signin',
           ),
           body: {
             'username': username,
@@ -22,10 +22,10 @@ class AuthenticationRemoteRepository extends AuthenticationRepository {
         return right(AuthenticationResult.fromJson(response.body));
       } else {
         print(response.body);
-        return left(AuthFailure());
+        return left(AuthFailure(reason: Reason.invalidCredentials));
       }
     } catch (e) {
-      return left(AuthFailure());
+      return left(AuthFailure(reason: Reason.serverError));
     }
   }
 }

@@ -11,7 +11,7 @@ class OnboardingIOC {
     );
   }
 
-  static OnboardingStatusRepo onboardingStatus() {
+  static OnboardingStatusRepo onboardingStatusRepo() {
     return _locator.get<OnboardingStatusRepo>();
   }
 }

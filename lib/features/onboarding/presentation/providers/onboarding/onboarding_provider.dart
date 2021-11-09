@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:loan_app/features/features.dart';
-import 'package:loan_app/features/onboarding/data/ioc/onboarding_ioc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:loan_app/features/onboarding/domain/domain.dart';
+import 'package:loan_app/features/onboarding/ioc/ioc.dart';
 
 class OnboardingProvider extends ChangeNotifier {
   final OnboardingStatusRepo _onboardingStatusRepo =
-      OnboardingIOC.onboardingStatus();
+      OnboardingIOC.onboardingStatusRepo();
   bool checked = false;
   bool seen = false;
 

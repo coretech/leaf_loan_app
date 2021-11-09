@@ -9,6 +9,10 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
   Future<Either<ScoringFailure, String>> scrapeAndSubmitScoringData({
     required String url,
   }) async {
+    const String mode = String.fromEnvironment('MODE');
+    if (mode == 'debug') {
+      return right('debug');
+    }
     try {
       var credoMethodChannel = MethodChannel(MethodChannelNames.credoScraping);
 

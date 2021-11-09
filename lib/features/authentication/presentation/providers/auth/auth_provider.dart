@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:loan_app/features/authentication/authentication.dart';
 
 class AuthProvider extends ChangeNotifier {
-  String errorMessage = '';
-  bool loading = false;
-  bool loggedIn = false;
   final AuthenticationRepository _authenticationRepository = AuthIOC.authRepo();
 
+  bool loading = false;
+
+  String errorMessage = '';
   void setErrorMessage(String message) {
     errorMessage = message;
     notifyListeners();
@@ -25,6 +25,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  bool loggedIn = false;
   Future<void> login(
       {required String username, required String password}) async {
     loading = true;

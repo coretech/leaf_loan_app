@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/core.dart';
@@ -31,7 +33,10 @@ class SplashProvider extends ChangeNotifier {
         errorMessage = 'Scoring failed';
         return false;
       },
-      (r) => true,
+      (r) {
+        log('Scoring completed, reference: $r');
+        return true;
+      },
     );
     loading = false;
     notifyListeners();

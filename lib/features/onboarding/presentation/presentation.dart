@@ -1,2 +1,2 @@
-export 'blocs/blocs.dart';
+export 'providers/providers.dart';
 export 'screens/screens.dart';

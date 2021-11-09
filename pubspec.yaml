@@ -27,7 +27,7 @@ dependencies:
     firebase_core: ^1.4.0
     firebase_messaging: ^10.0.4
     flag: ^5.0.1
-    flutter_bloc: ^7.3.1
+    provider: ^6.0.1
     get_it: ^7.2.0
     hive: ^2.0.4
     hive_flutter: ^1.1.0

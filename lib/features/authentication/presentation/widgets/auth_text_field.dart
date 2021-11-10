@@ -34,9 +34,6 @@ class AuthTextField extends StatelessWidget {
           horizontal: 10,
           vertical: 10,
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF0120F1), width: 0.7),
-        ),
         hintText: hintText,
         suffixIcon: GestureDetector(
           child: Icon(suffixIcon),

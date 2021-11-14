@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/features/loan_history/loan_history.dart';
 
 class NoLoanContent extends StatelessWidget {
   const NoLoanContent({
@@ -67,7 +69,28 @@ class NoLoanContent extends StatelessWidget {
               return const ArticleCard();
             },
           ),
-        )
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate.fixed(
+            [
+              ActiveLoanAction(
+                title: 'Articles',
+                description: 'Read about how Leaf is helping its users acheive'
+                    ' their goals with small loans',
+                onTap: () {
+                  Navigator.of(context).pushNamed(ArticlesScreen.routeName);
+                },
+              ),
+              ActiveLoanAction(
+                title: 'Loan History',
+                description: 'See you loan history with them payment details',
+                onTap: () {
+                  Navigator.of(context).pushNamed(LoanHistoryScreen.routeName);
+                },
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

@@ -35,42 +35,53 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
         horizontal: 10,
         vertical: 10,
       ),
-      child: Card(
-        color: Theme.of(context).colorScheme.primary,
-        elevation: 0,
-        child: InkWell(
-          onTap: () async {
-            await Navigator.of(context)
-                .push(
-                  MaterialPageRoute(
-                    builder: (context) => const NewLoanApplication(),
-                  ),
-                )
-                .then((_) => onApply());
-          },
-          child: SizedBox(
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Apply for a loan now',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+      child: TextButton(
+        onPressed: () async {
+          await Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => const NewLoanApplication(),
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  'You can take loans as much as RWF 50,000',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
+              )
+              .then((_) => onApply());
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            Theme.of(context).colorScheme.primary,
+          ),
+          elevation: MaterialStateProperty.all(5),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
+          ),
+          fixedSize: MaterialStateProperty.all(const Size(150, 70)),
+          foregroundColor: MaterialStateProperty.all(
+            Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Apply for a loan now',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                'You can take loans as much as RWF 50,000',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ),
         ),
       ),

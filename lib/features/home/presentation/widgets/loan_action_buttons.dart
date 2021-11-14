@@ -42,8 +42,9 @@ class LoanActionButtons extends StatelessWidget {
             onPressed: onPay,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                Theme.of(context).colorScheme.primary,
               ),
+              elevation: MaterialStateProperty.all(5),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -51,7 +52,7 @@ class LoanActionButtons extends StatelessWidget {
               ),
               fixedSize: MaterialStateProperty.all(const Size(150, 70)),
               foregroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.onSurface,
+                Theme.of(context).colorScheme.onPrimary,
               ),
             ),
             child: const Text('Pay your loan'),

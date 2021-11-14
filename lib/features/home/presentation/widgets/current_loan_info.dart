@@ -104,12 +104,9 @@ class CurrentLoanInfo extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: Align(
                 alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.info,
-                    color: _getTextColor(context),
-                  ),
+                child: Icon(
+                  Icons.info,
+                  color: _getTextColor(context),
                 ),
               ),
             ),

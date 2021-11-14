@@ -45,11 +45,14 @@ class NoLoanContent extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate.fixed(
             [
-              Text(
-                'Recent from Leaf',
-                style: Theme.of(context).textTheme.headline5?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  'Recent from Leaf',
+                  style: Theme.of(context).textTheme.headline5?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
               ),
               const Divider(
                 endIndent: 30,

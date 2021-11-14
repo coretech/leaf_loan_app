@@ -61,21 +61,21 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                     },
                   ),
                   ActiveLoanAction(
-                    title: 'Articles',
-                    description:
-                        'Read about how Leaf is helping its users acheive'
-                        ' their goals with small loans',
-                    onTap: () {
-                      Navigator.of(context).pushNamed(ArticlesScreen.routeName);
-                    },
-                  ),
-                  ActiveLoanAction(
                     title: 'Loan History',
                     description:
                         'See you loan history with them payment details',
                     onTap: () {
                       Navigator.of(context)
                           .pushNamed(LoanHistoryScreen.routeName);
+                    },
+                  ),
+                  ActiveLoanAction(
+                    title: 'Articles',
+                    description:
+                        'Read about how Leaf is helping its users acheive'
+                        ' their goals with small loans',
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ArticlesScreen.routeName);
                     },
                   ),
                 ],

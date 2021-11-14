@@ -49,7 +49,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  'Loan currency',
+                  'Select a loan currency',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -75,7 +75,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  'Loan duration',
+                  'Choose the loan duration',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -94,7 +94,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  'Loan amount',
+                  'Choose the loan amount',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -171,7 +171,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  'Loan purpose',
+                  'Choose the loan purpose',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

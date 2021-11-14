@@ -223,7 +223,7 @@ class ActiveLoanCard extends StatelessWidget {
                           TextSpan(
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
-                                      color: _getErrorTextColor(context),
+                                      color: _getTextColor(context),
                                     ),
                             text: 'Open',
                           ),

@@ -156,6 +156,13 @@ class LoanCard extends StatelessWidget {
                   ),
                 ],
               ),
+              Text(
+                'View Details',
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+              ),
             ],
           ),
         ),
@@ -184,7 +191,7 @@ class LoanCard extends StatelessWidget {
   }
 
   double _getCardHeight() {
-    return 110;
+    return 120;
   }
 
   String _getLoanStatus() {

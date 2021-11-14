@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:loan_app/core/utils/utils.dart';
 
 import 'package:loan_app/features/authentication/authentication.dart';
-import 'package:loan_app/features/home/home.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,12 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _authProvider = AuthProvider();
     _authProvider.addListener(() {
       if (_authProvider.loggedIn && !_authProvider.loading) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) {
-              return const NewHomeScreen();
-            },
-          ),
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          '/home',
           (route) => false,
         );
       }

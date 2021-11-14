@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
-
   static const routeName = '/';
 
   @override

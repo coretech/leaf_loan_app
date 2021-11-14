@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/authentication/authentication.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
@@ -12,10 +12,21 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: (settings) {
+        if (settings.name == HomeScreen.routeName) {
+          final args = settings.arguments as HomeScreenArguments?;
+          return MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              hasTransactions: args?.hasTransactions ?? false,
+              hasLoan: args?.hasLoan ?? false,
+            ),
+          );
+        }
+      },
       routes: {
-        LoginScreen.routeName: (context) => const LoginScreen(),
+        ArticlesScreen.routeName: (context) => const ArticlesScreen(),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
-        MainScreen.routeName: (context) => const NewHomeScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
         OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
         SplashScreen.routeName: (ctx) => const SplashScreen(),
       },

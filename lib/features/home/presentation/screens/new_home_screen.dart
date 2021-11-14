@@ -26,7 +26,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 Navigator.of(context).pushNamed(LoanHistoryScreen.routeName);
               },
               icon: Icon(
-                Icons.history,
+                Icons.segment_outlined,
                 color: _getAppBarTextColor(context),
               ),
             ),

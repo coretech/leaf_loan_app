@@ -30,7 +30,7 @@ class ArticleCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Struggling to get your bussines up and running? You'
+                    'Struggling to get your business up and running? You'
                     " might benefit from Leaf's small loans",
                     style: Theme.of(context).textTheme.caption,
                   ),

@@ -72,7 +72,7 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                   ActiveLoanAction(
                     title: 'Articles',
                     description:
-                        'Read about how Leaf is helping its users acheive'
+                        'Read about how Leaf is helping its users achieve'
                         ' their goals with small loans',
                     onTap: () {
                       Navigator.of(context).pushNamed(ArticlesScreen.routeName);

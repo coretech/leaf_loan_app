@@ -262,11 +262,4 @@ class ActiveLoanCard extends StatelessWidget {
       return Theme.of(context).colorScheme.onPrimary;
     }
   }
-
-  Color _getErrorTextColor(BuildContext context) {
-    if (status == LoanStatus.overdue) {
-      return Theme.of(context).colorScheme.onSurface;
-    }
-    return Theme.of(context).errorColor;
-  }
 }

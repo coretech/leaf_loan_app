@@ -21,6 +21,7 @@ environment:
     sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+    carousel_slider: ^4.0.0
     # The following adds the Cupertino Icons font to your application.
     # Use with the CupertinoIcons class for iOS style icons.
     cupertino_icons: ^1.0.3
@@ -42,6 +43,7 @@ dependencies:
     intl: ^0.17.0
     intro_slider: ^3.0.2
     jwt_decoder: ^2.0.1
+    package_info: ^2.0.2
     permission_handler: ^8.1.4
     provider: ^6.0.1
     url_launcher: ^6.0.12

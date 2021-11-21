@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/authentication/authentication.dart';
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/features/info/info.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:loan_app/features/splash/splash.dart';
+import 'package:loan_app/features/user_profile/user_profile.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -27,10 +29,12 @@ class App extends StatelessWidget {
       },
       routes: {
         ArticlesScreen.routeName: (context) => const ArticlesScreen(),
+        InfoScreen.routeName: (context) => const InfoScreen(),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
         SplashScreen.routeName: (ctx) => const SplashScreen(),
+        UserProfileScreen.routeName: (ctx) => const UserProfileScreen(),
       },
       theme: ThemeData(
         primaryColor: Colors.green,

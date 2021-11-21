@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
+import 'package:loan_app/features/user_profile/user_profile.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           IconButton(
-            onPressed: _onProfilePressed,
+            onPressed: () => _onProfilePressed(context),
             icon: Icon(
               Icons.person_outlined,
               color: _getAppBarTextColor(context),
@@ -40,7 +41,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  void _onProfilePressed() {}
+  void _onProfilePressed(BuildContext context) {
+    Navigator.of(context).pushNamed(UserProfileScreen.routeName);
+  }
 
   void _onLoanHistoryPressed(BuildContext context) {
     Navigator.of(context).pushNamed(LoanHistoryScreen.routeName);

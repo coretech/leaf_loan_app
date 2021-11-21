@@ -37,7 +37,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
     // user to select one
     // a button that opens a bottom modal sheet
     return ElevatedButton.icon(
-      icon: const Icon(Icons.contact_support),
+      icon: const Icon(Icons.inventory_outlined),
       label: const Text(
         'Select loan purpose',
         style: TextStyle(fontSize: 18),

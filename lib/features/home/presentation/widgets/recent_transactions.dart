@@ -10,40 +10,28 @@ class RecentTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Recent Transactions',
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        ),
-        Expanded(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              const TransactionCard(),
-              const TransactionCard(),
-              const TransactionCard(),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => LoanDetailScreen(
-                        dueDate: DateTime.now(),
-                        paidAmount: 234325,
-                        status: LoanStatus.due,
-                        totalAmount: 10234324,
-                      ),
-                    ),
-                  );
-                },
-                child: const Text('show more'),
-              )
-            ],
-          ),
-        ),
+        const TransactionCard(),
+        const TransactionCard(),
+        const TransactionCard(),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => LoanDetailScreen(
+                  dueDate: DateTime.now(),
+                  paidAmount: 234325,
+                  status: LoanStatus.due,
+                  totalAmount: 10234324,
+                ),
+              ),
+            );
+          },
+          child: const Text('show more'),
+        )
       ],
     );
   }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
-import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/home/home.dart';
-import 'package:loan_app/features/loan_history/loan_history.dart';
 
 class NoLoanContent extends StatelessWidget {
   const NoLoanContent({
@@ -21,6 +19,7 @@ class NoLoanContent extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate.fixed(
             [
+              const SizedBox(height: 20),
               Text(
                 'Welcome, John! 👋🏾',
                 style: Theme.of(context).textTheme.headline5,
@@ -30,11 +29,12 @@ class NoLoanContent extends StatelessWidget {
                 'Leaf provides you small loans that you '
                 'can pay with any currency that is available in your wallet',
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
                 'You have no active loans at the moment',
                 style: Theme.of(context).textTheme.bodyText1,
               ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
@@ -48,7 +48,7 @@ class NoLoanContent extends StatelessWidget {
           delegate: SliverChildListDelegate.fixed(
             [
               Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text(
                   'Recent from Leaf',
                   style: Theme.of(context).textTheme.headline5?.copyWith(
@@ -68,27 +68,6 @@ class NoLoanContent extends StatelessWidget {
             (context, index) {
               return const ArticleCard();
             },
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate.fixed(
-            [
-              ActiveLoanAction(
-                title: 'Articles',
-                description: 'Read about how Leaf is helping its users achieve'
-                    ' their goals with small loans',
-                onTap: () {
-                  Navigator.of(context).pushNamed(ArticlesScreen.routeName);
-                },
-              ),
-              ActiveLoanAction(
-                title: 'Loan History',
-                description: 'See you loan history with them payment details',
-                onTap: () {
-                  Navigator.of(context).pushNamed(LoanHistoryScreen.routeName);
-                },
-              ),
-            ],
           ),
         ),
       ],

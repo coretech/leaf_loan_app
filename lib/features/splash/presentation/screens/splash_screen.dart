@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
-  static const routeName = '/';
+  // TODO(Yabsra): revert the route name to /
+  static const routeName = '/splash';
 
   @override
   _SplashScreenState createState() => _SplashScreenState();

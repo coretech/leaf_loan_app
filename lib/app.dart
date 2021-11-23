@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/about/about.dart';
-import 'package:loan_app/features/articles/articles.dart';
-import 'package:loan_app/features/authentication/authentication.dart';
-import 'package:loan_app/features/home/home.dart';
-import 'package:loan_app/features/loan_history/loan_history.dart';
-import 'package:loan_app/features/onboarding/onboarding.dart';
-import 'package:loan_app/features/splash/splash.dart';
-import 'package:loan_app/features/user_profile/user_profile.dart';
+import 'package:loan_app/features/features.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -31,6 +24,7 @@ class App extends StatelessWidget {
         ArticlesScreen.routeName: (context) => const ArticlesScreen(),
         AboutScreen.routeName: (context) => const AboutScreen(),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
+        LoanPaymentScreen.routeName: (context) => const LoanPaymentScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
         SplashScreen.routeName: (ctx) => const SplashScreen(),

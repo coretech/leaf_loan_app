@@ -32,12 +32,9 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
               child: Column(
                 children: [
                   const CurrentLoanInfo(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: LoanActionButtons(
-                      hasActiveLoan: true,
-                      onPay: widget.onPay,
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: LoanActionButtons(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),

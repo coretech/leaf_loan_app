@@ -13,7 +13,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   // a widget that shows a date and the difference in days between the date and
   // today
 
-  DateTime _selectedDate = DateTime.now().add(const Duration(days: 3));
+  DateTime _selectedDate = DateTime.now().add(const Duration(days: 61));
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
     final date = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime.now(),
+      firstDate: DateTime.now().add(const Duration(days: 61)),
       lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (date != null) {

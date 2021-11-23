@@ -221,9 +221,9 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
               ),
             ),
             Slider(
-              max: 100000,
+              max: 50000,
               min: 50,
-              divisions: 100000 - 50,
+              divisions: 50000 - 50,
               value: _loanAmount,
               label: '${Formatter.formatMoney(_loanAmount)} $_currentCurrency',
               onChanged: (amount) {
@@ -240,7 +240,7 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  '100000 $_currentCurrency',
+                  '50000 $_currentCurrency',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

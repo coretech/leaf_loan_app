@@ -13,7 +13,7 @@ class NewLoanApplication extends StatefulWidget {
 }
 
 class _NewLoanApplicationState extends State<NewLoanApplication> {
-  String _currentCurrency = 'KES';
+  final String _currentCurrency = 'RWF';
   String _selectedPurpose = 'Home Improvement';
 
   DateTime dueDate = DateTime.now().add(Duration(days: Random().nextInt(75)));
@@ -62,11 +62,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 ),
               ),
               LoanCurrencyPicker(
-                onChanged: (value) {
-                  setState(() {
-                    _currentCurrency = value;
-                  });
-                },
+                onChanged: (value) {},
                 selectedCurrency: _currentCurrency,
               ),
               const SizedBox(
@@ -107,9 +103,9 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                 ),
               ),
               Slider(
-                max: 100000,
+                max: 50000,
                 min: 50,
-                divisions: 100000 - 50,
+                divisions: 50000 - 50,
                 value: _loanAmount,
                 label:
                     '${Formatter.formatMoney(_loanAmount)} $_currentCurrency',
@@ -127,7 +123,7 @@ class _NewLoanApplicationState extends State<NewLoanApplication> {
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
-                    '100000 $_currentCurrency',
+                    '50000 $_currentCurrency',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],

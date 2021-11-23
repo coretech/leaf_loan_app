@@ -68,6 +68,8 @@ class LoanDetailAppBar extends StatelessWidget {
                   mini: true,
                   onTap: () {
                     log('pay on loan detail app bar tapped');
+                    Navigator.of(context)
+                        .pushNamed(LoanPaymentScreen.routeName);
                   },
                 ),
               ),

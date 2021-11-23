@@ -145,6 +145,8 @@ class LoanDetailScreen extends StatelessWidget {
                                 label: 'Pay now',
                                 onTap: () {
                                   log('big pay button on detail card tapped');
+                                  Navigator.of(context)
+                                      .pushNamed(LoanPaymentScreen.routeName);
                                 },
                               ),
                             ),

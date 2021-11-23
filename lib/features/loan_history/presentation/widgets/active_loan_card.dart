@@ -142,6 +142,8 @@ class ActiveLoanCard extends StatelessWidget {
                     mini: true,
                     onTap: () {
                       log('pay on loan history card tapped');
+                      Navigator.of(context)
+                          .pushNamed(LoanPaymentScreen.routeName);
                     },
                   ),
                 ),

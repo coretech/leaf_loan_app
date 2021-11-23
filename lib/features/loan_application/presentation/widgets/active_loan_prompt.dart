@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
+
 class ActiveLoanPrompt extends StatelessWidget {
   const ActiveLoanPrompt({Key? key}) : super(key: key);
 
@@ -47,6 +48,7 @@ class ActiveLoanPrompt extends StatelessWidget {
           label: 'Pay now',
           onTap: () {
             log('pay on active loan prompt tapped');
+            Navigator.of(context).pushNamed(LoanPaymentScreen.routeName);
           },
         ),
       ],

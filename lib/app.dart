@@ -7,8 +7,6 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // TODO(Yabsra): remove this
-      initialRoute: OnboardingScreen.routeName,
       onGenerateRoute: (settings) {
         if (settings.name == HomeScreen.routeName) {
           final args = settings.arguments as HomeScreenArguments?;

@@ -155,7 +155,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     );
   }
 
-  String? _validateAmount(value) {
+  String? _validateAmount(String? value) {
     if (value?.isEmpty ?? true) {
       return 'Please enter the amount you want to pay';
     }

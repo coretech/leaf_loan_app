@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/info/info.dart';
+import 'package:loan_app/features/about/about.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class UserProfileScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(InfoScreen.routeName);
+                  Navigator.of(context).pushNamed(AboutScreen.routeName);
                 },
                 icon: const Icon(Icons.info_outline),
               )

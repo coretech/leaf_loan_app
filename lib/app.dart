@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/features/about/about.dart';
 import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/authentication/authentication.dart';
 import 'package:loan_app/features/home/home.dart';
-import 'package:loan_app/features/info/info.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:loan_app/features/splash/splash.dart';
@@ -29,7 +29,7 @@ class App extends StatelessWidget {
       },
       routes: {
         ArticlesScreen.routeName: (context) => const ArticlesScreen(),
-        InfoScreen.routeName: (context) => const InfoScreen(),
+        AboutScreen.routeName: (context) => const AboutScreen(),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),

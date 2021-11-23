@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class InfoScreen extends StatefulWidget {
-  const InfoScreen({Key? key}) : super(key: key);
-  static const routeName = '/info';
+class AboutScreen extends StatefulWidget {
+  const AboutScreen({Key? key}) : super(key: key);
+  static const routeName = '/about';
 
   @override
-  State<InfoScreen> createState() => _InfoScreenState();
+  State<AboutScreen> createState() => _AboutScreenState();
 }
 
-class _InfoScreenState extends State<InfoScreen> {
+class _AboutScreenState extends State<AboutScreen> {
   late PackageInfo packageInfo;
   String versionName = 'v';
   @override

@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     onboardingStatusRepo = OnboardingStatusHiveRepo();
     scoringDataCollectionService = CredoDataCollectionService();
-    _splashProvider = SplashProvider();
+    _splashProvider = SplashProvider()..initializeApp();
     _splashProvider
       ..addListener(() {
         if (_splashProvider.onboardingSeen && !_splashProvider.loading) {

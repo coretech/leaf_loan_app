@@ -26,7 +26,7 @@ class SplashProvider extends ChangeNotifier {
     );
     onboardingSeen = onboardingEither.fold(
       (l) => false,
-      (r) => true,
+      (r) => r,
     );
     scoringCompleted = scoringEither.fold(
       (l) {

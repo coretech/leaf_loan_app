@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/utils/screen_size.dart';
 import 'package:loan_app/core/utils/utils.dart';
@@ -15,8 +13,6 @@ class NewLoanApplication extends StatefulWidget {
 class _NewLoanApplicationState extends State<NewLoanApplication> {
   final String _currentCurrency = 'RWF';
   String _selectedPurpose = 'Home Improvement';
-
-  DateTime dueDate = DateTime.now().add(Duration(days: Random().nextInt(75)));
 
   double _loanAmount = 50;
   LoanType _loanType = LoanType.personal;

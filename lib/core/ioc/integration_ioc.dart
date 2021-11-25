@@ -13,6 +13,9 @@ class IntegrationIOC {
       )
       ..registerLazySingleton<ScoringDataCollectionService>(
         () => CredoDataCollectionService(),
+      )
+      ..registerLazySingleton<HttpHelper>(
+        () => DioHttpHelper(),
       );
   }
 
@@ -22,5 +25,9 @@ class IntegrationIOC {
 
   static ScoringDataCollectionService scoringDataCollectionService() {
     return _locator.get<ScoringDataCollectionService>();
+  }
+
+  static HttpHelper httpHelper() {
+    return _locator.get<HttpHelper>();
   }
 }

@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
+import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/authentication/authentication.dart';
 
 class AuthenticationRemoteRepository extends AuthenticationRepository {
   static const _urlBase = String.fromEnvironment('API_URL');
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
+  final LocalStorage _localStorage = IntegrationIOC.localStorage();
   @override
   Future<Either<AuthFailure, AuthenticationResult>> login({
     required String username,
@@ -20,7 +22,9 @@ class AuthenticationRemoteRepository extends AuthenticationRepository {
         url: '$_urlBase/userservice/signin',
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
-        return right(AuthenticationResult.fromMap(response.data));
+        final result = AuthenticationResult.fromMap(response.data);
+        await _localStorage.setString(Keys.token, result.token);
+        return right(result);
       } else {
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }

@@ -67,4 +67,14 @@ class HiveLocalStorage implements LocalStorage {
   Future<void> setString(String key, String value) {
     return _setValue(key, value);
   }
+
+  @override
+  Future<void> remove(String key) async {
+    await box.delete(key);
+  }
+
+  @override
+  Future<void> clear() async {
+    await box.clear();
+  }
 }

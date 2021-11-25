@@ -9,4 +9,7 @@ abstract class LocalStorage {
   Future<double?> getDouble(String key);
   Future<int?> getInt(String key);
   Future<String?> getString(String key);
+
+  Future<void> clear();
+  Future<void> remove(String key);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,9 @@ class NameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
+        if (userProvider.loading) {
+          return const ShimmerBox(width: 140, height: 40);
+        }
         return Column(
           children: [
             Padding(

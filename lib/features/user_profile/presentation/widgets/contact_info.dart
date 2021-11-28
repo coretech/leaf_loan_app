@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
 import 'package:provider/provider.dart';
 
@@ -34,10 +35,13 @@ class ContactInfo extends StatelessWidget {
                         style: Theme.of(context).textTheme.caption,
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        userProvider.address,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
+                      if (userProvider.loading)
+                        const ShimmerBox(width: 100, height: 20)
+                      else
+                        Text(
+                          userProvider.address,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                     ],
                   ),
                 ),
@@ -49,10 +53,13 @@ class ContactInfo extends StatelessWidget {
                         style: Theme.of(context).textTheme.caption,
                       ),
                       const SizedBox(height: 5),
-                      Text(
-                        userProvider.phoneNumber,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
+                      if (userProvider.loading)
+                        const ShimmerBox(width: 100, height: 20)
+                      else
+                        Text(
+                          userProvider.phoneNumber,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                     ],
                   ),
                 ),
@@ -66,10 +73,13 @@ class ContactInfo extends StatelessWidget {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 const SizedBox(height: 5),
-                Text(
-                  '-',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
+                if (userProvider.loading)
+                  const ShimmerBox(width: 100, height: 20)
+                else
+                  Text(
+                    '-',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
               ],
             ),
           ],

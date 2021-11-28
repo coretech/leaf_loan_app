@@ -1,6 +1,5 @@
 export 'about/about.dart';
 export 'articles/articles.dart';
-export 'authentication/authentication.dart';
 export 'features_ioc.dart';
 export 'home/home.dart';
 export 'loan_application/loan_application.dart';

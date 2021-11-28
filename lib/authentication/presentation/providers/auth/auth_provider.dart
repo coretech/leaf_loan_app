@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/features/authentication/authentication.dart';
+import 'package:loan_app/authentication/authentication.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthenticationRepository _authenticationRepository = AuthIOC.authRepo();

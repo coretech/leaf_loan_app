@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:loan_app/features/authentication/authentication.dart';
+import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 

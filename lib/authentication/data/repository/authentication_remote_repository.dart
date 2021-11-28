@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
-import 'package:loan_app/features/authentication/authentication.dart';
 
-class AuthenticationRemoteRepository extends AuthenticationRepository {
+class AuthRepoImplementation extends AuthenticationRepository {
   static const _urlBase = String.fromEnvironment('API_URL');
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
@@ -31,5 +31,12 @@ class AuthenticationRemoteRepository extends AuthenticationRepository {
     } catch (e) {
       return left(AuthFailure(reason: Reason.serverError));
     }
+  }
+
+  @override
+  Future<bool> isAuthenticated() {
+    return _localStorage.getString(Keys.token).then((token) {
+      return token != null;
+    });
   }
 }

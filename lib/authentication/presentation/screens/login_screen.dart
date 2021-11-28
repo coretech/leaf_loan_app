@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/utils/utils.dart';
-
-import 'package:loan_app/features/authentication/authentication.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

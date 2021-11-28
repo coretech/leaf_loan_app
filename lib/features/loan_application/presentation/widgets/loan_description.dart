@@ -12,29 +12,10 @@ class LoanDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (loanType) {
-      case LoanType.personal:
-        return const Description(
-          text: 'Personal loans are loans that are used to pay for'
-              ' goods and services that you need. They are usually '
-              'short-term and are usually repaid within a few months.',
-          title: 'Personal',
-        );
-      case LoanType.business:
-        return const Description(
-          text: 'Business loans are loans that are used to pay for'
-              ' goods and services that you need. They are usually '
-              'short-term and are usually repaid within a few months.',
-          title: 'Business',
-        );
-      case LoanType.asset:
-        return const Description(
-          text: 'Asset loans are loans that are used to pay for'
-              ' goods and services that you need. They are usually '
-              'short-term and are usually repaid within a few months.',
-          title: 'Asset',
-        );
-    }
+    return Description(
+      text: loanType.description,
+      title: loanType.name,
+    );
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:loan_app/authentication/helpers/helpers.dart';
+import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/constants/urls.dart';
@@ -10,7 +11,7 @@ import 'package:loan_app/features/user_profile/data/dtos/dtos.dart';
 import 'package:loan_app/features/user_profile/domain/domain.dart';
 
 class UserRemoteRepository extends UserRepository {
-  final AuthHelper _authHelper = AuthHelper();
+  final AuthHelper _authHelper = AuthIOC.authHelper();
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
   @override

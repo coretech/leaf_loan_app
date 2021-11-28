@@ -1,5 +1,8 @@
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_application/loan_application.dart';
+import 'package:provider/provider.dart';
 
 class LoanCurrencyPicker extends StatelessWidget {
   const LoanCurrencyPicker({
@@ -13,82 +16,71 @@ class LoanCurrencyPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: SizedBox(
-        height: 110,
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            _buildCurrencyCard(context, 'KSH', FlagsCode.KE),
-            _buildCurrencyCard(context, 'UGX', FlagsCode.UG),
-            _buildCurrencyCard(context, 'RWF', FlagsCode.RW),
-            _buildCurrencyCard(context, 'ETB', FlagsCode.ET),
-            _buildCurrencyCard(context, 'CLP', FlagsCode.CL),
+    return Consumer<LoanApplicationProvider>(
+      builder: (context, loanApplicationProvider, _) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                'Select a loan currency',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                'The currency is one of the available currencies attached to '
+                'your Leaf wallet. As of now, leaf supports KES, RWF, and UGX.',
+                style: Theme.of(context).textTheme.caption,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: SizedBox(
+                height: 110,
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  children: _getCurrencies(loanApplicationProvider),
+                ),
+              ),
+            ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildCurrencyCard(
-    BuildContext context,
-    String currency,
-    FlagsCode countryCode,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: Stack(
-        children: [
-          SizedBox(
-            height: 100,
-            child: Card(
-              color: selectedCurrency == currency
-                  ? Theme.of(context).primaryColorLight
-                  : null,
-              elevation: 4,
-              margin: EdgeInsets.zero,
-              child: InkWell(
-                onTap: () {
-                  onChanged(currency);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Flag.fromCode(
-                        countryCode,
-                        height: 25,
-                        width: 50,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        currency,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          if (selectedCurrency == currency)
-            Positioned(
-              top: 5,
-              right: 5,
-              child: Center(
-                child: Icon(
-                  Icons.check_circle,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
+  List<Widget> _getCurrencies(LoanApplicationProvider loanApplicationProvider) {
+    if (loanApplicationProvider.canShowTypes) {
+      final index = loanApplicationProvider.selectedLoanTypeIndex;
+      return loanApplicationProvider.loanTypes[index].currencies.map(
+        (currency) {
+          final code = FlagUtil.getCode(currency.currencyId.country);
+          final flag = Flag.fromString(
+            code?.toLowerCase() ?? 'rw',
+            height: 25,
+            width: 50,
+          );
+          return CurrencyCard(
+            currency: currency.currencyId.fiatCode,
+            flag: flag,
+            onTap: onChanged,
+            selectedCurrency: selectedCurrency,
+          );
+        },
+      ).toList();
+    } else {
+      return List.filled(
+        3,
+        const ShimmerBox(
+          height: 100,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          width: 90,
+        ),
+      );
+    }
   }
 }

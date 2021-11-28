@@ -40,7 +40,7 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
           await Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => const NewLoanApplication(),
+                  builder: (context) => const LoanApplicationScreen(),
                 ),
               )
               .then((_) => onApply());

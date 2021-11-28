@@ -11,11 +11,16 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  final AuthHelper _authHelper = AuthHelper();
+  final AuthHelper _authHelper = AuthIOC.authHelper();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _setUpLogOutListener();
   }
 
@@ -28,7 +33,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      key: _navigatorKey,
+      navigatorKey: _navigatorKey,
       onGenerateRoute: (settings) {
         if (settings.name == HomeScreen.routeName) {
           final args = settings.arguments as HomeScreenArguments?;
@@ -43,6 +48,8 @@ class _AppState extends State<App> {
       routes: {
         ArticlesScreen.routeName: (context) => const ArticlesScreen(),
         AboutScreen.routeName: (context) => const AboutScreen(),
+        LoanApplicationScreen.routeName: (context) =>
+            const LoanApplicationScreen(),
         LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
         LoanPaymentScreen.routeName: (context) => const LoanPaymentScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
@@ -70,10 +77,12 @@ class _AppState extends State<App> {
 
   void _setUpLogOutListener() {
     _authHelper.authenticationStream.listen((loggedOut) {
-      _navigatorKey.currentState?.pushNamedAndRemoveUntil(
-        '/',
-        (_) => false,
-      );
+      if (loggedOut) {
+        _navigatorKey.currentState!.pushNamedAndRemoveUntil(
+          '/',
+          (_) => false,
+        );
+      }
     });
   }
 }

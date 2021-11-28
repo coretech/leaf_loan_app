@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:loan_app/authentication/authentication.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/about/about.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
@@ -71,7 +73,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           const ContactInfo(),
                           const SizedBox(height: 20),
                           TextButton.icon(
-                            onPressed: () {},
+                            onPressed: _launchApp,
                             icon: const Icon(Icons.edit_outlined),
                             label: const Text('Edit on Leaf Wallet'),
                           ),
@@ -105,7 +107,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           const _ProvideDivider(),
                           TextButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              AuthIOC.authHelper().logOut();
+                            },
                             icon: const Icon(Icons.exit_to_app),
                             label: const Text('Log Out'),
                           ),
@@ -120,6 +124,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         );
       },
     );
+  }
+
+  Future<void> _launchApp() async {
+    await AppLinks.launchApp();
   }
 }
 

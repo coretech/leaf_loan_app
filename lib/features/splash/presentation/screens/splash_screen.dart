@@ -51,7 +51,9 @@ class _SplashScreenState extends State<SplashScreen> {
         OnboardingScreen.routeName,
       );
     }
-    if (!_splashProvider.authenticated && !_splashProvider.loading) {
+    if (!_splashProvider.authenticated &&
+        !_splashProvider.loading &&
+        _splashProvider.onboardingSeen) {
       Navigator.of(context).pushReplacementNamed(
         LoginScreen.routeName,
       );

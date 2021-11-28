@@ -76,14 +76,8 @@ class LoanHistoryScreen extends StatelessWidget {
                 label: 'Apply for a loan',
                 onTap: () {
                   log('apply on no loans tapped');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const LoanApplicationScreen(
-                          hasLoan: true,
-                        );
-                      },
-                    ),
+                  Navigator.of(context).pushNamed(
+                    LoanApplicationScreen.routeName,
                   );
                 },
               ),

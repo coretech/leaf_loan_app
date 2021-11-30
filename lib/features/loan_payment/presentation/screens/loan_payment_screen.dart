@@ -136,6 +136,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
               onPressed: _validateAmount(_amountController.text) == null
                   ? () async {
                       await showPaymentConfirmationSheet(context);
+                      // ignore: use_build_context_synchronously
                       await Navigator.of(context).pushNamedAndRemoveUntil(
                         HomeScreen.routeName,
                         (route) => false,

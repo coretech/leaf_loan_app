@@ -36,11 +36,9 @@ class _AboutScreenState extends State<AboutScreen> {
               Icons.description_outlined,
               color: Theme.of(context).colorScheme.secondary,
             ),
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Coming soon'),
-                ),
+            onTap: () async {
+              await launch(
+                'https://leafglobalfintech.com/leaf-loans-terms/',
               );
             },
             title: Text(
@@ -55,8 +53,7 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             onTap: () async {
               await launch(
-                'https://leafglobalfintech.github.io/leaf_loans'
-                '/privacy_policy/',
+                'https://leafglobalfintech.com/leaf-loans-privacy-policy/',
               );
             },
             title: const Text(

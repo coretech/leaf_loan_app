@@ -65,7 +65,8 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                 ],
               ),
             ),
-            const Divider(
+            Divider(
+              color: Theme.of(context).colorScheme.secondary,
               endIndent: 50,
               height: 30,
               indent: 50,

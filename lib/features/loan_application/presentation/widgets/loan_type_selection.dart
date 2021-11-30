@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/features.dart';
-import 'package:loan_app/features/loan_application/domain/value_objects/value_objects.dart';
 import 'package:provider/provider.dart';
 
 class LoanTypeSelection extends StatelessWidget {
   const LoanTypeSelection({
     Key? key,
     required this.onSelection,
-    required this.selectedLoanType,
   }) : super(key: key);
   final ValueChanged<int> onSelection;
-  final LoanTypeEnum selectedLoanType;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +55,10 @@ class LoanTypeSelection extends StatelessWidget {
       for (var i = 0; i < loanApplicationProvider.loanTypes.length; i++) {
         final loanType = loanApplicationProvider.loanTypes[i];
         loanTypeCards.add(
-          Padding(
+          Container(
+            height: 175,
             padding: const EdgeInsets.symmetric(vertical: 10),
+            width: 150,
             child: LoanTypeCard(
               onSelection: onSelection,
               selectedLoanType: loanApplicationProvider.selectedLoanType!,

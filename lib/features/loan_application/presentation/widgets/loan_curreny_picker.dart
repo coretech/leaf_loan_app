@@ -7,12 +7,16 @@ import 'package:provider/provider.dart';
 class LoanCurrencyPicker extends StatelessWidget {
   const LoanCurrencyPicker({
     Key? key,
+    required this.currencies,
     required this.selectedCurrency,
+    required this.selectedIndex,
     required this.onChanged,
   }) : super(key: key);
 
+  final List<Currency> currencies;
   final String selectedCurrency;
-  final ValueChanged<String> onChanged;
+  final int selectedIndex;
+  final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +40,13 @@ class LoanCurrencyPicker extends StatelessWidget {
                 style: Theme.of(context).textTheme.caption,
               ),
             ),
-            Padding(
+            Container(
+              height: 110,
               padding: const EdgeInsets.all(8),
-              child: SizedBox(
-                height: 110,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  children: _getCurrencies(loanApplicationProvider),
-                ),
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                children: _getCurrencies(loanApplicationProvider),
               ),
             ),
           ],
@@ -55,23 +57,28 @@ class LoanCurrencyPicker extends StatelessWidget {
 
   List<Widget> _getCurrencies(LoanApplicationProvider loanApplicationProvider) {
     if (loanApplicationProvider.canShowTypes) {
-      final index = loanApplicationProvider.selectedLoanTypeIndex;
-      return loanApplicationProvider.loanTypes[index].currencies.map(
-        (currency) {
-          final code = FlagUtil.getCode(currency.currencyId.country);
-          final flag = Flag.fromString(
-            code?.toLowerCase() ?? 'rw',
-            height: 25,
-            width: 50,
-          );
-          return CurrencyCard(
-            currency: currency.currencyId.fiatCode,
+      final currencyCards = <Widget>[];
+      final selectedIndex = loanApplicationProvider.selectedCurrencyIndex;
+      final currencies = loanApplicationProvider.selectedLoanType!.currencies;
+      for (var i = 0; i < currencies.length; i++) {
+        final currency = currencies[i];
+        final code = FlagUtil.getCode(currency.currencyId.country);
+        final flag = Flag.fromString(
+          code?.toLowerCase() ?? 'rw',
+          height: 25,
+          width: 50,
+        );
+        currencyCards.add(
+          CurrencyCard(
+            currency: currency,
             flag: flag,
+            index: i,
             onTap: onChanged,
-            selectedCurrency: selectedCurrency,
-          );
-        },
-      ).toList();
+            selectedIndex: selectedIndex,
+          ),
+        );
+      }
+      return currencyCards;
     } else {
       return List.filled(
         3,

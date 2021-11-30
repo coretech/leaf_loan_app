@@ -15,10 +15,11 @@ class LoanApplicationScreen extends StatefulWidget {
 
 class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   final String _currentCurrency = 'RWF';
-  String _selectedPurpose = 'Home Improvement';
+  String? _selectedPurpose;
 
-  double _loanAmount = 50;
-  final LoanTypeEnum _loanType = LoanTypeEnum.personal;
+  double? _loanAmount;
+
+  int _seletedDurationInDays = 61;
 
   late LoanApplicationProvider _loanApplicationProvider;
 
@@ -41,197 +42,147 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<LoanApplicationProvider>(
       create: (_) => _loanApplicationProvider,
       builder: (context, _) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            elevation: 0,
-            foregroundColor: Theme.of(context).colorScheme.onSurface,
-            title: const Text(
-              'Apply for a loan',
-            ),
-          ),
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LoanTypeSelection(
-                    onSelection: (value) {},
-                    selectedLoanType: _loanType,
-                  ),
-                  LoanCurrencyPicker(
-                    onChanged: (value) {},
-                    selectedCurrency: _currentCurrency,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      'Choose the loan duration',
-                      style: Theme.of(context).textTheme.headline6,
+        return Builder(
+          builder: (context) {
+            return Consumer<LoanApplicationProvider>(
+              builder: (context, loanApplicationProvider, _) {
+                return Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    elevation: 0,
+                    foregroundColor: Theme.of(context).colorScheme.onSurface,
+                    title: const Text(
+                      'Apply for a loan',
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                      ' sed do eiusmod tempor incididunt ut labore et dolore '
-                      'magna',
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ),
-                  const LoanDurationPicker(),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      'Choose the loan amount',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                      ' sed do eiusmod tempor incididunt ut labore et dolore '
-                      'magna',
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ),
-                  Slider(
-                    max: 50000,
-                    min: 50,
-                    divisions: 50000 - 50,
-                    value: _loanAmount,
-                    label: '${Formatter.formatMoney(_loanAmount)}'
-                        ' $_currentCurrency',
-                    onChanged: (amount) {
-                      setState(() {
-                        _loanAmount = amount;
-                      });
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '50 $_currentCurrency',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      Text(
-                        '50000 $_currentCurrency',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: Wrap(
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.spaceBetween,
-                      runSpacing: 20,
-                      spacing: 40,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              '${Formatter.formatMoney(_loanAmount * 0.1)}'
-                              ' $_currentCurrency',
-                              style: Theme.of(context).textTheme.headline6,
+                  body: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          LoanTypeSelection(
+                            onSelection: (value) {},
+                          ),
+                          LoanCurrencyPicker(
+                            currencies: loanApplicationProvider
+                                    .selectedLoanType?.currencies ??
+                                [],
+                            onChanged: (value) {
+                              loanApplicationProvider
+                                  .setSelectedCurrency(value);
+                              setState(() {
+                                _loanAmount = null;
+                              });
+                            },
+                            selectedCurrency: _currentCurrency,
+                            selectedIndex:
+                                loanApplicationProvider.selectedCurrencyIndex,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          LoanDurationPicker(
+                            durationInDays: _seletedDurationInDays,
+                            loading: loanApplicationProvider.loading,
+                            maxDurationInDays: loanApplicationProvider
+                                .selectedLoanType?.maxDuration,
+                            minDurationInDays: loanApplicationProvider
+                                .selectedLoanType?.minDuration,
+                            onChanged: (selectedDays) {
+                              setState(() {
+                                _seletedDurationInDays = selectedDays;
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          LoanAmountPicker(
+                            fiatCode: loanApplicationProvider
+                                .selectedCurrency?.currencyId.fiatCode,
+                            interestRate: loanApplicationProvider
+                                .selectedLoanType?.interestRate
+                                .toDouble(),
+                            loading: loanApplicationProvider.loading,
+                            loanAmount: _loanAmount,
+                            maxAmount: loanApplicationProvider
+                                .selectedCurrency?.maxLoanAmount
+                                .toDouble(),
+                            minAmount: loanApplicationProvider
+                                .selectedCurrency?.minLoanAmount
+                                .toDouble(),
+                            onChanged: (selectedAmount) {
+                              setState(() {
+                                _loanAmount = selectedAmount;
+                              });
+                            },
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          LoanPurposePicker(
+                            loading: loanApplicationProvider.loading,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedPurpose = value;
+                              });
+                            },
+                            purposeList: loanApplicationProvider
+                                    .selectedLoanType?.purpose ??
+                                [],
+                            selectedPurpose: _selectedPurpose,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const TOCConfirmation(),
+                          ElevatedButton(
+                            onPressed: !loanApplicationProvider.loading
+                                ? _onSubmit
+                                : null,
+                            style: ButtonStyle(
+                              fixedSize: MaterialStateProperty.all(
+                                Size(
+                                  ScreenSize.of(context).width - 40,
+                                  50,
+                                ),
+                              ),
                             ),
-                            const Text('Interest (10%)'),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              '${Formatter.formatMoney(_getTotal(_loanAmount))}'
-                              ' $_currentCurrency',
-                              style: Theme.of(context).textTheme.headline6,
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(fontSize: 18),
                             ),
-                            const Text('Total Due'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      'Choose the loan purpose',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                      ' sed do eiusmod tempor incididunt ut labore et dolore'
-                      ' magna',
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  LoanPurposePicker(
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedPurpose = value;
-                      });
-                    },
-                    selectedPurpose: _selectedPurpose,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const TOCConfirmation(),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.upload_file),
-                    label: const Text(
-                      'Submit',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Loan application submitted'),
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                    },
-                    style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(
-                        Size(
-                          ScreenSize.of(context).width - 40,
-                          50,
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
+                );
+              },
+            );
+          },
         );
       },
     );
   }
 
-  double _getTotal(double amount) {
-    return amount * 1.1;
+  Future<void> _onSubmit() async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) => const ConfirmationWidget(
+        amount: '1000',
+        amountDue: '1100',
+        interestRate: '10%',
+        purpose: 'Some Purpose',
+        typeName: 'Personal',
+        dueDate: 'January 1, 2020',
+      ),
+    );
   }
 }
 

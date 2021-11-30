@@ -1,54 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loan_app/core/core.dart';
+
 import 'package:loan_app/core/utils/utils.dart';
 
 class LoanDurationPicker extends StatefulWidget {
-  const LoanDurationPicker({Key? key}) : super(key: key);
+  const LoanDurationPicker({
+    Key? key,
+    required this.durationInDays,
+    required this.loading,
+    required this.maxDurationInDays,
+    required this.minDurationInDays,
+    required this.onChanged,
+  }) : super(key: key);
+  final int durationInDays;
+  final bool loading;
+  final int? maxDurationInDays;
+  final int? minDurationInDays;
+  final ValueChanged<int> onChanged;
 
   @override
   _LoanDurationPickerState createState() => _LoanDurationPickerState();
 }
 
 class _LoanDurationPickerState extends State<LoanDurationPicker> {
-  // a widget that shows a date and the difference in days between the date and
-  // today
+  DateTime _selectedDate = DateTime.now().add(
+    const Duration(days: 61),
+  );
 
-  DateTime _selectedDate = DateTime.now().add(const Duration(days: 61));
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.5),
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    DateFormat.yMMMMd().format(_selectedDate),
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
-              ),
-              _buildDayCount(context, _selectedDate),
-            ],
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            'Choose the loan duration',
+            style: Theme.of(context).textTheme.headline6,
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
+            ' sed do eiusmod tempor incididunt ut labore et dolore '
+            'magna',
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 12.5,
+            horizontal: 8,
+          ),
+          child: _buildSelectedDate(),
+        ),
         Center(
-          child: ElevatedButton.icon(
-            icon: const Icon(Icons.calendar_today),
-            label: const Text(
-              'Select payment due date',
-              style: TextStyle(fontSize: 18),
-            ),
-            onPressed: () {
-              _pickDate(context);
-            },
+          child: ElevatedButton(
+            onPressed: !widget.loading ? () => _pickDate(context) : null,
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.secondary,
+              backgroundColor: MaterialStateProperty.resolveWith(
+                (states) => states.contains(MaterialState.disabled)
+                    ? null
+                    : Theme.of(context).colorScheme.secondary,
               ),
               fixedSize: MaterialStateProperty.all(
                 Size(
@@ -56,6 +76,10 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
                   50,
                 ),
               ),
+            ),
+            child: const Text(
+              'Select payment due date',
+              style: TextStyle(fontSize: 18),
             ),
           ),
         ),
@@ -69,6 +93,36 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
       '$dayCount days',
       style: Theme.of(context).textTheme.bodyText1,
     );
+  }
+
+  Widget _buildSelectedDate() {
+    if (widget.loading) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          ShimmerBox(
+            width: 150,
+            height: 20,
+          ),
+          ShimmerBox(
+            width: 30,
+            height: 20,
+          ),
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          Expanded(
+            child: Text(
+              DateFormat.yMMMMd().format(_selectedDate),
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          _buildDayCount(context, _selectedDate),
+        ],
+      );
+    }
   }
 
   Future<void> _pickDate(BuildContext context) async {

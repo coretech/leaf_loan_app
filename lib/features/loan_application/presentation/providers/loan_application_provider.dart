@@ -36,9 +36,13 @@ class LoanApplicationProvider extends ChangeNotifier {
   bool get canShowTypes => hasLoanTypes && !loading;
 
   int selectedLoanTypeIndex = 0;
+  int selectedCurrencyIndex = 0;
 
   LoanType? get selectedLoanType =>
       canShowTypes ? loanTypes[selectedLoanTypeIndex] : null;
+
+  Currency? get selectedCurrency =>
+      canShowTypes ? selectedLoanType?.currencies[selectedCurrencyIndex] : null;
 
   Future<void> getLoanTypes() async {
     clear();
@@ -56,6 +60,11 @@ class LoanApplicationProvider extends ChangeNotifier {
 
   Future<void> setSelectedLoanType(int index) async {
     selectedLoanTypeIndex = index;
+    notifyListeners();
+  }
+
+  Future<void> setSelectedCurrency(int index) async {
+    selectedCurrencyIndex = index;
     notifyListeners();
   }
 }

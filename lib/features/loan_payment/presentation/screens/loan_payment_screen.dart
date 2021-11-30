@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/features/loan_payment/presentation/widgets/widgets.dart';
 
 class LoanPaymentScreen extends StatefulWidget {
   const LoanPaymentScreen({Key? key}) : super(key: key);
@@ -133,8 +134,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                 style: TextStyle(fontSize: 18),
               ),
               onPressed: _validateAmount(_amountController.text) == null
-                  ? () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
+                  ? () async {
+                      await showPaymentConfirmationSheet(context);
+                      await Navigator.of(context).pushNamedAndRemoveUntil(
                         HomeScreen.routeName,
                         (route) => false,
                       );

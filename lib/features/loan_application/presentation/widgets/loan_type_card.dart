@@ -30,6 +30,7 @@ class LoanTypeCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   CachedNetworkImage(
@@ -39,7 +40,9 @@ class LoanTypeCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     loanType.name,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.headline6?.copyWith(
+                          fontSize: 14,
+                        ),
                   ),
                 ],
               ),
@@ -49,7 +52,7 @@ class LoanTypeCard extends StatelessWidget {
         if (selectedLoanType == loanType)
           Positioned(
             top: 10,
-            right: 10,
+            right: 20,
             child: Center(
               child: Icon(
                 Icons.check_circle,

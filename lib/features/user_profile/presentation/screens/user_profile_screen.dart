@@ -138,7 +138,8 @@ class _ProvideDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(
+    return Divider(
+      color: Theme.of(context).colorScheme.secondary,
       endIndent: 80,
       height: 40,
       indent: 80,

@@ -7,7 +7,8 @@ class StatDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(
+    return Divider(
+      color: Theme.of(context).colorScheme.secondary,
       height: 10,
       endIndent: 30,
       indent: 120,

@@ -187,64 +187,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      TextButton(
-                                        onPressed: !_authProvider.loading
-                                            ? () {
-                                                _authProvider.login(
-                                                  username:
-                                                      _usernameController.text,
-                                                  password:
-                                                      _passwordController.text,
-                                                );
-                                              }
-                                            : null,
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          fixedSize: Size(
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                            50,
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 25,
-                                            vertical: 12,
-                                          ),
-                                          primary: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            if (_authProvider.loading)
-                                              SizedBox(
-                                                height: 20,
-                                                width: 20,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 1,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onPrimary,
-                                                ),
-                                              ),
-                                            if (_authProvider.loading)
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                            const Text(
-                                              'Log In',
-                                            ),
-                                          ],
-                                        ),
-                                      )
+                                      SubmitButton(
+                                        authProvider: _authProvider,
+                                        usernameController: _usernameController,
+                                        passwordController: _passwordController,
+                                      ),
                                     ],
                                   ),
                                 ),

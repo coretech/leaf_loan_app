@@ -14,30 +14,19 @@ class LoanApplicationScreen extends StatefulWidget {
 }
 
 class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
-  final String _currentCurrency = 'RWF';
-  String? _selectedPurpose;
-
   double? _loanAmount;
-
-  int _seletedDurationInDays = 61;
-
   late LoanApplicationProvider _loanApplicationProvider;
+  int _selectedCurrencyIndex = 0;
+  int _selectedLoanTypeIndex = 0;
+  int _seletedDurationInDays = 61;
+  String? _selectedPurpose;
 
   @override
   void initState() {
     super.initState();
     _loanApplicationProvider = LoanApplicationProvider()
       ..getLoanTypes()
-      ..addListener(() {
-        if (_loanApplicationProvider.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(_loanApplicationProvider.errorMessage!),
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
-      });
+      ..addListener(_loanApplicationListener);
   }
 
   @override
@@ -47,18 +36,25 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       builder: (context, _) {
         return Builder(
           builder: (context) {
-            return Consumer<LoanApplicationProvider>(
-              builder: (context, loanApplicationProvider, _) {
-                return Scaffold(
-                  appBar: AppBar(
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    elevation: 0,
-                    foregroundColor: Theme.of(context).colorScheme.onSurface,
-                    title: const Text(
-                      'Apply for a loan',
-                    ),
-                  ),
-                  body: SingleChildScrollView(
+            return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                elevation: 0,
+                foregroundColor: Theme.of(context).colorScheme.onSurface,
+                title: const Text(
+                  'Apply for a loan',
+                ),
+              ),
+              body: Consumer<LoanApplicationProvider>(
+                builder: (context, loanApplicationProvider, _) {
+                  if (loanApplicationProvider.errorMessage != null) {
+                    return const Center(
+                      child: Text(
+                        'Some error occured while fetching Loan Type Details',
+                      ),
+                    );
+                  }
+                  return SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Padding(
                       padding: const EdgeInsets.all(15),
@@ -66,22 +62,34 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           LoanTypeSelection(
-                            onSelection: (value) {},
-                          ),
-                          LoanCurrencyPicker(
-                            currencies: loanApplicationProvider
-                                    .selectedLoanType?.currencies ??
-                                [],
-                            onChanged: (value) {
-                              loanApplicationProvider
-                                  .setSelectedCurrency(value);
+                            loading: loanApplicationProvider.loading,
+                            loanTypes: loanApplicationProvider.loanTypes,
+                            onSelection: (value) {
                               setState(() {
-                                _loanAmount = null;
+                                _selectedCurrencyIndex = 0;
+                                _selectedLoanTypeIndex = value;
                               });
                             },
-                            selectedCurrency: _currentCurrency,
-                            selectedIndex:
-                                loanApplicationProvider.selectedCurrencyIndex,
+                            selectedIndex: _selectedLoanTypeIndex,
+                          ),
+                          LoanCurrencyPicker(
+                            currencies: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .currencies
+                                : [],
+                            loading: loanApplicationProvider.loading,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedCurrencyIndex = value;
+                                _loanAmount = loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .currencies[_selectedCurrencyIndex]
+                                    .minLoanAmount
+                                    .toDouble();
+                              });
+                            },
+                            selectedIndex: _selectedCurrencyIndex,
                           ),
                           const SizedBox(
                             height: 5,
@@ -89,10 +97,16 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           LoanDurationPicker(
                             durationInDays: _seletedDurationInDays,
                             loading: loanApplicationProvider.loading,
-                            maxDurationInDays: loanApplicationProvider
-                                .selectedLoanType?.maxDuration,
-                            minDurationInDays: loanApplicationProvider
-                                .selectedLoanType?.minDuration,
+                            maxDurationInDays: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .maxDuration
+                                : null,
+                            minDurationInDays: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .minDuration
+                                : null,
                             onChanged: (selectedDays) {
                               setState(() {
                                 _seletedDurationInDays = selectedDays;
@@ -103,19 +117,35 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                             height: 5,
                           ),
                           LoanAmountPicker(
-                            fiatCode: loanApplicationProvider
-                                .selectedCurrency?.currencyId.fiatCode,
-                            interestRate: loanApplicationProvider
-                                .selectedLoanType?.interestRate
-                                .toDouble(),
+                            fiatCode: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .currencies[_selectedCurrencyIndex]
+                                    .currencyId
+                                    .fiatCode
+                                : null,
+                            interestRate: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .interestRate
+                                    .toDouble()
+                                : null,
                             loading: loanApplicationProvider.loading,
                             loanAmount: _loanAmount,
-                            maxAmount: loanApplicationProvider
-                                .selectedCurrency?.maxLoanAmount
-                                .toDouble(),
-                            minAmount: loanApplicationProvider
-                                .selectedCurrency?.minLoanAmount
-                                .toDouble(),
+                            maxAmount: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .currencies[_selectedCurrencyIndex]
+                                    .maxLoanAmount
+                                    .toDouble()
+                                : null,
+                            minAmount: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex]
+                                    .currencies[_selectedCurrencyIndex]
+                                    .minLoanAmount
+                                    .toDouble()
+                                : null,
                             onChanged: (selectedAmount) {
                               setState(() {
                                 _loanAmount = selectedAmount;
@@ -132,9 +162,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 _selectedPurpose = value;
                               });
                             },
-                            purposeList: loanApplicationProvider
-                                    .selectedLoanType?.purpose ??
-                                [],
+                            purposeList: _hasLoanTypes()
+                                ? loanApplicationProvider
+                                    .loanTypes[_selectedLoanTypeIndex].purpose
+                                : [],
                             selectedPurpose: _selectedPurpose,
                           ),
                           const SizedBox(
@@ -142,9 +173,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                           const TOCConfirmation(),
                           ElevatedButton(
-                            onPressed: !loanApplicationProvider.loading
-                                ? _onSubmit
-                                : null,
+                            onPressed: _canSubmit() ? _onSubmit : null,
                             style: ButtonStyle(
                               fixedSize: MaterialStateProperty.all(
                                 Size(
@@ -161,9 +190,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                         ],
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           },
         );
@@ -171,18 +200,47 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     );
   }
 
+  bool _canSubmit() {
+    return _loanApplicationProvider.canShowTypes &&
+        _loanAmount != null &&
+        _selectedPurpose != null;
+  }
+
   Future<void> _onSubmit() async {
     await showModalBottomSheet(
       context: context,
-      builder: (context) => const ConfirmationWidget(
-        amount: '1000',
-        amountDue: '1100',
-        interestRate: '10%',
-        purpose: 'Some Purpose',
-        typeName: 'Personal',
-        dueDate: 'January 1, 2020',
+      builder: (context) => LoanConfirmationWidget(
+        amount: _loanAmount!,
+        durationDays: _seletedDurationInDays,
+        loanType: _loanApplicationProvider.loanTypes[_selectedLoanTypeIndex],
+        purpose: _selectedPurpose!,
+        selectedCurrency: _loanApplicationProvider
+            .loanTypes[_selectedLoanTypeIndex]
+            .currencies[_selectedCurrencyIndex],
       ),
     );
+  }
+
+  bool _hasLoanTypes() {
+    return _loanApplicationProvider.loanTypes.isNotEmpty;
+  }
+
+  void _loanApplicationListener() {
+    if (_loanApplicationProvider.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_loanApplicationProvider.errorMessage!),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+    if (_loanApplicationProvider.loanTypes.isNotEmpty) {
+      setState(() {
+        _loanAmount = _loanApplicationProvider.loanTypes[_selectedLoanTypeIndex]
+            .currencies[_selectedCurrencyIndex].minLoanAmount
+            .toDouble();
+      });
+    }
   }
 }
 

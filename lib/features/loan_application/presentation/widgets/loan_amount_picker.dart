@@ -68,30 +68,48 @@ class LoanAmountPicker extends StatelessWidget {
         ),
         if (!loading)
           Center(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              runAlignment: WrapAlignment.spaceBetween,
-              runSpacing: 20,
-              spacing: 40,
+            child: Column(
               children: [
                 Column(
                   children: [
                     Text(
-                      '${Formatter.formatMoney(loanAmount ?? minAmount! * 0.1)}'
+                      '${Formatter.formatMoney(loanAmount ?? minAmount!)}'
                       ' $fiatCode',
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    Text('Interest (${interestRate ?? 0}%)'),
+                    const Text(
+                      'Amount',
+                    ),
                   ],
                 ),
-                Column(
+                const SizedBox(
+                  height: 10,
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  runAlignment: WrapAlignment.spaceBetween,
+                  runSpacing: 20,
+                  spacing: 40,
                   children: [
-                    Text(
-                      '${_getTotal(loanAmount ?? minAmount!)}'
-                      ' $fiatCode',
-                      style: Theme.of(context).textTheme.headline6,
+                    Column(
+                      children: [
+                        Text(
+                          '${_getInterest()} $fiatCode',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        Text('Interest (${interestRate ?? 0}%)'),
+                      ],
                     ),
-                    const Text('Total Due'),
+                    Column(
+                      children: [
+                        Text(
+                          '${_getTotal()}'
+                          ' $fiatCode',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        const Text('Total Due'),
+                      ],
+                    ),
                   ],
                 ),
               ],
@@ -139,9 +157,16 @@ class LoanAmountPicker extends StatelessWidget {
     onChanged(value);
   }
 
-  String _getTotal(double amount) {
+  String _getTotal() {
+    final amount = loanAmount ?? minAmount!;
     return Formatter.formatMoney(
       amount * (1 + ((interestRate ?? 0) / 100)),
+    );
+  }
+
+  String _getInterest() {
+    return Formatter.formatMoney(
+      (loanAmount ?? minAmount!) * (interestRate! / 100),
     );
   }
 }

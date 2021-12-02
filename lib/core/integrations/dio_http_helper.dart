@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:loan_app/core/abstractions/abstractions.dart';
 
 class DioHttpHelper implements HttpHelper {
-  DioHttpHelper() {
+  DioHttpHelper({
+    required this.onResponse,
+  }) {
     const _apiBaseUrl = String.fromEnvironment('API_URL');
     _dio = Dio();
     _dio.interceptors.add(
@@ -13,11 +17,13 @@ class DioHttpHelper implements HttpHelper {
     );
   }
   late Dio _dio;
+  final ValueChanged<HttpResponse> onResponse;
 
   @override
   Future<HttpResponse> delete({
     Map<String, dynamic>? headers,
     Map<String, dynamic>? params,
+    bool processResponse = true,
     required String url,
   }) async {
     try {
@@ -28,9 +34,17 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
-      return _buildResponse(response);
+      final httpResponse = _buildResponse(response);
+      if (processResponse) {
+        onResponse(httpResponse);
+      }
+      return httpResponse;
     } on DioError catch (e) {
-      return _buildResponseWithError(e);
+      final errResponse = _buildResponseWithError(e);
+      if (processResponse && e.response != null) {
+        onResponse(errResponse);
+      }
+      return errResponse;
     } catch (e) {
       rethrow;
     }
@@ -41,6 +55,7 @@ class DioHttpHelper implements HttpHelper {
     Duration? cacheAge,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? params,
+    bool processResponse = true,
     required String url,
   }) async {
     try {
@@ -54,9 +69,17 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
-      return _buildResponse(response);
+      final httpResponse = _buildResponse(response);
+      if (processResponse) {
+        onResponse(httpResponse);
+      }
+      return httpResponse;
     } on DioError catch (e) {
-      return _buildResponseWithError(e);
+      final errResponse = _buildResponseWithError(e);
+      if (processResponse && e.response != null) {
+        onResponse(errResponse);
+      }
+      return errResponse;
     } catch (e) {
       rethrow;
     }
@@ -67,6 +90,7 @@ class DioHttpHelper implements HttpHelper {
     required Map<String, dynamic> data,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? params,
+    bool processResponse = true,
     required String url,
   }) async {
     try {
@@ -78,9 +102,17 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
-      return _buildResponse(response);
+      final httpResponse = _buildResponse(response);
+      if (processResponse) {
+        onResponse(httpResponse);
+      }
+      return httpResponse;
     } on DioError catch (e) {
-      return _buildResponseWithError(e);
+      final errResponse = _buildResponseWithError(e);
+      if (processResponse && e.response != null) {
+        onResponse(errResponse);
+      }
+      return errResponse;
     } catch (e) {
       rethrow;
     }
@@ -92,6 +124,7 @@ class DioHttpHelper implements HttpHelper {
     required Map<String, dynamic> data,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? params,
+    bool processResponse = true,
     required String url,
   }) async {
     try {
@@ -106,9 +139,17 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
-      return _buildResponse(response);
+      final httpResponse = _buildResponse(response);
+      if (processResponse) {
+        onResponse(httpResponse);
+      }
+      return httpResponse;
     } on DioError catch (e) {
-      return _buildResponseWithError(e);
+      final errResponse = _buildResponseWithError(e);
+      if (processResponse && e.response != null) {
+        onResponse(errResponse);
+      }
+      return errResponse;
     } catch (e) {
       rethrow;
     }
@@ -119,6 +160,7 @@ class DioHttpHelper implements HttpHelper {
     required Map<String, dynamic> data,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? params,
+    bool processResponse = true,
     required String url,
   }) async {
     try {
@@ -130,9 +172,17 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
-      return _buildResponse(response);
+      final httpResponse = _buildResponse(response);
+      if (processResponse) {
+        onResponse(httpResponse);
+      }
+      return httpResponse;
     } on DioError catch (e) {
-      return _buildResponseWithError(e);
+      final errResponse = _buildResponseWithError(e);
+      if (processResponse && e.response != null) {
+        onResponse(errResponse);
+      }
+      return errResponse;
     } catch (e) {
       rethrow;
     }

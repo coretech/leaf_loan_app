@@ -1,59 +1,59 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/features.dart';
-import 'package:provider/provider.dart';
 
 class LoanTypeSelection extends StatelessWidget {
   const LoanTypeSelection({
     Key? key,
+    required this.loading,
+    required this.loanTypes,
     required this.onSelection,
+    required this.selectedIndex,
   }) : super(key: key);
+  final bool loading;
+  final List<LoanType> loanTypes;
   final ValueChanged<int> onSelection;
+  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoanApplicationProvider>(
-      builder: (context, loanApplicationProvider, _) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  'Choose a loan type',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose a loan type',
+              style: Theme.of(context).textTheme.headline6,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: _buildLoanTypeCards(loanApplicationProvider),
-            ),
-            if (loanApplicationProvider.canShowTypes)
-              LoanDescription(
-                loanType: loanApplicationProvider.selectedLoanType!,
-              )
-            else
-              const ShimmerBox(
-                height: 30,
-                padding: EdgeInsets.only(top: 5, bottom: 10, left: 10),
-                width: 280,
-              ),
-          ],
-        );
-      },
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: _buildLoanTypeCards(),
+        ),
+        if (!loading)
+          LoanDescription(
+            loanType: loanTypes[selectedIndex],
+          )
+        else
+          const ShimmerBox(
+            height: 30,
+            padding: EdgeInsets.only(top: 5, bottom: 10, left: 10),
+            width: 280,
+          ),
+      ],
     );
   }
 
-  List<Widget> _buildLoanTypeCards(
-    LoanApplicationProvider loanApplicationProvider,
-  ) {
-    if (loanApplicationProvider.canShowTypes) {
+  List<Widget> _buildLoanTypeCards() {
+    if (!loading) {
       final loanTypeCards = <Widget>[];
-      for (var i = 0; i < loanApplicationProvider.loanTypes.length; i++) {
-        final loanType = loanApplicationProvider.loanTypes[i];
+      for (var i = 0; i < loanTypes.length; i++) {
+        final loanType = loanTypes[i];
         loanTypeCards.add(
           Container(
             height: 175,
@@ -61,7 +61,7 @@ class LoanTypeSelection extends StatelessWidget {
             width: 150,
             child: LoanTypeCard(
               onSelection: onSelection,
-              selectedLoanType: loanApplicationProvider.selectedLoanType!,
+              selectedLoanType: loanTypes[selectedIndex],
               loanType: loanType,
               index: i,
             ),

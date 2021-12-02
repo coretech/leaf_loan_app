@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/integrations/integrations.dart';
 
@@ -15,7 +16,13 @@ class IntegrationIOC {
         () => CredoDataCollectionService(),
       )
       ..registerLazySingleton<HttpHelper>(
-        () => DioHttpHelper(),
+        () => DioHttpHelper(
+          /// This could be better architected to avoid the cyclic dependency
+          /// we have now between this IOC and AuthHelper
+          onResponse: (response) async {
+            await AuthIOC.authHelper().processResponse(response);
+          },
+        ),
       );
   }
 

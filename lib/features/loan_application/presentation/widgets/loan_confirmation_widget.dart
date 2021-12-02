@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:loan_app/core/core.dart';
 
-class ConfirmationWidget extends StatelessWidget {
-  const ConfirmationWidget({
+import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/features.dart';
+
+class LoanConfirmationWidget extends StatelessWidget {
+  const LoanConfirmationWidget({
     Key? key,
     required this.amount,
-    required this.amountDue,
-    required this.interestRate,
+    required this.durationDays,
     required this.purpose,
-    required this.typeName,
-    required this.dueDate,
+    required this.selectedCurrency,
+    required this.loanType,
   }) : super(key: key);
-  final String amount;
-  final String amountDue;
-  final String interestRate;
+  final double amount;
+  final int durationDays;
   final String purpose;
-  final String typeName;
-  final String dueDate;
+  final Currency selectedCurrency;
+  final LoanType loanType;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class ConfirmationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  typeName,
+                  loanType.name,
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.italic,
@@ -69,7 +69,7 @@ class ConfirmationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  amount,
+                  '$amount ${selectedCurrency.currencyId.fiatCode}',
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.italic,
@@ -92,7 +92,7 @@ class ConfirmationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  interestRate,
+                  '${loanType.interestRate}',
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.italic,
@@ -115,7 +115,7 @@ class ConfirmationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  amountDue,
+                  '${_getAmountDue()}',
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.italic,
@@ -138,7 +138,7 @@ class ConfirmationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  dueDate,
+                  _getDueDate(),
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.italic,
@@ -201,5 +201,15 @@ class ConfirmationWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double _getAmountDue() {
+    return amount + (amount * loanType.interestRate / 100);
+  }
+
+  String _getDueDate() {
+    final now = DateTime.now();
+    final dueDate = now.add(Duration(days: durationDays));
+    return Formatter.formatDate(dueDate);
   }
 }

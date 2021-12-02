@@ -40,7 +40,7 @@ class AuthHelper {
   }
 
   Future<void> processResponse(HttpResponse response) async {
-    if (response.statusCode == 401) {
+    if (response.statusCode >= 400) {
       await logOut();
     }
   }

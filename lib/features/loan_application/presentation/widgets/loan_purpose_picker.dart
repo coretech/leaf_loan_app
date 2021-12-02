@@ -20,12 +20,6 @@ class LoanPurposePicker extends StatefulWidget {
 }
 
 class _LoanPurposePickerState extends State<LoanPurposePicker> {
-  final List<String> purposeList = [];
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,7 +41,27 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
             style: Theme.of(context).textTheme.caption,
           ),
         ),
-        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 10,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Selected Purpose ',
+                style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+              ),
+              Text(
+                widget.selectedPurpose ?? 'None',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+        ),
         ElevatedButton(
           onPressed: !widget.loading ? _selectPurpose : null,
           style: ButtonStyle(
@@ -99,13 +113,14 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: purposeList.length,
+                  itemCount: widget.purposeList.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      selected: purposeList[index] == widget.selectedPurpose,
-                      title: Text(purposeList[index]),
+                      selected:
+                          widget.purposeList[index] == widget.selectedPurpose,
+                      title: Text(widget.purposeList[index]),
                       onTap: () {
-                        Navigator.pop(context, purposeList[index]);
+                        Navigator.pop(context, widget.purposeList[index]);
                       },
                     );
                   },

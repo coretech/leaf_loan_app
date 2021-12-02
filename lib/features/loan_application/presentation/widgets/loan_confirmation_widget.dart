@@ -178,7 +178,7 @@ class LoanConfirmationWidget extends StatelessWidget {
           const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () async {
-              var pinCode = await showPinConfirmationSheet(context);
+              final _ = await showPinConfirmationSheet(context);
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith(

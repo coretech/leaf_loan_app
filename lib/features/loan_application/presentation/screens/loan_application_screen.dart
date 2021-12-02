@@ -15,7 +15,7 @@ class LoanApplicationScreen extends StatefulWidget {
 
 class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   double? _loanAmount;
-  late LoanApplicationProvider _loanApplicationProvider;
+  late LoanTypeProvider _loanTypeProvider;
   int _selectedCurrencyIndex = 0;
   int _selectedLoanTypeIndex = 0;
   int _seletedDurationInDays = 61;
@@ -24,15 +24,15 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   @override
   void initState() {
     super.initState();
-    _loanApplicationProvider = LoanApplicationProvider()
+    _loanTypeProvider = LoanTypeProvider()
       ..getLoanTypes()
       ..addListener(_loanApplicationListener);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoanApplicationProvider>(
-      create: (_) => _loanApplicationProvider,
+    return ChangeNotifierProvider<LoanTypeProvider>(
+      create: (_) => _loanTypeProvider,
       builder: (context, _) {
         return Builder(
           builder: (context) {
@@ -45,9 +45,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                   'Apply for a loan',
                 ),
               ),
-              body: Consumer<LoanApplicationProvider>(
-                builder: (context, loanApplicationProvider, _) {
-                  if (loanApplicationProvider.errorMessage != null) {
+              body: Consumer<LoanTypeProvider>(
+                builder: (context, loanTypeProvider, _) {
+                  if (loanTypeProvider.errorMessage != null) {
                     return const Center(
                       child: Text(
                         'Some error occured while fetching Loan Type Details',
@@ -62,8 +62,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           LoanTypeSelection(
-                            loading: loanApplicationProvider.loading,
-                            loanTypes: loanApplicationProvider.loanTypes,
+                            loading: loanTypeProvider.loading,
+                            loanTypes: loanTypeProvider.loanTypes,
                             onSelection: (value) {
                               setState(() {
                                 _selectedCurrencyIndex = 0;
@@ -74,15 +74,15 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                           LoanCurrencyPicker(
                             currencies: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies
                                 : [],
-                            loading: loanApplicationProvider.loading,
+                            loading: loanTypeProvider.loading,
                             onChanged: (value) {
                               setState(() {
                                 _selectedCurrencyIndex = value;
-                                _loanAmount = loanApplicationProvider
+                                _loanAmount = loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies[_selectedCurrencyIndex]
                                     .minLoanAmount
@@ -96,14 +96,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                           LoanDurationPicker(
                             durationInDays: _seletedDurationInDays,
-                            loading: loanApplicationProvider.loading,
+                            loading: loanTypeProvider.loading,
                             maxDurationInDays: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .maxDuration
                                 : null,
                             minDurationInDays: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .minDuration
                                 : null,
@@ -118,29 +118,29 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                           LoanAmountPicker(
                             fiatCode: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies[_selectedCurrencyIndex]
                                     .currencyId
                                     .fiatCode
                                 : null,
                             interestRate: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .interestRate
                                     .toDouble()
                                 : null,
-                            loading: loanApplicationProvider.loading,
+                            loading: loanTypeProvider.loading,
                             loanAmount: _loanAmount,
                             maxAmount: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies[_selectedCurrencyIndex]
                                     .maxLoanAmount
                                     .toDouble()
                                 : null,
                             minAmount: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies[_selectedCurrencyIndex]
                                     .minLoanAmount
@@ -156,14 +156,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                             height: 5,
                           ),
                           LoanPurposePicker(
-                            loading: loanApplicationProvider.loading,
+                            loading: loanTypeProvider.loading,
                             onChanged: (value) {
                               setState(() {
                                 _selectedPurpose = value;
                               });
                             },
                             purposeList: _hasLoanTypes()
-                                ? loanApplicationProvider
+                                ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex].purpose
                                 : [],
                             selectedPurpose: _selectedPurpose,
@@ -201,7 +201,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   bool _canSubmit() {
-    return _loanApplicationProvider.canShowTypes &&
+    return _loanTypeProvider.canShowTypes &&
         _loanAmount != null &&
         _selectedPurpose != null;
   }
@@ -212,31 +212,30 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       builder: (context) => LoanConfirmationWidget(
         amount: _loanAmount!,
         durationDays: _seletedDurationInDays,
-        loanType: _loanApplicationProvider.loanTypes[_selectedLoanTypeIndex],
+        loanType: _loanTypeProvider.loanTypes[_selectedLoanTypeIndex],
         purpose: _selectedPurpose!,
-        selectedCurrency: _loanApplicationProvider
-            .loanTypes[_selectedLoanTypeIndex]
+        selectedCurrency: _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
             .currencies[_selectedCurrencyIndex],
       ),
     );
   }
 
   bool _hasLoanTypes() {
-    return _loanApplicationProvider.loanTypes.isNotEmpty;
+    return _loanTypeProvider.loanTypes.isNotEmpty;
   }
 
   void _loanApplicationListener() {
-    if (_loanApplicationProvider.errorMessage != null) {
+    if (_loanTypeProvider.errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(_loanApplicationProvider.errorMessage!),
+          content: Text(_loanTypeProvider.errorMessage!),
           duration: const Duration(seconds: 3),
         ),
       );
     }
-    if (_loanApplicationProvider.loanTypes.isNotEmpty) {
+    if (_loanTypeProvider.loanTypes.isNotEmpty) {
       setState(() {
-        _loanAmount = _loanApplicationProvider.loanTypes[_selectedLoanTypeIndex]
+        _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
             .currencies[_selectedCurrencyIndex].minLoanAmount
             .toDouble();
       });

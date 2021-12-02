@@ -59,11 +59,11 @@ class _PinConfirmationState extends State<PinConfirmation> {
           ),
           const SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-              Navigator.of(context).pop(true);
-              Navigator.of(context).pop(true);
-            },
+            onPressed: _otpController.text.length == 5
+                ? () {
+                    Navigator.pop(context, _otpController.text);
+                  }
+                : null,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith(
                 (states) => states.contains(MaterialState.disabled)
@@ -89,7 +89,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
   }
 }
 
-Future<bool?> showPinConfirmationSheet(BuildContext context) async {
+Future<String?> showPinConfirmationSheet(BuildContext context) async {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,

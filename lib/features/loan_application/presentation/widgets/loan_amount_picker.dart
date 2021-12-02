@@ -44,7 +44,9 @@ class LoanAmountPicker extends StatelessWidget {
         ),
         if (!loading)
           Slider(
-            divisions: (maxAmount! - minAmount!).toInt() + 1,
+            divisions: ((maxAmount! - minAmount!).toInt() ~/
+                    ((maxAmount! - minAmount!))) +
+                1,
             label: '${Formatter.formatMoney(loanAmount ?? minAmount!)}'
                 ' ${fiatCode!}',
             max: maxAmount!,

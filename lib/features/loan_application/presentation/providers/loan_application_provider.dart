@@ -1,19 +1,20 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:loan_app/features/loan_application/domain/domain.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 
 class LoanApplicationProvider extends ChangeNotifier {
+  final LoanApplicationRepository loanTypeRepository =
+      LoanApplicationIOC.loanApplicationRepo();
   bool loading = false;
+  bool completed = false;
   String? errorMessage;
-  final LoanTypeRepository loanTypeRepository =
-      LoanApplicationIOC.loanTypeRepo();
 
   void setLoading({required bool value}) {
     loading = value;
     notifyListeners();
   }
 
-  void setErrorMessage({required String? value}) {
+  void setErrorMessage(String? value) {
     errorMessage = value;
     notifyListeners();
   }
@@ -29,22 +30,29 @@ class LoanApplicationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<LoanType> loanTypes = [];
-
-  bool get hasLoanTypes => loanTypes.isNotEmpty;
-
-  bool get canShowTypes => hasLoanTypes && !loading;
-
-  Future<void> getLoanTypes() async {
-    clear();
+  Future<void> apply({
+    required double amount,
+    required String currencyId,
+    required int duration,
+    required String loanPurpose,
+    required String loanTypeId,
+    required String pinCode,
+  }) async {
     setLoading(value: true);
-    final loanTypesEither = await loanTypeRepository.getLoanTypes();
-    loanTypes = loanTypesEither.fold(
-      (l) {
-        setErrorMessage(value: "Couldn't fetch loan types");
-        return [];
+    final resultEither = await loanTypeRepository.apply(
+      amount: amount,
+      currencyId: currencyId,
+      duration: duration,
+      loanPurpose: loanPurpose,
+      loanTypeId: loanTypeId,
+      pinCode: pinCode,
+    );
+
+    resultEither.fold(
+      (l) => setErrorMessage("Couldn't complete application"),
+      (r) {
+        completed = true;
       },
-      (r) => r,
     );
     setLoading(value: false);
   }

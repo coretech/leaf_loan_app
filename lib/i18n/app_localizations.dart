@@ -16,10 +16,10 @@ class AppLocalizations implements L10n {
   late Map<String, String> _localizedStrings;
 
   static List<Locale> get supportedLocales => const [
-        Locale('en', ''),
-        Locale('rw', ''),
-        Locale('sw', ''),
-        Locale('fr', ''),
+        Locale(LocaleCodes.english, ''),
+        Locale(LocaleCodes.kinyarwanda, ''),
+        Locale(LocaleCodes.swahili, ''),
+        Locale(LocaleCodes.french, ''),
       ];
 
   // Helper method to keep the code in the widgets concise
@@ -73,7 +73,7 @@ class AppLocalizations implements L10n {
 }
 
 // LocalizationsDelegate is a factory for a set of localized resources
-// In this case, the localized strings will be gotten in an AppLocalizations 
+// In this case, the localized strings will be gotten in an AppLocalizations
 // object
 class _AppLocalizationsDelegate
     extends LocalizationsDelegate<AppLocalizations> {

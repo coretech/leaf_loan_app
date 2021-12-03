@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/features/features.dart';
 import 'package:loan_app/i18n/i18n.dart';
+import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -34,67 +35,72 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: _navigatorKey,
-      onGenerateRoute: (settings) {
-        if (settings.name == HomeScreen.routeName) {
-          final args = settings.arguments as HomeScreenArguments?;
-          return MaterialPageRoute(
-            builder: (context) => HomeScreen(
-              hasTransactions: args?.hasTransactions ?? false,
-              hasLoan: args?.hasLoan ?? false,
+    return LocalizationWrapper(
+      child: Consumer<LocalizationProvider>(
+        builder: (context, localizationProvider, _) => MaterialApp(
+          navigatorKey: _navigatorKey,
+          onGenerateRoute: (settings) {
+            if (settings.name == HomeScreen.routeName) {
+              final args = settings.arguments as HomeScreenArguments?;
+              return MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                  hasTransactions: args?.hasTransactions ?? false,
+                  hasLoan: args?.hasLoan ?? false,
+                ),
+              );
+            }
+          },
+          routes: {
+            ArticlesScreen.routeName: (context) => const ArticlesScreen(),
+            AboutScreen.routeName: (context) => const AboutScreen(),
+            LoanApplicationScreen.routeName: (context) =>
+                const LoanApplicationScreen(),
+            LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
+            LoanPaymentScreen.routeName: (context) => const LoanPaymentScreen(),
+            LoginScreen.routeName: (context) => const LoginScreen(),
+            OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
+            SplashScreen.routeName: (ctx) => const SplashScreen(),
+            UserProfileScreen.routeName: (ctx) => const UserProfileScreen(),
+          },
+          theme: ThemeData(
+            primaryColor: Colors.green,
+            primarySwatch: Colors.green,
+            colorScheme: const ColorScheme.light(
+              primary: Colors.green,
+              secondary: Colors.orange,
             ),
-          );
-        }
-      },
-      routes: {
-        ArticlesScreen.routeName: (context) => const ArticlesScreen(),
-        AboutScreen.routeName: (context) => const AboutScreen(),
-        LoanApplicationScreen.routeName: (context) =>
-            const LoanApplicationScreen(),
-        LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
-        LoanPaymentScreen.routeName: (context) => const LoanPaymentScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
-        SplashScreen.routeName: (ctx) => const SplashScreen(),
-        UserProfileScreen.routeName: (ctx) => const UserProfileScreen(),
-      },
-      theme: ThemeData(
-        primaryColor: Colors.green,
-        primarySwatch: Colors.green,
-        colorScheme: const ColorScheme.light(
-          primary: Colors.green,
-          secondary: Colors.orange,
-        ),
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        primaryColor: Colors.green,
-        colorScheme: ColorScheme.dark(
-          primary: Colors.green,
-          secondary: Colors.orange.withGreen(210).withBlue(55),
-        ),
-      ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      // Returns a locale which will be used by the app
-      localeResolutionCallback: (locale, supportedLocales) {
-        // Check if the current device locale is supported
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+            primaryColor: Colors.green,
+            colorScheme: ColorScheme.dark(
+              primary: Colors.green,
+              secondary: Colors.orange.withGreen(210).withBlue(55),
+            ),
+          ),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          // Returns a locale which will be used by the app
+          localeResolutionCallback: (locale, supportedLocales) {
+            // Check if the current device locale is supported
 
-        for (final supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale?.languageCode &&
-              supportedLocale.countryCode == locale?.countryCode) {
-            return supportedLocale;
-          }
-        }
-        // If the locale of the device is not supported, use the first one
-        // from the list (English, in this case).
-        return supportedLocales.first;
-      },
-      supportedLocales: AppLocalizations.supportedLocales,
+            for (final supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale?.languageCode &&
+                  supportedLocale.countryCode == locale?.countryCode) {
+                return supportedLocale;
+              }
+            }
+            // If the locale of the device is not supported, use the first one
+            // from the list (English, in this case).
+            return supportedLocales.first;
+          },
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: localizationProvider.locale,
+        ),
+      ),
     );
   }
 

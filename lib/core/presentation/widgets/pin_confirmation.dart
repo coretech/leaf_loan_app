@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinConfirmation extends StatefulWidget {
@@ -20,7 +21,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Enter your PIN code',
+            'Enter your PIN code'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
           Divider(
@@ -54,7 +55,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
           ),
           const SizedBox(height: 10),
           Text(
-            'Please enter your Leaf Wallet PIN code to continue',
+            'Please enter your Leaf Wallet PIN code to continue'.tr(),
             style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(height: 10),
@@ -77,9 +78,9 @@ class _PinConfirmationState extends State<PinConfirmation> {
                 ),
               ),
             ),
-            child: const Text(
-              'Confirm',
-              style: TextStyle(fontSize: 18),
+            child: Text(
+              'Confirm'.tr(),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).viewInsets.bottom),

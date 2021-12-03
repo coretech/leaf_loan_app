@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleCard extends StatelessWidget {
@@ -39,7 +40,7 @@ class ArticleCard extends StatelessWidget {
                     style: TextButton.styleFrom(
                       primary: Theme.of(context).colorScheme.secondary,
                     ),
-                    child: const Text('Read more'),
+                    child: Text('Read more'.tr()),
                     onPressed: () {
                       launch(
                         'https://leafglobalfintech.com/leaf/leaf-for'

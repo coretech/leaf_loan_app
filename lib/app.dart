@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/features/features.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -72,6 +74,27 @@ class _AppState extends State<App> {
           secondary: Colors.orange.withGreen(210).withBlue(55),
         ),
       ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      // Returns a locale which will be used by the app
+      localeResolutionCallback: (locale, supportedLocales) {
+        // Check if the current device locale is supported
+
+        for (final supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale?.languageCode &&
+              supportedLocale.countryCode == locale?.countryCode) {
+            return supportedLocale;
+          }
+        }
+        // If the locale of the device is not supported, use the first one
+        // from the list (English, in this case).
+        return supportedLocales.first;
+      },
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 

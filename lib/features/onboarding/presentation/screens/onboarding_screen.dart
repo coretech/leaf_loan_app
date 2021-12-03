@@ -3,6 +3,7 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -33,28 +34,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final _slides = [
       _buildSlide(
         context,
-        title: 'Easy Application',
-        description: 'Apply for a loan with almost instant approval',
+        title: 'Easy Application'.tr(),
+        description: 'Apply for a loan with almost instant approval'.tr(),
         image: 'assets/images/application.png',
       ),
       _buildSlide(
         context,
-        title: 'Easy Payment',
-        description: 'Pay off your loan from your Leaf Wallet',
+        title: 'Easy Payment'.tr(),
+        description: 'Pay off your loan from your Leaf Wallet'.tr(),
         image: 'assets/images/smartphone_payment.png',
       ),
       _buildSlide(
         context,
-        title: 'Score and Insights',
+        title: 'Score and Insights'.tr(),
         description: 'Build your credit score and see personalized '
-            'insights on your profile',
+                'insights on your profile'
+            .tr(),
         image: 'assets/images/growth.png',
       ),
       _buildSlide(
         context,
-        title: 'Learn with Leaf',
+        title: 'Learn with Leaf'.tr(),
         description: 'Learn about how taking and paying small'
-            ' loans can change your life',
+                ' loans can change your life'
+            .tr(),
         image: 'assets/images/financial_knowledge.png',
       ),
     ];

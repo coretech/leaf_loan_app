@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           Expanded(
             child: Center(
               child: Text(
-                'Leaf Loans',
+                'Leaf Loans'.tr(),
                 style: TextStyle(
                   color: _getAppBarTextColor(context),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class ArticlesScreen extends StatefulWidget {
   const ArticlesScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
         centerTitle: true,
         elevation: 0,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
-        title: const Text('Recent from Leaf'),
+        title: Text('Recent from Leaf'.tr()),
       ),
       body: const Padding(
         padding: EdgeInsets.all(20),

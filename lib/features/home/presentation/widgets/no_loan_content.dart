@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class NoLoanContent extends StatelessWidget {
   const NoLoanContent({
@@ -21,17 +22,18 @@ class NoLoanContent extends StatelessWidget {
             [
               const SizedBox(height: 20),
               Text(
-                'Welcome, John! 👋🏾',
+                '${'Welcome'.tr()}, John! 👋🏾',
                 style: Theme.of(context).textTheme.headline5,
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Leaf provides you small loans that you '
-                'can pay with any currency that is available in your wallet',
+              Text(
+                'Leaf provides you small loans that you can pay with any '
+                        'currency that is available in your wallet'
+                    .tr(),
               ),
               const SizedBox(height: 20),
               Text(
-                'You have no active loans at the moment',
+                'You have no active loans at the moment'.tr(),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               const SizedBox(height: 10),
@@ -50,7 +52,7 @@ class NoLoanContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Text(
-                  'Recent from Leaf',
+                  'Recent from Leaf'.tr(),
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

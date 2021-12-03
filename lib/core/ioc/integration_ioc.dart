@@ -26,6 +26,10 @@ class IntegrationIOC {
       );
   }
 
+  static void registerI18n(L10n localizations) {
+    _locator.registerLazySingleton<L10n>(() => localizations);
+  }
+
   static LocalStorage localStorage() {
     return _locator.get<LocalStorage>();
   }
@@ -36,5 +40,9 @@ class IntegrationIOC {
 
   static HttpHelper httpHelper() {
     return _locator.get<HttpHelper>();
+  }
+
+  static L10n localization() {
+    return _locator.get<L10n>();
   }
 }

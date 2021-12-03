@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({
@@ -14,7 +15,7 @@ class TransactionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Formatter.formatDate(DateTime.now()),
+            Formatter.formatDate(context, DateTime.now()),
             style: TextStyle(
               color: Theme.of(context).hintColor,
               fontWeight: FontWeight.w900,
@@ -32,9 +33,9 @@ class TransactionCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Repayment',
-                    style: TextStyle(
+                  Text(
+                    'Repayment'.tr(),
+                    style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
                       letterSpacing: 0.75,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanActionButtons extends StatelessWidget {
   const LoanActionButtons({
@@ -30,7 +31,7 @@ class LoanActionButtons extends StatelessWidget {
               Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          child: const Text('Pay your loan'),
+          child: Text('Pay your loan'.tr()),
         ),
         const SizedBox(width: 20),
         ElevatedButton(
@@ -53,7 +54,7 @@ class LoanActionButtons extends StatelessWidget {
               Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          child: const Text('More info'),
+          child: Text('More info'.tr()),
         ),
       ],
     );

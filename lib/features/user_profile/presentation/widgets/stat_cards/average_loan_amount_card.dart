@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class AverageLoanAmountCard extends StatelessWidget {
   const AverageLoanAmountCard({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class AverageLoanAmountCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Average Loan Amount',
+              'Average Loan Amount'.tr(),
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
@@ -41,7 +42,8 @@ class AverageLoanAmountCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20),
               child: Text(
                 'The average is the total loan amount you have taken divided'
-                ' with the total number of loans.',
+                        ' with the total number of loans.'
+                    .tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 10,
                     ),

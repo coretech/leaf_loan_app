@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class ActiveLoanCard extends StatelessWidget {
   const ActiveLoanCard({
@@ -72,7 +73,7 @@ class ActiveLoanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '[Category X] Loan',
+                      '[Category X] ${'Loan'.tr()}',
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             color: _getTextColor(context),
                             fontSize: 18,
@@ -88,7 +89,7 @@ class ActiveLoanCard extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  'Pay before',
+                  'Pay before'.tr(),
                   style: TextStyle(
                     color: _getTextColor(context),
                     fontSize: 16,
@@ -116,7 +117,7 @@ class ActiveLoanCard extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
-                        text: 'Remaining amount\n',
+                        text: '${'Remaining amount'.tr()}\n',
                       ),
                       TextSpan(
                         style: TextStyle(
@@ -138,7 +139,7 @@ class ActiveLoanCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10, bottom: 15),
                   child: PayButton.labeled(
                     context: context,
-                    label: 'Pay now',
+                    label: 'Pay now'.tr(),
                     mini: true,
                     onTap: () {
                       log('pay on loan history card tapped');
@@ -158,7 +159,7 @@ class ActiveLoanCard extends StatelessWidget {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: 'Total Amount: ',
+                            text: '${'Total Amount'.tr()}: ',
                           ),
                           TextSpan(
                             style:
@@ -193,7 +194,7 @@ class ActiveLoanCard extends StatelessWidget {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: 'Paid: ',
+                            text: '${'Paid'.tr()}: ',
                           ),
                           TextSpan(
                             style:
@@ -220,14 +221,14 @@ class ActiveLoanCard extends StatelessWidget {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: 'Status: ',
+                            text: '${'Status'.tr()}: ',
                           ),
                           TextSpan(
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: 'Open',
+                            text: 'Open'.tr(),
                           ),
                         ],
                       ),

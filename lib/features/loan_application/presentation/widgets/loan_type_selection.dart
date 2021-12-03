@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/features.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanTypeSelection extends StatelessWidget {
   const LoanTypeSelection({
@@ -26,7 +27,7 @@ class LoanTypeSelection extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
-              'Choose a loan type',
+              'Choose a loan type'.tr(),
               style: Theme.of(context).textTheme.headline6,
             ),
           ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class CustomLoadingWidget extends StatelessWidget {
   const CustomLoadingWidget({Key? key}) : super(key: key);
@@ -19,9 +20,9 @@ class CustomLoadingWidget extends StatelessWidget {
           else
             const CupertinoActivityIndicator(),
           const SizedBox(height: 20),
-          const Text(
-            'Loading please wait',
-            style: TextStyle(fontSize: 15),
+          Text(
+            'Loading please wait'.tr(),
+            style: const TextStyle(fontSize: 15),
           ),
         ],
       ),

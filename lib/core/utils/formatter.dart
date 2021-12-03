@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class Formatter {
-  static String formatDate(DateTime date) {
-    final dateFormat = DateFormat.yMMMMd('en_US');
+  static String formatDate(BuildContext context, DateTime date) {
+    final locale = Localizations.localeOf(context);
+    final dateFormat = DateFormat.yMMMMd(locale.languageCode);
     return dateFormat.format(date);
   }
 

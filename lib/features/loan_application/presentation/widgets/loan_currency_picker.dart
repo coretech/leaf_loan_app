@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanCurrencyPicker extends StatelessWidget {
   const LoanCurrencyPicker({
@@ -26,15 +27,16 @@ class LoanCurrencyPicker extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'Select a loan currency',
+            'Select a loan currency'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
-            'The currency is one of the available currencies attached to '
-            'your Leaf wallet. As of now, leaf supports KES, RWF, and UGX.',
+            'The currency is one of the available currencies attached to your '
+                    'Leaf wallet. As of now, leaf supports KES, RWF, and UGX.'
+                .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class ApplyButton {
   static Widget labeled({
@@ -22,7 +23,7 @@ class ApplyButton {
         ),
       ),
       child: Text(
-        'Apply now',
+        'Apply now'.tr(),
         style: TextStyle(
           fontSize: mini ? 13 : 20,
         ),
@@ -76,7 +77,7 @@ class ApplyButton {
               ),
               const SizedBox(height: 5),
               Text(
-                'Apply',
+                'Apply'.tr(),
                 style: Theme.of(context).textTheme.headline5?.copyWith(
                       color: Theme.of(context).canvasColor,
                     ),

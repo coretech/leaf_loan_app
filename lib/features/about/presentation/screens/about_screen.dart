@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,7 +28,7 @@ class _AboutScreenState extends State<AboutScreen> {
         centerTitle: true,
         elevation: 0,
         foregroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Text('About'),
+        title: Text('About'.tr()),
       ),
       body: Column(
         children: [
@@ -42,7 +43,7 @@ class _AboutScreenState extends State<AboutScreen> {
               );
             },
             title: Text(
-              'Terms and Conditions',
+              'Terms and Conditions'.tr(),
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -56,8 +57,8 @@ class _AboutScreenState extends State<AboutScreen> {
                 'https://leafglobalfintech.com/leaf-loans-privacy-policy/',
               );
             },
-            title: const Text(
-              'Privacy Policy',
+            title: Text(
+              'Privacy Policy'.tr(),
             ),
           ),
           ListTile(
@@ -67,13 +68,13 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Coming soon'),
+                SnackBar(
+                  content: Text('Coming soon'.tr()),
                 ),
               );
             },
             title: Text(
-              'Contact us',
+              'Contact us'.tr(),
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -84,13 +85,13 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Coming soon'),
+                SnackBar(
+                  content: Text('Coming soon'.tr()),
                 ),
               );
             },
             title: Text(
-              'Share App',
+              'Share App'.tr(),
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -102,15 +103,15 @@ class _AboutScreenState extends State<AboutScreen> {
                 style: Theme.of(context).textTheme.bodyText2,
                 children: [
                   TextSpan(
-                    text: 'Leaf Loans version ',
+                    text: 'Leaf Loans'.tr(),
                     style: Theme.of(context).textTheme.caption,
                   ),
                   TextSpan(
-                    text: versionName,
+                    text: ' $versionName ',
                     style: Theme.of(context).textTheme.caption,
                   ),
                   TextSpan(
-                    text: ' © Leaf Global Fintech',
+                    text: '© Leaf Global Fintech'.tr(),
                     style: Theme.of(context).textTheme.caption?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

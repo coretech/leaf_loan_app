@@ -5,6 +5,7 @@ import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/about/about.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 elevation: 0,
                 foregroundColor: Theme.of(context).colorScheme.onBackground,
                 pinned: true,
-                title: const Text('Leaf Profile'),
+                title: Text('Leaf Profile'.tr()),
               ),
               SliverList(
                 delegate: SliverChildListDelegate.fixed(
@@ -75,7 +76,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           TextButton.icon(
                             onPressed: _launchApp,
                             icon: const Icon(Icons.edit_outlined),
-                            label: const Text('Edit on Leaf Wallet'),
+                            label: Text('Edit on Leaf Wallet'.tr()),
                           ),
                           const _ProvideDivider(),
                           Padding(
@@ -83,7 +84,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               bottom: 20,
                             ),
                             child: Text(
-                              'Loan Stats',
+                              'Loan Stats'.tr(),
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle1
@@ -111,7 +112,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               AuthIOC.authHelper().logOut();
                             },
                             icon: const Icon(Icons.exit_to_app),
-                            label: const Text('Log Out'),
+                            label: Text('Log Out'.tr()),
                           ),
                         ],
                       ),

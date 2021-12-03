@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class PaymentsHistoryColumnLabels extends SliverPersistentHeaderDelegate {
   PaymentsHistoryColumnLabels();
@@ -30,7 +31,7 @@ class PaymentsHistoryColumnLabels extends SliverPersistentHeaderDelegate {
         vertical: 10,
       ),
       child: Text(
-        'Transaction History',
+        'Transaction History'.tr(),
         style: Theme.of(context).textTheme.headline5?.copyWith(
               color: Theme.of(context).colorScheme.onSurface,
             ),

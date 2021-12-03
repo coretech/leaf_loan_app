@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanAmountPicker extends StatelessWidget {
   const LoanAmountPicker({
@@ -29,7 +30,7 @@ class LoanAmountPicker extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'Choose the loan amount',
+            'Choose the loan amount'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -37,8 +38,9 @@ class LoanAmountPicker extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-            ' sed do eiusmod tempor incididunt ut labore et dolore '
-            'magna',
+                    ' sed do eiusmod tempor incididunt ut labore et dolore '
+                    'magna'
+                .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -77,8 +79,8 @@ class LoanAmountPicker extends StatelessWidget {
                       ' $fiatCode',
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    const Text(
-                      'Amount',
+                    Text(
+                      'Amount'.tr(),
                     ),
                   ],
                 ),
@@ -97,7 +99,7 @@ class LoanAmountPicker extends StatelessWidget {
                           '${_getInterest()} $fiatCode',
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                        Text('Interest (${interestRate ?? 0}%)'),
+                        Text('${'Interest'.tr()} (${interestRate ?? 0}%)'),
                       ],
                     ),
                     Column(
@@ -107,7 +109,7 @@ class LoanAmountPicker extends StatelessWidget {
                           ' $fiatCode',
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                        const Text('Total Due'),
+                        Text('Total Due'.tr()),
                       ],
                     ),
                   ],

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanHistoryScreen extends StatelessWidget {
   const LoanHistoryScreen({
@@ -25,7 +26,7 @@ class LoanHistoryScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           foregroundColor: Theme.of(context).colorScheme.onSurface,
-          title: const Text('Loans History'),
+          title: Text('Loans History'.tr()),
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
@@ -66,14 +67,14 @@ class LoanHistoryScreen extends StatelessWidget {
               height: 20,
             ),
             Text(
-              "You haven't taken a loan on Leaf",
+              "You haven't taken a loan on Leaf".tr(),
               style: Theme.of(context).textTheme.headline6,
             ),
             Padding(
               padding: const EdgeInsets.all(20),
               child: ApplyButton.labeled(
                 context: context,
-                label: 'Apply for a loan',
+                label: 'Apply for a loan'.tr(),
                 onTap: () {
                   log('apply on no loans tapped');
                   Navigator.of(context).pushNamed(

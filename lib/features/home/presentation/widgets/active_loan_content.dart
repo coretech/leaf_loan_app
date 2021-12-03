@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class ActiveLoanContent extends StatefulWidget {
   const ActiveLoanContent({
@@ -39,7 +39,7 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(
-                      'Recent Transactions',
+                      'Recent Transactions'.tr(),
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),

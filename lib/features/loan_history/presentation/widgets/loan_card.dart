@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanCard extends StatelessWidget {
   const LoanCard({
@@ -59,7 +60,7 @@ class LoanCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '[Category X] Loan',
+                    '[Category X] ${'Loan'.tr()}',
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: 18,
                         ),
@@ -81,7 +82,7 @@ class LoanCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           style: Theme.of(context).textTheme.bodyText1,
-                          text: 'Amount: ',
+                          text: '${'Amount'.tr()}: ',
                         ),
                         TextSpan(
                           style: TextStyle(
@@ -102,11 +103,11 @@ class LoanCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           style: Theme.of(context).textTheme.bodyText1,
-                          text: 'Due: ',
+                          text: '${'Due'.tr()}: ',
                         ),
                         TextSpan(
                           style: _getDueDateTextStyle(context),
-                          text: Formatter.formatDate(dueDate),
+                          text: Formatter.formatDate(context, dueDate),
                         ),
                       ],
                     ),
@@ -124,7 +125,7 @@ class LoanCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           style: Theme.of(context).textTheme.bodyText1,
-                          text: 'Paid: ',
+                          text: '${'Paid'.tr()}: ',
                         ),
                         TextSpan(
                           style: TextStyle(
@@ -145,7 +146,7 @@ class LoanCard extends StatelessWidget {
                       children: [
                         TextSpan(
                           style: Theme.of(context).textTheme.bodyText1,
-                          text: 'Status: ',
+                          text: '${'Status'.tr()}: ',
                         ),
                         TextSpan(
                           style: _getStatusTextStyle(context),
@@ -157,7 +158,7 @@ class LoanCard extends StatelessWidget {
                 ],
               ),
               Text(
-                'View Details',
+                'View Details'.tr(),
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontSize: 12,
                       color: Theme.of(context).colorScheme.secondary,
@@ -195,7 +196,7 @@ class LoanCard extends StatelessWidget {
   }
 
   String _getLoanStatus() {
-    return 'Closed';
+    return 'Closed'.tr();
   }
 
   TextStyle? _getAmountTextStyle(BuildContext context) {

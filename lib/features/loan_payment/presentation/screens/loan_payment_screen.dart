@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/loan_payment/presentation/widgets/widgets.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanPaymentScreen extends StatefulWidget {
   const LoanPaymentScreen({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
         centerTitle: true,
         elevation: 0,
         foregroundColor: Theme.of(context).colorScheme.onBackground,
-        title: const Text('Pay for your Asset Loan'),
+        title: Text('Pay for your {Asset} Loan'.tr()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -39,7 +40,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
           children: [
             Row(),
             Text(
-              'Your current remaining loan amount is ',
+              '${'Your current remaining loan amount is'.tr()} ',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
@@ -72,7 +73,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
               indent: 50,
             ),
             Text(
-              'Your KSH balance on Leaf Wallet is ',
+              '${'Your {KSH} balance on Leaf Wallet is'.tr()} ',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
@@ -107,7 +108,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 errorMaxLines: 3,
-                labelText: 'Enter the amount you want to pay',
+                labelText: 'Enter the amount you want to pay'.tr(),
                 prefixText: 'KSH ',
                 prefixStyle: TextStyle(
                   color: Theme.of(context).colorScheme.onBackground,
@@ -121,8 +122,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                 padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
                 child: Text(
                   'You will have '
-                  '${_getRemaining()}'
-                  ' KSH remaining to pay after paying this amount',
+                          '{${_getRemaining()}}'
+                          ' {KSH} remaining to pay after paying this amount'
+                      .tr(),
                   style: Theme.of(context).textTheme.caption,
                   textAlign: TextAlign.center,
                 ),
@@ -130,9 +132,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             const SizedBox(height: 20),
             ElevatedButton.icon(
               icon: const Icon(Icons.payment),
-              label: const Text(
-                'Pay',
-                style: TextStyle(fontSize: 18),
+              label: Text(
+                'Pay'.tr(),
+                style: const TextStyle(fontSize: 18),
               ),
               onPressed: _validateAmount(_amountController.text) == null
                   ? () async {
@@ -161,18 +163,20 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
 
   String? _validateAmount(String? value) {
     if (value?.isEmpty ?? true) {
-      return 'Please enter the amount you want to pay';
+      return 'Please enter the amount you want to pay'.tr();
     }
     if (double.tryParse(value!) == null) {
-      return 'Please enter a valid amount';
+      return 'Please enter a valid amount'.tr();
     }
     if (double.parse(value) > 12960) {
       return 'Please enter an amount that is less than or equal '
-          'to your remaining amount';
+              'to your remaining amount'
+          .tr();
     }
     if (double.parse(value) > 5000) {
       return 'Please enter an amount that is less than or equal '
-          'to your Leaf Wallet balance';
+              'to your Leaf Wallet balance'
+          .tr();
     }
   }
 

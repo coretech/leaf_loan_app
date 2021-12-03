@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class TotalLoanAmountCard extends StatelessWidget {
   const TotalLoanAmountCard({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class TotalLoanAmountCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Total Taken Loan Amount',
+              'Total Taken Loan Amount'.tr(),
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
@@ -40,7 +41,8 @@ class TotalLoanAmountCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20),
               child: Text(
                 'This is the total amount that you have taken through '
-                'Leaf Loan App.',
+                        'Leaf Loan App.'
+                    .tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 10,
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:loan_app/features/loan_application/loan_application.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
   BigPersistentApplyButton({
@@ -66,7 +66,7 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Apply for a loan now',
+                'Apply for a loan now'.tr(),
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 20,
@@ -75,7 +75,7 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
               ),
               const SizedBox(height: 5),
               Text(
-                'You can take loans as much as RWF 50,000',
+                '${'You can take loans as much as'.tr()} RWF 50,000',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 12,

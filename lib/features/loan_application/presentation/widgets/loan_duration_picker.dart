@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:loan_app/core/core.dart';
 
 import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanDurationPicker extends StatefulWidget {
   const LoanDurationPicker({
@@ -41,7 +42,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'Choose the loan duration',
+            'Choose the loan duration'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -49,8 +50,9 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-            ' sed do eiusmod tempor incididunt ut labore et dolore '
-            'magna',
+                    ' sed do eiusmod tempor incididunt ut labore et dolore '
+                    'magna'
+                .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -77,9 +79,9 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
                 ),
               ),
             ),
-            child: const Text(
-              'Select payment due date',
-              style: TextStyle(fontSize: 18),
+            child: Text(
+              'Select payment due date'.tr(),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
         ),
@@ -90,7 +92,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   Widget _buildDayCount(BuildContext context, DateTime date) {
     final dayCount = date.difference(DateTime.now()).inDays.toString();
     return Text(
-      '$dayCount days',
+      '$dayCount ${'days'.tr()}',
       style: Theme.of(context).textTheme.bodyText1,
     );
   }

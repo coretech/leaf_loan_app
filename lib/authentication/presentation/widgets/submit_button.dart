@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class SubmitButton extends StatelessWidget {
@@ -72,7 +73,7 @@ class SubmitButton extends StatelessWidget {
                   width: 10,
                 ),
               Text(
-                'Log In',
+                'Log In'.tr(),
                 style: TextStyle(
                   color: Theme.of(context).scaffoldBackgroundColor,
                 ),

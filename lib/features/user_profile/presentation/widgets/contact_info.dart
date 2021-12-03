@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class ContactInfo extends StatelessWidget {
@@ -19,7 +20,7 @@ class ContactInfo extends StatelessWidget {
                 bottom: 20,
               ),
               child: Text(
-                'Contact Info',
+                'Contact Info'.tr(),
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -31,7 +32,7 @@ class ContactInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Address',
+                        'Address'.tr(),
                         style: Theme.of(context).textTheme.caption,
                       ),
                       const SizedBox(height: 5),
@@ -49,7 +50,7 @@ class ContactInfo extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Phone Number',
+                        'Phone Number'.tr(),
                         style: Theme.of(context).textTheme.caption,
                       ),
                       const SizedBox(height: 5),
@@ -69,7 +70,7 @@ class ContactInfo extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  'Email',
+                  'Email'.tr(),
                   style: Theme.of(context).textTheme.caption,
                 ),
                 const SizedBox(height: 5),

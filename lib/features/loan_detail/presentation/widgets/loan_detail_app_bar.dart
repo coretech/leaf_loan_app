@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanDetailAppBar extends StatelessWidget {
   const LoanDetailAppBar({
@@ -33,11 +34,11 @@ class LoanDetailAppBar extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('[Category X] Loan'),
+          Text('[Category X] ${'Loan'.tr()}'),
           if (status != LoanStatus.closed) const Spacer(),
           if (status != LoanStatus.closed)
             Text(
-              '${_getRemainingDays()} days remaining',
+              '${_getRemainingDays()} ${'days remaining'.tr()}',
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: Theme.of(context).canvasColor,
                     fontWeight: FontWeight.bold,
@@ -64,7 +65,7 @@ class LoanDetailAppBar extends StatelessWidget {
                 padding: const EdgeInsets.all(5),
                 child: PayButton.labeled(
                   context: context,
-                  label: 'Pay',
+                  label: 'Pay'.tr(),
                   mini: true,
                   onTap: () {
                     log('pay on loan detail app bar tapped');
@@ -89,7 +90,7 @@ class LoanDetailAppBar extends StatelessWidget {
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       color: Theme.of(context).canvasColor,
                     ),
-                text: 'Remaining amount\n',
+                text: '${'Remaining amount'.tr()}\n',
               ),
               TextSpan(
                 style: Theme.of(context).textTheme.caption?.copyWith(
@@ -112,7 +113,7 @@ class LoanDetailAppBar extends StatelessWidget {
         backgroundColor: _getBackgroundColor(context),
         centerTitle: true,
         elevation: 0,
-        title: const Text('Completely Paid'),
+        title: Text('Completely Paid'.tr()),
       );
     }
   }

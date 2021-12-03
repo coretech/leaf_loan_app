@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class CurrentLoanInfo extends StatelessWidget {
   const CurrentLoanInfo({
@@ -47,7 +48,7 @@ class CurrentLoanInfo extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    'Pay before',
+                    'Pay before'.tr(),
                     style: TextStyle(
                       color: _getTextColor(context),
                       fontSize: 16,
@@ -66,7 +67,7 @@ class CurrentLoanInfo extends StatelessWidget {
                     height: 15,
                   ),
                   Text(
-                    'Remaining Amount',
+                    'Remaining Amount'.tr(),
                     style: TextStyle(
                       color: _getTextColor(context),
                       fontSize: 16,

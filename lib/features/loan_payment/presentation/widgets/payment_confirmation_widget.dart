@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class PaymentConfirmationWidget extends StatelessWidget {
   const PaymentConfirmationWidget({
@@ -20,7 +21,7 @@ class PaymentConfirmationWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Confirm Payment Info',
+            'Confirm Payment Info'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
           Divider(
@@ -31,7 +32,7 @@ class PaymentConfirmationWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Amount',
+                'Amount'.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .headline6
@@ -51,7 +52,7 @@ class PaymentConfirmationWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Remaining Loan Amount',
+                'Remaining Loan Amount'.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .headline6
@@ -68,7 +69,8 @@ class PaymentConfirmationWidget extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'You will have to pay enter your pin code to confirm this payment',
+            'You will have to pay enter your pin code to confirm this payment'
+                .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(height: 10),
@@ -89,9 +91,9 @@ class PaymentConfirmationWidget extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text(
-              'Proceed',
-              style: TextStyle(fontSize: 18),
+            child: Text(
+              'Proceed'.tr(),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/features.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanConfirmationWidget extends StatelessWidget {
   const LoanConfirmationWidget({
@@ -26,7 +27,7 @@ class LoanConfirmationWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Confirm Loan Info',
+            'Confirm Loan Info'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
           Divider(
@@ -37,7 +38,7 @@ class LoanConfirmationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Loan Type',
+                  'Loan Type'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -60,7 +61,7 @@ class LoanConfirmationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Amount',
+                  'Amount'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -83,7 +84,7 @@ class LoanConfirmationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Interest Rate',
+                  'Interest Rate'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -106,7 +107,7 @@ class LoanConfirmationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Amount Due',
+                  'Amount Due'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -129,7 +130,7 @@ class LoanConfirmationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Due Date',
+                  'Due Date'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -138,7 +139,7 @@ class LoanConfirmationWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  _getDueDate(),
+                  _getDueDate(context),
                   style: Theme.of(context).textTheme.caption?.copyWith(
                         fontSize: 16,
                         fontStyle: FontStyle.italic,
@@ -152,7 +153,7 @@ class LoanConfirmationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Loan Purpose',
+                  'Loan Purpose'.tr(),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -172,7 +173,8 @@ class LoanConfirmationWidget extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'You will have to pay enter your pin code to confirm this loan',
+            'You will have to pay enter your pin code to confirm this loan'
+                .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(height: 10),
@@ -193,9 +195,9 @@ class LoanConfirmationWidget extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text(
-              'Proceed',
-              style: TextStyle(fontSize: 18),
+            child: Text(
+              'Proceed'.tr(),
+              style: const TextStyle(fontSize: 18),
             ),
           ),
         ],
@@ -207,9 +209,12 @@ class LoanConfirmationWidget extends StatelessWidget {
     return amount + (amount * loanType.interestRate / 100);
   }
 
-  String _getDueDate() {
+  String _getDueDate(BuildContext context) {
     final now = DateTime.now();
     final dueDate = now.add(Duration(days: durationDays));
-    return Formatter.formatDate(dueDate);
+    return Formatter.formatDate(
+      context,
+      dueDate,
+    );
   }
 }

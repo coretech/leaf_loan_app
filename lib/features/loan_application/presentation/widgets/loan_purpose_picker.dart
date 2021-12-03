@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanPurposePicker extends StatefulWidget {
   const LoanPurposePicker({
@@ -28,7 +29,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            'Choose the loan purpose',
+            'Choose the loan purpose'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -36,8 +37,9 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-            ' sed do eiusmod tempor incididunt ut labore et dolore'
-            ' magna',
+                    ' sed do eiusmod tempor incididunt ut labore et dolore'
+                    ' magna'
+                .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -50,13 +52,13 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Selected Purpose ',
+                'Selected Purpose'.tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
               Text(
-                widget.selectedPurpose ?? 'None',
+                widget.selectedPurpose ?? 'None'.tr(),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ],
@@ -77,9 +79,9 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
               ),
             ),
           ),
-          child: const Text(
-            'Select loan purpose',
-            style: TextStyle(fontSize: 18),
+          child: Text(
+            'Select loan purpose'.tr(),
+            style: const TextStyle(fontSize: 18),
           ),
         ),
       ],
@@ -106,7 +108,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
               SizedBox(
                 height: 25,
                 child: Text(
-                  'Loan Purpose',
+                  'Loan Purpose'.tr(),
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

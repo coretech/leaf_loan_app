@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/core.dart';
-import 'package:loan_app/features/about/about.dart';
+import 'package:loan_app/features/settings/settings.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -50,9 +50,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(AboutScreen.routeName);
+                      Navigator.of(context).pushNamed(SettingsScreen.routeName);
                     },
-                    icon: const Icon(Icons.info_outline),
+                    icon: const Icon(Icons.settings_outlined),
                   )
                 ],
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,

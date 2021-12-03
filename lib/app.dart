@@ -36,8 +36,8 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return LocalizationWrapper(
-      child: Consumer<LocalizationProvider>(
-        builder: (context, localizationProvider, _) => MaterialApp(
+      child: Consumer<L10nProvider>(
+        builder: (context, l10nProvider, _) => MaterialApp(
           navigatorKey: _navigatorKey,
           onGenerateRoute: (settings) {
             if (settings.name == HomeScreen.routeName) {
@@ -60,6 +60,7 @@ class _AppState extends State<App> {
             LoginScreen.routeName: (context) => const LoginScreen(),
             OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
             SplashScreen.routeName: (ctx) => const SplashScreen(),
+            SettingsScreen.routeName: (ctx) => const SettingsScreen(),
             UserProfileScreen.routeName: (ctx) => const UserProfileScreen(),
           },
           theme: ThemeData(
@@ -88,8 +89,7 @@ class _AppState extends State<App> {
             // Check if the current device locale is supported
 
             for (final supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale?.languageCode &&
-                  supportedLocale.countryCode == locale?.countryCode) {
+              if (supportedLocale.languageCode == locale?.languageCode) {
                 return supportedLocale;
               }
             }
@@ -98,7 +98,7 @@ class _AppState extends State<App> {
             return supportedLocales.first;
           },
           supportedLocales: AppLocalizations.supportedLocales,
-          locale: localizationProvider.locale,
+          locale: l10nProvider.locale,
         ),
       ),
     );

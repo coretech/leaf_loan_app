@@ -3,7 +3,7 @@ import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/i18n/domain/domain.dart';
 
-class LocalizationLocalRepo extends LocalizationRepository {
+class L10nLocalRepo extends L10nRepository {
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
   @override
   Future<String?> getLanguage() {

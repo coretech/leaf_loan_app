@@ -7,5 +7,6 @@ export 'loan_detail/loan_detail.dart';
 export 'loan_history/loan_history.dart';
 export 'loan_payment/loan_payment.dart';
 export 'onboarding/onboarding.dart';
+export 'settings/settings.dart';
 export 'splash/splash.dart';
 export 'user_profile/user_profile.dart';

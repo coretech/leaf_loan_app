@@ -116,5 +116,6 @@
   "You will have to pay enter your pin code to confirm this payment": "You will have to pay enter your pin code to confirm this payment",
   "User not found": "User not found",
   "Account locked": "Account locked",
-  "Server error": "Server error"
+  "Server error": "Server error",
+  "Settings": "Settings"
 }

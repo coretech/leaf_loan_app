@@ -27,6 +27,9 @@ class IntegrationIOC {
   }
 
   static void registerI18n(L10n localizations) {
+    if (_locator.isRegistered<L10n>()) {
+      _locator.unregister<L10n>();
+    }
     _locator.registerLazySingleton<L10n>(() => localizations);
   }
 
@@ -42,7 +45,7 @@ class IntegrationIOC {
     return _locator.get<HttpHelper>();
   }
 
-  static L10n localization() {
+  static L10n getL10n() {
     return _locator.get<L10n>();
   }
 }

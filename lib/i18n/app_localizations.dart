@@ -50,13 +50,13 @@ class AppLocalizations implements L10n {
   String translate(String key) {
     final value = _localizedStrings[key];
     if (value == null) {
-      _saveKey(key);
       log('Missing translation key: $key', name: 'Localization');
       return key;
     }
     return value;
   }
 
+  // ignore: unused_element
   Future<void> _saveKey(key) async {
     final appDocDir = await getApplicationDocumentsDirectory();
     final appDocPath = appDocDir.path;

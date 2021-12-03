@@ -1,1 +1,1 @@
-export 'localization_wrapper.dart';
+export 'l10n_wrapper.dart';

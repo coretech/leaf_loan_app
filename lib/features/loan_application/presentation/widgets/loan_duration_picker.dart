@@ -130,9 +130,13 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   Future<void> _pickDate(BuildContext context) async {
     final date = await showDatePicker(
       context: context,
+      firstDate: DateTime.now().add(
+        Duration(days: widget.minDurationInDays ?? 61),
+      ),
       initialDate: _selectedDate,
-      firstDate: DateTime.now().add(const Duration(days: 61)),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      lastDate: DateTime.now().add(
+        Duration(days: widget.maxDurationInDays ?? 90),
+      ),
     );
     if (date != null) {
       setState(() {

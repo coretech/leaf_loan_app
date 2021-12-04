@@ -45,7 +45,7 @@ class LoanApplicationProvider extends ChangeNotifier {
       duration: duration,
       loanPurpose: loanPurpose,
       loanTypeId: loanTypeId,
-      pinCode: pinCode,
+      password: pinCode,
     );
 
     resultEither.fold(

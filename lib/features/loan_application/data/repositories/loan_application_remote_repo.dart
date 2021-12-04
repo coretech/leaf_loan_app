@@ -15,12 +15,12 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required int duration,
     required String loanPurpose,
     required String loanTypeId,
-    required String pinCode,
+    required String password,
   }) async {
     try {
       final _token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.post(
-        url: '${URLs.baseURL}/loanservice/loantypes',
+        url: '${URLs.baseURL}/loanservice/loans',
         headers: Map.fromEntries([
           TokenUtil.generateBearer(_token),
         ]),
@@ -31,7 +31,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
           'duration': duration,
           'loanpurpose': loanPurpose,
           'loantypeid': loanTypeId,
-          'pincode': pinCode
+          'password': password,
         },
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {

@@ -208,7 +208,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   Future<void> _onSubmit() async {
-    await showModalBottomSheet(
+    final success = await showModalBottomSheet(
       context: context,
       builder: (context) => LoanConfirmationWidget(
         amount: _loanAmount!,
@@ -219,6 +219,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
             .currencies[_selectedCurrencyIndex],
       ),
     );
+    if (success) {
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   bool _hasLoanTypes() {

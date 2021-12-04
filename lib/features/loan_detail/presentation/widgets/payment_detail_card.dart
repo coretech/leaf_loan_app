@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class PaymentDetailCard extends StatelessWidget {
   const PaymentDetailCard({
@@ -19,6 +20,7 @@ class PaymentDetailCard extends StatelessWidget {
         children: [
           Text(
             Formatter.formatDate(
+              context,
               DateTime.now().subtract(
                 Duration(
                   days: Random().nextInt(1000),
@@ -43,7 +45,7 @@ class PaymentDetailCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    disbursement ? 'Disbursement' : 'Payment',
+                    disbursement ? 'Disbursement'.tr() : 'Payment'.tr(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,

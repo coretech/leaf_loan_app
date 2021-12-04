@@ -1,0 +1,54 @@
+import 'package:flutter/foundation.dart';
+import 'package:loan_app/features/user_profile/domain/domain.dart';
+import 'package:loan_app/features/user_profile/ioc/ioc.dart';
+
+class UserProvider extends ChangeNotifier {
+  final UserRepository _userRepository = UserIOC.userRepo();
+
+  bool loading = false;
+  User? _user;
+  String? errorMessage;
+
+  User? get user => _user;
+
+  void setLoading({required bool value}) {
+    loading = value;
+    notifyListeners();
+  }
+
+  bool isReady() {
+    return user != null && !loading;
+  }
+
+  String get fullName =>
+      isReady() ? '${user!.userId.firstName} ${user!.userId.lastName}' : '';
+
+  String get firstName => isReady() ? user!.userId.firstName : '';
+
+  String get usernamePresentation =>
+      isReady() ? '(${user?.userId.username})' : '';
+
+  bool get isVerified => isReady() && user!.status.toLowerCase() == 'active';
+
+  String get address => isReady() ? _buildAddress() : '';
+
+  String _buildAddress() {
+    return '${user!.city}, ${user!.country}';
+  }
+
+  String get phoneNumber => isReady() ? user!.phone : '';
+
+  Future<void> getUser() async {
+    errorMessage = null;
+    setLoading(value: true);
+    final userEither = await _userRepository.getUser();
+    userEither.fold(
+      (_) {
+        errorMessage = 'Error getting user profile';
+      },
+      (user) => _user = user,
+    );
+    setLoading(value: false);
+    notifyListeners();
+  }
+}

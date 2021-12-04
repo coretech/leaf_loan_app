@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:loan_app/core/core.dart';
-import 'package:loan_app/features/onboarding/presentation/presentation.dart';
+import 'package:loan_app/authentication/authentication.dart';
+import 'package:loan_app/features/onboarding/onboarding.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _onboardingProvider = OnboardingProvider();
     _onboardingProvider.addListener(() {
       if (_onboardingProvider.seen && _onboardingProvider.seen) {
-        Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       }
     });
     super.initState();
@@ -33,44 +34,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final _slides = [
       _buildSlide(
         context,
-        title: 'Store Money',
-        description:
-            'Keep your money safe by storing it digitally with Leaf—for however'
-            ' long you need. Say goodbye to the risks of cash!',
-        image: 'assets/images/safe.png',
+        title: 'Easy Application'.tr(),
+        description: 'Apply for a loan with almost instant approval'.tr(),
+        image: 'assets/images/application.png',
       ),
       _buildSlide(
         context,
-        title: 'Send Money',
-        description:
-            'Send and receive money instantly with your friends and family for'
-            ' free.',
-        image: 'assets/images/transfer.png',
+        title: 'Easy Payment'.tr(),
+        description: 'Pay off your loan from your Leaf Wallet'.tr(),
+        image: 'assets/images/smartphone_payment.png',
       ),
       _buildSlide(
         context,
-        title: 'Exchange Money',
-        description:
-            'Hold and transact in any currency Leaf supports with great rates'
-            ' and instant exchange.',
-        image: 'assets/images/exchange.png',
+        title: 'Score and Insights'.tr(),
+        description: 'Build your credit score and see personalized '
+                'insights on your profile'
+            .tr(),
+        image: 'assets/images/growth.png',
       ),
       _buildSlide(
         context,
-        title: 'Pay with Leaf',
-        description:
-            'Grow your business by using Leaf locally and across borders.'
-            ' Customers, merchants, and suppliers can save time and money'
-            ' by paying with Leaf.',
-        image: 'assets/images/pay.png',
-      ),
-      _buildSlide(
-        context,
-        title: 'International Coverage',
-        description:
-            'Tired of expensive international transfers? Send and receive money'
-            ' across borders, instantly and for free.',
-        image: 'assets/images/international.png',
+        title: 'Learn with Leaf'.tr(),
+        description: 'Learn about how taking and paying small'
+                ' loans can change your life'
+            .tr(),
+        image: 'assets/images/financial_knowledge.png',
       ),
     ];
 
@@ -79,45 +67,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Builder(
         builder: (context) {
           return IntroSlider(
-            backgroundColorAllSlides: Colors.white,
-            slides: _slides,
+            backgroundColorAllSlides: Theme.of(context).scaffoldBackgroundColor,
             colorActiveDot: Theme.of(context).primaryColor,
-            showNextBtn: true,
-            showDoneBtn: true,
-            nextButtonStyle: ButtonStyle(
-              textStyle: MaterialStateProperty.all(
-                const TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+            doneButtonStyle: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                Theme.of(context).colorScheme.primary,
               ),
             ),
-            doneButtonStyle: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(Theme.of(context).primaryColor),
-              textStyle: MaterialStateProperty.all(
-                const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+            nextButtonStyle: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                Theme.of(context).colorScheme.primary,
               ),
             ),
             onDonePress: _updateOnboardingStatus,
+            onSkipPress: _updateOnboardingStatus,
+            showNextBtn: true,
+            showDoneBtn: true,
             skipButtonStyle: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
                 Theme.of(context).colorScheme.secondary,
               ),
-              textStyle: MaterialStateProperty.all(
-                const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
             ),
-            onSkipPress: _updateOnboardingStatus,
+            slides: _slides,
           );
         },
       ),
@@ -131,16 +102,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     required String image,
   }) {
     return Slide(
-      title: title,
-      styleTitle: TextStyle(
-        fontFamily: 'Franklin',
-        fontWeight: FontWeight.w600,
-        color: Theme.of(context).primaryColor,
-        fontSize: 25,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      centerWidget: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 35,
+                vertical: 25,
+              ),
+              child: Image.asset(
+                image,
+              ),
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headline6?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
-      description: description,
-      styleDescription: const TextStyle(color: Colors.black),
-      backgroundColor: Colors.white,
     );
   }
 

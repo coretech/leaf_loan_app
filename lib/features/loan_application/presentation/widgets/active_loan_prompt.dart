@@ -3,6 +3,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
+import 'package:loan_app/i18n/i18n.dart';
+
 class ActiveLoanPrompt extends StatelessWidget {
   const ActiveLoanPrompt({Key? key}) : super(key: key);
 
@@ -25,7 +27,7 @@ class ActiveLoanPrompt extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 15),
           child: Text(
-            'You can only have one loan at a time.',
+            'You can only have one loan at a time.'.tr(),
             style: Theme.of(context).textTheme.subtitle1,
           ),
         ),
@@ -35,7 +37,8 @@ class ActiveLoanPrompt extends StatelessWidget {
             vertical: 15,
           ),
           child: Text(
-            'Pay off your current loan and then you can apply for a new one.',
+            'Pay off your current loan and then you can apply for a new one.'
+                .tr(),
             style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontStyle: FontStyle.italic,
                 ),
@@ -44,9 +47,10 @@ class ActiveLoanPrompt extends StatelessWidget {
         ),
         PayButton.labeled(
           context: context,
-          label: 'Pay now',
+          label: 'Pay now'.tr(),
           onTap: () {
             log('pay on active loan prompt tapped');
+            Navigator.of(context).pushNamed(LoanPaymentScreen.routeName);
           },
         ),
       ],

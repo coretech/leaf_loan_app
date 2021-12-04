@@ -1,4 +1,4 @@
-enum LoanType {
+enum LoanTypeEnum {
   personal,
   business,
   asset,

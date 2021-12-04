@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanDetailScreen extends StatelessWidget {
   LoanDetailScreen({
@@ -65,7 +66,7 @@ class LoanDetailScreen extends StatelessWidget {
                             ),
                             TextSpan(
                               style: Theme.of(context).textTheme.bodyText2,
-                              text: 'Amount',
+                              text: 'Amount'.tr(),
                             ),
                           ],
                         ),
@@ -111,7 +112,7 @@ class LoanDetailScreen extends StatelessWidget {
                             ),
                             TextSpan(
                               style: Theme.of(context).textTheme.bodyText2,
-                              text: 'Total',
+                              text: 'Total'.tr(),
                             ),
                           ],
                         ),
@@ -120,7 +121,7 @@ class LoanDetailScreen extends StatelessWidget {
                         children: [
                           if (status != LoanStatus.closed)
                             Text(
-                              'Pay before',
+                              'Pay before'.tr(),
                               style: TextStyle(
                                 color: _getTextColor(context),
                                 fontSize: 16,
@@ -142,9 +143,11 @@ class LoanDetailScreen extends StatelessWidget {
                                   const EdgeInsets.only(bottom: 15, top: 15),
                               child: PayButton.labeled(
                                 context: context,
-                                label: 'Pay now',
+                                label: 'Pay now'.tr(),
                                 onTap: () {
                                   log('big pay button on detail card tapped');
+                                  Navigator.of(context)
+                                      .pushNamed(LoanPaymentScreen.routeName);
                                 },
                               ),
                             ),

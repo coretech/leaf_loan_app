@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/core.dart';
-import 'package:loan_app/features/authentication/authentication.dart';
+import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:loan_app/features/splash/presentation/providers/providers.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
-
   static const routeName = '/';
 
   @override
@@ -22,20 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     onboardingStatusRepo = OnboardingStatusHiveRepo();
     scoringDataCollectionService = CredoDataCollectionService();
-    _splashProvider = SplashProvider();
+    _splashProvider = SplashProvider()..initializeApp();
     _splashProvider
-      ..addListener(() {
-        if (_splashProvider.onboardingSeen && !_splashProvider.loading) {
-          Navigator.of(context).pushReplacementNamed(
-            LoginScreen.routeName,
-          );
-        }
-        if (!_splashProvider.onboardingSeen && !_splashProvider.loading) {
-          Navigator.of(context).pushReplacementNamed(
-            OnboardingScreen.routeName,
-          );
-        }
-      })
+      ..addListener(_navigateNext)
       ..initializeApp();
     super.initState();
   }
@@ -54,5 +43,25 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  void _navigateNext() {
+    if (!_splashProvider.onboardingSeen && !_splashProvider.loading) {
+      Navigator.of(context).pushReplacementNamed(
+        OnboardingScreen.routeName,
+      );
+    }
+    if (!_splashProvider.authenticated &&
+        !_splashProvider.loading &&
+        _splashProvider.onboardingSeen) {
+      Navigator.of(context).pushReplacementNamed(
+        LoginScreen.routeName,
+      );
+    }
+    if (_splashProvider.authenticated) {
+      Navigator.of(context).pushReplacementNamed(
+        HomeScreen.routeName,
+      );
+    }
   }
 }

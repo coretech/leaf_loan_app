@@ -1,107 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/features.dart';
-import 'package:loan_app/features/loan_application/domain/value_objects/value_objects.dart';
 
-//a widget to show three options laid out horizontally for choosing loan type 
-// of which one can be taken. selected by the user. The options should be cards 
-// with an image and a text under it. The text should be a body text.
-// the image should take up most of the height of the card.
+import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/features.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class LoanTypeSelection extends StatelessWidget {
   const LoanTypeSelection({
     Key? key,
+    required this.loading,
+    required this.loanTypes,
     required this.onSelection,
-    required this.selectedLoanType,
+    required this.selectedIndex,
   }) : super(key: key);
-  final ValueChanged<LoanType> onSelection;
-  final LoanType selectedLoanType;
+  final bool loading;
+  final List<LoanType> loanTypes;
+  final ValueChanged<int> onSelection;
+  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const SizedBox(height: 16),
         Align(
           alignment: Alignment.centerLeft,
-          child: Text(
-            'Choose a loan type',
-            style: Theme.of(context).textTheme.headline6,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose a loan type'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
         ),
-        const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _buildLoanTypeCard(
-              context,
-              imagePath: 'assets/images/personal.png',
-              loanType: LoanType.personal,
-              title: 'Personal',
-            ),
-            _buildLoanTypeCard(
-              context,
-              imagePath: 'assets/images/business.png',
-              loanType: LoanType.business,
-              title: 'Business',
-            ),
-            _buildLoanTypeCard(
-              context,
-              imagePath: 'assets/images/asset.png',
-              loanType: LoanType.asset,
-              title: 'Asset',
-            ),
-          ],
+          children: _buildLoanTypeCards(),
         ),
-        LoanDescription(
-          loanType: selectedLoanType,
-        )
+        if (!loading)
+          LoanDescription(
+            loanType: loanTypes[selectedIndex],
+          )
+        else
+          const ShimmerBox(
+            height: 30,
+            padding: EdgeInsets.only(top: 5, bottom: 10, left: 10),
+            width: 280,
+          ),
       ],
     );
   }
 
-  Widget _buildLoanTypeCard(
-    BuildContext context, {
-    required LoanType loanType,
-    required String title,
-    required String imagePath,
-  }) {
-    return Stack(
-      children: [
-        Card(
-          elevation: 4,
-          child: InkWell(
-            onTap: () => onSelection(loanType),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Image.asset(
-                    imagePath,
-                    height: 64,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ],
-              ),
+  List<Widget> _buildLoanTypeCards() {
+    if (!loading) {
+      final loanTypeCards = <Widget>[];
+      for (var i = 0; i < loanTypes.length; i++) {
+        final loanType = loanTypes[i];
+        loanTypeCards.add(
+          Container(
+            height: 175,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            width: 150,
+            child: LoanTypeCard(
+              onSelection: onSelection,
+              selectedLoanType: loanTypes[selectedIndex],
+              loanType: loanType,
+              index: i,
             ),
           ),
-        ),
-        if (selectedLoanType == loanType)
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Center(
-              child: Icon(
-                Icons.check_circle,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-      ],
+        );
+      }
+      return loanTypeCards;
+    }
+
+    return List.filled(
+      3,
+      const ShimmerBox(
+        height: 120,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        width: 100,
+      ),
     );
   }
 }

@@ -5,7 +5,6 @@ import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
-/* cSpell:disable */
 class LoanApplicationScreen extends StatefulWidget {
   const LoanApplicationScreen({Key? key}) : super(key: key);
   static const String routeName = '/loan-application';
@@ -19,7 +18,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   late LoanTypeProvider _loanTypeProvider;
   int _selectedCurrencyIndex = 0;
   int _selectedLoanTypeIndex = 0;
-  int _seletedDurationInDays = 61;
+  int _selectedDurationInDays = 61;
   String? _selectedPurpose;
 
   @override
@@ -51,7 +50,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                   if (loanTypeProvider.errorMessage != null) {
                     return const Center(
                       child: Text(
-                        'Some error occured while fetching Loan Type Details',
+                        'Some error occurred while fetching Loan Type Details',
                       ),
                     );
                   }
@@ -96,7 +95,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                             height: 5,
                           ),
                           LoanDurationPicker(
-                            durationInDays: _seletedDurationInDays,
+                            durationInDays: _selectedDurationInDays,
                             loading: loanTypeProvider.loading,
                             maxDurationInDays: _hasLoanTypes()
                                 ? loanTypeProvider
@@ -110,7 +109,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 : null,
                             onChanged: (selectedDays) {
                               setState(() {
-                                _seletedDurationInDays = selectedDays;
+                                _selectedDurationInDays = selectedDays;
                               });
                             },
                           ),
@@ -208,17 +207,24 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   Future<void> _onSubmit() async {
-    await showModalBottomSheet(
+    final success = await showModalBottomSheet(
       context: context,
+      enableDrag: false,
+      isDismissible: false,
       builder: (context) => LoanConfirmationWidget(
         amount: _loanAmount!,
-        durationDays: _seletedDurationInDays,
+        durationDays: _selectedDurationInDays,
         loanType: _loanTypeProvider.loanTypes[_selectedLoanTypeIndex],
         purpose: _selectedPurpose!,
         selectedCurrency: _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
             .currencies[_selectedCurrencyIndex],
       ),
     );
+    if (success) {
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   bool _hasLoanTypes() {

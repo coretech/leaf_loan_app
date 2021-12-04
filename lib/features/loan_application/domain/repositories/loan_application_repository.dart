@@ -7,7 +7,7 @@ abstract class LoanApplicationRepository {
     required int duration,
     required String loanPurpose,
     required String loanTypeId,
-    required String pinCode,
+    required String password,
   });
 }
 

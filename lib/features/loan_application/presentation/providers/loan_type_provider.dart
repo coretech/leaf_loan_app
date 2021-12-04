@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_application/domain/domain.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 

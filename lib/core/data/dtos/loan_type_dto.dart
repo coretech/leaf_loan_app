@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/features/loan_application/data/dtos/dtos.dart';
-import 'package:loan_app/features/loan_application/domain/domain.dart';
+import 'package:loan_app/core/data/dtos/dtos.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 
 class LoanTypeDTO {
   LoanTypeDTO({

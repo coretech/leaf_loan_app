@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:loan_app/features/features.dart';
-
-import 'package:loan_app/features/loan_application/data/dtos/dtos.dart';
+import 'package:loan_app/core/data/dtos/dtos.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 
 class CurrencyDTO {
   CurrencyDTO({

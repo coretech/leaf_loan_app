@@ -1,4 +1,5 @@
-import 'package:loan_app/features/loan_application/domain/entities/entities.dart';
+
+import 'package:loan_app/core/domain/entities/currency_id.dart';
 
 class Currency {
   Currency({

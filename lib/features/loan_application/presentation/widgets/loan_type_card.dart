@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/loan_application/loan_application.dart';
+import 'package:loan_app/core/domain/entities/loan_type.dart';
 
 class LoanTypeCard extends StatelessWidget {
   const LoanTypeCard({

@@ -4,7 +4,7 @@ import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/constants/urls.dart';
-import 'package:loan_app/core/data/dto/response_dto.dart';
+import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/user_profile/data/dtos/dtos.dart';

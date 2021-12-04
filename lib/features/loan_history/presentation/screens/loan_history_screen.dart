@@ -8,7 +8,7 @@ import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
-class LoanHistoryScreen extends StatelessWidget {
+class LoanHistoryScreen extends StatefulWidget {
   const LoanHistoryScreen({
     Key? key,
     this.hasLoan = true,
@@ -19,8 +19,19 @@ class LoanHistoryScreen extends StatelessWidget {
   final bool hasLoan;
 
   @override
+  State<LoanHistoryScreen> createState() => _LoanHistoryScreenState();
+}
+
+class _LoanHistoryScreenState extends State<LoanHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    LoanHistoryProvider().getLoans();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (hasLoan) {
+    if (widget.hasLoan) {
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,

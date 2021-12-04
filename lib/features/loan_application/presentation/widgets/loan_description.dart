@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:loan_app/features/features.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 
 class LoanDescription extends StatelessWidget {
   const LoanDescription({

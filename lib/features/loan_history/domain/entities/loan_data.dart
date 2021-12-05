@@ -24,12 +24,12 @@ class LoanData {
   final String customerId;
   final LoanType loanTypeId;
   final String loanPurpose;
-  final Currency currencyId;
+  final CurrencyId currencyId;
   final String dueDate;
-  final int requestedAmount;
-  final int interestAmount;
-  final int totalAmount;
-  final int remainingAmount;
+  final double requestedAmount;
+  final double interestAmount;
+  final double totalAmount;
+  final double remainingAmount;
   final int duration;
   final String requestDate;
   final String createdAt;

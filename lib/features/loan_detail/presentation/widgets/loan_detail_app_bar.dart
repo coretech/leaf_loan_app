@@ -25,7 +25,7 @@ class LoanDetailAppBar extends StatelessWidget {
       bottom: _getRemainingAmount(context),
       backgroundColor: _getBackgroundColor(context),
       centerTitle: true,
-      foregroundColor: status == LoanStatus.closed
+      foregroundColor: status == LoanStatus.pending
           ? Theme.of(context).colorScheme.onSurface
           : Theme.of(context).colorScheme.onPrimary,
       floating: true,
@@ -35,8 +35,8 @@ class LoanDetailAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('[Category X] ${'Loan'.tr()}'),
-          if (status != LoanStatus.closed) const Spacer(),
-          if (status != LoanStatus.closed)
+          if (status != LoanStatus.pending) const Spacer(),
+          if (status != LoanStatus.pending)
             Text(
               '${_getRemainingDays()} ${'days remaining'.tr()}',
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
@@ -50,16 +50,16 @@ class LoanDetailAppBar extends StatelessWidget {
   }
 
   Color? _getBackgroundColor(BuildContext context) {
-    if (status != LoanStatus.closed) {
+    if (status != LoanStatus.pending) {
       return Theme.of(context).colorScheme.secondary.withRed(210).withBlue(55);
     }
   }
 
   AppBar? _getRemainingAmount(context) {
-    if (status != LoanStatus.closed) {
+    if (status != LoanStatus.pending) {
       return AppBar(
         actions: [
-          if (status != LoanStatus.closed)
+          if (status != LoanStatus.pending)
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(5),
@@ -78,7 +78,7 @@ class LoanDetailAppBar extends StatelessWidget {
         ],
         backgroundColor: _getBackgroundColor(context),
         centerTitle: true,
-        foregroundColor: status == LoanStatus.closed
+        foregroundColor: status == LoanStatus.pending
             ? Theme.of(context).colorScheme.onSurface
             : Theme.of(context).colorScheme.onPrimary,
         elevation: 0,

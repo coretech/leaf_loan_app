@@ -121,7 +121,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies[_selectedCurrencyIndex]
-                                    .currencyId
+                                    .currencyId!
                                     .fiatCode
                                 : null,
                             interestRate: _hasLoanTypes()

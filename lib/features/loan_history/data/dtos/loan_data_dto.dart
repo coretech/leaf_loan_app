@@ -29,12 +29,12 @@ class LoanDataDto {
       customerid: map['customerid'],
       loantypeid: LoanTypeDTO.fromMap(map['loantypeid']),
       loanpurpose: map['loanpurpose'],
-      currencyid: CurrencyDTO.fromMap(map['currencyid']),
+      currencyid: CurrencyIdDTO.fromMap(map['currencyid']),
       duedate: map['duedate'],
-      requestedamount: map['requestedamount'],
-      interestamount: map['interestamount'],
-      totalamount: map['totalamount'],
-      remainingamount: map['remainingamount'],
+      requestedamount: double.parse(map['requestedamount'].toString()),
+      interestamount: double.parse(map['interestamount'].toString()),
+      totalamount: double.parse(map['totalamount'].toString()),
+      remainingamount: double.parse(map['remainingamount'].toString()),
       duration: map['duration'],
       requestdate: map['requestdate'],
       createdAt: map['createdAt'],
@@ -63,7 +63,6 @@ class LoanDataDto {
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
-
   }
 
   final String status;
@@ -71,12 +70,12 @@ class LoanDataDto {
   final String customerid;
   final LoanTypeDTO loantypeid;
   final String loanpurpose;
-  final CurrencyDTO currencyid;
+  final CurrencyIdDTO currencyid;
   final String duedate;
-  final int requestedamount;
-  final int interestamount;
-  final int totalamount;
-  final int remainingamount;
+  final double requestedamount;
+  final double interestamount;
+  final double totalamount;
+  final double remainingamount;
   final int duration;
   final String requestdate;
   final String createdAt;
@@ -88,12 +87,12 @@ class LoanDataDto {
     String? customerid,
     LoanTypeDTO? loantypeid,
     String? loanpurpose,
-    CurrencyDTO? currencyid,
+    CurrencyIdDTO? currencyid,
     String? duedate,
-    int? requestedamount,
-    int? interestamount,
-    int? totalamount,
-    int? remainingamount,
+    double? requestedamount,
+    double? interestamount,
+    double? totalamount,
+    double? remainingamount,
     int? duration,
     String? requestdate,
     String? createdAt,

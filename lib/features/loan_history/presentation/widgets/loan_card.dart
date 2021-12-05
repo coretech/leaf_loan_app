@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
+import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanCard extends StatelessWidget {
   const LoanCard({
     Key? key,
-    required this.dueDate,
-    required this.paidAmount,
-    required this.status,
-    required this.totalAmount,
+    required this.loan,
   }) : super(key: key);
 
-  final DateTime dueDate;
-  final double paidAmount;
-  final LoanStatus status;
-  final double totalAmount;
+  final LoanData loan;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +23,10 @@ class LoanCard extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoanDetailScreen(
-                dueDate: dueDate,
-                paidAmount: paidAmount,
-                status: status,
-                totalAmount: totalAmount,
+                dueDate: DateTime.parse(loan.dueDate),
+                paidAmount: loan.totalAmount - loan.remainingAmount,
+                status: loanStatusFromString(loan.status),
+                totalAmount: loan.totalAmount,
               ),
             ),
           );
@@ -60,7 +56,7 @@ class LoanCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '[Category X] ${'Loan'.tr()}',
+                    loan.loanTypeId.name,
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: 18,
                         ),
@@ -89,11 +85,11 @@ class LoanCard extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             fontSize: 12,
                           ),
-                          text: 'RWF ',
+                          text: '${loan.currencyId.fiatCode} ',
                         ),
                         TextSpan(
                           style: _getAmountTextStyle(context),
-                          text: Formatter.formatMoney(totalAmount),
+                          text: Formatter.formatMoney(loan.totalAmount),
                         ),
                       ],
                     ),
@@ -107,7 +103,10 @@ class LoanCard extends StatelessWidget {
                         ),
                         TextSpan(
                           style: _getDueDateTextStyle(context),
-                          text: Formatter.formatDate(context, dueDate),
+                          text: Formatter.formatDate(
+                            context,
+                            DateTime.parse(loan.dueDate),
+                          ),
                         ),
                       ],
                     ),
@@ -132,11 +131,13 @@ class LoanCard extends StatelessWidget {
                             color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 12,
                           ),
-                          text: 'RWF ',
+                          text: '${loan.currencyId.fiatCode} ',
                         ),
                         TextSpan(
                           style: _getPaidTextStyle(context),
-                          text: Formatter.formatMoney(paidAmount),
+                          text: Formatter.formatMoney(
+                            loan.totalAmount - loan.remainingAmount,
+                          ),
                         ),
                       ],
                     ),
@@ -180,11 +181,31 @@ class LoanCard extends StatelessWidget {
   }
 
   Color _getIconColor(BuildContext context) {
-    return Colors.green;
+    final status = loanStatusFromString(loan.status);
+    switch (status) {
+      case LoanStatus.approved:
+        return Theme.of(context).colorScheme.primary;
+      case LoanStatus.pending:
+        return Theme.of(context).disabledColor;
+      case LoanStatus.rejected:
+        return Theme.of(context).errorColor;
+      case LoanStatus.due:
+        return Theme.of(context).colorScheme.secondary;
+    }
   }
 
   IconData _getIcon() {
-    return Icons.check_circle;
+    final status = loanStatusFromString(loan.status);
+    switch (status) {
+      case LoanStatus.approved:
+        return Icons.check_circle;
+      case LoanStatus.pending:
+        return Icons.hourglass_empty;
+      case LoanStatus.rejected:
+        return Icons.cancel;
+      case LoanStatus.due:
+        return Icons.warning;
+    }
   }
 
   double _getBorderWidth() {
@@ -196,7 +217,17 @@ class LoanCard extends StatelessWidget {
   }
 
   String _getLoanStatus() {
-    return 'Closed'.tr();
+    final status = loanStatusFromString(loan.status);
+    switch (status) {
+      case LoanStatus.approved:
+        return 'Approved'.tr();
+      case LoanStatus.rejected:
+        return 'Rejected'.tr();
+      case LoanStatus.pending:
+        return 'Pending'.tr();
+      case LoanStatus.due:
+        return 'Due'.tr();
+    }
   }
 
   TextStyle? _getAmountTextStyle(BuildContext context) {

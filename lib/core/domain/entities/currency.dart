@@ -7,7 +7,7 @@ class Currency {
     required this.minLoanAmount,
     required this.maxLoanAmount,
   });
-  final CurrencyId currencyId;
+  final CurrencyId? currencyId;
   final int minLoanAmount;
   final int maxLoanAmount;
 

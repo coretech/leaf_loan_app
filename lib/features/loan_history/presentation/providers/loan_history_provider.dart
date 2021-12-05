@@ -4,7 +4,7 @@ import 'package:loan_app/features/features.dart';
 class LoanHistoryProvider extends ChangeNotifier {
   List<LoanData> _loanHistory = [];
 
-  List<LoanData> get loanHistory => _loanHistory;
+  List<LoanData> get loans => _loanHistory;
 
   bool loading = false;
 

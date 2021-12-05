@@ -5,14 +5,16 @@ import 'package:loan_app/core/domain/entities/entities.dart';
 
 class CurrencyDTO {
   CurrencyDTO({
-    required this.currencyid,
+    this.currencyid,
     required this.minloanamount,
     required this.maxloanamount,
   });
 
   factory CurrencyDTO.fromMap(Map<String, dynamic> map) {
     return CurrencyDTO(
-      currencyid: CurrencyIdDTO.fromMap(map['currencyid']),
+      currencyid: (map['currencyid'] is String)
+          ? null
+          : CurrencyIdDTO.fromMap(map['currencyid']),
       minloanamount: map['minloanamount'],
       maxloanamount: map['maxloanamount'],
     );
@@ -21,13 +23,13 @@ class CurrencyDTO {
   factory CurrencyDTO.fromJson(String source) =>
       CurrencyDTO.fromMap(json.decode(source));
 
-  final CurrencyIdDTO currencyid;
+  final CurrencyIdDTO? currencyid;
   final int minloanamount;
   final int maxloanamount;
 
   Currency toEntity() {
     return Currency(
-      currencyId: currencyid.toEntity(),
+      currencyId: currencyid?.toEntity(),
       minLoanAmount: minloanamount,
       maxLoanAmount: maxloanamount,
     );
@@ -47,7 +49,7 @@ class CurrencyDTO {
 
   Map<String, dynamic> toMap() {
     return {
-      'currencyid': currencyid.toMap(),
+      'currencyid': currencyid?.toMap(),
       'minloanamount': minloanamount,
       'maxloanamount': maxloanamount,
     };

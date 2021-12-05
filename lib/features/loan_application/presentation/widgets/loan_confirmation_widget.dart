@@ -99,7 +99,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                   Expanded(
                     child: Text(
                       '${widget.amount} '
-                      '${widget.selectedCurrency.currencyId.fiatCode}',
+                      '${widget.selectedCurrency.currencyId!.fiatCode}',
                       style: Theme.of(context).textTheme.caption?.copyWith(
                             fontSize: 16,
                             fontStyle: FontStyle.italic,
@@ -275,7 +275,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
     if (pinCode != null) {
       await _loanApplicationProvider.apply(
         amount: widget.amount,
-        currencyId: widget.selectedCurrency.currencyId.id,
+        currencyId: widget.selectedCurrency.currencyId!.id,
         duration: widget.durationDays,
         loanPurpose: widget.purpose,
         loanTypeId: widget.loanType.id,

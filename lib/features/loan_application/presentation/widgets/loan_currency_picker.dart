@@ -58,7 +58,7 @@ class LoanCurrencyPicker extends StatelessWidget {
       final currencyCards = <Widget>[];
       for (var i = 0; i < currencies.length; i++) {
         final currency = currencies[i];
-        final code = FlagUtil.getCode(currency.currencyId.country);
+        final code = FlagUtil.getCode(currency.currencyId!.country);
         final flag = Flag.fromString(
           code?.toLowerCase() ?? 'rw',
           height: 25,

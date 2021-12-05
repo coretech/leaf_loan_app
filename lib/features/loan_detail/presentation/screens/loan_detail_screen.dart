@@ -119,7 +119,7 @@ class LoanDetailScreen extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          if (status != LoanStatus.closed)
+                          if (status != LoanStatus.pending)
                             Text(
                               'Pay before'.tr(),
                               style: TextStyle(
@@ -128,7 +128,7 @@ class LoanDetailScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                          if (status != LoanStatus.closed)
+                          if (status != LoanStatus.pending)
                             Text(
                               'January 15, 2022',
                               style: TextStyle(
@@ -137,7 +137,7 @@ class LoanDetailScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                          if (status != LoanStatus.closed)
+                          if (status != LoanStatus.pending)
                             Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 15, top: 15),

@@ -17,7 +17,7 @@ class AppLocalizations implements L10n {
 
   static List<Locale> get supportedLocales => const [
         Locale(LocaleCodes.english, ''),
-        Locale(LocaleCodes.kinyarwanda, ''),
+        Locale(LocaleCodes.kinyarwanda),
         Locale(LocaleCodes.swahili, ''),
         Locale(LocaleCodes.french, ''),
       ];
@@ -90,7 +90,7 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) {
     // Include all of supported language codes here
     return AppLocalizations.supportedLocales
-        .map((locale) => locale.languageCode)
+        .map((l) => l.languageCode)
         .contains(locale.languageCode);
   }
 

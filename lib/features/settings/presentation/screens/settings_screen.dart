@@ -82,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Change Language'),
+          title: Text('Change Language'.tr()),
           content: SingleChildScrollView(
             child: ListBody(
               children: [

@@ -31,7 +31,7 @@ class LoanActionButtons extends StatelessWidget {
               Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          child: Text('Pay your loan'.tr()),
+          child: Text('Make a Payment'.tr()),
         ),
         const SizedBox(width: 20),
         ElevatedButton(

@@ -47,13 +47,18 @@ class AppLocalizations implements L10n {
 
   // This method will be called from every widget which needs a localized text
   @override
-  String translate(String key) {
-    final value = _localizedStrings[key];
+  String translate(String key, {Map<String, String>? values}) {
+    var value = _localizedStrings[key];
     if (value == null) {
       log('Missing translation key: $key', name: 'Localization');
-      return key;
+      value = key;
     }
-    return value;
+    if (values != null) {
+      values.forEach((key, _) {
+        value = value!.replaceAll('{$key}', values[key]!);
+      });
+    }
+    return value!;
   }
 
   // ignore: unused_element

@@ -41,8 +41,8 @@ class AverageLoanAmountCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Text(
-                'The average is the total loan amount you have taken divided'
-                        ' with the total number of loans.'
+                'This is the total amount you have borrowed divided by the '
+                        'number of loans you have taken.'
                     .tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 10,

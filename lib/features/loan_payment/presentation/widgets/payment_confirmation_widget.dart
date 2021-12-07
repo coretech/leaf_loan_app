@@ -69,7 +69,7 @@ class PaymentConfirmationWidget extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'You will have to pay enter your pin code to confirm this payment'
+            'You will have to enter your PIN to confirm this payment'
                 .tr(),
             style: Theme.of(context).textTheme.caption,
           ),

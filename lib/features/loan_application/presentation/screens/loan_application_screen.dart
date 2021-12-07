@@ -271,9 +271,8 @@ class TOCConfirmation extends StatelessWidget {
               style: Theme.of(context).textTheme.button,
             ),
             TextSpan(
-              text: 'below, I hereby agree to and accept the following'
-                      ' terms and conditions governing my '
-                      'loan that are stated in the'
+              text: 'below, I hereby agree to and accept the following terms '
+                      'and conditions governing my loan as stated in the'
                   .tr(),
               style: Theme.of(context).textTheme.caption,
             ),

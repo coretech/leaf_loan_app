@@ -47,7 +47,7 @@ class ActiveLoanPrompt extends StatelessWidget {
         ),
         PayButton.labeled(
           context: context,
-          label: 'Pay now'.tr(),
+          label: 'Pay Now'.tr(),
           onTap: () {
             log('pay on active loan prompt tapped');
             Navigator.of(context).pushNamed(LoanPaymentScreen.routeName);

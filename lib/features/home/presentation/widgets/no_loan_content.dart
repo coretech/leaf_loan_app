@@ -28,7 +28,7 @@ class NoLoanContent extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 'Leaf provides you small loans that you can pay with any '
-                        'currency that is available in your wallet'
+                        'currency available in your Leaf Wallet'
                     .tr(),
               ),
               const SizedBox(height: 20),

@@ -30,8 +30,7 @@ class TotalNumberOfLoansCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Text(
-                'These are the number of loans you have taken through the '
-                        'Leaf Loan App.'
+                'This is the number of loans you have taken through Leaf Loans.'
                     .tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 10,

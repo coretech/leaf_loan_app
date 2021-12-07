@@ -143,7 +143,7 @@ class LoanDetailScreen extends StatelessWidget {
                                   const EdgeInsets.only(bottom: 15, top: 15),
                               child: PayButton.labeled(
                                 context: context,
-                                label: 'Pay now'.tr(),
+                                label: 'Pay Now'.tr(),
                                 onTap: () {
                                   log('big pay button on detail card tapped');
                                   Navigator.of(context)

@@ -80,7 +80,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
               ),
             ),
             child: Text(
-              'Select payment due date'.tr(),
+              'Select final payment due date'.tr(),
               style: const TextStyle(fontSize: 18),
             ),
           ),

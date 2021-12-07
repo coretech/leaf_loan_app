@@ -75,7 +75,7 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
               ),
               const SizedBox(height: 5),
               Text(
-                '${'You can take loans as much as'.tr()} RWF 50,000',
+                '${'You can take loans up to'.tr()} RWF 50,000',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 12,

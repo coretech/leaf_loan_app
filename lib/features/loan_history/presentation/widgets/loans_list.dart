@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 
-import 'package:loan_app/core/domain/domain.dart';
 import 'package:loan_app/core/presentation/presentation.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 

@@ -123,7 +123,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                 child: Text(
                   'You will have '
                           '{${_getRemaining()}}'
-                          ' {KSH} remaining to pay after paying this amount'
+                          ' {KSH} left to pay after this payment'
                       .tr(),
                   style: Theme.of(context).textTheme.caption,
                   textAlign: TextAlign.center,
@@ -169,13 +169,13 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
       return 'Please enter a valid amount'.tr();
     }
     if (double.parse(value) > 12960) {
-      return 'Please enter an amount that is less than or equal '
-              'to your remaining amount'
+      return 'Please enter an amount less than or equal to your '
+              'remaining amount'
           .tr();
     }
     if (double.parse(value) > 5000) {
-      return 'Please enter an amount that is less than or equal '
-              'to your Leaf Wallet balance'
+      return 'Please enter an amount less than or equal to your '
+              'Leaf Wallet balance'
           .tr();
     }
   }

@@ -34,8 +34,8 @@ class LoanCurrencyPicker extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
-            'The currency is one of the available currencies attached to your '
-                    'Leaf wallet. As of now, leaf supports KES, RWF, and UGX.'
+            'Available currencies are those you use in your Leaf Wallet. '
+                    'Leaf currently supports KES, RWF, and UGX.'
                 .tr(),
             style: Theme.of(context).textTheme.caption,
           ),

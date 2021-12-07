@@ -40,7 +40,8 @@ class AverageLoanDurationCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Text(
-                'The average number of days it took you to return a loan.'.tr(),
+                'The average number of days it took you to pay back a loan.'
+                    .tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 10,
                     ),

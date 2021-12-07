@@ -134,7 +134,7 @@ class ActiveLoanCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10, bottom: 15),
                   child: PayButton.labeled(
                     context: context,
-                    label: 'Pay now'.tr(),
+                    label: 'Pay Now'.tr(),
                     mini: true,
                     onTap: () {
                       log('pay on loan history card tapped');

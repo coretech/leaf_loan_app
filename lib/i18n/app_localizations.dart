@@ -29,11 +29,10 @@ class AppLocalizations implements L10n {
   }
 
   // Static member to have a simple access to the delegate from the MaterialApp
-  static const LocalizationsDelegate<AppLocalizations> delegate =
+  static const LocalizationsDelegate<MaterialLocalizations> delegate =
       _AppLocalizationsDelegate();
 
   Future<bool> load() async {
-    // Load the language JSON file from the "lang" folder
     final jsonString =
         await rootBundle.loadString('assets/l10n/${locale.languageCode}.json');
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -81,7 +80,7 @@ class AppLocalizations implements L10n {
 // In this case, the localized strings will be gotten in an AppLocalizations
 // object
 class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+    extends LocalizationsDelegate<MaterialLocalizations> {
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
   const _AppLocalizationsDelegate();
@@ -95,12 +94,13 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
+  Future<MaterialLocalizations> load(Locale locale) async {
     // AppLocalizations class is where the JSON loading actually runs
     final localizations = AppLocalizations(locale);
     await localizations.load();
     IntegrationIOC.registerI18n(localizations);
-    return localizations;
+    //This needs to be replaced at some point in time
+    return const DefaultMaterialLocalizations();
   }
 
   @override

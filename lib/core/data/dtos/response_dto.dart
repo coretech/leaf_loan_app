@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-class ResponseDTO {
-  ResponseDTO({
+class ResponseDto {
+  ResponseDto({
     required this.code,
     required this.status,
     required this.message,
     required this.data,
   });
 
-  factory ResponseDTO.fromMap(Map<String, dynamic> map) {
-    return ResponseDTO(
+  factory ResponseDto.fromMap(Map<String, dynamic> map) {
+    return ResponseDto(
       code: map['code'],
       status: map['status'],
       message: map['message'],
@@ -17,21 +17,21 @@ class ResponseDTO {
     );
   }
 
-  factory ResponseDTO.fromJson(String source) =>
-      ResponseDTO.fromMap(json.decode(source));
+  factory ResponseDto.fromJson(String source) =>
+      ResponseDto.fromMap(json.decode(source));
 
   final int code;
   final bool status;
   final String message;
   final dynamic data;
 
-  ResponseDTO copyWith({
+  ResponseDto copyWith({
     int? code,
     bool? status,
     String? message,
     dynamic data,
   }) {
-    return ResponseDTO(
+    return ResponseDto(
       code: code ?? this.code,
       status: status ?? this.status,
       message: message ?? this.message,
@@ -60,7 +60,7 @@ class ResponseDTO {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ResponseDTO &&
+    return other is ResponseDto &&
         other.code == code &&
         other.status == status &&
         other.message == message &&

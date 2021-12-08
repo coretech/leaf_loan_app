@@ -24,7 +24,7 @@ class LoanTypeRemoteRepo extends LoanTypeRepository {
         cacheAge: const Duration(minutes: 20),
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
-        final responseDto = ResponseDTO.fromMap(response.data);
+        final responseDto = ResponseDto.fromMap(response.data);
         final loanTypes = (responseDto.data as List<dynamic>)
             .map(
               (loanType) => LoanTypeDTO.fromMap(loanType).toEntity(),

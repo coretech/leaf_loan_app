@@ -14,7 +14,7 @@ class CurrencyDTO {
     return CurrencyDTO(
       currencyid: (map['currencyid'] is String)
           ? null
-          : CurrencyIdDTO.fromMap(map['currencyid']),
+          : CurrencyIdDto.fromMap(map['currencyid']),
       minloanamount: map['minloanamount'],
       maxloanamount: map['maxloanamount'],
     );
@@ -23,7 +23,7 @@ class CurrencyDTO {
   factory CurrencyDTO.fromJson(String source) =>
       CurrencyDTO.fromMap(json.decode(source));
 
-  final CurrencyIdDTO? currencyid;
+  final CurrencyIdDto? currencyid;
   final int minloanamount;
   final int maxloanamount;
 
@@ -36,7 +36,7 @@ class CurrencyDTO {
   }
 
   CurrencyDTO copyWith({
-    CurrencyIdDTO? currencyid,
+    CurrencyIdDto? currencyid,
     int? minloanamount,
     int? maxloanamount,
   }) {

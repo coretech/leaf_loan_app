@@ -23,7 +23,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
         ]),
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
-        final responseDto = ResponseDTO.fromMap(response.data);
+        final responseDto = ResponseDto.fromMap(response.data);
         final loanData = (responseDto.data as List<dynamic>).map(
           (data) {
             return LoanDataDto.fromMap(data).toEntity();

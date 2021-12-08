@@ -29,7 +29,7 @@ class LoanDataDto {
       customerid: map['customerid'],
       loantypeid: LoanTypeDTO.fromMap(map['loantypeid']),
       loanpurpose: map['loanpurpose'],
-      currencyid: CurrencyIdDTO.fromMap(map['currencyid']),
+      currencyid: CurrencyIdDto.fromMap(map['currencyid']),
       duedate: map['duedate'],
       requestedamount: double.parse(map['requestedamount'].toString()),
       interestamount: double.parse(map['interestamount'].toString()),
@@ -70,7 +70,7 @@ class LoanDataDto {
   final String customerid;
   final LoanTypeDTO loantypeid;
   final String loanpurpose;
-  final CurrencyIdDTO currencyid;
+  final CurrencyIdDto currencyid;
   final String duedate;
   final double requestedamount;
   final double interestamount;
@@ -87,7 +87,7 @@ class LoanDataDto {
     String? customerid,
     LoanTypeDTO? loantypeid,
     String? loanpurpose,
-    CurrencyIdDTO? currencyid,
+    CurrencyIdDto? currencyid,
     String? duedate,
     double? requestedamount,
     double? interestamount,

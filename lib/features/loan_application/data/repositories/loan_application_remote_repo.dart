@@ -24,7 +24,6 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
         headers: Map.fromEntries([
           TokenUtil.generateBearer(_token),
         ]),
-        cacheAge: const Duration(minutes: 20),
         data: {
           'amount': amount,
           'currencyid': currencyId,

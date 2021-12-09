@@ -31,8 +31,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoanTypeProvider>(
-      create: (_) => _loanTypeProvider,
+    return ChangeNotifierProvider.value(
+      value: _loanTypeProvider,
       builder: (context, _) {
         return Builder(
           builder: (context) {

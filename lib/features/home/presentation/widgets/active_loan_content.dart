@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class ActiveLoanContent extends StatefulWidget {
   const ActiveLoanContent({
     Key? key,
-    this.onPay,
+    required this.loan,
+    required this.payments,
   }) : super(key: key);
-  final VoidCallback? onPay;
+  final LoanData loan;
+  final List<Payment> payments;
 
   @override
   State<ActiveLoanContent> createState() => _ActiveLoanContentState();
@@ -31,7 +36,9 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
               height: constraint.maxHeight,
               child: Column(
                 children: [
-                  const CurrentLoanInfo(),
+                  CurrentLoanInfo(
+                    loan: widget.loan,
+                  ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: LoanActionButtons(),
@@ -43,8 +50,11 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
-                  const Expanded(
-                    child: RecentTransactions(),
+                  Expanded(
+                    child: RecentTransactions(
+                      currencyFiat: widget.loan.currencyId.fiatCode,
+                      payments: widget.payments,
+                    ),
                   ),
                 ],
               ),

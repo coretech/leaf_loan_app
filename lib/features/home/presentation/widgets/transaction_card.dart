@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({
     Key? key,
+    required this.currencyFiat,
+    required this.payment,
   }) : super(key: key);
+  final String currencyFiat;
+  final Payment payment;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class TransactionCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Formatter.formatDate(context, DateTime.now()),
+            Formatter.formatDate(DateTime.now()),
             style: TextStyle(
               color: Theme.of(context).hintColor,
               fontWeight: FontWeight.w900,
@@ -45,14 +51,16 @@ class TransactionCard extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'KSH ',
+                          text: '$currencyFiat ',
                           style: TextStyle(
                             fontSize: 11,
                             color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         TextSpan(
-                          text: '12,960',
+                          text: Formatter.formatMoney(
+                            payment.paymentAmount.toDouble(),
+                          ),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 16,

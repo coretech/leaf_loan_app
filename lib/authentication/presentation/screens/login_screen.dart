@@ -35,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => _authProvider,
+    return ChangeNotifierProvider.value(
+      value: _authProvider,
       builder: (context, _) {
         return Scaffold(
           appBar: _buildAppBar(context),

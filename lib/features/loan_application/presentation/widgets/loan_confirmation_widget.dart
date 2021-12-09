@@ -46,8 +46,8 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _loanApplicationProvider,
+    return ChangeNotifierProvider.value(
+      value:_loanApplicationProvider,
       builder: (context, _) {
         return Padding(
           padding: const EdgeInsets.all(20),
@@ -264,7 +264,6 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
     final now = DateTime.now();
     final dueDate = now.add(Duration(days: widget.durationDays));
     return Formatter.formatDate(
-      context,
       dueDate,
     );
   }

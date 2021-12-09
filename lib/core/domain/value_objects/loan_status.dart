@@ -1,7 +1,7 @@
 enum LoanStatus { approved, pending, rejected, due }
 
 LoanStatus loanStatusFromString(String status) {
-  switch (status) {
+  switch (status.toLowerCase()) {
     case 'approved':
       return LoanStatus.approved;
     case 'pending':

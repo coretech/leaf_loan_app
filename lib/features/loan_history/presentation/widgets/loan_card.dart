@@ -95,6 +95,7 @@ class LoanCard extends StatelessWidget {
                     ),
                   ),
                   RichText(
+                    overflow: TextOverflow.ellipsis,
                     text: TextSpan(
                       children: [
                         TextSpan(
@@ -103,8 +104,7 @@ class LoanCard extends StatelessWidget {
                         ),
                         TextSpan(
                           style: _getDueDateTextStyle(context),
-                          text: Formatter.formatDate(
-                            context,
+                          text: Formatter.formatDateMini(
                             DateTime.parse(loan.dueDate),
                           ),
                         ),

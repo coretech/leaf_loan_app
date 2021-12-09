@@ -20,7 +20,6 @@ class PaymentDetailCard extends StatelessWidget {
         children: [
           Text(
             Formatter.formatDate(
-              context,
               DateTime.now().subtract(
                 Duration(
                   days: Random().nextInt(1000),

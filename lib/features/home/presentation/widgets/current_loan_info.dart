@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
+import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class CurrentLoanInfo extends StatelessWidget {
   const CurrentLoanInfo({
     Key? key,
+    required this.loan,
   }) : super(key: key);
+  final LoanData loan;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class CurrentLoanInfo extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'January 15, 2022',
+                    _getDate(context),
                     style: TextStyle(
                       color: _getTextColor(context),
                       fontSize: 24,
@@ -81,13 +85,13 @@ class CurrentLoanInfo extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'KSH ',
+                          text: '${loan.currencyId.fiatCode} ',
                           style: TextStyle(
                             color: _getTextColor(context),
                           ),
                         ),
                         TextSpan(
-                          text: '12,960',
+                          text: Formatter.formatMoney(loan.remainingAmount),
                           style: TextStyle(
                             color: _getTextColor(context),
                             fontSize: 31,
@@ -124,5 +128,9 @@ class CurrentLoanInfo extends StatelessWidget {
     } else {
       return Theme.of(context).colorScheme.onPrimary;
     }
+  }
+
+  String _getDate(BuildContext context) {
+    return Formatter.formatDate( DateTime.parse(loan.dueDate));
   }
 }

@@ -11,8 +11,8 @@ class LocalizationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LocalizationIOC.l10nProvider(),
+    return ChangeNotifierProvider.value(
+      value: LocalizationIOC.l10nProvider(),
       builder: (context, _) {
         return child;
       },

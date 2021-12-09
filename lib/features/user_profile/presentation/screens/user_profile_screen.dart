@@ -39,8 +39,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _userProvider,
+    return ChangeNotifierProvider.value(
+      value: _userProvider,
       builder: (context, _) {
         return Scaffold(
           body: CustomScrollView(

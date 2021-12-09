@@ -28,8 +28,8 @@ class _LoanHistoryScreenState extends State<LoanHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _loanHistoryProvider,
+    return ChangeNotifierProvider.value(
+      value: _loanHistoryProvider,
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(

@@ -23,10 +23,7 @@ class LoanCard extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoanDetailScreen(
-                dueDate: DateTime.parse(loan.dueDate),
-                paidAmount: loan.totalAmount - loan.remainingAmount,
-                status: loanStatusFromString(loan.status),
-                totalAmount: loan.totalAmount,
+                loan: loan,
               ),
             ),
           );

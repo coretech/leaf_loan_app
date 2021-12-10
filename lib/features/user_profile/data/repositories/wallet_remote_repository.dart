@@ -16,16 +16,16 @@ class WalletRemoteRepository implements WalletRepository {
   @override
   Future<Either<WalletFailure, Wallet>> getWallet() async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
-      final _response = await _httpHelper.get(
+      final token = await _authHelper.getToken() ?? '';
+      final response = await _httpHelper.get(
         url: '${URLs.baseURL}/walletservice/wallets',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         cacheAge: const Duration(minutes: 20),
       );
-      final _responseDto = ResponseDto.fromMap(_response.data);
-      final _walletDto = WalletDto.fromMap(_responseDto.data);
+      final responseDto = ResponseDto.fromMap(response.data);
+      final _walletDto = WalletDto.fromMap(responseDto.data);
       final _wallet = _walletDto.toEntity();
       return Right(_wallet);
     } catch (e) {

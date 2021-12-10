@@ -20,10 +20,7 @@ class CurrentLoanInfo extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => LoanDetailScreen(
-              dueDate: DateTime.now(),
-              paidAmount: 234325,
-              status: LoanStatus.due,
-              totalAmount: 10234324,
+              loan: loan,
             ),
           ),
         );

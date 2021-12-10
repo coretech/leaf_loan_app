@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
+import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class RecentTransactions extends StatelessWidget {
   const RecentTransactions({
     Key? key,
+    required this.loan,
     required this.payments,
     required this.currencyFiat,
   }) : super(key: key);
+  final LoanData loan;
   final List<Payment> payments;
   final String currencyFiat;
 
@@ -39,10 +41,7 @@ class RecentTransactions extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => LoanDetailScreen(
-                  dueDate: DateTime.now(),
-                  paidAmount: 234325,
-                  status: LoanStatus.due,
-                  totalAmount: 10234324,
+                  loan: loan,
                 ),
               ),
             );

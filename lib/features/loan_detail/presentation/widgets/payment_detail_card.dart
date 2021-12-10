@@ -1,15 +1,17 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class PaymentDetailCard extends StatelessWidget {
   const PaymentDetailCard({
     Key? key,
-    this.disbursement = false,
+    required this.currencyFiat,
+    required this.payment,
   }) : super(key: key);
-  final bool disbursement;
+  final String currencyFiat;
+  final Payment payment;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,7 @@ class PaymentDetailCard extends StatelessWidget {
         children: [
           Text(
             Formatter.formatDate(
-              DateTime.now().subtract(
-                Duration(
-                  days: Random().nextInt(1000),
-                ),
-              ),
+              DateTime.parse(payment.createdAt),
             ),
             style: TextStyle(
               color: Theme.of(context).hintColor,
@@ -44,7 +42,7 @@ class PaymentDetailCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    disbursement ? 'Disbursement'.tr() : 'Payment'.tr(),
+                    'Payment'.tr(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
@@ -55,7 +53,7 @@ class PaymentDetailCard extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'RWF ',
+                          text: '$currencyFiat ',
                           style: TextStyle(
                             fontSize: 11,
                             color: Theme.of(context).colorScheme.onSurface,
@@ -63,7 +61,7 @@ class PaymentDetailCard extends StatelessWidget {
                         ),
                         TextSpan(
                           text: Formatter.formatMoney(
-                            Random().nextDouble() * 100000,
+                            payment.paymentAmount.toDouble(),
                           ),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,

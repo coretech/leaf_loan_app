@@ -15,11 +15,11 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
   @override
   Future<Either<LoanHistoryFailure, List<LoanData>>> getLoans() async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {

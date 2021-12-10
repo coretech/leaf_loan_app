@@ -15,11 +15,11 @@ class LoanTypeRemoteRepo extends LoanTypeRepository {
   @override
   Future<Either<LoanTypeError, List<LoanType>>> getLoanTypes() async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loantypes',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         cacheAge: const Duration(minutes: 20),
       );

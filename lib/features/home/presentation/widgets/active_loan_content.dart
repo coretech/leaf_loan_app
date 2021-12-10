@@ -39,9 +39,11 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                   CurrentLoanInfo(
                     loan: widget.loan,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: LoanActionButtons(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: LoanActionButtons(
+                      loan: widget.loan,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -53,6 +55,7 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                   Expanded(
                     child: RecentTransactions(
                       currencyFiat: widget.loan.currencyId.fiatCode,
+                      loan: widget.loan,
                       payments: widget.payments,
                     ),
                   ),

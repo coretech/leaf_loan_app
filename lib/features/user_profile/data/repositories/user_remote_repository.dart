@@ -17,11 +17,11 @@ class UserRemoteRepository extends UserRepository {
   @override
   Future<Either<UserFailure, User>> getUser() async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/userservice/profile',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         cacheAge: const Duration(minutes: 20),
       );

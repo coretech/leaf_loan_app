@@ -25,10 +25,7 @@ class ActiveLoanCard extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoanDetailScreen(
-                dueDate: DateTime.parse(loan.dueDate),
-                paidAmount: loan.totalAmount - loan.remainingAmount,
-                status: loanStatusFromString(loan.status),
-                totalAmount: loan.totalAmount,
+                loan: loan,
               ),
             ),
           );
@@ -138,8 +135,12 @@ class ActiveLoanCard extends StatelessWidget {
                     mini: true,
                     onTap: () {
                       log('pay on loan history card tapped');
-                      Navigator.of(context)
-                          .pushNamed(LoanPaymentScreen.routeName);
+                      Navigator.of(context).pushNamed(
+                        LoanPaymentScreen.routeName,
+                        arguments: LoanPaymentScreenArguments(
+                          loan: loan,
+                        ),
+                      );
                     },
                   ),
                 ),

@@ -19,11 +19,11 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
     String paymentId,
   ) async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/payments/$paymentId',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         cacheAge: const Duration(minutes: 20),
       );
@@ -41,11 +41,11 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
     required String loanId,
   }) async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/payments/loan/$loanId',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         cacheAge: const Duration(minutes: 20),
       );
@@ -63,11 +63,11 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
   @override
   Future<Either<LoanPaymentFailure, List<Payment>>> getUserPayments() async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/payments',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         cacheAge: const Duration(minutes: 20),
       );
@@ -91,11 +91,11 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
     required String password,
   }) async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/payments',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         data: {
           'amount': amount,

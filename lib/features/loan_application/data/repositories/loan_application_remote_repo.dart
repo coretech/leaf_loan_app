@@ -18,11 +18,11 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required String password,
   }) async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/loans',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
         data: {
           'amount': amount,

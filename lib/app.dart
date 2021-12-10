@@ -49,6 +49,14 @@ class _AppState extends State<App> {
                 ),
               );
             }
+            if (settings.name == LoanPaymentScreen.routeName) {
+              final args = settings.arguments as LoanPaymentScreenArguments?;
+              return MaterialPageRoute(
+                builder: (context) => LoanPaymentScreen(
+                  loan: args!.loan,
+                ),
+              );
+            }
           },
           routes: {
             ArticlesScreen.routeName: (context) => const ArticlesScreen(),
@@ -56,7 +64,6 @@ class _AppState extends State<App> {
             LoanApplicationScreen.routeName: (context) =>
                 const LoanApplicationScreen(),
             LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
-            LoanPaymentScreen.routeName: (context) => const LoanPaymentScreen(),
             LoginScreen.routeName: (context) => const LoginScreen(),
             OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
             SplashScreen.routeName: (ctx) => const SplashScreen(),

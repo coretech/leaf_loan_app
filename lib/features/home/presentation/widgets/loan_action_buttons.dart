@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/features/articles/articles.dart';
+import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanActionButtons extends StatelessWidget {
   const LoanActionButtons({
     Key? key,
+    required this.loan,
   }) : super(key: key);
-
+  final LoanData loan;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,7 +18,12 @@ class LoanActionButtons extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(LoanPaymentScreen.routeName);
+            Navigator.of(context).pushNamed(
+              LoanPaymentScreen.routeName,
+              arguments: LoanPaymentScreenArguments(
+                loan: loan,
+              ),
+            );
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(

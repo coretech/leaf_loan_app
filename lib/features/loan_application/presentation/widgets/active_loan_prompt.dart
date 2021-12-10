@@ -2,11 +2,17 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
+import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class ActiveLoanPrompt extends StatelessWidget {
-  const ActiveLoanPrompt({Key? key}) : super(key: key);
+  const ActiveLoanPrompt({
+    Key? key,
+    required this.loan,
+  }) : super(key: key);
+  final LoanData loan;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,12 @@ class ActiveLoanPrompt extends StatelessWidget {
           label: 'Pay Now'.tr(),
           onTap: () {
             log('pay on active loan prompt tapped');
-            Navigator.of(context).pushNamed(LoanPaymentScreen.routeName);
+            Navigator.of(context).pushNamed(
+              LoanPaymentScreen.routeName,
+              arguments: LoanPaymentScreenArguments(
+                loan: loan,
+              ),
+            );
           },
         ),
       ],

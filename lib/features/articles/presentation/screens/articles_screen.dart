@@ -22,8 +22,8 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         title: Text('Recent from Leaf'.tr()),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(20),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: ArticlesList(),
       ),
     );

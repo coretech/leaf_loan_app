@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard({
     Key? key,
+    required this.article,
   }) : super(key: key);
+  final Article article;
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +24,17 @@ class ArticleCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   //bolder text to show the article title
-                  const Text(
-                    'A small loan just might be what you need',
+                  Text(
+                    article.title,
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Struggling to get your business up and running? You'
-                    " might benefit from Leaf's small loans",
+                    article.description,
                     style: Theme.of(context).textTheme.caption,
                   ),
                   //button to read the article
@@ -43,8 +45,7 @@ class ArticleCard extends StatelessWidget {
                     child: Text('Read more'.tr()),
                     onPressed: () {
                       launch(
-                        'https://leafglobalfintech.com/leaf/leaf-for'
-                        '-traders-and-small-businesses/',
+                        article.url,
                       );
                     },
                   ),
@@ -54,11 +55,28 @@ class ArticleCard extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
-              'assets/images/small_loan.jpg',
+            child: Image.network(
+              article.imageUrl,
               height: 100,
               width: 100,
               fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                return const SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'assets/images/small_loan.jpg',
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                );
+              },
             ),
           ),
         ],

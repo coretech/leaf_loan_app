@@ -137,7 +137,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                           'You will have {1} {2} left to pay after this payment'
                               .tr(
                             values: {
-                              '1': _getRemaining(),
+                              '1': Formatter.formatMoney(_getRemaining()),
                               '2': widget.loan.currencyId.fiatCode,
                             },
                           ),
@@ -154,14 +154,19 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                       ),
                       onPressed: _validateAmount(_amountController.text) == null
                           ? () async {
-                              await showPaymentConfirmationSheet(context);
-                              if (mounted) {
-                                await Navigator.of(context)
-                                    .pushNamedAndRemoveUntil(
-                                  HomeScreen.routeName,
-                                  (route) => false,
-                                );
-                              }
+                              await showPaymentConfirmationSheet(
+                                context,
+                                amount: double.parse(_amountController.text),
+                                currencyFiat: widget.loan.currencyId.fiatCode,
+                                remainingAmount: _getRemaining(),
+                              );
+                              // if (mounted) {
+                              //   await Navigator.of(context)
+                              //       .pushNamedAndRemoveUntil(
+                              //     HomeScreen.routeName,
+                              //     (route) => false,
+                              //   );
+                              // }
                             }
                           : null,
                       style: ButtonStyle(
@@ -190,27 +195,27 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     if (double.tryParse(value!) == null) {
       return 'Please enter a valid amount'.tr();
     }
-    if (double.parse(value) > 12960) {
+    if (double.parse(value) > widget.loan.remainingAmount) {
       return 'Please enter an amount less than or equal to your '
               'remaining amount'
           .tr();
     }
-    if (double.parse(value) > 5000) {
+    if (double.parse(value) > balance) {
       return 'Please enter an amount less than or equal to your '
               'Leaf Wallet balance'
           .tr();
     }
   }
 
-  String _getRemaining() {
-    return (12960 - double.parse(_amountController.text)).toStringAsFixed(2);
+  double _getRemaining() {
+    return widget.loan.remainingAmount - double.parse(_amountController.text);
   }
 
   double _getBalance(Wallet wallet) {
     try {
       final activeCurrency = wallet.walletDetail.firstWhere(
-        (walletDetail) =>
-            walletDetail.currencyId.fiatCode == widget.loan.currencyId.fiatCode,
+        //TODO(Yabsram): Fix this
+        (walletDetail) => walletDetail.currencyId.fiatCode == 'KES',
       );
       // ignore: join_return_with_assignment
       balance = activeCurrency.balance;

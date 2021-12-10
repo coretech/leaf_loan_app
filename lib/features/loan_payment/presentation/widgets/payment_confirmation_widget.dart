@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
@@ -6,12 +9,12 @@ class PaymentConfirmationWidget extends StatelessWidget {
   const PaymentConfirmationWidget({
     Key? key,
     required this.amount,
+    required this.currencyFiat,
     required this.remainingAmount,
-    required this.dueDate,
   }) : super(key: key);
   final String amount;
+  final String currencyFiat;
   final String remainingAmount;
-  final String dueDate;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class PaymentConfirmationWidget extends StatelessWidget {
                     ?.copyWith(fontSize: 16),
               ),
               Text(
-                '$amount KES',
+                '$amount $currencyFiat',
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 16,
                       fontStyle: FontStyle.italic,
@@ -59,7 +62,7 @@ class PaymentConfirmationWidget extends StatelessWidget {
                     ?.copyWith(fontSize: 16),
               ),
               Text(
-                '$remainingAmount KES',
+                '$remainingAmount $currencyFiat',
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 16,
                       fontStyle: FontStyle.italic,
@@ -69,14 +72,14 @@ class PaymentConfirmationWidget extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'You will have to enter your PIN to confirm this payment'
-                .tr(),
+            'You will have to enter your PIN to confirm this payment'.tr(),
             style: Theme.of(context).textTheme.caption,
           ),
           const SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () {
-              showPinConfirmationSheet(context);
+            onPressed: () async {
+              final password = await showPinConfirmationSheet(context);
+              log(password.toString());
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith(
@@ -102,14 +105,19 @@ class PaymentConfirmationWidget extends StatelessWidget {
   }
 }
 
-Future<bool?> showPaymentConfirmationSheet(BuildContext context) async {
+Future<bool?> showPaymentConfirmationSheet(
+  BuildContext context, {
+  required double amount,
+  required String currencyFiat,
+  required double remainingAmount,
+}) async {
   await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    builder: (context) => const PaymentConfirmationWidget(
-      amount: '1000',
-      remainingAmount: '1124',
-      dueDate: 'Jan 1, 2022',
+    builder: (context) => PaymentConfirmationWidget(
+      amount: Formatter.formatMoney(amount),
+      currencyFiat: currencyFiat,
+      remainingAmount: Formatter.formatMoney(remainingAmount),
     ),
   );
   return false;

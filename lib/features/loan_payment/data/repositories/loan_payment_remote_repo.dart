@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:loan_app/authentication/helpers/helpers.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
@@ -25,7 +27,6 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),
-        cacheAge: const Duration(minutes: 20),
       );
       final _responseDto = ResponseDto.fromMap(_response.data);
       final _paymentDto = PaymentDto.fromMap(_responseDto.data);
@@ -40,6 +41,7 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
   Future<Either<LoanPaymentFailure, List<Payment>>> getLoanPayments({
     required String loanId,
   }) async {
+    log('Loan ID now $loanId');
     try {
       final token = await _authHelper.getToken() ?? '';
       final _response = await _httpHelper.get(
@@ -47,14 +49,17 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),
-        cacheAge: const Duration(minutes: 20),
       );
       final _responseDto = ResponseDto.fromMap(_response.data);
-      final _paymentDtos = (_responseDto.data as List)
-          .map((e) => PaymentDto.fromMap(e))
-          .toList();
-      final _payments = _paymentDtos.map((e) => e.toEntity()).toList();
-      return Right(_payments);
+      if (_responseDto.data != null) {
+        final _paymentDtos = (_responseDto.data as List)
+            .map((e) => PaymentDto.fromMap(e))
+            .toList();
+        final _payments = _paymentDtos.map((e) => e.toEntity()).toList();
+        return Right(_payments);
+      } else {
+        return const Right([]);
+      }
     } catch (e) {
       return left(LoanPaymentFailure());
     }
@@ -69,7 +74,6 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),
-        cacheAge: const Duration(minutes: 20),
       );
       final _responseDto = ResponseDto.fromMap(_response.data);
       final _paymentDtos = (_responseDto.data as List)

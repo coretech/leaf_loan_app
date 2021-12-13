@@ -8,7 +8,6 @@ class PaymentDto {
     required this.status,
     required this.id,
     required this.customerid,
-    required this.loanid,
     required this.principalamount,
     required this.interestamount,
     required this.paymentamount,
@@ -22,10 +21,9 @@ class PaymentDto {
       status: map['status'],
       id: map['_id'],
       customerid: map['customerid'],
-      loanid: LoanTypeDTO.fromMap(map['loanid']),
-      principalamount: int.parse(map['principalamount']),
-      interestamount: int.parse(map['interestamount']),
-      paymentamount: int.parse(map['paymentamount']),
+      principalamount: double.parse(map['principalamount'].toString()),
+      interestamount: double.parse(map['interestamount'].toString()),
+      paymentamount: double.parse(map['paymentamount'].toString()),
       currencyid: map['currencyid'],
       createdAt: map['createdAt'],
       updatedAt: map['updatedAt'],
@@ -38,10 +36,9 @@ class PaymentDto {
   final String status;
   final String id;
   final String customerid;
-  final LoanTypeDTO loanid;
-  final int principalamount;
-  final int interestamount;
-  final int paymentamount;
+  final double principalamount;
+  final double interestamount;
+  final double paymentamount;
   final String currencyid;
   final String createdAt;
   final String updatedAt;
@@ -51,7 +48,6 @@ class PaymentDto {
       status: status,
       id: id,
       customerId: customerid,
-      loanId: loanid.toEntity(),
       principalAmount: principalamount,
       interestAmount: interestamount,
       paymentAmount: paymentamount,
@@ -66,9 +62,9 @@ class PaymentDto {
     String? id,
     String? customerid,
     LoanTypeDTO? loanid,
-    int? principalamount,
-    int? interestamount,
-    int? paymentamount,
+    double? principalamount,
+    double? interestamount,
+    double? paymentamount,
     String? currencyid,
     String? createdAt,
     String? updatedAt,
@@ -77,7 +73,6 @@ class PaymentDto {
       status: status ?? this.status,
       id: id ?? this.id,
       customerid: customerid ?? this.customerid,
-      loanid: loanid ?? this.loanid,
       principalamount: principalamount ?? this.principalamount,
       interestamount: interestamount ?? this.interestamount,
       paymentamount: paymentamount ?? this.paymentamount,
@@ -92,7 +87,6 @@ class PaymentDto {
       'status': status,
       'id': id,
       'customerid': customerid,
-      'loanid': loanid.toMap(),
       'principalamount': principalamount,
       'interestamount': interestamount,
       'paymentamount': paymentamount,
@@ -107,7 +101,7 @@ class PaymentDto {
   @override
   String toString() {
     return 'PaymentDto(status: $status, _id: $id, customerid: $customerid, '
-        'loanid: $loanid, principalamount: $principalamount, interestamount: '
+        'principalamount: $principalamount, interestamount: '
         '$interestamount, paymentamount: $paymentamount, currencyid: '
         '$currencyid, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
@@ -120,7 +114,6 @@ class PaymentDto {
         other.status == status &&
         other.id == id &&
         other.customerid == customerid &&
-        other.loanid == loanid &&
         other.principalamount == principalamount &&
         other.interestamount == interestamount &&
         other.paymentamount == paymentamount &&
@@ -134,7 +127,6 @@ class PaymentDto {
     return status.hashCode ^
         id.hashCode ^
         customerid.hashCode ^
-        loanid.hashCode ^
         principalamount.hashCode ^
         interestamount.hashCode ^
         paymentamount.hashCode ^

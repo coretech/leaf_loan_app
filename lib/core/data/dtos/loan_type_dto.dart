@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
 
@@ -21,7 +22,8 @@ class LoanTypeDTO {
 
   factory LoanTypeDTO.fromMap(Map<String, dynamic> map) {
     return LoanTypeDTO(
-      purpose: List<String>.from(map['purpose']),
+      purpose:
+          map['purpose'] != null ? List<String>.from(map['purpose']) : null,
       id: map['_id'],
       name: map['name'],
       description: map['description'],
@@ -41,7 +43,7 @@ class LoanTypeDTO {
   factory LoanTypeDTO.fromJson(String source) =>
       LoanTypeDTO.fromMap(json.decode(source));
 
-  final List<String> purpose;
+  final List<String>? purpose;
   final String id;
   final String name;
   final String description;
@@ -117,9 +119,9 @@ class LoanTypeDTO {
 
   @override
   String toString() {
-    return 'LoanDTO(purpose: $purpose, _id: $id, name: $name, description:'
-        ' $description, currencies: $currencies, minduration: $minduration,'
-        ' maxduration: $maxduration, interestrate: $interestrate, image: '
+    return 'LoanTypeDTO(purpose: $purpose, _id: $id, name: $name, description:'
+        ' $description, currencies: $currencies, minduration: $minduration, '
+        'maxduration: $maxduration, interestrate: $interestrate, image: '
         '$image, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 

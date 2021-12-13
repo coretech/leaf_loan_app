@@ -162,9 +162,12 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 _selectedPurpose = value;
                               });
                             },
+                            // TODO(Yabsra): fix this monstrosity
                             purposeList: _hasLoanTypes()
                                 ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex].purpose
+                                        .loanTypes[_selectedLoanTypeIndex]
+                                        .purpose ??
+                                    []
                                 : [],
                             selectedPurpose: _selectedPurpose,
                           ),

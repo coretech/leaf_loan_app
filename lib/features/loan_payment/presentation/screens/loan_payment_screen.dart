@@ -152,21 +152,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                         style: const TextStyle(fontSize: 18),
                       ),
                       onPressed: _validateAmount(_amountController.text) == null
-                          ? () async {
-                              await showPaymentConfirmationSheet(
-                                context,
-                                amount: double.parse(_amountController.text),
-                                currencyFiat: widget.loan.currencyId.fiatCode,
-                                remainingAmount: _getRemaining(),
-                              );
-                              // if (mounted) {
-                              //   await Navigator.of(context)
-                              //       .pushNamedAndRemoveUntil(
-                              //     HomeScreen.routeName,
-                              //     (route) => false,
-                              //   );
-                              // }
-                            }
+                          ? _onPay
                           : null,
                       style: ButtonStyle(
                         fixedSize: MaterialStateProperty.all(
@@ -185,6 +171,28 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
         );
       },
     );
+  }
+
+  Future<void> _onPay() async {
+    final paid = await showPaymentConfirmationSheet(
+      context,
+      amount: double.parse(_amountController.text),
+      loan: widget.loan,
+      loanPaymentProvider: _loanPaymentProvider,
+      remainingAmount: _getRemaining(),
+    );
+    if (paid != null && paid) {
+      if (mounted) {
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Payment successfully completed!',
+            ),
+          ),
+        );
+      }
+    }
   }
 
   String? _validateAmount(String? value) {
@@ -213,8 +221,8 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
   double _getBalance(Wallet wallet) {
     try {
       final activeCurrency = wallet.walletDetail.firstWhere(
-        //TODO(Yabsram): Fix this
-        (walletDetail) => walletDetail.currencyId.fiatCode == 'KES',
+        (walletDetail) =>
+            walletDetail.currencyId.fiatCode == widget.loan.currencyId.fiatCode,
       );
       // ignore: join_return_with_assignment
       balance = activeCurrency.balance;
@@ -222,52 +230,5 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     } catch (_) {
       return 0;
     }
-  }
-}
-
-class LeafBalanceWidget extends StatelessWidget {
-  const LeafBalanceWidget({
-    Key? key,
-    required this.currencyFiat,
-    required this.balance,
-  }) : super(key: key);
-  final String currencyFiat;
-  final double balance;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          '${'Your {1} balance on Leaf Wallet is'.tr(
-            values: {'1': currencyFiat},
-          )} ',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-        ),
-        const SizedBox(height: 10),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: '$currencyFiat ',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-              ),
-              TextSpan(
-                text: Formatter.formatMoney(balance),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 27,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
   }
 }

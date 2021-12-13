@@ -23,7 +23,6 @@ class UserRemoteRepository extends UserRepository {
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),
-        cacheAge: const Duration(minutes: 20),
       );
       final _responseDto = ResponseDto.fromMap(_response.data);
       final _userDto = UserDTO.fromMap(_responseDto.data);

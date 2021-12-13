@@ -15,7 +15,7 @@ class LoanType {
     required this.createdAt,
     required this.updatedAt,
   });
-  final List<String> purpose;
+  final List<String>? purpose;
   final String id;
   final String name;
   final String description;

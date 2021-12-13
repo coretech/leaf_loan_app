@@ -22,7 +22,6 @@ class WalletRemoteRepository implements WalletRepository {
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),
-        cacheAge: const Duration(minutes: 20),
       );
       final responseDto = ResponseDto.fromMap(response.data);
       final _walletDto = WalletDto.fromMap(responseDto.data);

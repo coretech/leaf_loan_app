@@ -10,6 +10,9 @@ class LoanPaymentProvider extends ChangeNotifier {
 
   bool loading = false;
 
+  bool paying = false;
+  bool paid = false;
+
   String? errorMessage;
 
   final LoanPaymentRepo loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
@@ -48,6 +51,30 @@ class LoanPaymentProvider extends ChangeNotifier {
     );
 
     setLoading(value: false);
+    notifyListeners();
+  }
+
+  Future<void> payLoan({
+    required double amount,
+    required String currencyId,
+    required String loanId,
+    required String password,
+  }) async {
+    paying = true;
+    notifyListeners();
+    final result = await loanTypeRepository.payLoan(
+      amount: amount,
+      currencyId: currencyId,
+      loanId: loanId,
+      password: password,
+    );
+    result.fold(
+      (error) => setErrorMessage(value: 'Could not pay loan'),
+      (paid) {
+        this.paid = paid;
+      },
+    );
+    paying = false;
     notifyListeners();
   }
 }

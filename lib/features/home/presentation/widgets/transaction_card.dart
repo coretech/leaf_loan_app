@@ -59,7 +59,7 @@ class TransactionCard extends StatelessWidget {
                         ),
                         TextSpan(
                           text: Formatter.formatMoney(
-                            payment.paymentAmount.toDouble(),
+                            payment.paymentAmount,
                           ),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,

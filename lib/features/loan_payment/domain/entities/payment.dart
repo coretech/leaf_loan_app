@@ -5,7 +5,6 @@ class Payment {
     required this.status,
     required this.id,
     required this.customerId,
-    required this.loanId,
     required this.principalAmount,
     required this.interestAmount,
     required this.paymentAmount,
@@ -17,10 +16,9 @@ class Payment {
   final String status;
   final String id;
   final String customerId;
-  final LoanType loanId;
-  final int principalAmount;
-  final int interestAmount;
-  final int paymentAmount;
+  final double principalAmount;
+  final double interestAmount;
+  final double paymentAmount;
   final String currencyId;
   final String createdAt;
   final String updatedAt;
@@ -30,9 +28,9 @@ class Payment {
     String? id,
     String? customerId,
     LoanType? loanId,
-    int? principalAmount,
-    int? interestAmount,
-    int? paymentAmount,
+    double? principalAmount,
+    double? interestAmount,
+    double? paymentAmount,
     String? currencyId,
     String? createdAt,
     String? updatedAt,
@@ -41,7 +39,6 @@ class Payment {
       status: status ?? this.status,
       id: id ?? this.id,
       customerId: customerId ?? this.customerId,
-      loanId: loanId ?? this.loanId,
       principalAmount: principalAmount ?? this.principalAmount,
       interestAmount: interestAmount ?? this.interestAmount,
       paymentAmount: paymentAmount ?? this.paymentAmount,
@@ -54,7 +51,7 @@ class Payment {
   @override
   String toString() {
     return 'Payment(status: $status, _id: $id, customerId: $customerId, '
-        'loanId: $loanId, principalAmount: $principalAmount, interestAmount: '
+        'principalAmount: $principalAmount, interestAmount: '
         '$interestAmount, paymentAmount: $paymentAmount, currencyId: '
         '$currencyId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
@@ -67,7 +64,6 @@ class Payment {
         other.status == status &&
         other.id == id &&
         other.customerId == customerId &&
-        other.loanId == loanId &&
         other.principalAmount == principalAmount &&
         other.interestAmount == interestAmount &&
         other.paymentAmount == paymentAmount &&
@@ -81,7 +77,6 @@ class Payment {
     return status.hashCode ^
         id.hashCode ^
         customerId.hashCode ^
-        loanId.hashCode ^
         principalAmount.hashCode ^
         interestAmount.hashCode ^
         paymentAmount.hashCode ^

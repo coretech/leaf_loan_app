@@ -53,8 +53,9 @@ class LoanDetailScreen extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   style: Theme.of(context).textTheme.headline6,
-                                  text:
-                                      '${Formatter.formatMoney(loan.requestedAmount)}'
+                                  text: '${Formatter.formatMoney(
+                                    loan.requestedAmount,
+                                  )}'
                                       '\n',
                                 ),
                                 TextSpan(
@@ -105,8 +106,9 @@ class LoanDetailScreen extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   style: Theme.of(context).textTheme.headline6,
-                                  text:
-                                      '${Formatter.formatMoney(loan.totalAmount)}'
+                                  text: '${Formatter.formatMoney(
+                                    loan.totalAmount,
+                                  )}'
                                       '\n',
                                 ),
                                 TextSpan(

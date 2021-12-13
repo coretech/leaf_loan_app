@@ -24,13 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _homeProvider = HomeProvider()..getActiveLoan();
+    _homeProvider = HomeProvider();
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: _homeProvider,
+      value: _homeProvider..getActiveLoan(),
       builder: (context, _) {
         return Scaffold(
           appBar: const HomeAppBar(),

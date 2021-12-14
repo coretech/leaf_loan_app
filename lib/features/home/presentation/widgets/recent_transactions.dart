@@ -54,7 +54,8 @@ class RecentTransactions extends StatelessWidget {
 
   List<Widget> _buildTransactions(BuildContext context) {
     final transactions = <Widget>[];
-    for (var i = 0; i < payments.length % 3; i++) {
+    final paymentsCount = payments.length > 3 ? 3 : payments.length;
+    for (var i = 0; i < paymentsCount; i++) {
       final payment = payments[i];
       transactions.add(
         TransactionCard(

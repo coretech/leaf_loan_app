@@ -19,6 +19,7 @@ class TotalLoanAmountCard extends StatelessWidget {
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
+              textAlign: TextAlign.right,
             ),
             const StatDivider(),
             RichText(

@@ -97,7 +97,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             options: CarouselOptions(
                               autoPlay: true,
                               autoPlayInterval: const Duration(seconds: 5),
-                              height: 150,
+                              height: 160,
                             ),
                             items: const [
                               TotalLoanAmountCard(),

@@ -8,9 +8,11 @@ import 'package:loan_app/i18n/i18n.dart';
 class ActiveLoanContent extends StatefulWidget {
   const ActiveLoanContent({
     Key? key,
+    required this.loadingPayments,
     required this.loan,
     required this.payments,
   }) : super(key: key);
+  final bool loadingPayments;
   final LoanData loan;
   final List<Payment> payments;
 
@@ -52,13 +54,18 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
-                  Expanded(
-                    child: RecentTransactions(
-                      currencyFiat: widget.loan.currencyId.fiatCode,
-                      loan: widget.loan,
-                      payments: widget.payments,
+                  if (widget.loadingPayments)
+                    Expanded(
+                      child: RecentTransactions.shimmer(context),
+                    )
+                  else
+                    Expanded(
+                      child: RecentTransactions(
+                        currencyFiat: widget.loan.currencyId.fiatCode,
+                        loan: widget.loan,
+                        payments: widget.payments,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

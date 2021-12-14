@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
 
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
@@ -65,5 +66,22 @@ class RecentTransactions extends StatelessWidget {
       );
     }
     return transactions;
+  }
+
+  static Widget shimmer(BuildContext context) {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      shrinkWrap: true,
+      children: [
+        const SizedBox(height: 14),
+        TransactionCard.shimmer(context),
+        const SizedBox(height: 14),
+        TransactionCard.shimmer(context),
+        const SizedBox(height: 14),
+        TransactionCard.shimmer(context),
+        const SizedBox(height: 20),
+        const ShimmerBox(width: 150, height: 20)
+      ],
+    );
   }
 }

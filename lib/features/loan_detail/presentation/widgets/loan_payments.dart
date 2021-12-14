@@ -31,12 +31,14 @@ class _LoanPaymentsState extends State<LoanPayments> {
         return Consumer<LoanDetailProvider>(
           builder: (context, loanDetailProvider, _) {
             if (loanDetailProvider.loading) {
-              return const SliverList(
-                delegate: SliverChildListDelegate.fixed([
-                  Center(
-                    child: CircularProgressIndicator(),
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: PaymentDetailCard.shimmer(context),
                   ),
-                ]),
+                  childCount: 5,
+                ),
               );
             }
             if (loanDetailProvider.errorMessage != null) {

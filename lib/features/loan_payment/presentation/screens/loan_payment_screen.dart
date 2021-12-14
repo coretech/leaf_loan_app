@@ -32,7 +32,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
       ..addListener(() {
         setState(() {});
       });
-    _loanPaymentProvider = LoanPaymentProvider()..getWallet();
+    _loanPaymentProvider = LoanPaymentProvider()
+      ..getWallet()
+      ..addListener(_loanPaymentListener);
   }
 
   @override
@@ -98,9 +100,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                         height: 50,
                         width: 125,
                       ),
-                    if (loanPaymentProvider.errorMessage != null)
+                    if (loanPaymentProvider.walletErrorMessage != null)
                       Text(
-                        loanPaymentProvider.errorMessage!,
+                        loanPaymentProvider.walletErrorMessage!,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.error,
                         ),
@@ -229,6 +231,16 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
       return balance;
     } catch (_) {
       return 0;
+    }
+  }
+
+  void _loanPaymentListener() {
+    if (_loanPaymentProvider.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_loanPaymentProvider.errorMessage!),
+        ),
+      );
     }
   }
 }

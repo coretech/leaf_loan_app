@@ -42,7 +42,7 @@ class PaymentDetailCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Payment'.tr(),
+                    'Repayment'.tr(),
                     style: const TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
@@ -79,5 +79,22 @@ class PaymentDetailCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static Widget shimmer(BuildContext context) {
+    return  Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const ShimmerBox(
+            height: 12.5,
+            width: 100,
+          ),
+          const SizedBox(height: 5),
+          ShimmerBox(
+            height: 50,
+            width: ScreenSize.of(context).width,
+          ),
+        ],
+      );
   }
 }

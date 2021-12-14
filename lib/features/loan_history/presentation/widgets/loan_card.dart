@@ -19,15 +19,7 @@ class LoanCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => LoanDetailScreen(
-                loan: loan,
-              ),
-            ),
-          );
-        },
+        onTap: _loanHasDetails() ? () => _navigateToLoanDetail(context) : null,
         child: Ink(
           decoration: BoxDecoration(
             border: Border.all(
@@ -155,13 +147,17 @@ class LoanCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(
-                'View Details'.tr(),
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-              ),
+              if (_loanHasDetails())
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    'View Details'.tr(),
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 12,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -210,7 +206,7 @@ class LoanCard extends StatelessWidget {
   }
 
   double _getCardHeight() {
-    return 120;
+    return 122.5;
   }
 
   String _getLoanStatus() {
@@ -249,5 +245,20 @@ class LoanCard extends StatelessWidget {
 
   TextStyle? _getStatusTextStyle(BuildContext context) {
     return Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.green);
+  }
+
+  void _navigateToLoanDetail(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => LoanDetailScreen(
+          loan: loan,
+        ),
+      ),
+    );
+  }
+
+  bool _loanHasDetails() {
+    return loanStatusFromString(loan.status) != LoanStatus.rejected &&
+        loanStatusFromString(loan.status) != LoanStatus.pending;
   }
 }

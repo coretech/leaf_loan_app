@@ -7,6 +7,7 @@ import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
 
 class HomeProvider extends ChangeNotifier {
   bool loading = false;
+  bool loadingPayments = false;
 
   String? errorMessage;
 
@@ -53,6 +54,7 @@ class HomeProvider extends ChangeNotifier {
             activeLoan = loan;
             setLoading(value: false);
             await getPayments();
+            break;
           }
         }
       },
@@ -60,8 +62,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<void> getPayments() async {
-    clear();
-    setLoading(value: true);
+    loadingPayments = true;
+    notifyListeners();
     if (activeLoan != null) {
       final _loansPayments =
           await _loanPaymentRepo.getLoanPayments(loanId: activeLoan!.id);
@@ -72,6 +74,7 @@ class HomeProvider extends ChangeNotifier {
         },
       );
     }
+    loadingPayments = false;
     paymentsLoaded = true;
     setLoading(value: false);
     notifyListeners();

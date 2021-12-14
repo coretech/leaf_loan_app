@@ -14,6 +14,7 @@ class LoanPaymentProvider extends ChangeNotifier {
   bool paid = false;
 
   String? errorMessage;
+  String? walletErrorMessage;
 
   final LoanPaymentRepo loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
   final WalletRepository walletRepository = UserIOC.walletRepo();
@@ -44,7 +45,9 @@ class LoanPaymentProvider extends ChangeNotifier {
 
     final result = await walletRepository.getWallet();
     result.fold(
-      (error) => setErrorMessage(value: 'Could not get wallet'),
+      (error) {
+        walletErrorMessage = "Couldn't fetch wallet balance";
+      },
       (wallet) {
         this.wallet = wallet;
       },

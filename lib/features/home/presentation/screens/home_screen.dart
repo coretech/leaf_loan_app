@@ -48,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, homeProvider, _) {
         if (homeProvider.activeLoan != null && !homeProvider.loading) {
           return ActiveLoanContent(
+            loadingPayments: homeProvider.loadingPayments,
             loan: homeProvider.activeLoan!,
             payments: homeProvider.payments,
           );

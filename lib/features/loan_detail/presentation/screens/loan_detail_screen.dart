@@ -145,8 +145,7 @@ class LoanDetailScreen extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 15, top: 15),
+                                padding: const EdgeInsets.only(top: 15),
                                 child: PayButton.labeled(
                                   context: context,
                                   label: 'Pay Now'.tr(),

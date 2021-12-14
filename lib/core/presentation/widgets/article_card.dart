@@ -60,15 +60,15 @@ class ArticleCard extends StatelessWidget {
               height: 100,
               width: 100,
               fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                return const SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              },
+              // loadingBuilder: (context, child, loadingProgress) {
+              //   return const SizedBox(
+              //     height: 80,
+              //     width: 80,
+              //     child: Center(
+              //       child: CircularProgressIndicator(),
+              //     ),
+              //   );
+              // },
               errorBuilder: (context, error, stackTrace) {
                 return Image.asset(
                   'assets/images/small_loan.jpg',

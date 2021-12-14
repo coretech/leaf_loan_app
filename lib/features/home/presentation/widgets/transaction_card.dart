@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/presentation/presentation.dart';
 
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
@@ -73,6 +74,26 @@ class TransactionCard extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget shimmer(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const ShimmerBox(
+            height: 12.5,
+            width: 100,
+          ),
+          const SizedBox(height: 5),
+          ShimmerBox(
+            height: 50,
+            width: ScreenSize.of(context).width,
           ),
         ],
       ),

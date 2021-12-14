@@ -112,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           RichText(
+            textAlign: TextAlign.center,
             text: TextSpan(
               style: Theme.of(context).textTheme.caption?.copyWith(
                     fontSize: 14,

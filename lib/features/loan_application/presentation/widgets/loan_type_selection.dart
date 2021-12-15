@@ -32,9 +32,13 @@ class LoanTypeSelection extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: _buildLoanTypeCards(),
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: _buildLoanTypeCards(),
+          ),
         ),
         if (!loading)
           LoanDescription(

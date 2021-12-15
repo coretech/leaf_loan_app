@@ -68,6 +68,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                               setState(() {
                                 _selectedCurrencyIndex = 0;
                                 _selectedLoanTypeIndex = value;
+                                _loanAmount = loanTypeProvider
+                                    .loanTypes[value]
+                                    .currencies[_selectedCurrencyIndex]
+                                    .minLoanAmount
+                                    .toDouble();
                               });
                             },
                             selectedIndex: _selectedLoanTypeIndex,
@@ -176,7 +181,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                           const TOCConfirmation(),
                           ElevatedButton(
-                            onPressed: _canSubmit() ? _onSubmit : null,
+                            onPressed: _onSubmitPressed,
                             style: ButtonStyle(
                               fixedSize: MaterialStateProperty.all(
                                 Size(
@@ -201,6 +206,38 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
         );
       },
     );
+  }
+
+  void _onSubmitPressed() {
+    if (_canSubmit()) {
+      _onSubmit();
+    } else {
+      if (_loanAmount == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please select loan amount',
+            ),
+          ),
+        );
+      } else if (_selectedPurpose == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please select loan purpose',
+            ),
+          ),
+        );
+      } else if (_selectedDurationInDays < 61) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please select a proper loan duration',
+            ),
+          ),
+        );
+      }
+    }
   }
 
   bool _canSubmit() {

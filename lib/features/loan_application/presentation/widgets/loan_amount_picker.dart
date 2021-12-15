@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -72,18 +73,6 @@ class LoanAmountPicker extends StatelessWidget {
           Center(
             child: Column(
               children: [
-                Column(
-                  children: [
-                    Text(
-                      '${Formatter.formatMoney(loanAmount ?? minAmount!)}'
-                      ' $fiatCode',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text(
-                      'Amount'.tr(),
-                    ),
-                  ],
-                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -96,22 +85,70 @@ class LoanAmountPicker extends StatelessWidget {
                     Column(
                       children: [
                         Text(
+                          '${Formatter.formatMoney(loanAmount ?? minAmount!)}'
+                          ' $fiatCode',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        Text(
+                          'Amount'.tr(),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
                           '${_getInterest()} $fiatCode',
                           style: Theme.of(context).textTheme.headline6,
                         ),
                         Text('${'Interest'.tr()} (${interestRate ?? 0}%)'),
                       ],
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          '${_getTotal()}'
-                          ' $fiatCode',
-                          style: Theme.of(context).textTheme.headline6,
+                  ],
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          errorMaxLines: 3,
+                          prefixText: '$fiatCode ',
+                          prefixStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
                         ),
-                        Text('Total Due'.tr()),
-                      ],
+                        initialValue: loanAmount?.toStringAsFixed(2) ?? '',
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d+\.?\d{0,2}'),
+                          ),
+                        ],
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          final amount = double.parse(value);
+                          if (amount < minAmount!) {
+                            onChanged(minAmount!);
+                          } else if (amount > maxAmount!) {
+                            onChanged(maxAmount!);
+                          } else {
+                            onChanged(amount);
+                          }
+                        },
+                      ),
                     ),
+                    Text(
+                      '${_getTotal()}'
+                      ' $fiatCode',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text('Total Due'.tr()),
                   ],
                 ),
               ],

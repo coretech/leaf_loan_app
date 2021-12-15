@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/core/presentation/widgets/error_widget.dart';
 
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
@@ -21,13 +22,8 @@ class RecentTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (payments.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('No transactions were found'),
-          ],
-        ),
+      return const CustomErrorWidget(
+        message: 'No transactions were found',
       );
     }
     return Column(

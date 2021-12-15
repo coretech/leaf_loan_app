@@ -62,7 +62,7 @@ class LoanActionButtons extends StatelessWidget {
               Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          child: Text('More info'.tr()),
+          child: Text('Learn more'.tr()),
         ),
       ],
     );

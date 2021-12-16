@@ -14,12 +14,7 @@ class HomeProvider extends ChangeNotifier {
     });
 
     _eventBus.on<LoanPaymentSuccess>().listen((event) async {
-      final updatedLoan = event.loan;
-      await setActiveLoan(
-        activeLoan!.copyWith(
-          remainingAmount: updatedLoan.remainingAmount,
-        ),
-      );
+      await getActiveLoan();
     });
   }
 

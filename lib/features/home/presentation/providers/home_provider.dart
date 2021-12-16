@@ -6,6 +6,23 @@ import 'package:loan_app/features/loan_payment/domain/domain.dart';
 import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
 
 class HomeProvider extends ChangeNotifier {
+  HomeProvider() {
+    _eventBus.on<LoanApplicationEvent>().listen((event) async {
+      if (event == LoanApplicationEvent.success) {
+        await getActiveLoan();
+      }
+    });
+
+    _eventBus.on<LoanPaymentSuccess>().listen((event) async {
+      final updatedLoan = event.loan;
+      await setActiveLoan(
+        activeLoan!.copyWith(
+          remainingAmount: updatedLoan.remainingAmount,
+        ),
+      );
+    });
+  }
+
   bool loading = false;
   bool loadingPayments = false;
 
@@ -17,6 +34,8 @@ class HomeProvider extends ChangeNotifier {
 
   final _loanPaymentRepo = LoanPaymentIOC.loanPaymentRepo();
   final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo();
+
+  final _eventBus = IntegrationIOC.eventBus();
 
   void setLoading({required bool value}) {
     loading = value;
@@ -39,26 +58,26 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setActiveLoan(LoanData loan) async {
+    activeLoan = loan;
+    notifyListeners();
+    await getPayments();
+  }
+
   Future<void> getActiveLoan() async {
+    await Future.delayed(Duration.zero);
     clear();
     setLoading(value: true);
-    final _loansResult = await _loanHistoryRepo.getLoans();
-    await _loansResult.fold(
-      (l) {
-        setErrorMessage(value: 'Some error occurred while loading');
-        setLoading(value: false);
-      },
-      (loans) async {
-        for (final loan in loans) {
-          if (loanStatusFromString(loan.status) == LoanStatus.approved) {
-            activeLoan = loan;
-            setLoading(value: false);
-            await getPayments();
-            break;
-          }
-        }
+    final _loanResult = await _loanHistoryRepo.getActiveLoan();
+    _loanResult.fold(
+      (error) => setErrorMessage(value: 'Error getting active loan'),
+      (loanData) async {
+        activeLoan = loanData;
+        notifyListeners();
+        await getPayments();
       },
     );
+    setLoading(value: false);
   }
 
   Future<void> getPayments() async {

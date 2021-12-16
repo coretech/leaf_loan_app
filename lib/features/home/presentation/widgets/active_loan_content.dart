@@ -68,9 +68,9 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                     else
                       Expanded(
                         child: RecentTransactions(
-                          currencyFiat: widget.loan.currencyId.fiatCode,
+                          currencyFiat: widget.loan.currencyId!.fiatCode,
                           loan: widget.loan,
-                          payments: widget.payments,
+                          payments: widget.payments.reversed.toList(),
                         ),
                       ),
                   ],

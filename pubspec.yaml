@@ -30,6 +30,7 @@ dependencies:
     dartz: ^0.10.0
     dio: ^4.0.4
     dio_http_cache: ^0.3.0
+    event_bus: ^2.0.0
     external_app_launcher: ^2.0.1
     firebase_core: ^1.4.0
     firebase_messaging: ^10.0.4

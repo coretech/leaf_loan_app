@@ -27,9 +27,11 @@ class LoanDataDto {
       status: map['status'],
       id: map['_id'],
       customerid: map['customerid'],
-      loantypeid: LoanTypeDTO.fromMap(map['loantypeid']),
+      loantypeid: LoanTypeDTO.fromMap(map['loantypeid'] ?? map['loanid']),
       loanpurpose: map['loanpurpose'],
-      currencyid: CurrencyIdDto.fromMap(map['currencyid']),
+      currencyid: map['currencyid'] != null
+          ? CurrencyIdDto.fromMap(map['currencyid'])
+          : null,
       duedate: map['duedate'],
       requestedamount: double.parse(map['requestedamount'].toString()),
       interestamount: double.parse(map['interestamount'].toString()),
@@ -52,7 +54,7 @@ class LoanDataDto {
       customerId: customerid,
       loanTypeId: loantypeid.toEntity(),
       loanPurpose: loanpurpose,
-      currencyId: currencyid.toEntity(),
+      currencyId: currencyid?.toEntity(),
       dueDate: duedate,
       requestedAmount: requestedamount,
       interestAmount: interestamount,
@@ -70,7 +72,7 @@ class LoanDataDto {
   final String customerid;
   final LoanTypeDTO loantypeid;
   final String loanpurpose;
-  final CurrencyIdDto currencyid;
+  final CurrencyIdDto? currencyid;
   final String duedate;
   final double requestedamount;
   final double interestamount;
@@ -124,7 +126,7 @@ class LoanDataDto {
       'customerid': customerid,
       'loantypeid': loantypeid.toMap(),
       'loanpurpose': loanpurpose,
-      'currencyid': currencyid.toMap(),
+      'currencyid': currencyid?.toMap(),
       'duedate': duedate,
       'requestedamount': requestedamount,
       'interestamount': interestamount,

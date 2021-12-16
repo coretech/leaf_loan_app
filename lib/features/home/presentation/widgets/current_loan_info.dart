@@ -82,7 +82,7 @@ class CurrentLoanInfo extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: '${loan.currencyId.fiatCode} ',
+                          text: '${loan.currencyId!.fiatCode} ',
                           style: TextStyle(
                             color: _getTextColor(context),
                           ),

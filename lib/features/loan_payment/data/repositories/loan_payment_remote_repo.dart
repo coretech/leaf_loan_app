@@ -8,6 +8,8 @@ import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/features/loan_history/data/dtos/dtos.dart';
+import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/data/dtos/dtos.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/payment.dart';
 import 'package:loan_app/features/loan_payment/domain/repositories/repositories.dart';
@@ -88,7 +90,7 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
   }
 
   @override
-  Future<Either<LoanPaymentFailure, bool>> payLoan({
+  Future<Either<LoanPaymentFailure, LoanData>> payLoan({
     required double amount,
     required String currencyId,
     required String loanId,
@@ -109,7 +111,13 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
         },
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
-        return const Right(true);
+        final responseDto = ResponseDto.fromMap(response.data);
+        // ignore: avoid_dynamic_calls
+        final loanId = responseDto.data['loanid'];
+        // ignore: avoid_dynamic_calls
+        loanId['currencyid'] = null;
+        final loan = LoanDataDto.fromMap(loanId).toEntity();
+        return Right(loan);
       } else {
         return Left(LoanPaymentFailure());
       }

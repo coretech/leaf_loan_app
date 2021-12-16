@@ -74,7 +74,7 @@ class LoanCard extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             fontSize: 12,
                           ),
-                          text: '${loan.currencyId.fiatCode} ',
+                          text: '${loan.currencyId!.fiatCode} ',
                         ),
                         TextSpan(
                           style: _getAmountTextStyle(context),
@@ -120,7 +120,7 @@ class LoanCard extends StatelessWidget {
                             color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 12,
                           ),
-                          text: '${loan.currencyId.fiatCode} ',
+                          text: '${loan.currencyId!.fiatCode} ',
                         ),
                         TextSpan(
                           style: _getPaidTextStyle(context),

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/features/loan_payment/domain/repositories/repositories.dart';
+import 'package:loan_app/core/events/events.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
 import 'package:loan_app/features/user_profile/domain/domain.dart';
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
@@ -16,8 +17,9 @@ class LoanPaymentProvider extends ChangeNotifier {
   String? errorMessage;
   String? walletErrorMessage;
 
-  final LoanPaymentRepo loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
-  final WalletRepository walletRepository = UserIOC.walletRepo();
+  final _loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
+  final _walletRepository = UserIOC.walletRepo();
+  final _eventBus = IntegrationIOC.eventBus();
 
   void setLoading({required bool value}) {
     loading = value;
@@ -43,7 +45,7 @@ class LoanPaymentProvider extends ChangeNotifier {
   Future<void> getWallet() async {
     setLoading(value: true);
 
-    final result = await walletRepository.getWallet();
+    final result = await _walletRepository.getWallet();
     result.fold(
       (error) {
         walletErrorMessage = "Couldn't fetch wallet balance";
@@ -65,7 +67,7 @@ class LoanPaymentProvider extends ChangeNotifier {
   }) async {
     paying = true;
     notifyListeners();
-    final result = await loanTypeRepository.payLoan(
+    final result = await _loanTypeRepository.payLoan(
       amount: amount,
       currencyId: currencyId,
       loanId: loanId,
@@ -73,8 +75,9 @@ class LoanPaymentProvider extends ChangeNotifier {
     );
     result.fold(
       (error) => setErrorMessage(value: 'Could not pay loan'),
-      (paid) {
-        this.paid = paid;
+      (loan) {
+        _eventBus.fire(LoanPaymentSuccess(loan: loan));
+        paid = true;
       },
     );
     paying = false;

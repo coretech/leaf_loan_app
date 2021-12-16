@@ -12,7 +12,8 @@ class CurrencyDTO {
 
   factory CurrencyDTO.fromMap(Map<String, dynamic> map) {
     return CurrencyDTO(
-      currencyid: (map['currencyid'] is String)
+      // ignore: avoid_dynamic_calls
+      currencyid: (map['currencyid'] is String || map['currencyid'] == null)
           ? null
           : CurrencyIdDto.fromMap(map['currencyid']),
       minloanamount: map['minloanamount'],

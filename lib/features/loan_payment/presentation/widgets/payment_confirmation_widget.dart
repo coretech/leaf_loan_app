@@ -57,7 +57,7 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
                       ),
                       Text(
                         '${Formatter.formatMoney(widget.amount)}'
-                        ' ${widget.loan.currencyId.fiatCode}',
+                        ' ${widget.loan.currencyId!.fiatCode}',
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontSize: 16,
                               fontStyle: FontStyle.italic,
@@ -78,7 +78,7 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
                       ),
                       Text(
                         '${Formatter.formatMoney(widget.remainingAmount)} '
-                        '${widget.loan.currencyId.fiatCode}',
+                        '${widget.loan.currencyId!.fiatCode}',
                         style: Theme.of(context).textTheme.caption?.copyWith(
                               fontSize: 16,
                               fontStyle: FontStyle.italic,
@@ -143,7 +143,7 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
     if (password != null) {
       await widget.loanPaymentProvider.payLoan(
         amount: widget.amount,
-        currencyId: widget.loan.currencyId.id,
+        currencyId: widget.loan.currencyId!.id,
         loanId: widget.loan.id,
         password: password,
       );

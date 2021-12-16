@@ -1,82 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
-import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
-class LoanPayments extends StatefulWidget {
+class LoanPayments extends StatelessWidget {
   const LoanPayments({
     Key? key,
-    required this.loan,
   }) : super(key: key);
-  final LoanData loan;
-
-  @override
-  State<LoanPayments> createState() => _LoanPaymentsState();
-}
-
-class _LoanPaymentsState extends State<LoanPayments> {
-  late LoanDetailProvider _loanDetailProvider;
-
-  @override
-  void initState() {
-    super.initState();
-    _loanDetailProvider = LoanDetailProvider()..getPayments(widget.loan.id);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: _loanDetailProvider,
-      builder: (context, _) {
-        return Consumer<LoanDetailProvider>(
-          builder: (context, loanDetailProvider, _) {
-            if (loanDetailProvider.loading) {
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: PaymentDetailCard.shimmer(context),
-                  ),
-                  childCount: 5,
+    return Consumer<LoanDetailProvider>(
+      builder: (context, loanDetailProvider, _) {
+        if (loanDetailProvider.loading) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => Padding(
+                padding: const EdgeInsets.all(10),
+                child: PaymentDetailCard.shimmer(context),
+              ),
+              childCount: 5,
+            ),
+          );
+        }
+        if (loanDetailProvider.errorMessage != null) {
+          return SliverList(
+            delegate: SliverChildListDelegate.fixed([
+              Center(
+                child: Text(loanDetailProvider.errorMessage!),
+              ),
+            ]),
+          );
+        }
+        if (loanDetailProvider.payments.isEmpty) {
+          return const SliverList(
+            delegate: SliverChildListDelegate.fixed([
+              Center(
+                child: Text('No payments found'),
+              ),
+            ]),
+          );
+        }
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 2.5,
+                  horizontal: 15,
+                ),
+                child: PaymentDetailCard(
+                  currencyFiat: loanDetailProvider.loan!.currencyId!.fiatCode,
+                  payment: loanDetailProvider.payments[index],
                 ),
               );
-            }
-            if (loanDetailProvider.errorMessage != null) {
-              return SliverList(
-                delegate: SliverChildListDelegate.fixed([
-                  Center(
-                    child: Text(loanDetailProvider.errorMessage!),
-                  ),
-                ]),
-              );
-            }
-            if (loanDetailProvider.payments.isEmpty) {
-              return const SliverList(
-                delegate: SliverChildListDelegate.fixed([
-                  Center(
-                    child: Text('No payments found'),
-                  ),
-                ]),
-              );
-            }
-            return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 2.5,
-                      horizontal: 15,
-                    ),
-                    child: PaymentDetailCard(
-                      currencyFiat: widget.loan.currencyId.fiatCode,
-                      payment: loanDetailProvider.payments[index],
-                    ),
-                  );
-                },
-                childCount: loanDetailProvider.payments.length,
-              ),
-            );
-          },
+            },
+            childCount: loanDetailProvider.payments.length,
+
+          ),
         );
       },
     );

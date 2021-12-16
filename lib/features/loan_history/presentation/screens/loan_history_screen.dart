@@ -19,12 +19,8 @@ class LoanHistoryScreen extends StatefulWidget {
 }
 
 class _LoanHistoryScreenState extends State<LoanHistoryScreen> {
-  late LoanHistoryProvider _loanHistoryProvider;
-  @override
-  void initState() {
-    super.initState();
-    _loanHistoryProvider = LoanHistoryProvider()..getLoans();
-  }
+  final LoanHistoryProvider _loanHistoryProvider =
+      LoanHistoryIOC.loanHistoryProvider()..getLoans();
 
   @override
   Widget build(BuildContext context) {

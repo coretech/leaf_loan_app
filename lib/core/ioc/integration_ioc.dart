@@ -23,6 +23,9 @@ class IntegrationIOC {
             await AuthIOC.authHelper().processResponse(response);
           },
         ),
+      )
+      ..registerLazySingleton<EventBusAbstraction>(
+        () => EvenBusIntegration(),
       );
   }
 
@@ -33,19 +36,23 @@ class IntegrationIOC {
     _locator.registerLazySingleton<L10n>(() => localizations);
   }
 
-  static LocalStorage localStorage() {
-    return _locator.get<LocalStorage>();
-  }
-
-  static ScoringDataCollectionService scoringDataCollectionService() {
-    return _locator.get<ScoringDataCollectionService>();
+  static EventBusAbstraction eventBus() {
+    return _locator.get<EventBusAbstraction>();
   }
 
   static HttpHelper httpHelper() {
     return _locator.get<HttpHelper>();
   }
 
-  static L10n getL10n() {
+  static LocalStorage localStorage() {
+    return _locator.get<LocalStorage>();
+  }
+
+  static L10n l10n() {
     return _locator.get<L10n>();
+  }
+
+  static ScoringDataCollectionService scoringDataCollectionService() {
+    return _locator.get<ScoringDataCollectionService>();
   }
 }

@@ -1,3 +1,4 @@
+export 'event_bus_abstraction.dart';
 export 'http_helper.dart';
 export 'l10n.dart';
 export 'local_storage.dart';

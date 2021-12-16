@@ -24,7 +24,7 @@ class LoanData {
   final String customerId;
   final LoanType loanTypeId;
   final String loanPurpose;
-  final CurrencyId currencyId;
+  final CurrencyId? currencyId;
   final String dueDate;
   final double requestedAmount;
   final double interestAmount;
@@ -34,6 +34,42 @@ class LoanData {
   final String requestDate;
   final String createdAt;
   final String updatedAt;
+
+  LoanData copyWith({
+    String? status,
+    String? id,
+    String? customerId,
+    LoanType? loanTypeId,
+    String? loanPurpose,
+    CurrencyId? currencyId,
+    String? dueDate,
+    double? requestedAmount,
+    double? interestAmount,
+    double? totalAmount,
+    double? remainingAmount,
+    int? duration,
+    String? requestDate,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return LoanData(
+      status: status ?? this.status,
+      id: id ?? this.id,
+      customerId: customerId ?? this.customerId,
+      loanTypeId: loanTypeId ?? this.loanTypeId,
+      loanPurpose: loanPurpose ?? this.loanPurpose,
+      currencyId: currencyId ?? this.currencyId,
+      dueDate: dueDate ?? this.dueDate,
+      requestedAmount: requestedAmount ?? this.requestedAmount,
+      interestAmount: interestAmount ?? this.interestAmount,
+      totalAmount: totalAmount ?? this.totalAmount,
+      remainingAmount: remainingAmount ?? this.remainingAmount,
+      duration: duration ?? this.duration,
+      requestDate: requestDate ?? this.requestDate,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 
   @override
   bool operator ==(Object other) {

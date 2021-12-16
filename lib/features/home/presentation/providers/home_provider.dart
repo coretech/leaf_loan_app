@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
+import 'package:loan_app/features/loan_history/domain/repositories/loan_history_repository.dart';
 import 'package:loan_app/features/loan_history/ioc/ioc.dart';
 import 'package:loan_app/features/loan_payment/domain/domain.dart';
 import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
@@ -64,8 +65,12 @@ class HomeProvider extends ChangeNotifier {
     clear();
     setLoading(value: true);
     final _loanResult = await _loanHistoryRepo.getActiveLoan();
-    _loanResult.fold(
-      (error) => setErrorMessage(value: 'Error getting active loan'),
+    await _loanResult.fold(
+      (error) {
+        if (error == LoanHistoryFailure.error) {
+          setErrorMessage(value: 'Error getting active loan');
+        }
+      },
       (loanData) async {
         activeLoan = loanData;
         notifyListeners();

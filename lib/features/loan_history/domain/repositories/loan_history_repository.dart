@@ -6,4 +6,7 @@ abstract class LoanHistoryRepository {
   Future<Either<LoanHistoryFailure, LoanData>> getActiveLoan();
 }
 
-class LoanHistoryFailure {}
+enum LoanHistoryFailure {
+  noActiveLoan,
+  error,
+}

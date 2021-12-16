@@ -31,10 +31,10 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
         ).toList();
         return Right(loanData);
       } else {
-        return Left(LoanHistoryFailure());
+        return const Left(LoanHistoryFailure.error);
       }
     } catch (e) {
-      return Left(LoanHistoryFailure());
+      return const Left(LoanHistoryFailure.error);
     }
   }
 
@@ -53,13 +53,13 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
         if (responseDto.data != null) {
           return Right(LoanDataDto.fromMap(responseDto.data).toEntity());
         } else {
-          return Left(LoanHistoryFailure());
+          return const Left(LoanHistoryFailure.noActiveLoan);
         }
       } else {
-        return Left(LoanHistoryFailure());
+        return const Left(LoanHistoryFailure.error);
       }
     } catch (e) {
-      return Left(LoanHistoryFailure());
+      return const Left(LoanHistoryFailure.error);
     }
   }
 }

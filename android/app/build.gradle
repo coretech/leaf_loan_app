@@ -43,7 +43,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.leafglobalfintech.loanapp"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -93,9 +93,9 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+    implementation platform('com.google.firebase:firebase-bom:29.0.2')
     implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
@@ -116,3 +116,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'

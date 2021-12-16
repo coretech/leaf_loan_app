@@ -8,10 +8,10 @@ import 'package:loan_app/i18n/ioc/ioc.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp();
   await IntegrationIOC.init();
   await FeaturesIOC.init();
   await LocalizationIOC.init();
-  await Firebase.initializeApp();
 
   runApp(const App());
 }

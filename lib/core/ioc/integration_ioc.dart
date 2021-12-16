@@ -9,11 +9,11 @@ class IntegrationIOC {
   static Future<void> init() async {
     await HiveLocalStorage.init();
     _locator
-      ..registerLazySingleton<LocalStorage>(
-        HiveLocalStorage.getInstance,
+      ..registerLazySingleton<Analytics>(
+        () => FirebaseAnalyticsIntegration(),
       )
-      ..registerLazySingleton<ScoringDataCollectionService>(
-        () => CredoDataCollectionService(),
+      ..registerLazySingleton<EventBusAbstraction>(
+        () => EvenBusIntegration(),
       )
       ..registerLazySingleton<HttpHelper>(
         () => DioHttpHelper(
@@ -24,8 +24,14 @@ class IntegrationIOC {
           },
         ),
       )
-      ..registerLazySingleton<EventBusAbstraction>(
-        () => EvenBusIntegration(),
+      ..registerLazySingleton<LocalStorage>(
+        HiveLocalStorage.getInstance,
+      )
+      ..registerLazySingleton<Logger>(
+        () => FirebaseLogger(),
+      )
+      ..registerLazySingleton<ScoringDataCollectionService>(
+        () => CredoDataCollectionService(),
       );
   }
 
@@ -34,6 +40,10 @@ class IntegrationIOC {
       _locator.unregister<L10n>();
     }
     _locator.registerLazySingleton<L10n>(() => localizations);
+  }
+
+  static Analytics analytics() {
+    return _locator.get<Analytics>();
   }
 
   static EventBusAbstraction eventBus() {
@@ -46,6 +56,10 @@ class IntegrationIOC {
 
   static LocalStorage localStorage() {
     return _locator.get<LocalStorage>();
+  }
+
+  static Logger logger() {
+    return _locator.get<Logger>();
   }
 
   static L10n l10n() {

@@ -68,7 +68,10 @@ class HomeProvider extends ChangeNotifier {
     await _loanResult.fold(
       (error) {
         if (error == LoanHistoryFailure.error) {
-          setErrorMessage(value: 'Error getting active loan');
+          setErrorMessage(
+            value:
+                'Not sure what went wrong.\nAre you connected to the internet?',
+          );
         }
       },
       (loanData) async {

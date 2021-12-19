@@ -20,7 +20,7 @@ class NoLoansWidget extends StatelessWidget {
         Transform.rotate(
           angle: math.pi / 2,
           child: Text(
-            ': )',
+            ':)',
             style: Theme.of(context).textTheme.headline3,
           ),
         ),
@@ -37,7 +37,6 @@ class NoLoansWidget extends StatelessWidget {
             context: context,
             label: 'Apply for a loan'.tr(),
             onTap: () {
-              log('apply on no loans tapped');
               Navigator.of(context).pushNamed(
                 LoanApplicationScreen.routeName,
               );

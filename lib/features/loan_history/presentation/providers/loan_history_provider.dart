@@ -55,7 +55,7 @@ class LoanHistoryProvider extends ChangeNotifier {
     resultEither.fold(
       (l) {
         setErrorMessage(
-          value: 'Fetching loan history failed',
+          value: "We couldn't get your loan history. Please try again.",
         );
       },
       (r) {

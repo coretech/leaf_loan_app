@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/presentation/presentation.dart';
 
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/home/presentation/providers/home_provider.dart';
@@ -58,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         } else if (homeProvider.errorMessage != null) {
           return Center(
-            child: Text(homeProvider.errorMessage!),
+            child: CustomErrorWidget(
+              message: homeProvider.errorMessage!,
+              onRetry: () => _homeProvider.getActiveLoan(),
+            ),
           );
         } else {
           return NoLoanContent(

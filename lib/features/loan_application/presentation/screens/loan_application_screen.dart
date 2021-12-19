@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/core/utils/screen_size.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
@@ -47,9 +48,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               body: Consumer<LoanTypeProvider>(
                 builder: (context, loanTypeProvider, _) {
                   if (loanTypeProvider.errorMessage != null) {
-                    return const Center(
-                      child: Text(
-                        'Some error occurred while fetching Loan Type Details',
+                    return Center(
+                      child: CustomErrorWidget(
+                        message: loanTypeProvider.errorMessage!,
+                        onRetry: loanTypeProvider.getLoanTypes,
                       ),
                     );
                   }

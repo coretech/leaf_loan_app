@@ -36,7 +36,10 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
           if (_loanApplicationProvider.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(_loanApplicationProvider.errorMessage!),
+                content: Text(
+                  _loanApplicationProvider.errorMessage!,
+                  maxLines: 3,
+                ),
               ),
             );
           }

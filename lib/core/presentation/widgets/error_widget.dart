@@ -19,14 +19,11 @@ class CustomErrorWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Transform.rotate(
-            angle: math.pi / 2,
-            child: Text(
-              ':(',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+        Transform.rotate(
+          angle: math.pi / 2,
+          child: Text(
+            ':(',
+            style: Theme.of(context).textTheme.headline4,
           ),
         ),
         Padding(

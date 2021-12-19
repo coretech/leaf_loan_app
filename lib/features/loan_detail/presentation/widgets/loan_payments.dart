@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:provider/provider.dart';
 
@@ -26,18 +27,25 @@ class LoanPayments extends StatelessWidget {
           return SliverList(
             delegate: SliverChildListDelegate.fixed([
               Center(
-                child: Text(loanDetailProvider.errorMessage!),
+                child: CustomErrorWidget(
+                  message: loanDetailProvider.errorMessage!,
+                  onRetry: loanDetailProvider.getPayments,
+                ),
               ),
             ]),
           );
         }
         if (loanDetailProvider.payments.isEmpty) {
           return const SliverList(
-            delegate: SliverChildListDelegate.fixed([
-              Center(
-                child: Text('No payments found'),
-              ),
-            ]),
+            delegate: SliverChildListDelegate.fixed(
+              [
+                Center(
+                  child: CustomErrorWidget(
+                    message: "Looks like you haven't made any payments yet",
+                  ),
+                ),
+              ],
+            ),
           );
         }
         return SliverList(
@@ -55,7 +63,6 @@ class LoanPayments extends StatelessWidget {
               );
             },
             childCount: loanDetailProvider.payments.length,
-
           ),
         );
       },

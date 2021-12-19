@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
 
 import 'package:loan_app/features/loan_history/loan_history.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -52,6 +53,13 @@ class _LoanHistoryScreenState extends State<LoanHistoryScreen> {
         loans: loans,
         hasActiveLoan: widget.hasActiveLoan,
         loading: loading,
+      );
+    } else if (loanHistoryProvider.errorMessage != null) {
+      return Center(
+        child: CustomErrorWidget(
+          message: loanHistoryProvider.errorMessage!,
+          onRetry: () => loanHistoryProvider.getLoans(),
+        ),
       );
     } else {
       return const NoLoansWidget();

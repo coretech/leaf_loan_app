@@ -51,7 +51,9 @@ class LoanApplicationProvider extends ChangeNotifier {
     );
 
     resultEither.fold(
-      (l) => setErrorMessage("Couldn't complete application"),
+      (l) => setErrorMessage(
+        "Oops! Your application didn't go through. Please try again.",
+      ),
       (r) {
         completed = true;
         _eventBus.fire(LoanApplicationEvent.success);

@@ -48,7 +48,8 @@ class LoanPaymentProvider extends ChangeNotifier {
     final result = await _walletRepository.getWallet();
     result.fold(
       (error) {
-        walletErrorMessage = "Couldn't fetch wallet balance";
+        walletErrorMessage =
+            "We couldn't fetch wallet balance. Please refresh the page.";
       },
       (wallet) {
         this.wallet = wallet;
@@ -74,7 +75,9 @@ class LoanPaymentProvider extends ChangeNotifier {
       password: password,
     );
     result.fold(
-      (error) => setErrorMessage(value: 'Could not pay loan'),
+      (error) => setErrorMessage(
+        value: "Your payment didn't go through. Please try again.",
+      ),
       (loan) {
         _eventBus.fire(LoanPaymentSuccess(loan: loan));
         paid = true;

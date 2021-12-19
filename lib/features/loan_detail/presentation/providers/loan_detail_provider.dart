@@ -63,7 +63,9 @@ class LoanDetailProvider extends ChangeNotifier {
     final _loansPayments =
         await _loanPaymentRepo.getLoanPayments(loanId: loanId);
     _loansPayments.fold(
-      (error) => setErrorMessage(value: 'Some error occurred while loading'),
+      (error) => setErrorMessage(
+        value: "We couldn't get the payments. Please try again.",
+      ),
       (payments) {
         this.payments = payments.reversed.toList();
       },

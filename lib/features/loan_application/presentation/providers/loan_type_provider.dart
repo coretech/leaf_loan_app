@@ -42,7 +42,10 @@ class LoanTypeProvider extends ChangeNotifier {
     final loanTypesEither = await loanTypeRepository.getLoanTypes();
     loanTypes = loanTypesEither.fold(
       (l) {
-        setErrorMessage(value: "Couldn't fetch loan types");
+        setErrorMessage(
+          value: 'Where did we go wrong?'
+              '\nCan you make sure you have internet and try again?',
+        );
         return [];
       },
       (r) => r,

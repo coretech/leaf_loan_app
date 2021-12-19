@@ -241,7 +241,10 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     if (_loanPaymentProvider.errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(_loanPaymentProvider.errorMessage!),
+          content: Text(
+            _loanPaymentProvider.errorMessage!,
+            maxLines: 3,
+          ),
         ),
       );
     }

@@ -24,7 +24,7 @@ class RecentTransactions extends StatelessWidget {
   Widget build(BuildContext context) {
     if (payments.isEmpty) {
       return const CustomErrorWidget(
-        message: 'No transactions were found',
+        message: "Looks like you haven't made any payments yet.",
       );
     }
     return Column(

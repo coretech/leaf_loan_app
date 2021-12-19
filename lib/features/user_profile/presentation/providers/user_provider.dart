@@ -44,7 +44,7 @@ class UserProvider extends ChangeNotifier {
     final userEither = await _userRepository.getUser();
     userEither.fold(
       (_) {
-        errorMessage = 'Error getting user profile';
+        errorMessage = "We didn't get your profile. Try again please.";
       },
       (user) => _user = user,
     );

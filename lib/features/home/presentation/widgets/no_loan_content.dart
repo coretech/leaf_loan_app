@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/i18n/i18n.dart';
+import 'package:provider/provider.dart';
 
 class NoLoanContent extends StatelessWidget {
   const NoLoanContent({
@@ -21,9 +22,13 @@ class NoLoanContent extends StatelessWidget {
           delegate: SliverChildListDelegate.fixed(
             [
               const SizedBox(height: 20),
-              Text(
-                '${'Welcome'.tr()}, John! 👋🏾',
-                style: Theme.of(context).textTheme.headline5,
+              Consumer<HomeProvider>(
+                builder: (context, homeProvider, _) {
+                  return Text(
+                    '${'Welcome'.tr()}, ${homeProvider.firstName}!',
+                    style: Theme.of(context).textTheme.headline5,
+                  );
+                },
               ),
               const SizedBox(height: 10),
               Text(
@@ -41,9 +46,7 @@ class NoLoanContent extends StatelessWidget {
           ),
         ),
         SliverPersistentHeader(
-          delegate: BigPersistentApplyButton(
-            onApply: onApply,
-          ),
+          delegate: BigPersistentApplyButton(),
           pinned: true,
         ),
         SliverList(

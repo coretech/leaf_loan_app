@@ -31,6 +31,10 @@ class UserRemoteRepository extends UserRepository {
         Keys.firstName,
         _user.userId.firstName,
       );
+      await _localStorage.setString(
+        Keys.userName,
+        _user.userId.username,
+      );
       return Right(_user);
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);

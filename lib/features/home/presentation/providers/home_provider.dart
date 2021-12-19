@@ -22,6 +22,8 @@ class HomeProvider extends ChangeNotifier {
   bool loading = false;
   bool loadingPayments = false;
 
+  String firstName = '';
+
   String? errorMessage;
 
   List<Payment> payments = [];
@@ -61,6 +63,11 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<void> getActiveLoan() async {
+    // TODO(Yabsra): this is a dirty hack, fix it
+    if (firstName.isEmpty) {
+      firstName =
+          (await IntegrationIOC.localStorage().getString(Keys.firstName)) ?? '';
+    }
     await Future.delayed(Duration.zero);
     clear();
     setLoading(value: true);
@@ -69,8 +76,8 @@ class HomeProvider extends ChangeNotifier {
       (error) {
         if (error == LoanHistoryFailure.error) {
           setErrorMessage(
-            value:
-                'Not sure what went wrong.\nAre you connected to the internet?',
+            value: 'Not sure what went wrong.'
+                '\nAre you connected to the internet?',
           );
         }
       },

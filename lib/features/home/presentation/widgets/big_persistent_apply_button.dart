@@ -3,11 +3,7 @@ import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
-  BigPersistentApplyButton({
-    required this.onApply,
-  });
-
-  final VoidCallback onApply;
+  BigPersistentApplyButton();
 
   @override
   double get maxExtent => 100;
@@ -37,13 +33,11 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
       ),
       child: TextButton(
         onPressed: () async {
-          await Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                  builder: (context) => const LoanApplicationScreen(),
-                ),
-              )
-              .then((_) => onApply());
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const LoanApplicationScreen(),
+            ),
+          );
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(

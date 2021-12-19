@@ -67,22 +67,23 @@ class ContactInfo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            Column(
-              children: [
-                Text(
-                  'Email'.tr(),
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                const SizedBox(height: 5),
-                if (userProvider.loading)
-                  const ShimmerBox(width: 100, height: 20)
-                else
+            if (userProvider.user?.email != null)
+              Column(
+                children: [
                   Text(
-                    '-',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    'Email'.tr(),
+                    style: Theme.of(context).textTheme.caption,
                   ),
-              ],
-            ),
+                  const SizedBox(height: 5),
+                  if (userProvider.loading)
+                    const ShimmerBox(width: 100, height: 20)
+                  else
+                    Text(
+                      userProvider.user!.email!,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                ],
+              ),
           ],
         );
       },

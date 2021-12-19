@@ -18,6 +18,7 @@ class UserDTO {
     required this.status,
     required this.updatedAt,
     required this.userid,
+    this.email,
   });
 
   factory UserDTO.fromMap(Map<String, dynamic> map) {
@@ -35,6 +36,7 @@ class UserDTO {
       status: map['status'],
       updatedAt: map['updatedAt'],
       userid: UserIdDTO.fromMap(map['userid']),
+      email: map['email'],
     );
   }
 
@@ -54,6 +56,7 @@ class UserDTO {
   final String status;
   final String updatedAt;
   final UserIdDTO userid;
+  final String? email;
 
   User toEntity() {
     return User(
@@ -70,6 +73,7 @@ class UserDTO {
       status: status,
       updatedAt: updatedAt,
       userId: userid.toEntity(),
+      email: email,
     );
   }
 
@@ -87,6 +91,7 @@ class UserDTO {
     String? status,
     String? updatedAt,
     UserIdDTO? userid,
+    String? email,
   }) {
     return UserDTO(
       id: id ?? this.id,
@@ -102,6 +107,7 @@ class UserDTO {
       status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
       userid: userid ?? this.userid,
+      email: email ?? this.email,
     );
   }
 
@@ -120,6 +126,7 @@ class UserDTO {
       'status': status,
       'updatedAt': updatedAt,
       'userid': userid.toMap(),
+      'email': email,
     };
   }
 
@@ -131,7 +138,7 @@ class UserDTO {
         ' createdAt: $createdAt, dob: $dob, gender: $gender,'
         ' idnumber: $idnumber, idtype: $idtype, issuingcountry:'
         ' $issuingcountry, phone: $phone, status: $status, updatedAt:'
-        ' $updatedAt, userid: $userid)';
+        ' $updatedAt, userid: $userid, email: $email)';
   }
 
   @override
@@ -151,7 +158,8 @@ class UserDTO {
         other.phone == phone &&
         other.status == status &&
         other.updatedAt == updatedAt &&
-        other.userid == userid;
+        other.userid == userid &&
+        other.email == email;
   }
 
   @override
@@ -168,6 +176,7 @@ class UserDTO {
         phone.hashCode ^
         status.hashCode ^
         updatedAt.hashCode ^
-        userid.hashCode;
+        userid.hashCode ^
+        email.hashCode;
   }
 }

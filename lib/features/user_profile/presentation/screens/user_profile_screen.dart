@@ -43,109 +43,112 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       value: _userProvider,
       builder: (context, _) {
         return Scaffold(
-          body: Consumer<UserProvider>(builder: (context, userProvider, _) {
-            return CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverAppBar(
-                  actions: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(SettingsScreen.routeName);
-                      },
-                      icon: const Icon(Icons.settings_outlined),
-                    )
-                  ],
-                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  centerTitle: true,
-                  elevation: 0,
-                  foregroundColor: Theme.of(context).colorScheme.onBackground,
-                  pinned: true,
-                  title: Text('Leaf Profile'.tr()),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate.fixed(
-                    [
-                      if (userProvider.errorMessage != null)
-                        SizedBox(
-                          height: ScreenSize.of(context).height -
-                              kToolbarHeight -
-                              kBottomNavigationBarHeight,
-                          child: Center(
-                            child: CustomErrorWidget(
-                              message: userProvider.errorMessage!,
-                              onRetry: userProvider.getUser,
+          body: Consumer<UserProvider>(
+            builder: (context, userProvider, _) {
+              return CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(SettingsScreen.routeName);
+                        },
+                        icon: const Icon(Icons.settings_outlined),
+                      )
+                    ],
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    centerTitle: true,
+                    elevation: 0,
+                    foregroundColor: Theme.of(context).colorScheme.onBackground,
+                    pinned: true,
+                    title: Text('Leaf Profile'.tr()),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate.fixed(
+                      [
+                        if (userProvider.errorMessage != null)
+                          SizedBox(
+                            height: ScreenSize.of(context).height -
+                                kToolbarHeight -
+                                kBottomNavigationBarHeight,
+                            child: Center(
+                              child: CustomErrorWidget(
+                                message: userProvider.errorMessage!,
+                                onRetry: userProvider.getUser,
+                              ),
+                            ),
+                          )
+                        else
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                const NameWidget(),
+                                const _ProvideDivider(),
+                                const ContactInfo(),
+                                const SizedBox(height: 20),
+                                TextButton.icon(
+                                  onPressed: () {
+                                    UserProfileAnalytics.logEditProfileTapped(
+                                      _userProvider.user?.userId.username,
+                                    );
+                                    _launchApp();
+                                  },
+                                  icon: const Icon(Icons.edit_outlined),
+                                  label: Text('Edit on Leaf Wallet'.tr()),
+                                ),
+                                const _ProvideDivider(),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 20,
+                                  ),
+                                  child: Text(
+                                    'Loan Stats'.tr(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ),
+                                CarouselSlider(
+                                  options: CarouselOptions(
+                                    autoPlay: true,
+                                    autoPlayInterval:
+                                        const Duration(seconds: 5),
+                                    height: 160,
+                                  ),
+                                  items: const [
+                                    TotalLoanAmountCard(),
+                                    TotalNumberOfLoansCard(),
+                                    AverageLoanAmountCard(),
+                                    AverageLoanDurationCard(),
+                                  ],
+                                ),
+                                const _ProvideDivider(),
+                                TextButton.icon(
+                                  onPressed: () {
+                                    UserProfileAnalytics.logLogOutTapped(
+                                      _userProvider.user?.userId.username,
+                                    );
+                                    AuthIOC.authHelper().logOut();
+                                  },
+                                  icon: const Icon(Icons.exit_to_app),
+                                  label: Text('Log Out'.tr()),
+                                ),
+                              ],
                             ),
                           ),
-                        )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              const NameWidget(),
-                              const _ProvideDivider(),
-                              const ContactInfo(),
-                              const SizedBox(height: 20),
-                              TextButton.icon(
-                                onPressed: () {
-                                  UserProfileAnalytics.logEditProfileTapped(
-                                    _userProvider.user?.userId.username,
-                                  );
-                                  _launchApp();
-                                },
-                                icon: const Icon(Icons.edit_outlined),
-                                label: Text('Edit on Leaf Wallet'.tr()),
-                              ),
-                              const _ProvideDivider(),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 20,
-                                ),
-                                child: Text(
-                                  'Loan Stats'.tr(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle1
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ),
-                              CarouselSlider(
-                                options: CarouselOptions(
-                                  autoPlay: true,
-                                  autoPlayInterval: const Duration(seconds: 5),
-                                  height: 160,
-                                ),
-                                items: const [
-                                  TotalLoanAmountCard(),
-                                  TotalNumberOfLoansCard(),
-                                  AverageLoanAmountCard(),
-                                  AverageLoanDurationCard(),
-                                ],
-                              ),
-                              const _ProvideDivider(),
-                              TextButton.icon(
-                                onPressed: () {
-                                  UserProfileAnalytics.logLogOutTapped(
-                                    _userProvider.user?.userId.username,
-                                  );
-                                  AuthIOC.authHelper().logOut();
-                                },
-                                icon: const Icon(Icons.exit_to_app),
-                                label: Text('Log Out'.tr()),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          }),
+                ],
+              );
+            },
+          ),
         );
       },
     );

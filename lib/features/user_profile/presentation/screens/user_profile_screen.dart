@@ -74,7 +74,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           const ContactInfo(),
                           const SizedBox(height: 20),
                           TextButton.icon(
-                            onPressed: _launchApp,
+                            onPressed: () {
+                              UserProfileAnalytics.logEditProfileTapped(
+                                _userProvider.user?.userId.username,
+                              );
+                              _launchApp();
+                            },
                             icon: const Icon(Icons.edit_outlined),
                             label: Text('Edit on Leaf Wallet'.tr()),
                           ),
@@ -109,6 +114,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           const _ProvideDivider(),
                           TextButton.icon(
                             onPressed: () {
+                              UserProfileAnalytics.logLogOutTapped(
+                                _userProvider.user?.userId.username,
+                              );
                               AuthIOC.authHelper().logOut();
                             },
                             icon: const Icon(Icons.exit_to_app),

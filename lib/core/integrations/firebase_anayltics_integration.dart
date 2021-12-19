@@ -10,7 +10,7 @@ class FirebaseAnalyticsIntegration implements Analytics {
   }
 
   @override
-  Future<void> logEvent(String name, Map<String, dynamic>? parameters) async {
+  Future<void> logEvent(String name, {Map<String, dynamic>? parameters}) async {
     await _analytics.logEvent(name: name, parameters: parameters);
   }
 
@@ -20,7 +20,7 @@ class FirebaseAnalyticsIntegration implements Analytics {
   }
 
   @override
-  Future<void> logLogout(String username) async {
+  Future<void> logLogout(String? username) async {
     await _analytics.logEvent(
       name: 'log_out',
       parameters: {'username': username},

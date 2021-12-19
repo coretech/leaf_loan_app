@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
+import 'package:loan_app/features/loan_payment/presentation/analytics/analytics.dart';
 import 'package:loan_app/features/loan_payment/presentation/providers/loan_payment_provider.dart';
 import 'package:loan_app/features/loan_payment/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
@@ -176,6 +177,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
   }
 
   Future<void> _onPay() async {
+    LoanPaymentAnalytics.loanPaymentPayButtonTapped();
     final paid = await showPaymentConfirmationSheet(
       context,
       amount: double.parse(_amountController.text),

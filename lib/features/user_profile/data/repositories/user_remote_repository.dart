@@ -32,7 +32,8 @@ class UserRemoteRepository extends UserRepository {
         _user.userId.firstName,
       );
       return Right(_user);
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(UserFailure());
     }
   }

@@ -80,7 +80,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             onDonePress: _updateOnboardingStatus,
-            onSkipPress: _updateOnboardingStatus,
+            onSkipPress: () {
+              OnboardingAnalytics.logOnboardingSkipped();
+              _updateOnboardingStatus();
+            },
             showNextBtn: true,
             showDoneBtn: true,
             skipButtonStyle: ButtonStyle(

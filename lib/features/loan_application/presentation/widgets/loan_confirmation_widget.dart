@@ -47,7 +47,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value:_loanApplicationProvider,
+      value: _loanApplicationProvider,
       builder: (context, _) {
         return Padding(
           padding: const EdgeInsets.all(20),
@@ -279,6 +279,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
         loanTypeId: widget.loanType.id,
         pinCode: pinCode,
       );
+      LoanApplicationAnalytics.loanApplicationSubmitted();
       if (mounted) {
         Navigator.of(context).pop(true);
       }

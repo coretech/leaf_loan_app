@@ -34,7 +34,8 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
       final _paymentDto = PaymentDto.fromMap(_responseDto.data);
       final _payment = _paymentDto.toEntity();
       return Right(_payment);
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(LoanPaymentFailure());
     }
   }
@@ -62,7 +63,8 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
       } else {
         return const Right([]);
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(LoanPaymentFailure());
     }
   }
@@ -84,7 +86,8 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
       final _payments = _paymentDtos.map((e) => e.toEntity()).toList();
 
       return Right(_payments);
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(LoanPaymentFailure());
     }
   }
@@ -121,7 +124,8 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
       } else {
         return Left(LoanPaymentFailure());
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return Left(LoanPaymentFailure());
     }
   }

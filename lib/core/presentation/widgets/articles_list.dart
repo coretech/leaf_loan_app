@@ -6,6 +6,7 @@ class ArticlesList extends StatelessWidget {
 
   static List<Article> articles = [
     Article(
+      id: '1',
       description: 'Microlenders provide smaller loan amounts but also offer '
           'support like education and training. Learn how a microloan can '
           'help your business.',
@@ -15,6 +16,7 @@ class ArticlesList extends StatelessWidget {
       url: 'https://aofund.org/resource/microloan-right-me/',
     ),
     Article(
+      id: '2',
       description: 'No matter what the economy is doing in Africa, there is '
           'little that can starve the entrepreneurial spirit of the '
           'continent. So, it is encouraging that aspiring small business '
@@ -26,6 +28,7 @@ class ArticlesList extends StatelessWidget {
           'https://www.africa.com/finding-the-right-financing-for-your-business/',
     ),
     Article(
+      id: '3',
       description: "Learn more about Plan International Canada's approach "
           'to microfinance and the 5 benefits to microfinance programs '
           'around the world. ',

@@ -38,7 +38,8 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
       } else {
         return Left(LoanApplicationFailure());
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return Left(LoanApplicationFailure());
     }
   }

@@ -28,7 +28,8 @@ class AuthRepoImplementation extends AuthenticationRepository {
       } else {
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(AuthFailure(reason: Reason.serverError));
     }
   }

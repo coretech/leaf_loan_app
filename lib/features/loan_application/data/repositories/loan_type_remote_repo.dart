@@ -34,7 +34,8 @@ class LoanTypeRemoteRepo extends LoanTypeRepository {
       } else {
         return Left(LoanTypeError());
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return Left(LoanTypeError());
     }
   }

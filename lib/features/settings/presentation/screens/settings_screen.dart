@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/features/about/about.dart';
+import 'package:loan_app/features/settings/presentation/analytics/analytics.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
@@ -106,6 +107,7 @@ class SettingsScreen extends StatelessWidget {
                 for (final locale in supportedLocales)
                   ListTile(
                     onTap: () {
+                      SettingsAnalytics.logLanguageChanged(locale.languageCode);
                       l10nProvider.changeLocale(locale);
                       Navigator.of(context).pop();
                     },

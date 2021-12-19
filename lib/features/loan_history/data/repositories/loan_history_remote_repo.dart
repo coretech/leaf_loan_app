@@ -33,7 +33,8 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
       } else {
         return const Left(LoanHistoryFailure.error);
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return const Left(LoanHistoryFailure.error);
     }
   }
@@ -58,7 +59,8 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
       } else {
         return const Left(LoanHistoryFailure.error);
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return const Left(LoanHistoryFailure.error);
     }
   }

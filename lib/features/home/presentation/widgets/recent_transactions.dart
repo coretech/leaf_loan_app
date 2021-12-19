@@ -3,6 +3,7 @@ import 'package:loan_app/core/core.dart';
 import 'package:loan_app/core/presentation/widgets/error_widget.dart';
 
 import 'package:loan_app/features/home/home.dart';
+import 'package:loan_app/features/home/presentation/analytics/analytics.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
@@ -35,6 +36,7 @@ class RecentTransactions extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
+            HomeAnalytics.homeShowMoreTapped();
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => LoanDetailScreen(

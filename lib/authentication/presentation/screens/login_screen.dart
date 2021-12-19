@@ -67,7 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(color: Color(0xFFA4A4A4)),
                         ),
                         TextButton(
-                          onPressed: _launchApp,
+                          onPressed: () {
+                            AuthenticationAnalytics.logSignUpTapped();
+                            _launchApp();
+                          },
                           child: Text(
                             'Sign up on Leaf Wallet'.tr(),
                             style: TextStyle(
@@ -120,7 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 TextSpan(text: 'Please enter your'.tr()),
                 TextSpan(
-                  recognizer: TapGestureRecognizer()..onTap = _launchApp,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      AuthenticationAnalytics.logLeafWalletButtonTapped();
+                      _launchApp();
+                    },
                   text: ' ${'Leaf Wallet'.tr()} ',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
@@ -228,6 +235,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _authProviderListener() {
     if (_authProvider.loggedIn && !_authProvider.loading) {
+      AuthenticationAnalytics.logSignIn(
+        _usernameController.text,
+        'Leaf Wallet Credentials',
+      );
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (route) => false,

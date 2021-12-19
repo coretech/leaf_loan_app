@@ -3,6 +3,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:loan_app/core/abstractions/abstractions.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 
 class DioHttpHelper implements HttpHelper {
   DioHttpHelper({
@@ -39,8 +40,8 @@ class DioHttpHelper implements HttpHelper {
         onResponse(httpResponse);
       }
       return httpResponse;
-    } on DioError catch (e) {
-      final errResponse = _buildResponseWithError(e);
+    } on DioError catch (e, stackTrace) {
+      final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
       }
@@ -74,8 +75,8 @@ class DioHttpHelper implements HttpHelper {
         onResponse(httpResponse);
       }
       return httpResponse;
-    } on DioError catch (e) {
-      final errResponse = _buildResponseWithError(e);
+    } on DioError catch (e, stackTrace) {
+      final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
       }
@@ -107,8 +108,8 @@ class DioHttpHelper implements HttpHelper {
         onResponse(httpResponse);
       }
       return httpResponse;
-    } on DioError catch (e) {
-      final errResponse = _buildResponseWithError(e);
+    } on DioError catch (e, stackTrace) {
+      final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
       }
@@ -144,8 +145,8 @@ class DioHttpHelper implements HttpHelper {
         onResponse(httpResponse);
       }
       return httpResponse;
-    } on DioError catch (e) {
-      final errResponse = _buildResponseWithError(e);
+    } on DioError catch (e, stackTrace) {
+      final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
       }
@@ -177,8 +178,8 @@ class DioHttpHelper implements HttpHelper {
         onResponse(httpResponse);
       }
       return httpResponse;
-    } on DioError catch (e) {
-      final errResponse = _buildResponseWithError(e);
+    } on DioError catch (e, stackTrace) {
+      final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
       }
@@ -195,7 +196,10 @@ class DioHttpHelper implements HttpHelper {
     );
   }
 
-  HttpResponse _buildResponseWithError(DioError error) {
+  HttpResponse _buildResponseWithError(DioError error, StackTrace stackTrace) {
+    if (error.response?.statusCode != 401) {
+      IntegrationIOC.logger().logError(error, stackTrace);
+    }
     return HttpResponse(
       data: error.response?.data,
       statusCode: error.response?.statusCode ?? 400,

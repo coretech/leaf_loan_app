@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_application/presentation/analytics/analytics.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanAmountPicker extends StatelessWidget {
@@ -53,6 +54,7 @@ class LoanAmountPicker extends StatelessWidget {
             max: maxAmount!,
             min: minAmount!,
             onChanged: !loading ? _onValueChanged : null,
+            onChangeEnd: (_) => LoanApplicationAnalytics.sliderUsed(),
             value: loanAmount ?? minAmount!,
           )
         else
@@ -141,6 +143,7 @@ class LoanAmountPicker extends StatelessWidget {
                             onChanged(amount);
                           }
                         },
+                        onTap: LoanApplicationAnalytics.amountFieldUsed,
                       ),
                     ),
                     Text(

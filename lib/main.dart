@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/app.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
@@ -13,5 +16,11 @@ Future<void> main() async {
   await FeaturesIOC.init();
   await LocalizationIOC.init();
 
-  runApp(const App());
+  await runZonedGuarded<Future<void>>(
+    () async {
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      runApp(const App());
+    },
+    (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
+  );
 }

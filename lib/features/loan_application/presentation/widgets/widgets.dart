@@ -9,3 +9,4 @@ export 'loan_duration_picker.dart';
 export 'loan_purpose_picker.dart';
 export 'loan_type_card.dart';
 export 'loan_type_selection.dart';
+export 'toc_confirmation.dart';

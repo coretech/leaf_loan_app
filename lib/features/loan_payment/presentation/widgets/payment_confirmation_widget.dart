@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
+import 'package:loan_app/features/loan_payment/presentation/analytics/analytics.dart';
 import 'package:loan_app/features/loan_payment/presentation/providers/providers.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -147,6 +148,7 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
         loanId: widget.loan.id,
         password: password,
       );
+      LoanPaymentAnalytics.loanPaymentSubmitted();
       if (widget.loanPaymentProvider.paid) {
         if (mounted) {
           Navigator.of(context).pop(true);

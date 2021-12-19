@@ -27,7 +27,8 @@ class WalletRemoteRepository implements WalletRepository {
       final _walletDto = WalletDto.fromMap(responseDto.data);
       final _wallet = _walletDto.toEntity();
       return Right(_wallet);
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(WalletFailure());
     }
   }

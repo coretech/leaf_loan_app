@@ -43,7 +43,8 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
       return right(storedReferenceNumber);
     } on PlatformException {
       return left(ScoringFailure());
-    } catch (_) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(ScoringFailure());
     }
   }

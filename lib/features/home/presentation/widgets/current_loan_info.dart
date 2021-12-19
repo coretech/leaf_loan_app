@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/home/presentation/analytics/analytics.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -17,6 +18,7 @@ class CurrentLoanInfo extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
+        HomeAnalytics.homeLoanCardTapped();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => LoanDetailScreen(
@@ -128,6 +130,6 @@ class CurrentLoanInfo extends StatelessWidget {
   }
 
   String _getDate(BuildContext context) {
-    return Formatter.formatDate( DateTime.parse(loan.dueDate));
+    return Formatter.formatDate(DateTime.parse(loan.dueDate));
   }
 }

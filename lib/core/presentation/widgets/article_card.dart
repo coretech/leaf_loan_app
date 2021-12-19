@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
+import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,6 +45,7 @@ class ArticleCard extends StatelessWidget {
                     ),
                     child: Text('Read more'.tr()),
                     onPressed: () {
+                      ArticlesAnalytics.articleOpened(article.id);
                       launch(
                         article.url,
                       );

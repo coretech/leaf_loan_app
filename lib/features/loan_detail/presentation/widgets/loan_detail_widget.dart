@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/domain/domain.dart';
 import 'package:loan_app/core/utils/utils.dart';
@@ -127,7 +125,7 @@ class LoanDetailWidget extends StatelessWidget {
                           context: context,
                           label: 'Pay Now'.tr(),
                           onTap: () {
-                            log('big pay button on detail card tapped');
+                            LoanDetailAnalytics.logBigPayButtonTapped();
                             Navigator.of(context).pushNamed(
                               LoanPaymentScreen.routeName,
                               arguments: LoanPaymentScreenArguments(

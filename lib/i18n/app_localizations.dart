@@ -49,7 +49,9 @@ class AppLocalizations implements L10n {
   String translate(String key, {Map<String, String>? values}) {
     var value = _localizedStrings[key];
     if (value == null) {
-      log('Missing translation key: $key', name: 'Localization');
+      IntegrationIOC.logger().log(
+        'Missing translation key: $key',
+      );
       value = key;
     }
     if (values != null) {

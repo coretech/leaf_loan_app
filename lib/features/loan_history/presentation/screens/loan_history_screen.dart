@@ -10,7 +10,7 @@ class LoanHistoryScreen extends StatefulWidget {
     this.hasActiveLoan = true,
   }) : super(key: key);
 
-  static const String routeName = '/loan-history-screen';
+  static const String routeName = '/loan-history';
 
   final bool hasActiveLoan;
 

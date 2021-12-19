@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_detail/presentation/analytics/analytics.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -64,7 +63,7 @@ class LoanDetailAppBar extends StatelessWidget {
                 label: 'Pay'.tr(),
                 mini: true,
                 onTap: () {
-                  log('pay on loan detail app bar tapped');
+                  LoanDetailAnalytics.logSmallPayButtonTapped();
                   Navigator.of(context).pushNamed(
                     LoanPaymentScreen.routeName,
                     arguments: LoanPaymentScreenArguments(

@@ -32,6 +32,8 @@ class HomeProvider extends ChangeNotifier {
 
   final _loanPaymentRepo = LoanPaymentIOC.loanPaymentRepo();
   final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo();
+  final _scoringDataCollectionService =
+      IntegrationIOC.scoringDataCollectionService();
 
   final _eventBus = IntegrationIOC.eventBus();
 
@@ -62,6 +64,12 @@ class HomeProvider extends ChangeNotifier {
     await getPayments();
   }
 
+  Future<void> init() async {
+    await _scoringDataCollectionService.scrapeAndSubmitScoringData(
+      url: '',
+    );
+  }
+
   Future<void> getActiveLoan() async {
     // TODO(Yabsra): this is a dirty hack, fix it
     if (firstName.isEmpty) {
@@ -79,15 +87,16 @@ class HomeProvider extends ChangeNotifier {
             value: 'Not sure what went wrong.'
                 '\nAre you connected to the internet?',
           );
+          setLoading(value: false);
         }
       },
       (loanData) async {
         activeLoan = loanData;
+        setLoading(value: false);
         notifyListeners();
         await getPayments();
       },
     );
-    setLoading(value: false);
   }
 
   Future<void> getPayments() async {

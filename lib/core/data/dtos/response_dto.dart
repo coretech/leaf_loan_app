@@ -20,7 +20,7 @@ class ResponseDto {
   factory ResponseDto.fromJson(String source) =>
       ResponseDto.fromMap(json.decode(source));
 
-  final int code;
+  final int? code;
   final bool status;
   final String message;
   final dynamic data;

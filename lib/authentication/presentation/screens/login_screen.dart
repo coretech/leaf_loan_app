@@ -21,15 +21,16 @@ class _LoginScreenState extends State<LoginScreen> {
   late AuthProvider _authProvider;
 
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   bool _passwordVisible = false;
 
   @override
   void initState() {
-    _authProvider = AuthProvider();
-    _authProvider.addListener(_authProviderListener);
+    _authProvider = AuthProvider()
+      ..loadUsername()
+      ..addListener(_authProviderListener);
     super.initState();
   }
 
@@ -234,6 +235,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _authProviderListener() {
+    if (_authProvider.initialLoad && _authProvider.username.isNotEmpty) {
+      _usernameController.text = _authProvider.username;
+    }
     if (_authProvider.loggedIn && !_authProvider.loading) {
       AuthenticationAnalytics.logSignIn(
         _usernameController.text,

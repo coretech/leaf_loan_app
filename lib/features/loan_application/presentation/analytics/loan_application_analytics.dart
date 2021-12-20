@@ -10,6 +10,10 @@ class LoanApplicationAnalytics {
         .logEvent('interacted_with_loan_application_page');
   }
 
+  static void addCurrencyTapped() {
+    IntegrationIOC.analytics().logEvent('add_currency_tapped');
+  }
+
   static void loanApplicationSubmitButtonTapped() {
     IntegrationIOC.analytics()
         .logEvent('loan_application_submit_button_tapped');

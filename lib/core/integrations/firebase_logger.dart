@@ -5,7 +5,7 @@ import 'package:loan_app/core/abstractions/abstractions.dart';
 class FirebaseLogger implements Logger {
   FirebaseLogger() {
     if (kDebugMode) {
-      FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+      FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
     } else {
       FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     }

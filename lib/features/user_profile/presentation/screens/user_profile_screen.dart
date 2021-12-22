@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
-import 'package:loan_app/core/core.dart';
+import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
+import 'package:loan_app/core/presentation/presentation.dart';
+import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/settings/settings.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -22,7 +25,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   void initState() {
-    _shouldShowStats = _remoteConfig.getBool('show_loan_stats');
+    _shouldShowStats = _remoteConfig.getBool(RemoteConfigKeys.showLoanStats);
     super.initState();
     _userProvider = UserProvider()
       ..getUser()
@@ -132,7 +135,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       AverageLoanDurationCard(),
                                     ],
                                   ),
-                                const _ProvideDivider(),
+                                if (_shouldShowStats) const _ProvideDivider(),
                                 TextButton.icon(
                                   onPressed: () {
                                     UserProfileAnalytics.logLogOutTapped(

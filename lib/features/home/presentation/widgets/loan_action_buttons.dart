@@ -59,10 +59,10 @@ class LoanActionButtons extends StatelessWidget {
               const Size(150, 70),
             ),
             foregroundColor: MaterialStateProperty.all(
-              Theme.of(context).colorScheme.onSurface,
+              Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          child: Text('Learn more'.tr()),
+          child: Text('Learn More'.tr()),
         ),
       ],
     );

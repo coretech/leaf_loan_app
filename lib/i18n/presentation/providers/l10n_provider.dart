@@ -1,8 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:loan_app/i18n/domain/domain.dart';
 import 'package:loan_app/i18n/i18n.dart';
-import 'package:loan_app/i18n/ioc/ioc.dart';
 
 class L10nProvider extends ChangeNotifier {
   L10nProvider() {

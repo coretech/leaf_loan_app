@@ -3,7 +3,6 @@ import 'package:loan_app/authentication/helpers/helpers.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
-import 'package:loan_app/core/constants/urls.dart';
 import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';

@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
-import 'package:loan_app/features/loan_application/presentation/widgets/widgets.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class NoLoansWidget extends StatelessWidget {

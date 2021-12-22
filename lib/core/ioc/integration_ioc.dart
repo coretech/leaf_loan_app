@@ -30,6 +30,9 @@ class IntegrationIOC {
       ..registerLazySingleton<Logger>(
         () => FirebaseLogger(),
       )
+      ..registerLazySingleton<RemoteConfiguration>(
+        () => RemoteConfigIntegration(),
+      )
       ..registerLazySingleton<ScoringDataCollectionService>(
         () => CredoDataCollectionService(),
       );
@@ -64,6 +67,10 @@ class IntegrationIOC {
 
   static L10n l10n() {
     return _locator.get<L10n>();
+  }
+
+  static RemoteConfiguration remoteConfig() {
+    return _locator.get<RemoteConfiguration>();
   }
 
   static ScoringDataCollectionService scoringDataCollectionService() {

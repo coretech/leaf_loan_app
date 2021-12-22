@@ -1,5 +1,5 @@
 import 'package:loan_app/authentication/ioc/ioc.dart';
-import 'package:loan_app/features/features.dart';
+import 'package:loan_app/features/home/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 import 'package:loan_app/features/loan_history/ioc/ioc.dart';
 import 'package:loan_app/features/loan_payment/ioc/ioc.dart';

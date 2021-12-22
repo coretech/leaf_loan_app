@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
-import 'package:loan_app/core/presentation/widgets/error_widget.dart';
 
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/home/presentation/analytics/analytics.dart';

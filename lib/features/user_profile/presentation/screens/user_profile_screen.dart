@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/settings/settings.dart';
-import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +17,12 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   late UserProvider _userProvider;
+  final _remoteConfig = IntegrationIOC.remoteConfig();
+  late bool _shouldShowStats;
 
   @override
   void initState() {
+    _shouldShowStats = _remoteConfig.getBool('show_loan_stats');
     super.initState();
     _userProvider = UserProvider()
       ..getUser()
@@ -100,34 +102,36 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   label: Text('Edit on Leaf Wallet'.tr()),
                                 ),
                                 const _ProvideDivider(),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 20,
+                                if (_shouldShowStats)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 20,
+                                    ),
+                                    child: Text(
+                                      'Loan Stats'.tr(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
                                   ),
-                                  child: Text(
-                                    'Loan Stats'.tr(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                if (_shouldShowStats)
+                                  CarouselSlider(
+                                    options: CarouselOptions(
+                                      autoPlay: true,
+                                      autoPlayInterval:
+                                          const Duration(seconds: 5),
+                                      height: 160,
+                                    ),
+                                    items: const [
+                                      TotalLoanAmountCard(),
+                                      TotalNumberOfLoansCard(),
+                                      AverageLoanAmountCard(),
+                                      AverageLoanDurationCard(),
+                                    ],
                                   ),
-                                ),
-                                CarouselSlider(
-                                  options: CarouselOptions(
-                                    autoPlay: true,
-                                    autoPlayInterval:
-                                        const Duration(seconds: 5),
-                                    height: 160,
-                                  ),
-                                  items: const [
-                                    TotalLoanAmountCard(),
-                                    TotalNumberOfLoansCard(),
-                                    AverageLoanAmountCard(),
-                                    AverageLoanDurationCard(),
-                                  ],
-                                ),
                                 const _ProvideDivider(),
                                 TextButton.icon(
                                   onPressed: () {

@@ -37,6 +37,7 @@ dependencies:
     firebase_crashlytics: ^2.4.4
     firebase_messaging: ^10.0.4
     firebase_performance: ^0.8.0+3
+    firebase_remote_config: ^1.0.3
     flag: ^5.0.1
 
     #This is the package that allows us to use the Flutter SDK

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/presentation/presentation.dart';
 
 import 'package:loan_app/features/home/home.dart';
-import 'package:loan_app/features/home/presentation/providers/home_provider.dart';
-import 'package:loan_app/features/home/presentation/widgets/no_loan_content.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

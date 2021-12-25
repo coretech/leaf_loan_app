@@ -137,7 +137,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                     .toDouble()
                                 : null,
                             loading: loanTypeProvider.loading,
-                            loanAmount: _loanAmount,
+                            loanAmount: _loanAmount ??
+                                (_hasLoanTypes()
+                                    ? loanTypeProvider
+                                        .loanTypes[_selectedLoanTypeIndex]
+                                        .currencies[_selectedCurrencyIndex]
+                                        .maxLoanAmount
+                                        .toDouble()
+                                    : 0),
                             maxAmount: _hasLoanTypes()
                                 ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]

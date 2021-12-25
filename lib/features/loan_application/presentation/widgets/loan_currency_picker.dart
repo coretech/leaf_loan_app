@@ -50,7 +50,7 @@ class LoanCurrencyPicker extends StatelessWidget {
   }
 
   Widget _buildCurrenciesList() {
-    if (currencies.isEmpty) {
+    if (currencies.isEmpty && !loading) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

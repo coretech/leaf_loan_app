@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:loan_app/core/abstractions/abstractions.dart';
@@ -19,6 +20,7 @@ class DioHttpHelper implements HttpHelper {
   }
   late Dio _dio;
   final ValueChanged<HttpResponse> onResponse;
+  final FirebasePerformance _firebasePerformance = FirebasePerformance.instance;
 
   @override
   Future<HttpResponse> delete({
@@ -27,6 +29,11 @@ class DioHttpHelper implements HttpHelper {
     bool processResponse = true,
     required String url,
   }) async {
+    final metric = _firebasePerformance.newHttpMetric(
+      url,
+      HttpMethod.Delete,
+    );
+    await metric.start();
     try {
       final response = await _dio.delete(
         url,
@@ -35,12 +42,14 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
+      await _stopMetric(metric, response);
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
       }
       return httpResponse;
     } on DioError catch (e, stackTrace) {
+      await _stopMetric(metric, e.response);
       final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
@@ -59,6 +68,11 @@ class DioHttpHelper implements HttpHelper {
     bool processResponse = true,
     required String url,
   }) async {
+    final metric = _firebasePerformance.newHttpMetric(
+      url,
+      HttpMethod.Delete,
+    );
+    await metric.start();
     try {
       final response = await _dio.get(
         url,
@@ -70,12 +84,14 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
+      await _stopMetric(metric, response);
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
       }
       return httpResponse;
     } on DioError catch (e, stackTrace) {
+      await _stopMetric(metric, e.response);
       final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
@@ -94,6 +110,11 @@ class DioHttpHelper implements HttpHelper {
     bool processResponse = true,
     required String url,
   }) async {
+    final metric = _firebasePerformance.newHttpMetric(
+      url,
+      HttpMethod.Delete,
+    );
+    await metric.start();
     try {
       final response = await _dio.patch(
         url,
@@ -103,12 +124,14 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
+      await _stopMetric(metric, response);
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
       }
       return httpResponse;
     } on DioError catch (e, stackTrace) {
+      await _stopMetric(metric, e.response);
       final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
@@ -128,6 +151,11 @@ class DioHttpHelper implements HttpHelper {
     bool processResponse = true,
     required String url,
   }) async {
+    final metric = _firebasePerformance.newHttpMetric(
+      url,
+      HttpMethod.Delete,
+    );
+    await metric.start();
     try {
       final response = await _dio.post(
         url,
@@ -140,12 +168,14 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
+      await _stopMetric(metric, response);
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
       }
       return httpResponse;
     } on DioError catch (e, stackTrace) {
+      await _stopMetric(metric, e.response);
       final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
@@ -164,6 +194,11 @@ class DioHttpHelper implements HttpHelper {
     bool processResponse = true,
     required String url,
   }) async {
+    final metric = _firebasePerformance.newHttpMetric(
+      url,
+      HttpMethod.Delete,
+    );
+    await metric.start();
     try {
       final response = await _dio.put(
         url,
@@ -173,12 +208,14 @@ class DioHttpHelper implements HttpHelper {
         ),
         queryParameters: params,
       );
+      await _stopMetric(metric, response);
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
       }
       return httpResponse;
     } on DioError catch (e, stackTrace) {
+      await _stopMetric(metric, e.response);
       final errResponse = _buildResponseWithError(e, stackTrace);
       if (processResponse && e.response != null) {
         onResponse(errResponse);
@@ -204,5 +241,13 @@ class DioHttpHelper implements HttpHelper {
       data: error.response?.data,
       statusCode: error.response?.statusCode ?? 400,
     );
+  }
+
+  Future<void> _stopMetric(
+    HttpMetric metric,
+    Response? response,
+  ) async {
+    metric.httpResponseCode = response?.statusCode;
+    await metric.stop();
   }
 }

@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class Formatter {
-  static String formatDate(BuildContext context, DateTime date) {
-    final locale = Localizations.localeOf(context);
-    final dateFormat = DateFormat.yMMMMd(locale.languageCode);
+  static String formatDate(DateTime date) {
+    final dateFormat = DateFormat.yMMMMd();
     return dateFormat.format(date);
   }
 
@@ -14,7 +12,7 @@ class Formatter {
   }
 
   static String formatMoney(double amount) {
-    final currencyFormatter = NumberFormat('#,##0', 'en_US');
+    final currencyFormatter = NumberFormat('#,##0.00', 'en_US');
     return currencyFormatter.format(amount);
   }
 }

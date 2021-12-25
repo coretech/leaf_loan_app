@@ -30,9 +30,14 @@ dependencies:
     dartz: ^0.10.0
     dio: ^4.0.4
     dio_http_cache: ^0.3.0
+    event_bus: ^2.0.0
     external_app_launcher: ^2.0.1
+    firebase_analytics: ^9.0.4
     firebase_core: ^1.4.0
+    firebase_crashlytics: ^2.4.4
     firebase_messaging: ^10.0.4
+    firebase_performance: ^0.8.0+3
+    firebase_remote_config: ^1.0.3
     flag: ^5.0.1
 
     #This is the package that allows us to use the Flutter SDK

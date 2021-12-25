@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/core/utils/screen_size.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
-import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class LoanApplicationScreen extends StatefulWidget {
@@ -31,8 +31,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoanTypeProvider>(
-      create: (_) => _loanTypeProvider,
+    return ChangeNotifierProvider.value(
+      value: _loanTypeProvider,
       builder: (context, _) {
         return Builder(
           builder: (context) {
@@ -48,9 +48,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               body: Consumer<LoanTypeProvider>(
                 builder: (context, loanTypeProvider, _) {
                   if (loanTypeProvider.errorMessage != null) {
-                    return const Center(
-                      child: Text(
-                        'Some error occurred while fetching Loan Type Details',
+                    return Center(
+                      child: CustomErrorWidget(
+                        message: loanTypeProvider.errorMessage!,
+                        onRetry: loanTypeProvider.getLoanTypes,
                       ),
                     );
                   }
@@ -68,6 +69,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                               setState(() {
                                 _selectedCurrencyIndex = 0;
                                 _selectedLoanTypeIndex = value;
+                                _loanAmount = loanTypeProvider
+                                    .loanTypes[value]
+                                    .currencies[_selectedCurrencyIndex]
+                                    .minLoanAmount
+                                    .toDouble();
                               });
                             },
                             selectedIndex: _selectedLoanTypeIndex,
@@ -121,7 +127,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
                                     .currencies[_selectedCurrencyIndex]
-                                    .currencyId
+                                    .currencyId!
                                     .fiatCode
                                 : null,
                             interestRate: _hasLoanTypes()
@@ -131,7 +137,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                     .toDouble()
                                 : null,
                             loading: loanTypeProvider.loading,
-                            loanAmount: _loanAmount,
+                            loanAmount: _loanAmount ??
+                                (_hasLoanTypes()
+                                    ? loanTypeProvider
+                                        .loanTypes[_selectedLoanTypeIndex]
+                                        .currencies[_selectedCurrencyIndex]
+                                        .maxLoanAmount
+                                        .toDouble()
+                                    : 0),
                             maxAmount: _hasLoanTypes()
                                 ? loanTypeProvider
                                     .loanTypes[_selectedLoanTypeIndex]
@@ -162,9 +175,12 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                                 _selectedPurpose = value;
                               });
                             },
+                            // TODO(Yabsra): fix this monstrosity
                             purposeList: _hasLoanTypes()
                                 ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex].purpose
+                                        .loanTypes[_selectedLoanTypeIndex]
+                                        .purpose ??
+                                    []
                                 : [],
                             selectedPurpose: _selectedPurpose,
                           ),
@@ -173,7 +189,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                           const TOCConfirmation(),
                           ElevatedButton(
-                            onPressed: _canSubmit() ? _onSubmit : null,
+                            onPressed: _onSubmitPressed,
                             style: ButtonStyle(
                               fixedSize: MaterialStateProperty.all(
                                 Size(
@@ -200,6 +216,38 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     );
   }
 
+  void _onSubmitPressed() {
+    if (_canSubmit()) {
+      _onSubmit();
+    } else {
+      if (_loanAmount == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please select loan amount',
+            ),
+          ),
+        );
+      } else if (_selectedPurpose == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please select loan purpose',
+            ),
+          ),
+        );
+      } else if (_selectedDurationInDays < 61) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Please select a proper loan duration',
+            ),
+          ),
+        );
+      }
+    }
+  }
+
   bool _canSubmit() {
     return _loanTypeProvider.canShowTypes &&
         _loanAmount != null &&
@@ -207,6 +255,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   Future<void> _onSubmit() async {
+    LoanApplicationAnalytics.loanApplicationSubmitButtonTapped();
     final success = await showModalBottomSheet(
       context: context,
       enableDrag: false,
@@ -247,43 +296,5 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
             .toDouble();
       });
     }
-  }
-}
-
-class TOCConfirmation extends StatelessWidget {
-  const TOCConfirmation({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'By clicking on the'.tr(),
-              style: Theme.of(context).textTheme.caption,
-            ),
-            TextSpan(
-              text: ' ${'Submit Button'.tr()} ',
-              style: Theme.of(context).textTheme.button,
-            ),
-            TextSpan(
-              text: 'below, I hereby agree to and accept the following'
-                      ' terms and conditions governing my '
-                      'loan that are stated in the'
-                  .tr(),
-              style: Theme.of(context).textTheme.caption,
-            ),
-            TextSpan(
-              text: 'Terms and Conditions.'.tr(),
-              style: Theme.of(context).textTheme.button,
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

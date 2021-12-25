@@ -1,22 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_detail/presentation/analytics/analytics.dart';
+import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanDetailAppBar extends StatelessWidget {
   const LoanDetailAppBar({
     Key? key,
-    required this.dueDate,
-    required this.paidAmount,
-    required this.status,
-    required this.totalAmount,
+    required this.loan,
   }) : super(key: key);
-  final DateTime dueDate;
-  final double paidAmount;
-  final LoanStatus status;
-  final double totalAmount;
+  final LoanData loan;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,7 @@ class LoanDetailAppBar extends StatelessWidget {
       bottom: _getRemainingAmount(context),
       backgroundColor: _getBackgroundColor(context),
       centerTitle: true,
-      foregroundColor: status == LoanStatus.closed
+      foregroundColor: loanStatusFromString(loan.status) != LoanStatus.approved
           ? Theme.of(context).colorScheme.onSurface
           : Theme.of(context).colorScheme.onPrimary,
       floating: true,
@@ -34,9 +29,10 @@ class LoanDetailAppBar extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('[Category X] ${'Loan'.tr()}'),
-          if (status != LoanStatus.closed) const Spacer(),
-          if (status != LoanStatus.closed)
+          Text(loan.loanTypeId.name),
+          if (loanStatusFromString(loan.status) == LoanStatus.approved)
+            const Spacer(),
+          if (loanStatusFromString(loan.status) == LoanStatus.approved)
             Text(
               '${_getRemainingDays()} ${'days remaining'.tr()}',
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
@@ -50,37 +46,41 @@ class LoanDetailAppBar extends StatelessWidget {
   }
 
   Color? _getBackgroundColor(BuildContext context) {
-    if (status != LoanStatus.closed) {
+    if (loanStatusFromString(loan.status) == LoanStatus.approved) {
       return Theme.of(context).colorScheme.secondary.withRed(210).withBlue(55);
     }
   }
 
   AppBar? _getRemainingAmount(context) {
-    if (status != LoanStatus.closed) {
+    if (loanStatusFromString(loan.status) == LoanStatus.approved) {
       return AppBar(
         actions: [
-          if (status != LoanStatus.closed)
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: PayButton.labeled(
-                  context: context,
-                  label: 'Pay'.tr(),
-                  mini: true,
-                  onTap: () {
-                    log('pay on loan detail app bar tapped');
-                    Navigator.of(context)
-                        .pushNamed(LoanPaymentScreen.routeName);
-                  },
-                ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: PayButton.labeled(
+                context: context,
+                label: 'Pay'.tr(),
+                mini: true,
+                onTap: () {
+                  LoanDetailAnalytics.logSmallPayButtonTapped();
+                  Navigator.of(context).pushNamed(
+                    LoanPaymentScreen.routeName,
+                    arguments: LoanPaymentScreenArguments(
+                      loan: loan,
+                    ),
+                  );
+                },
               ),
-            )
+            ),
+          )
         ],
         backgroundColor: _getBackgroundColor(context),
         centerTitle: true,
-        foregroundColor: status == LoanStatus.closed
-            ? Theme.of(context).colorScheme.onSurface
-            : Theme.of(context).colorScheme.onPrimary,
+        foregroundColor:
+            loanStatusFromString(loan.status) != LoanStatus.approved
+                ? Theme.of(context).colorScheme.onSurface
+                : Theme.of(context).colorScheme.onPrimary,
         elevation: 0,
         title: RichText(
           textAlign: TextAlign.center,
@@ -102,7 +102,7 @@ class LoanDetailAppBar extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline6?.copyWith(
                       color: Theme.of(context).canvasColor,
                     ),
-                text: Formatter.formatMoney(totalAmount - paidAmount),
+                text: Formatter.formatMoney(loan.remainingAmount),
               )
             ],
           ),
@@ -119,6 +119,6 @@ class LoanDetailAppBar extends StatelessWidget {
   }
 
   int _getRemainingDays() {
-    return dueDate.difference(DateTime.now()).inDays;
+    return DateTime.parse(loan.dueDate).difference(DateTime.now()).inDays;
   }
 }

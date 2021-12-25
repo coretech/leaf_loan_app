@@ -1,6 +1,8 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loan_app/authentication/authentication.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/features.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,7 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
+    IntegrationIOC.analytics().logAppOpen();
     super.initState();
   }
 
@@ -39,6 +42,9 @@ class _AppState extends State<App> {
       child: Consumer<L10nProvider>(
         builder: (context, l10nProvider, _) => MaterialApp(
           navigatorKey: _navigatorKey,
+          navigatorObservers: [
+            FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+          ],
           onGenerateRoute: (settings) {
             if (settings.name == HomeScreen.routeName) {
               final args = settings.arguments as HomeScreenArguments?;
@@ -49,6 +55,14 @@ class _AppState extends State<App> {
                 ),
               );
             }
+            if (settings.name == LoanPaymentScreen.routeName) {
+              final args = settings.arguments as LoanPaymentScreenArguments?;
+              return MaterialPageRoute(
+                builder: (context) => LoanPaymentScreen(
+                  loan: args!.loan,
+                ),
+              );
+            }
           },
           routes: {
             ArticlesScreen.routeName: (context) => const ArticlesScreen(),
@@ -56,7 +70,6 @@ class _AppState extends State<App> {
             LoanApplicationScreen.routeName: (context) =>
                 const LoanApplicationScreen(),
             LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),
-            LoanPaymentScreen.routeName: (context) => const LoanPaymentScreen(),
             LoginScreen.routeName: (context) => const LoginScreen(),
             OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
             SplashScreen.routeName: (ctx) => const SplashScreen(),

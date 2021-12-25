@@ -21,7 +21,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Enter your PIN code'.tr(),
+            'Enter your PIN'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
           Divider(

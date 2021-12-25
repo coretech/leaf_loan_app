@@ -9,11 +9,11 @@ class IntegrationIOC {
   static Future<void> init() async {
     await HiveLocalStorage.init();
     _locator
-      ..registerLazySingleton<LocalStorage>(
-        HiveLocalStorage.getInstance,
+      ..registerLazySingleton<Analytics>(
+        () => FirebaseAnalyticsIntegration(),
       )
-      ..registerLazySingleton<ScoringDataCollectionService>(
-        () => CredoDataCollectionService(),
+      ..registerLazySingleton<EventBusAbstraction>(
+        () => EvenBusIntegration(),
       )
       ..registerLazySingleton<HttpHelper>(
         () => DioHttpHelper(
@@ -23,6 +23,18 @@ class IntegrationIOC {
             await AuthIOC.authHelper().processResponse(response);
           },
         ),
+      )
+      ..registerLazySingleton<LocalStorage>(
+        HiveLocalStorage.getInstance,
+      )
+      ..registerLazySingleton<Logger>(
+        () => FirebaseLogger(),
+      )
+      ..registerLazySingleton<RemoteConfiguration>(
+        () => RemoteConfigIntegration(),
+      )
+      ..registerLazySingleton<ScoringDataCollectionService>(
+        () => CredoDataCollectionService(),
       );
   }
 
@@ -33,19 +45,35 @@ class IntegrationIOC {
     _locator.registerLazySingleton<L10n>(() => localizations);
   }
 
-  static LocalStorage localStorage() {
-    return _locator.get<LocalStorage>();
+  static Analytics analytics() {
+    return _locator.get<Analytics>();
   }
 
-  static ScoringDataCollectionService scoringDataCollectionService() {
-    return _locator.get<ScoringDataCollectionService>();
+  static EventBusAbstraction eventBus() {
+    return _locator.get<EventBusAbstraction>();
   }
 
   static HttpHelper httpHelper() {
     return _locator.get<HttpHelper>();
   }
 
-  static L10n getL10n() {
+  static LocalStorage localStorage() {
+    return _locator.get<LocalStorage>();
+  }
+
+  static Logger logger() {
+    return _locator.get<Logger>();
+  }
+
+  static L10n l10n() {
     return _locator.get<L10n>();
+  }
+
+  static RemoteConfiguration remoteConfig() {
+    return _locator.get<RemoteConfiguration>();
+  }
+
+  static ScoringDataCollectionService scoringDataCollectionService() {
+    return _locator.get<ScoringDataCollectionService>();
   }
 }

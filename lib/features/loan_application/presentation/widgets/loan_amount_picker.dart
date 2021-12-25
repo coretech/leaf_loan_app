@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_application/presentation/analytics/analytics.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
-class LoanAmountPicker extends StatelessWidget {
+class LoanAmountPicker extends StatefulWidget {
   const LoanAmountPicker({
     Key? key,
     required this.fiatCode,
@@ -17,10 +21,36 @@ class LoanAmountPicker extends StatelessWidget {
   final String? fiatCode;
   final double? interestRate;
   final bool loading;
-  final double? loanAmount;
+  final double loanAmount;
   final double? maxAmount;
   final double? minAmount;
   final ValueChanged<double> onChanged;
+
+  @override
+  State<LoanAmountPicker> createState() => _LoanAmountPickerState();
+}
+
+class _LoanAmountPickerState extends State<LoanAmountPicker> {
+  late TextEditingController _amountController;
+  final FocusNode _amountFocusNode = FocusNode();
+  @override
+  void initState() {
+    log('initState', name: 'LoanAmountPicker');
+    super.initState();
+    _amountController = TextEditingController(
+      text: widget.loanAmount.toStringAsFixed(2),
+    );
+  }
+
+  @override
+  void didUpdateWidget(LoanAmountPicker oldWidget) {
+    log('didUpdateWidget', name: 'LoanAmountPicker');
+    super.didUpdateWidget(oldWidget);
+    if (widget.loanAmount != oldWidget.loanAmount &&
+        !_amountFocusNode.hasFocus) {
+      _amountController.text = widget.loanAmount.toStringAsFixed(2);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +74,16 @@ class LoanAmountPicker extends StatelessWidget {
             style: Theme.of(context).textTheme.caption,
           ),
         ),
-        if (!loading)
+        if (!widget.loading)
           Slider(
-            divisions: (maxAmount! - minAmount!).toInt() + 1,
-            label: '${Formatter.formatMoney(loanAmount ?? minAmount!)}'
-                ' ${fiatCode!}',
-            max: maxAmount!,
-            min: minAmount!,
-            onChanged: !loading ? _onValueChanged : null,
-            value: loanAmount ?? minAmount!,
+            divisions: (widget.maxAmount! - widget.minAmount!).toInt() + 1,
+            label: '${Formatter.formatMoney(widget.loanAmount)}'
+                ' ${widget.fiatCode!}',
+            max: widget.maxAmount!,
+            min: widget.minAmount!,
+            onChanged: !widget.loading ? _onValueChanged : null,
+            onChangeEnd: (_) => LoanApplicationAnalytics.sliderUsed(),
+            value: widget.loanAmount,
           )
         else
           Padding(
@@ -68,22 +99,10 @@ class LoanAmountPicker extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        if (!loading)
+        if (!widget.loading)
           Center(
             child: Column(
               children: [
-                Column(
-                  children: [
-                    Text(
-                      '${Formatter.formatMoney(loanAmount ?? minAmount!)}'
-                      ' $fiatCode',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text(
-                      'Amount'.tr(),
-                    ),
-                  ],
-                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -96,22 +115,85 @@ class LoanAmountPicker extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          '${_getInterest()} $fiatCode',
+                          '${Formatter.formatMoney(widget.loanAmount)}'
+                          ' ${widget.fiatCode}',
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                        Text('${'Interest'.tr()} (${interestRate ?? 0}%)'),
+                        Text(
+                          'Amount'.tr(),
+                        ),
                       ],
                     ),
                     Column(
                       children: [
                         Text(
-                          '${_getTotal()}'
-                          ' $fiatCode',
+                          '${_getInterest()} ${widget.fiatCode}',
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                        Text('Total Due'.tr()),
+                        Text(
+                          '${'Interest'.tr()} (${widget.interestRate ?? 0}%)',
+                        ),
                       ],
                     ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 20,
+                      ),
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: _amountController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          errorMaxLines: 3,
+                          prefixText: '${widget.fiatCode} ',
+                          prefixStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        focusNode: _amountFocusNode,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d+\.?\d{0,2}'),
+                          ),
+                        ],
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          final amount = double.parse(value);
+                          if (amount < widget.minAmount!) {
+                            widget.onChanged(widget.minAmount!);
+                          } else if (amount > widget.maxAmount!) {
+                            widget.onChanged(widget.maxAmount!);
+                          } else {
+                            widget.onChanged(amount);
+                          }
+                        },
+                        onTap: LoanApplicationAnalytics.amountFieldUsed,
+                        validator: (value) {
+                          final amount = double.parse(value ?? '0');
+                          if (amount < widget.minAmount!) {
+                            return 'Amount must be greater than or equal'
+                                ' to ${widget.minAmount}!';
+                          } else if (amount > widget.maxAmount!) {
+                            return 'Amount must be less than or equal'
+                                ' to ${widget.maxAmount}!';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Text(
+                      '${_getTotal()}'
+                      ' ${widget.fiatCode}',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text('Total Due'.tr()),
                   ],
                 ),
               ],
@@ -122,7 +204,7 @@ class LoanAmountPicker extends StatelessWidget {
   }
 
   Widget _getAmountLabels(BuildContext context) {
-    if (loading) {
+    if (widget.loading) {
       return Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -144,11 +226,11 @@ class LoanAmountPicker extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${minAmount!} ${fiatCode!}',
+          '${widget.minAmount!} ${widget.fiatCode!}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
         Text(
-          '${maxAmount!} ${fiatCode!}',
+          '${widget.maxAmount!} ${widget.fiatCode!}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
@@ -156,19 +238,20 @@ class LoanAmountPicker extends StatelessWidget {
   }
 
   void _onValueChanged(double value) {
-    onChanged(value);
+    _amountFocusNode.unfocus();
+    widget.onChanged(value);
   }
 
   String _getTotal() {
-    final amount = loanAmount ?? minAmount!;
+    final amount = widget.loanAmount;
     return Formatter.formatMoney(
-      amount * (1 + ((interestRate ?? 0) / 100)),
+      amount * (1 + ((widget.interestRate ?? 0) / 100)),
     );
   }
 
   String _getInterest() {
     return Formatter.formatMoney(
-      (loanAmount ?? minAmount!) * (interestRate! / 100),
+      (widget.loanAmount) * (widget.interestRate! / 100),
     );
   }
 }

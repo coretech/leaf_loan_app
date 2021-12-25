@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/presentation/presentation.dart';
 
 import 'package:loan_app/features/home/home.dart';
-import 'package:loan_app/features/home/presentation/widgets/no_loan_content.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -17,38 +18,56 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late bool hasLoan;
+  late HomeProvider _homeProvider;
 
   @override
   void initState() {
     super.initState();
-    hasLoan = widget.hasLoan;
+    _homeProvider = HomeIOC.homeProvider()..init();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const HomeAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: _getContent(),
-      ),
+    return ChangeNotifierProvider.value(
+      value: _homeProvider..getActiveLoan(),
+      builder: (context, _) {
+        return Scaffold(
+          appBar: const HomeAppBar(),
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: _getContent(),
+          ),
+        );
+      },
     );
   }
 
   Widget _getContent() {
-    if (hasLoan) {
-      return ActiveLoanContent(
-        onPay: () => setState(() {
-          hasLoan = false;
-        }),
-      );
-    } else {
-      return NoLoanContent(
-        onApply: () => setState(() {
-          hasLoan = true;
-        }),
-      );
-    }
+    return Consumer<HomeProvider>(
+      builder: (context, homeProvider, _) {
+        if (homeProvider.activeLoan != null && !homeProvider.loading) {
+          return ActiveLoanContent(
+            loadingPayments: homeProvider.loadingPayments,
+            loan: homeProvider.activeLoan!,
+            payments: homeProvider.payments,
+          );
+        } else if (homeProvider.loading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (homeProvider.errorMessage != null) {
+          return Center(
+            child: CustomErrorWidget(
+              message: homeProvider.errorMessage!,
+              onRetry: () => _homeProvider.getActiveLoan(),
+            ),
+          );
+        } else {
+          return NoLoanContent(
+            onApply: () {},
+          );
+        }
+      },
+    );
   }
 }

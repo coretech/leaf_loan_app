@@ -1,6 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:loan_app/i18n/data/data.dart';
-import 'package:loan_app/i18n/domain/domain.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LocalizationIOC {

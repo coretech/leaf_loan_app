@@ -1,1 +1,1 @@
-export 'dto/dto.dart';
+export 'dtos/dtos.dart';

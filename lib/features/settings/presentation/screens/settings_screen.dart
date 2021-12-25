@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/features/about/about.dart';
+import 'package:loan_app/features/settings/presentation/analytics/analytics.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +39,22 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 trailing: _getLanguageWidget(context, l10nProvider),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AboutScreen.routeName);
+                },
+                title: const Text(
+                  'About',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.info_outline,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
             ],
           );
@@ -82,13 +100,14 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Change Language'),
+          title: Text('Change Language'.tr()),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
                 for (final locale in supportedLocales)
                   ListTile(
                     onTap: () {
+                      SettingsAnalytics.logLanguageChanged(locale.languageCode);
                       l10nProvider.changeLocale(locale);
                       Navigator.of(context).pop();
                     },

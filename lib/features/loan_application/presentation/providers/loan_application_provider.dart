@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/features/loan_application/domain/domain.dart';
+import 'package:loan_app/core/events/events.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 
 class LoanApplicationProvider extends ChangeNotifier {
-  final LoanApplicationRepository loanTypeRepository =
-      LoanApplicationIOC.loanApplicationRepo();
+  final _loanTypeRepository = LoanApplicationIOC.loanApplicationRepo();
+  final _eventBus = IntegrationIOC.eventBus();
+
   bool loading = false;
   bool completed = false;
   String? errorMessage;
@@ -39,7 +41,7 @@ class LoanApplicationProvider extends ChangeNotifier {
     required String pinCode,
   }) async {
     setLoading(value: true);
-    final resultEither = await loanTypeRepository.apply(
+    final resultEither = await _loanTypeRepository.apply(
       amount: amount,
       currencyId: currencyId,
       duration: duration,
@@ -49,9 +51,12 @@ class LoanApplicationProvider extends ChangeNotifier {
     );
 
     resultEither.fold(
-      (l) => setErrorMessage("Couldn't complete application"),
+      (l) => setErrorMessage(
+        "Oops! Your application didn't go through. Please try again.",
+      ),
       (r) {
         completed = true;
+        _eventBus.fire(LoanApplicationEvent.success);
       },
     );
     setLoading(value: false);

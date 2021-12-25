@@ -15,6 +15,7 @@ class User {
     required this.status,
     required this.updatedAt,
     required this.userId,
+    this.email,
   });
 
   final String id;
@@ -30,6 +31,7 @@ class User {
   final String status;
   final String updatedAt;
   final UserId userId;
+  final String? email;
 
   User copyWith({
     String? id,
@@ -45,6 +47,7 @@ class User {
     String? status,
     String? updatedAt,
     UserId? userId,
+    String? email,
   }) {
     return User(
       id: id ?? this.id,
@@ -60,6 +63,7 @@ class User {
       status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
       userId: userId ?? this.userId,
+      email: email ?? this.email,
     );
   }
 
@@ -80,7 +84,8 @@ class User {
         other.phone == phone &&
         other.status == status &&
         other.updatedAt == updatedAt &&
-        other.userId == userId;
+        other.userId == userId &&
+        other.email == email;
   }
 
   @override
@@ -97,6 +102,7 @@ class User {
         phone.hashCode ^
         status.hashCode ^
         updatedAt.hashCode ^
-        userId.hashCode;
+        userId.hashCode ^
+        email.hashCode;
   }
 }

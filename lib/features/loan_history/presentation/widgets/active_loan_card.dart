@@ -1,24 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
+import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class ActiveLoanCard extends StatelessWidget {
   const ActiveLoanCard({
     Key? key,
-    required this.dueDate,
-    required this.paidAmount,
-    required this.totalAmount,
-    this.status = LoanStatus.open,
+    required this.loan,
   }) : super(key: key);
-
-  final DateTime dueDate;
-  final double paidAmount;
-  final double totalAmount;
-  final LoanStatus status;
+  final LoanData loan;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +25,7 @@ class ActiveLoanCard extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => LoanDetailScreen(
-                dueDate: dueDate,
-                paidAmount: paidAmount,
-                status: LoanStatus.open,
-                totalAmount: totalAmount,
+                loan: loan,
               ),
             ),
           );
@@ -73,7 +65,7 @@ class ActiveLoanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '[Category X] ${'Loan'.tr()}',
+                      loan.loanTypeId.name,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             color: _getTextColor(context),
                             fontSize: 18,
@@ -124,13 +116,13 @@ class ActiveLoanCard extends StatelessWidget {
                           color: _getTextColor(context),
                           fontSize: 12,
                         ),
-                        text: 'RWF ',
+                        text: '${loan.currencyId!.fiatCode} ',
                       ),
                       TextSpan(
                         style: Theme.of(context).textTheme.headline6?.copyWith(
                               color: _getTextColor(context),
                             ),
-                        text: Formatter.formatMoney(totalAmount - paidAmount),
+                        text: Formatter.formatMoney(loan.remainingAmount),
                       ),
                     ],
                   ),
@@ -139,12 +131,16 @@ class ActiveLoanCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10, bottom: 15),
                   child: PayButton.labeled(
                     context: context,
-                    label: 'Pay now'.tr(),
+                    label: 'Pay Now'.tr(),
                     mini: true,
                     onTap: () {
                       log('pay on loan history card tapped');
-                      Navigator.of(context)
-                          .pushNamed(LoanPaymentScreen.routeName);
+                      Navigator.of(context).pushNamed(
+                        LoanPaymentScreen.routeName,
+                        arguments: LoanPaymentScreenArguments(
+                          loan: loan,
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -166,14 +162,14 @@ class ActiveLoanCard extends StatelessWidget {
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: 'RWF ',
+                            text: '${loan.currencyId!.fiatCode} ',
                           ),
                           TextSpan(
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: '${Formatter.formatMoney(totalAmount)} ',
+                            text: '${Formatter.formatMoney(loan.totalAmount)} ',
                           ),
                         ],
                       ),
@@ -201,14 +197,16 @@ class ActiveLoanCard extends StatelessWidget {
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: 'RWF ',
+                            text: '${loan.currencyId!.fiatCode} ',
                           ),
                           TextSpan(
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: Formatter.formatMoney(paidAmount),
+                            text: Formatter.formatMoney(
+                              loan.totalAmount - loan.remainingAmount,
+                            ),
                           ),
                         ],
                       ),
@@ -244,14 +242,15 @@ class ActiveLoanCard extends StatelessWidget {
   }
 
   Color _getColor(BuildContext context) {
-    if (status == LoanStatus.overdue) {
+    if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
       return Theme.of(context).errorColor;
     }
     return Theme.of(context).colorScheme.secondary;
   }
 
   Color _getGradientColor(BuildContext context) {
-    if (status == LoanStatus.overdue || status == LoanStatus.due) {
+    if (loanStatusFromString(loan.status) == LoanStatus.rejected ||
+        loanStatusFromString(loan.status) == LoanStatus.due) {
       return Theme.of(context).errorColor;
     }
     return Theme.of(context).colorScheme.secondary;

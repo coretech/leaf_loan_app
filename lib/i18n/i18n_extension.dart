@@ -1,7 +1,10 @@
 import 'package:loan_app/core/core.dart';
 
 extension I18n on String {
-  String tr() {
-    return IntegrationIOC.getL10n().translate(this);
+  String tr({Map<String, String>? values}) {
+    return IntegrationIOC.l10n().translate(
+      this,
+      values: values,
+    );
   }
 }

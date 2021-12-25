@@ -7,14 +7,15 @@ import 'package:loan_app/core/ioc/ioc.dart';
 class AuthHelper {
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
   Future<void> clear() async {
-    await _localStorage.remove(Keys.firstName);
     await _localStorage.remove(Keys.token);
     await _localStorage.remove(Keys.userId);
-    await _localStorage.remove(Keys.userName);
   }
 
   Future<String?> getToken() async {
     return _localStorage.getString(Keys.token);
+  }
+  Future<String?> getUserId() async {
+    return _localStorage.getString(Keys.userId);
   }
 
   Future<String?> saveToken(String token) async {

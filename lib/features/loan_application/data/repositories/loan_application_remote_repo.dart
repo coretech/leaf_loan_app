@@ -18,13 +18,12 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required String password,
   }) async {
     try {
-      final _token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/loans',
         headers: Map.fromEntries([
-          TokenUtil.generateBearer(_token),
+          TokenUtil.generateBearer(token),
         ]),
-        cacheAge: const Duration(minutes: 20),
         data: {
           'amount': amount,
           'currencyid': currencyId,
@@ -39,7 +38,8 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
       } else {
         return Left(LoanApplicationFailure());
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return Left(LoanApplicationFailure());
     }
   }

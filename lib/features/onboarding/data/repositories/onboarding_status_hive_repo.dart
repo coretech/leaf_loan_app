@@ -10,7 +10,8 @@ class OnboardingStatusHiveRepo implements OnboardingStatusRepo {
       final seen =
           await IntegrationIOC.localStorage().getBool(Keys.onboardingStatus);
       return right(seen ?? false);
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(OnboardingFailure());
     }
   }
@@ -23,7 +24,8 @@ class OnboardingStatusHiveRepo implements OnboardingStatusRepo {
       await IntegrationIOC.localStorage()
           .setBool(Keys.onboardingStatus, viewed);
       return right(null);
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(OnboardingFailure());
     }
   }

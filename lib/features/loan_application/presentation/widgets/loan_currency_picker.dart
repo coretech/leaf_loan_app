@@ -34,8 +34,8 @@ class LoanCurrencyPicker extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
-            'The currency is one of the available currencies attached to your '
-                    'Leaf wallet. As of now, leaf supports KES, RWF, and UGX.'
+            'Available currencies are those you use in your Leaf Wallet. '
+                    'Leaf currently supports KES, RWF, and UGX.'
                 .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
@@ -43,13 +43,37 @@ class LoanCurrencyPicker extends StatelessWidget {
         Container(
           height: 110,
           padding: const EdgeInsets.all(8),
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            children: _getCurrencies(),
-          ),
+          child: _buildCurrenciesList(),
         ),
       ],
+    );
+  }
+
+  Widget _buildCurrenciesList() {
+    if (currencies.isEmpty && !loading) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'No currencies available on your Leaf Wallet Account'.tr(),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 10),
+          TextButton.icon(
+            onPressed: () {
+              LoanApplicationAnalytics.addCurrencyTapped();
+              _launchApp();
+            },
+            icon: const Icon(Icons.add),
+            label: Text('Add Currencies to Your Wallet'.tr()),
+          ),
+        ],
+      );
+    }
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      children: _getCurrencies(),
     );
   }
 
@@ -58,7 +82,7 @@ class LoanCurrencyPicker extends StatelessWidget {
       final currencyCards = <Widget>[];
       for (var i = 0; i < currencies.length; i++) {
         final currency = currencies[i];
-        final code = FlagUtil.getCode(currency.currencyId.country);
+        final code = FlagUtil.getCode(currency.currencyId!.country);
         final flag = Flag.fromString(
           code?.toLowerCase() ?? 'rw',
           height: 25,
@@ -85,5 +109,9 @@ class LoanCurrencyPicker extends StatelessWidget {
         ),
       );
     }
+  }
+
+  Future<void> _launchApp() async {
+    await AppLinks.launchApp();
   }
 }

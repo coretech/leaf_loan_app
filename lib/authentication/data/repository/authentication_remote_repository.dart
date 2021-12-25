@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
@@ -24,11 +25,16 @@ class AuthRepoImplementation extends AuthenticationRepository {
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final result = AuthenticationResult.fromMap(response.data);
         await _localStorage.setString(Keys.token, result.token);
+        final userMap = JwtDecoder.decode(result.token);
+        await _localStorage.setString(Keys.firstName, userMap['fname']);
+        await _localStorage.setString(Keys.userName, username);
+        await _localStorage.setString(Keys.userId, userMap['id']);
         return right(result);
       } else {
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }
-    } catch (e) {
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
       return left(AuthFailure(reason: Reason.serverError));
     }
   }

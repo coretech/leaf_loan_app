@@ -1,6 +1,6 @@
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/loan_application/loan_application.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 
 class CurrencyCard extends StatelessWidget {
   const CurrencyCard({
@@ -47,7 +47,7 @@ class CurrencyCard extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        currency.currencyId.fiatCode,
+                        currency.currencyId!.fiatCode,
                         style: Theme.of(context).textTheme.headline6?.copyWith(
                               fontSize: 14,
                             ),

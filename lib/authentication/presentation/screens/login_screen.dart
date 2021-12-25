@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,22 +20,23 @@ class _LoginScreenState extends State<LoginScreen> {
   late AuthProvider _authProvider;
 
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   bool _passwordVisible = false;
 
   @override
   void initState() {
-    _authProvider = AuthProvider();
-    _authProvider.addListener(_authProviderListener);
+    _authProvider = AuthProvider()
+      ..loadUsername()
+      ..addListener(_authProviderListener);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => _authProvider,
+    return ChangeNotifierProvider.value(
+      value: _authProvider,
       builder: (context, _) {
         return Scaffold(
           appBar: _buildAppBar(context),
@@ -67,7 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(color: Color(0xFFA4A4A4)),
                         ),
                         TextButton(
-                          onPressed: _launchApp,
+                          onPressed: () {
+                            AuthenticationAnalytics.logSignUpTapped();
+                            _launchApp();
+                          },
                           child: Text(
                             'Sign up on Leaf Wallet'.tr(),
                             style: TextStyle(
@@ -112,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           RichText(
+            textAlign: TextAlign.center,
             text: TextSpan(
               style: Theme.of(context).textTheme.caption?.copyWith(
                     fontSize: 14,
@@ -119,7 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 TextSpan(text: 'Please enter your'.tr()),
                 TextSpan(
-                  recognizer: TapGestureRecognizer()..onTap = _launchApp,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      AuthenticationAnalytics.logLeafWalletButtonTapped();
+                      _launchApp();
+                    },
                   text: ' ${'Leaf Wallet'.tr()} ',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
@@ -226,7 +234,14 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _authProviderListener() {
+    if (_authProvider.initialLoad && _authProvider.username.isNotEmpty) {
+      _usernameController.text = _authProvider.username;
+    }
     if (_authProvider.loggedIn && !_authProvider.loading) {
+      AuthenticationAnalytics.logSignIn(
+        _usernameController.text,
+        'Leaf Wallet Credentials',
+      );
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/home',
         (route) => false,

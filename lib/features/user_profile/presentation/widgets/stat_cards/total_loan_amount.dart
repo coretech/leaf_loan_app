@@ -15,10 +15,11 @@ class TotalLoanAmountCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Total Taken Loan Amount'.tr(),
+              'Total Loan Amount Taken'.tr(),
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
+              textAlign: TextAlign.right,
             ),
             const StatDivider(),
             RichText(
@@ -40,8 +41,7 @@ class TotalLoanAmountCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: Text(
-                'This is the total amount that you have taken through '
-                        'Leaf Loan App.'
+                'This is the total amount you have borrowed through Leaf Loans.'
                     .tr(),
                 style: Theme.of(context).textTheme.caption?.copyWith(
                       fontSize: 10,

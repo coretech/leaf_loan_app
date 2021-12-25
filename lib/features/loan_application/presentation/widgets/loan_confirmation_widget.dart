@@ -36,7 +36,10 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
           if (_loanApplicationProvider.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(_loanApplicationProvider.errorMessage!),
+                content: Text(
+                  _loanApplicationProvider.errorMessage!,
+                  maxLines: 3,
+                ),
               ),
             );
           }
@@ -46,8 +49,8 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _loanApplicationProvider,
+    return ChangeNotifierProvider.value(
+      value: _loanApplicationProvider,
       builder: (context, _) {
         return Padding(
           padding: const EdgeInsets.all(20),
@@ -99,7 +102,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                   Expanded(
                     child: Text(
                       '${widget.amount} '
-                      '${widget.selectedCurrency.currencyId.fiatCode}',
+                      '${widget.selectedCurrency.currencyId!.fiatCode}',
                       style: Theme.of(context).textTheme.caption?.copyWith(
                             fontSize: 16,
                             fontStyle: FontStyle.italic,
@@ -202,8 +205,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
               ),
               const SizedBox(height: 10),
               Text(
-                'You will have to pay enter your pin code'
-                        ' to confirm this loan'
+                'You will have to enter your PIN to confirm this loan request'
                     .tr(),
                 style: Theme.of(context).textTheme.caption,
               ),
@@ -265,7 +267,6 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
     final now = DateTime.now();
     final dueDate = now.add(Duration(days: widget.durationDays));
     return Formatter.formatDate(
-      context,
       dueDate,
     );
   }
@@ -275,12 +276,13 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
     if (pinCode != null) {
       await _loanApplicationProvider.apply(
         amount: widget.amount,
-        currencyId: widget.selectedCurrency.currencyId.id,
+        currencyId: widget.selectedCurrency.currencyId!.id,
         duration: widget.durationDays,
         loanPurpose: widget.purpose,
         loanTypeId: widget.loanType.id,
         pinCode: pinCode,
       );
+      LoanApplicationAnalytics.loanApplicationSubmitted();
       if (mounted) {
         Navigator.of(context).pop(true);
       }

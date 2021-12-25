@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/features/articles/articles.dart';
+import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/loan_payment.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanActionButtons extends StatelessWidget {
   const LoanActionButtons({
     Key? key,
+    required this.loan,
   }) : super(key: key);
-
+  final LoanData loan;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,7 +18,12 @@ class LoanActionButtons extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(LoanPaymentScreen.routeName);
+            Navigator.of(context).pushNamed(
+              LoanPaymentScreen.routeName,
+              arguments: LoanPaymentScreenArguments(
+                loan: loan,
+              ),
+            );
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
@@ -31,7 +39,7 @@ class LoanActionButtons extends StatelessWidget {
               Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          child: Text('Pay your loan'.tr()),
+          child: Text('Make a Payment'.tr()),
         ),
         const SizedBox(width: 20),
         ElevatedButton(
@@ -51,10 +59,10 @@ class LoanActionButtons extends StatelessWidget {
               const Size(150, 70),
             ),
             foregroundColor: MaterialStateProperty.all(
-              Theme.of(context).colorScheme.onSurface,
+              Theme.of(context).colorScheme.onPrimary,
             ),
           ),
-          child: Text('More info'.tr()),
+          child: Text('Learn More'.tr()),
         ),
       ],
     );

@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
-import 'package:loan_app/core/core.dart';
+import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
+import 'package:loan_app/core/presentation/presentation.dart';
+import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/settings/settings.dart';
-import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/user_profile/user_profile.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +20,12 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   late UserProvider _userProvider;
+  final _remoteConfig = IntegrationIOC.remoteConfig();
+  late bool _shouldShowStats;
 
   @override
   void initState() {
+    _shouldShowStats = _remoteConfig.getBool(RemoteConfigKeys.showLoanStats);
     super.initState();
     _userProvider = UserProvider()
       ..getUser()
@@ -39,88 +44,117 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _userProvider,
+    return ChangeNotifierProvider.value(
+      value: _userProvider,
       builder: (context, _) {
         return Scaffold(
-          body: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(SettingsScreen.routeName);
-                    },
-                    icon: const Icon(Icons.settings_outlined),
-                  )
-                ],
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                centerTitle: true,
-                elevation: 0,
-                foregroundColor: Theme.of(context).colorScheme.onBackground,
-                pinned: true,
-                title: Text('Leaf Profile'.tr()),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate.fixed(
-                  [
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          const NameWidget(),
-                          const _ProvideDivider(),
-                          const ContactInfo(),
-                          const SizedBox(height: 20),
-                          TextButton.icon(
-                            onPressed: _launchApp,
-                            icon: const Icon(Icons.edit_outlined),
-                            label: Text('Edit on Leaf Wallet'.tr()),
-                          ),
-                          const _ProvideDivider(),
+          body: Consumer<UserProvider>(
+            builder: (context, userProvider, _) {
+              return CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(SettingsScreen.routeName);
+                        },
+                        icon: const Icon(Icons.settings_outlined),
+                      )
+                    ],
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    centerTitle: true,
+                    elevation: 0,
+                    foregroundColor: Theme.of(context).colorScheme.onBackground,
+                    pinned: true,
+                    title: Text('Leaf Profile'.tr()),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate.fixed(
+                      [
+                        if (userProvider.errorMessage != null)
+                          SizedBox(
+                            height: ScreenSize.of(context).height -
+                                kToolbarHeight -
+                                kBottomNavigationBarHeight,
+                            child: Center(
+                              child: CustomErrorWidget(
+                                message: userProvider.errorMessage!,
+                                onRetry: userProvider.getUser,
+                              ),
+                            ),
+                          )
+                        else
                           Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 20,
-                            ),
-                            child: Text(
-                              'Loan Stats'.tr(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                const NameWidget(),
+                                const _ProvideDivider(),
+                                const ContactInfo(),
+                                const SizedBox(height: 20),
+                                TextButton.icon(
+                                  onPressed: () {
+                                    UserProfileAnalytics.logEditProfileTapped(
+                                      _userProvider.user?.userId.username,
+                                    );
+                                    _launchApp();
+                                  },
+                                  icon: const Icon(Icons.edit_outlined),
+                                  label: Text('Edit on Leaf Wallet'.tr()),
+                                ),
+                                const _ProvideDivider(),
+                                if (_shouldShowStats)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 20,
+                                    ),
+                                    child: Text(
+                                      'Loan Stats'.tr(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
                                   ),
+                                if (_shouldShowStats)
+                                  CarouselSlider(
+                                    options: CarouselOptions(
+                                      autoPlay: true,
+                                      autoPlayInterval:
+                                          const Duration(seconds: 5),
+                                      height: 160,
+                                    ),
+                                    items: const [
+                                      TotalLoanAmountCard(),
+                                      TotalNumberOfLoansCard(),
+                                      AverageLoanAmountCard(),
+                                      AverageLoanDurationCard(),
+                                    ],
+                                  ),
+                                if (_shouldShowStats) const _ProvideDivider(),
+                                TextButton.icon(
+                                  onPressed: () {
+                                    UserProfileAnalytics.logLogOutTapped(
+                                      _userProvider.user?.userId.username,
+                                    );
+                                    AuthIOC.authHelper().logOut();
+                                  },
+                                  icon: const Icon(Icons.exit_to_app),
+                                  label: Text('Log Out'.tr()),
+                                ),
+                              ],
                             ),
                           ),
-                          CarouselSlider(
-                            options: CarouselOptions(
-                              autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 5),
-                              height: 150,
-                            ),
-                            items: const [
-                              TotalLoanAmountCard(),
-                              TotalNumberOfLoansCard(),
-                              AverageLoanAmountCard(),
-                              AverageLoanDurationCard(),
-                            ],
-                          ),
-                          const _ProvideDivider(),
-                          TextButton.icon(
-                            onPressed: () {
-                              AuthIOC.authHelper().logOut();
-                            },
-                            icon: const Icon(Icons.exit_to_app),
-                            label: Text('Log Out'.tr()),
-                          ),
-                        ],
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         );
       },

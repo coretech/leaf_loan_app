@@ -22,9 +22,6 @@ class AuthHelper {
     return _localStorage.getString(Keys.token);
   }
 
-  StreamController<bool> get authenticationStreamController =>
-      _authenticationStreamController;
-
   Stream<bool> get authenticationStream =>
       _authenticationStreamController.stream;
 

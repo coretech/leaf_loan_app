@@ -13,12 +13,14 @@ class LoanDurationPicker extends StatefulWidget {
     required this.maxDurationInDays,
     required this.minDurationInDays,
     required this.onChanged,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final int durationInDays;
   final bool loading;
   final int? maxDurationInDays;
   final int? minDurationInDays;
   final ValueChanged<int> onChanged;
+  final bool shouldShowTitle;
 
   @override
   _LoanDurationPickerState createState() => _LoanDurationPickerState();

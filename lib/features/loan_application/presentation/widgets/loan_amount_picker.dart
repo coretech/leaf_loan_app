@@ -17,6 +17,7 @@ class LoanAmountPicker extends StatefulWidget {
     required this.maxAmount,
     required this.minAmount,
     required this.onChanged,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final String? fiatCode;
   final double? interestRate;
@@ -25,6 +26,7 @@ class LoanAmountPicker extends StatefulWidget {
   final double? maxAmount;
   final double? minAmount;
   final ValueChanged<double> onChanged;
+  final bool shouldShowTitle;
 
   @override
   State<LoanAmountPicker> createState() => _LoanAmountPickerState();

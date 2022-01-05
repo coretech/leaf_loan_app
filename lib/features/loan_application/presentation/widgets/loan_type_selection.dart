@@ -11,11 +11,13 @@ class LoanTypeSelection extends StatelessWidget {
     required this.loanTypes,
     required this.onSelection,
     required this.selectedIndex,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final bool loading;
   final List<LoanType> loanTypes;
   final ValueChanged<int> onSelection;
   final int selectedIndex;
+  final bool shouldShowTitle;
 
   @override
   Widget build(BuildContext context) {

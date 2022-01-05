@@ -10,11 +10,13 @@ class LoanPurposePicker extends StatefulWidget {
     required this.onChanged,
     required this.purposeList,
     required this.selectedPurpose,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final bool loading;
   final ValueChanged<String> onChanged;
   final List<String> purposeList;
   final String? selectedPurpose;
+  final bool shouldShowTitle;
 
   @override
   _LoanPurposePickerState createState() => _LoanPurposePickerState();

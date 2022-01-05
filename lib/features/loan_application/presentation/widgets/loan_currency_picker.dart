@@ -12,12 +12,14 @@ class LoanCurrencyPicker extends StatelessWidget {
     required this.currencies,
     required this.selectedIndex,
     required this.onChanged,
+    this.shouldShowTitle = true,
   }) : super(key: key);
 
   final bool loading;
   final List<Currency> currencies;
   final int selectedIndex;
   final ValueChanged<int> onChanged;
+  final bool shouldShowTitle;
 
   @override
   Widget build(BuildContext context) {

@@ -26,15 +26,15 @@ class LoanCurrencyPicker extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Select a loan currency'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Select a loan currency'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(

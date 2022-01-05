@@ -29,13 +29,14 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Choose the loan purpose'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (widget.shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose the loan purpose'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(

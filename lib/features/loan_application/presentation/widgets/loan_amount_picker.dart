@@ -59,15 +59,15 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Choose the loan amount'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (widget.shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose the loan amount'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(

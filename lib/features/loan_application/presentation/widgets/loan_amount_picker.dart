@@ -56,6 +56,8 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),

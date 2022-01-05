@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loan_app/core/presentation/widgets/widgets.dart';
-import 'package:loan_app/core/utils/screen_size.dart';
-import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:provider/provider.dart';
 
@@ -14,12 +13,16 @@ class LoanApplicationScreen extends StatefulWidget {
 }
 
 class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
-  double? _loanAmount;
   late LoanTypeProvider _loanTypeProvider;
   int _selectedCurrencyIndex = 0;
   int _selectedLoanTypeIndex = 0;
   int _selectedDurationInDays = 61;
   String? _selectedPurpose;
+  double? _loanAmount;
+
+  final _remoteConfig = IntegrationIOC.remoteConfig();
+
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -45,174 +48,129 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                   'Apply for a loan',
                 ),
               ),
-              body: Consumer<LoanTypeProvider>(
-                builder: (context, loanTypeProvider, _) {
-                  if (loanTypeProvider.errorMessage != null) {
-                    return Center(
-                      child: CustomErrorWidget(
-                        message: loanTypeProvider.errorMessage!,
-                        onRetry: loanTypeProvider.getLoanTypes,
-                      ),
-                    );
-                  }
-                  return SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          LoanTypeSelection(
-                            loading: loanTypeProvider.loading,
-                            loanTypes: loanTypeProvider.loanTypes,
-                            onSelection: (value) {
-                              setState(() {
-                                _selectedCurrencyIndex = 0;
-                                _selectedLoanTypeIndex = value;
-                                _loanAmount = loanTypeProvider
-                                    .loanTypes[value]
-                                    .currencies[_selectedCurrencyIndex]
-                                    .minLoanAmount
-                                    .toDouble();
-                              });
-                            },
-                            selectedIndex: _selectedLoanTypeIndex,
-                          ),
-                          LoanCurrencyPicker(
-                            currencies: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .currencies
-                                : [],
-                            loading: loanTypeProvider.loading,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedCurrencyIndex = value;
-                                _loanAmount = loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .currencies[_selectedCurrencyIndex]
-                                    .minLoanAmount
-                                    .toDouble();
-                              });
-                            },
-                            selectedIndex: _selectedCurrencyIndex,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          LoanDurationPicker(
-                            durationInDays: _selectedDurationInDays,
-                            loading: loanTypeProvider.loading,
-                            maxDurationInDays: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .maxDuration
-                                : null,
-                            minDurationInDays: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .minDuration
-                                : null,
-                            onChanged: (selectedDays) {
-                              setState(() {
-                                _selectedDurationInDays = selectedDays;
-                              });
-                            },
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          LoanAmountPicker(
-                            fiatCode: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .currencies[_selectedCurrencyIndex]
-                                    .currencyId!
-                                    .fiatCode
-                                : null,
-                            interestRate: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .interestRate
-                                    .toDouble()
-                                : null,
-                            loading: loanTypeProvider.loading,
-                            loanAmount: _loanAmount ??
-                                (_hasLoanTypes()
-                                    ? loanTypeProvider
-                                        .loanTypes[_selectedLoanTypeIndex]
-                                        .currencies[_selectedCurrencyIndex]
-                                        .maxLoanAmount
-                                        .toDouble()
-                                    : 0),
-                            maxAmount: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .currencies[_selectedCurrencyIndex]
-                                    .maxLoanAmount
-                                    .toDouble()
-                                : null,
-                            minAmount: _hasLoanTypes()
-                                ? loanTypeProvider
-                                    .loanTypes[_selectedLoanTypeIndex]
-                                    .currencies[_selectedCurrencyIndex]
-                                    .minLoanAmount
-                                    .toDouble()
-                                : null,
-                            onChanged: (selectedAmount) {
-                              setState(() {
-                                _loanAmount = selectedAmount;
-                              });
-                            },
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          LoanPurposePicker(
-                            loading: loanTypeProvider.loading,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedPurpose = value;
-                              });
-                            },
-                            // TODO(Yabsra): fix this monstrosity
-                            purposeList: _hasLoanTypes()
-                                ? loanTypeProvider
-                                        .loanTypes[_selectedLoanTypeIndex]
-                                        .purpose ??
-                                    []
-                                : [],
-                            selectedPurpose: _selectedPurpose,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const TOCConfirmation(),
-                          ElevatedButton(
-                            onPressed: _onSubmitPressed,
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                Size(
-                                  ScreenSize.of(context).width - 40,
-                                  50,
-                                ),
-                              ),
-                            ),
-                            child: const Text(
-                              'Submit',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+              body: _buildContent(),
             );
           },
         );
       },
+    );
+  }
+
+  Widget _buildContent() {
+    if (_remoteConfig.getString(RemoteConfigKeys.formContentType) == 'A') {
+      return FormContentA(
+        hasLoanTypes: _hasLoanTypes(),
+        loanAmount: _loanAmount,
+        onCurrencySelected: _onCurrencySelected,
+        onDurationInDaysSelected: _onDurationInDaysSelected,
+        onLoanTypeSelected: _onLoanTypeSelected,
+        onPurposeSelected: _onPurposeSelected,
+        onSubmitPressed: _onSubmitPressed,
+        selectedPurpose: _selectedPurpose,
+        selectedCurrencyIndex: _selectedCurrencyIndex,
+        selectedDurationInDays: _selectedDurationInDays,
+        selectedLoanTypeIndex: _selectedLoanTypeIndex,
+        onLoanAmountChanged: _onLoanAmountChanged,
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: FormContentB(
+                hasLoanTypes: _hasLoanTypes(),
+                loanAmount: _loanAmount,
+                onCurrencySelected: _onCurrencySelected,
+                onDurationInDaysSelected: _onDurationInDaysSelected,
+                onLoanTypeSelected: _onLoanTypeSelected,
+                onPurposeSelected: _onPurposeSelected,
+                onSubmitPressed: _onSubmitPressed,
+                selectedPurpose: _selectedPurpose,
+                selectedCurrencyIndex: _selectedCurrencyIndex,
+                selectedDurationInDays: _selectedDurationInDays,
+                selectedLoanTypeIndex: _selectedLoanTypeIndex,
+                onLoanAmountChanged: _onLoanAmountChanged,
+                controller: _pageController,
+              ),
+            ),
+          ),
+          StepIndicator(
+            total: 5,
+            controller: _pageController,
+          ),
+          NavButtons(
+            pageController: _pageController,
+            onSubmit: _onSubmitPressed,
+            onNext: _onNext,
+            onPrev: _onPrev,
+          )
+        ],
+      );
+    }
+  }
+
+  void _onNext() {
+    setState(() {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    });
+  }
+
+  void _onPrev() {
+    setState(() {
+      _pageController.previousPage(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    });
+  }
+
+  void _onPurposeSelected(String purpose) {
+    setState(() {
+      _selectedPurpose = purpose;
+    });
+  }
+
+  void _onLoanAmountChanged(double? loanAmount) {
+    setState(() {
+      _loanAmount = loanAmount;
+    });
+  }
+
+  void _onLoanTypeSelected(int value) {
+    setState(() {
+      _selectedCurrencyIndex = 0;
+      _selectedLoanTypeIndex = value;
+      _loanAmount = _loanTypeProvider
+          .loanTypes[value].currencies[_selectedCurrencyIndex].minLoanAmount
+          .toDouble();
+    });
+  }
+
+  void _onCurrencySelected(int value) {
+    setState(() {
+      _selectedCurrencyIndex = value;
+      _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
+          .currencies[_selectedCurrencyIndex].minLoanAmount
+          .toDouble();
+    });
+  }
+
+  void _onDurationInDaysSelected(int durationInDays) {
+    setState(() {
+      _selectedDurationInDays = durationInDays;
+    });
+  }
+
+  void showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
     );
   }
 
@@ -221,29 +179,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       _onSubmit();
     } else {
       if (_loanAmount == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Please select loan amount',
-            ),
-          ),
-        );
+        showSnackbar('Please select loan amount');
       } else if (_selectedPurpose == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Please select loan purpose',
-            ),
-          ),
-        );
+        showSnackbar('Please select loan purpose');
       } else if (_selectedDurationInDays < 61) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Please select a proper loan duration',
-            ),
-          ),
-        );
+        showSnackbar('Please select a proper loan duration');
       }
     }
   }

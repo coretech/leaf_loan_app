@@ -91,7 +91,7 @@ class HomeProvider extends ChangeNotifier {
         }
       },
       (loanData) async {
-        // activeLoan = loanData;]
+        // activeLoan = loanData;
         setLoading(value: false);
         notifyListeners();
         await getPayments();

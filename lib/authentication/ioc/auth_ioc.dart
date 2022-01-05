@@ -9,7 +9,7 @@ class AuthIOC {
   static Future<void> init() async {
     _locator
       ..registerLazySingleton<AuthenticationRepository>(
-        () => AuthRepoImplementation(),
+        () => AuthRemoteRepo(),
       )
       ..registerLazySingleton<AuthHelper>(
         () => AuthHelper(),

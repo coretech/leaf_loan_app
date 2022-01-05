@@ -27,6 +27,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),

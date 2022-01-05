@@ -5,10 +5,11 @@ import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 
-class AuthRepoImplementation extends AuthenticationRepository {
+class AuthRemoteRepo extends AuthenticationRepository {
   static const _urlBase = String.fromEnvironment('API_URL');
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
+  final AuthHelper _authHelper = AuthIOC.authHelper();
   @override
   Future<Either<AuthFailure, AuthenticationResult>> login({
     required String username,
@@ -24,7 +25,7 @@ class AuthRepoImplementation extends AuthenticationRepository {
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final result = AuthenticationResult.fromMap(response.data);
-        await _localStorage.setString(Keys.token, result.token);
+        await _authHelper.saveToken(result.token);
         final userMap = JwtDecoder.decode(result.token);
         await _localStorage.setString(Keys.firstName, userMap['fname']);
         await _localStorage.setString(Keys.userName, username);

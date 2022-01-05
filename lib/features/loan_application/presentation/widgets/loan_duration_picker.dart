@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:loan_app/core/presentation/widgets/widgets.dart';
 
 import 'package:loan_app/core/utils/utils.dart';
@@ -40,6 +39,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -119,7 +119,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
         children: [
           Expanded(
             child: Text(
-              DateFormat.yMMMMd().format(_selectedDate),
+              Formatter.formatDate(_selectedDate),
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

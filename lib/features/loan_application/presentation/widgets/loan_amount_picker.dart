@@ -46,7 +46,6 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
 
   @override
   void didUpdateWidget(LoanAmountPicker oldWidget) {
-    log('didUpdateWidget', name: 'LoanAmountPicker');
     super.didUpdateWidget(oldWidget);
     if (widget.loanAmount != oldWidget.loanAmount &&
         !_amountFocusNode.hasFocus) {

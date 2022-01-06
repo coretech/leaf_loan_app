@@ -25,8 +25,8 @@ class AuthRemoteRepo extends AuthenticationRepository {
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final result = AuthenticationResult.fromMap(response.data);
-        await _authHelper.saveToken(result.token);
         final userMap = JwtDecoder.decode(result.token);
+        await _localStorage.setString(Keys.token, result.token);
         await _localStorage.setString(Keys.firstName, userMap['fname']);
         await _localStorage.setString(Keys.userName, username);
         await _localStorage.setString(Keys.userId, userMap['id']);

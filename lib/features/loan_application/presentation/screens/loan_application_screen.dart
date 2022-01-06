@@ -19,6 +19,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   int _selectedDurationInDays = 61;
   String? _selectedPurpose;
   double? _loanAmount;
+  int currentStep = 0;
 
   final _remoteConfig = IntegrationIOC.remoteConfig();
 
@@ -57,7 +58,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   Widget _buildContent() {
-    if (_remoteConfig.getString(RemoteConfigKeys.formContentType) == 'A') {
+    if (_remoteConfig
+            .getString(RemoteConfigKeys.formContentType)
+            .toLowerCase() ==
+        'a') {
       return FormContentA(
         hasLoanTypes: _hasLoanTypes(),
         loanAmount: _loanAmount,
@@ -72,7 +76,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
         selectedLoanTypeIndex: _selectedLoanTypeIndex,
         onLoanAmountChanged: _onLoanAmountChanged,
       );
-    } else {
+    } else if (_remoteConfig
+            .getString(RemoteConfigKeys.formContentType)
+            .toLowerCase() ==
+        'b') {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -108,7 +115,36 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
           )
         ],
       );
+    } else {
+      return FormContentC(
+        currentStep: currentStep,
+        hasLoanTypes: _hasLoanTypes(),
+        loanAmount: _loanAmount,
+        selectedCurrencyIndex: _selectedCurrencyIndex,
+        selectedLoanTypeIndex: _selectedLoanTypeIndex,
+        selectedDurationInDays: _selectedDurationInDays,
+        onPurposeSelected: _onPurposeSelected,
+        onLoanAmountChanged: _onLoanAmountChanged,
+        onLoanTypeSelected: _onLoanTypeSelected,
+        onCurrencySelected: _onCurrencySelected,
+        onDurationInDaysSelected: _onDurationInDaysSelected,
+        onNextPressed: _onStepperNext,
+        onBackPressed: _onOnStepperBack,
+        onSubmitPressed: _onSubmitPressed,
+      );
     }
+  }
+
+  void _onStepperNext() {
+    setState(() {
+      currentStep++;
+    });
+  }
+
+  void _onOnStepperBack() {
+    setState(() {
+      currentStep--;
+    });
   }
 
   void _onNext() {

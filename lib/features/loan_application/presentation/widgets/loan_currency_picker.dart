@@ -46,6 +46,7 @@ class LoanCurrencyPicker extends StatelessWidget {
         ),
         Container(
           height: 110,
+          margin: const EdgeInsets.all(8),
           padding: const EdgeInsets.all(8),
           child: _buildCurrenciesList(),
         ),

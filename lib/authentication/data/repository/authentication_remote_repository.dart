@@ -9,7 +9,6 @@ class AuthRemoteRepo extends AuthenticationRepository {
   static const _urlBase = String.fromEnvironment('API_URL');
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
-  final AuthHelper _authHelper = AuthIOC.authHelper();
   @override
   Future<Either<AuthFailure, AuthenticationResult>> login({
     required String username,

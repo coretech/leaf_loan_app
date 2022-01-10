@@ -57,6 +57,9 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
           return const Left(LoanHistoryFailure.noActiveLoan);
         }
       } else {
+        if (response.statusCode == 404) {
+          return const Left(LoanHistoryFailure.noActiveLoan);
+        }
         return const Left(LoanHistoryFailure.error);
       }
     } catch (e, stacktrace) {

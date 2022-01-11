@@ -169,7 +169,7 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
                           final amount = double.tryParse(value);
-                          if (amount == null ||amount < widget.minAmount!) {
+                          if (amount == null || amount < widget.minAmount!) {
                             widget.onChanged(widget.minAmount!);
                           } else if (amount > widget.maxAmount!) {
                             widget.onChanged(widget.maxAmount!);
@@ -179,8 +179,8 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                         },
                         onTap: LoanApplicationAnalytics.amountFieldUsed,
                         validator: (value) {
-                          final amount = double.parse(value ?? '0');
-                          if (amount < widget.minAmount!) {
+                          final amount = double.tryParse(value ?? '0');
+                          if (amount == null || amount < widget.minAmount!) {
                             return 'Amount must be greater than or equal'
                                 ' to ${widget.minAmount}!';
                           } else if (amount > widget.maxAmount!) {

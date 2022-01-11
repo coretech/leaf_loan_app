@@ -70,7 +70,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Get,
     );
     await metric.start();
     try {
@@ -112,7 +112,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Patch,
     );
     await metric.start();
     try {
@@ -153,7 +153,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Post,
     );
     await metric.start();
     try {
@@ -196,7 +196,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Put,
     );
     await metric.start();
     try {

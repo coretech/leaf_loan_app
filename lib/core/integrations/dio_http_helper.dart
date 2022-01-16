@@ -247,7 +247,11 @@ class DioHttpHelper implements HttpHelper {
     HttpMetric metric,
     Response? response,
   ) async {
-    metric.httpResponseCode = response?.statusCode;
+    metric
+      ..httpResponseCode = response?.statusCode
+      ..responsePayloadSize = response?.data?.toString().length;
     await metric.stop();
+    await IntegrationIOC.logger()
+        .log('Response is ${response?.data?.toString() ?? 'null'}');
   }
 }

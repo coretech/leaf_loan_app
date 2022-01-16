@@ -230,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _launchApp() async {
-    await AppLinks.launchApp();
+    await ExternalLinks.launchApp();
   }
 
   void _authProviderListener() {

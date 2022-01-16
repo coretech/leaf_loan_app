@@ -117,6 +117,6 @@ class LoanCurrencyPicker extends StatelessWidget {
   }
 
   Future<void> _launchApp() async {
-    await AppLinks.launchApp();
+    await ExternalLinks.launchApp();
   }
 }

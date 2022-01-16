@@ -28,23 +28,27 @@ class RecentTransactions extends StatelessWidget {
     }
     return Column(
       children: [
-        ListView(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          children: _buildTransactions(context),
+        Expanded(
+          child: ListView(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            children: _buildTransactions(context),
+          ),
         ),
-        TextButton(
-          onPressed: () {
-            HomeAnalytics.homeShowMoreTapped();
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => LoanDetailScreen(
-                  loan: loan,
+        FittedBox(
+          child: TextButton(
+            onPressed: () {
+              HomeAnalytics.homeShowMoreTapped();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LoanDetailScreen(
+                    loan: loan,
+                  ),
                 ),
-              ),
-            );
-          },
-          child: Text('show more'.tr()),
+              );
+            },
+            child: Text('show more'.tr()),
+          ),
         ),
       ],
     );

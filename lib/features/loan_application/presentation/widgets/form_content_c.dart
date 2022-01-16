@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:loan_app/features/loan_application/presentation/presentation.dart';
+import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/i18n/i18n.dart';
+import 'package:provider/provider.dart';
 
 class FormContentC extends StatelessWidget {
   const FormContentC({

@@ -8,9 +8,6 @@ class User {
     required this.createdAt,
     required this.dob,
     required this.gender,
-    required this.idNumber,
-    required this.idType,
-    required this.issuingCountry,
     required this.phone,
     required this.status,
     required this.updatedAt,
@@ -24,9 +21,6 @@ class User {
   final String createdAt;
   final String dob;
   final String gender;
-  final String idNumber;
-  final String idType;
-  final String issuingCountry;
   final String phone;
   final String status;
   final String updatedAt;
@@ -40,9 +34,6 @@ class User {
     String? createdAt,
     String? dob,
     String? gender,
-    String? idNumber,
-    String? idType,
-    String? issuingCountry,
     String? phone,
     String? status,
     String? updatedAt,
@@ -56,9 +47,6 @@ class User {
       createdAt: createdAt ?? this.createdAt,
       dob: dob ?? this.dob,
       gender: gender ?? this.gender,
-      idNumber: idNumber ?? this.idNumber,
-      idType: idType ?? this.idType,
-      issuingCountry: issuingCountry ?? this.issuingCountry,
       phone: phone ?? this.phone,
       status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -78,9 +66,6 @@ class User {
         other.createdAt == createdAt &&
         other.dob == dob &&
         other.gender == gender &&
-        other.idNumber == idNumber &&
-        other.idType == idType &&
-        other.issuingCountry == issuingCountry &&
         other.phone == phone &&
         other.status == status &&
         other.updatedAt == updatedAt &&
@@ -96,9 +81,6 @@ class User {
         createdAt.hashCode ^
         dob.hashCode ^
         gender.hashCode ^
-        idNumber.hashCode ^
-        idType.hashCode ^
-        issuingCountry.hashCode ^
         phone.hashCode ^
         status.hashCode ^
         updatedAt.hashCode ^

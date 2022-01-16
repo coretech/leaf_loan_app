@@ -210,7 +210,8 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'You will have to enter your PIN to confirm this loan request'
+                    'You will have to enter your PIN '
+                            'to confirm this loan request'
                         .tr(),
                     style: Theme.of(context).textTheme.caption,
                   ),
@@ -242,7 +243,8 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                                 height: 20,
                                 width: 20,
                                 child: CircularProgressIndicator(
-                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
                                   strokeWidth: 1,
                                 ),
                               ),

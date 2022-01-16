@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/features/contact_us/contact_us.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:package_info/package_info.dart';
 import 'package:share_plus/share_plus.dart';
@@ -68,11 +69,7 @@ class _AboutScreenState extends State<AboutScreen> {
               color: Theme.of(context).colorScheme.secondary,
             ),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Coming soon'.tr()),
-                ),
-              );
+              Navigator.of(context).pushNamed(ContactUsScreen.routeName);
             },
             title: Text(
               'Contact us'.tr(),

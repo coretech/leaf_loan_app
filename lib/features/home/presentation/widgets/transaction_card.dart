@@ -20,6 +20,7 @@ class TransactionCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             Formatter.formatDate(DateTime.now()),
@@ -43,8 +44,8 @@ class TransactionCard extends StatelessWidget {
                   Text(
                     'Repayment'.tr(),
                     style: const TextStyle(
-                      fontWeight: FontWeight.w900,
                       fontSize: 16,
+                      fontWeight: FontWeight.w900,
                       letterSpacing: 0.75,
                     ),
                   ),

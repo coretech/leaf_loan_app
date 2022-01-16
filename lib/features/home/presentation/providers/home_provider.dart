@@ -53,6 +53,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void clear() {
+    activeLoan = null;
     loading = false;
     errorMessage = null;
     notifyListeners();

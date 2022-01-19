@@ -5,12 +5,18 @@ import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
 
 class LoansList extends StatelessWidget {
-  const LoansList({
+  LoansList({
     Key? key,
     required this.loans,
     required this.loading,
     required this.hasActiveLoan,
-  }) : super(key: key);
+  }) : super(key: key) {
+    loans.sort(
+      (a, b) => DateTime.parse(a.createdAt).compareTo(
+        DateTime.parse(b.createdAt),
+      ),
+    );
+  }
 
   final List<LoanData> loans;
   final bool loading;

@@ -12,8 +12,8 @@ class LoansList extends StatelessWidget {
     required this.hasActiveLoan,
   }) : super(key: key) {
     loans.sort(
-      (a, b) => DateTime.parse(a.createdAt).compareTo(
-        DateTime.parse(b.createdAt),
+      (a, b) => DateTime.parse(b.createdAt).compareTo(
+        DateTime.parse(a.createdAt),
       ),
     );
   }

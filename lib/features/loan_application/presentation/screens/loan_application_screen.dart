@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
+import 'package:loan_app/i18n/i18n_extension.dart';
 import 'package:provider/provider.dart';
 
 class LoanApplicationScreen extends StatefulWidget {
@@ -247,6 +248,12 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     );
     if (success) {
       if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Loan application submitted successfully'.tr()),
+            duration: const Duration(seconds: 3),
+          ),
+        );
         Navigator.of(context).pop();
       }
     }

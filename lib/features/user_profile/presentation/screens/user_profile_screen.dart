@@ -162,7 +162,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Future<void> _launchApp() async {
-    await AppLinks.launchApp();
+    await ExternalLinks.launchApp();
   }
 }
 

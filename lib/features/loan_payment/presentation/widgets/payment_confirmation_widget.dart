@@ -33,104 +33,106 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
       builder: (context, _) {
         return Consumer<LoanPaymentProvider>(
           builder: (context, loanPaymentProvider, _) {
-            return Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Confirm Payment Info'.tr(),
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Divider(
-                    height: 20,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Amount'.tr(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            ?.copyWith(fontSize: 16),
-                      ),
-                      Text(
-                        '${Formatter.formatMoney(widget.amount)}'
-                        ' ${widget.loan.currencyId!.fiatCode}',
-                        style: Theme.of(context).textTheme.caption?.copyWith(
-                              fontSize: 16,
-                              fontStyle: FontStyle.italic,
-                            ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Remaining Loan Amount'.tr(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            ?.copyWith(fontSize: 16),
-                      ),
-                      Text(
-                        '${Formatter.formatMoney(widget.remainingAmount)} '
-                        '${widget.loan.currencyId!.fiatCode}',
-                        style: Theme.of(context).textTheme.caption?.copyWith(
-                              fontSize: 16,
-                              fontStyle: FontStyle.italic,
-                            ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'You will have to enter your PIN to confirm this payment'
-                        .tr(),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: _onSubmit,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) => states.contains(MaterialState.disabled)
-                            ? null
-                            : Theme.of(context).colorScheme.secondary,
-                      ),
-                      fixedSize: MaterialStateProperty.all(
-                        Size(
-                          ScreenSize.of(context).width - 40,
-                          50,
-                        ),
-                      ),
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Confirm Payment Info'.tr(),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Divider(
+                      height: 20,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (loanPaymentProvider.paying)
-                          SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              strokeWidth: 1,
-                            ),
-                          ),
-                        if (loanPaymentProvider.paying)
-                          const SizedBox(width: 10),
                         Text(
-                          'Proceed'.tr(),
-                          style: const TextStyle(fontSize: 18),
+                          'Amount'.tr(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              ?.copyWith(fontSize: 16),
+                        ),
+                        Text(
+                          '${Formatter.formatMoney(widget.amount)}'
+                          ' ${widget.loan.currencyId!.fiatCode}',
+                          style: Theme.of(context).textTheme.caption?.copyWith(
+                                fontSize: 16,
+                                fontStyle: FontStyle.italic,
+                              ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Remaining Loan Amount'.tr(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              ?.copyWith(fontSize: 16),
+                        ),
+                        Text(
+                          '${Formatter.formatMoney(widget.remainingAmount)} '
+                          '${widget.loan.currencyId!.fiatCode}',
+                          style: Theme.of(context).textTheme.caption?.copyWith(
+                                fontSize: 16,
+                                fontStyle: FontStyle.italic,
+                              ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'You will have to enter your PIN to confirm this payment'
+                          .tr(),
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: _onSubmit,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) => states.contains(MaterialState.disabled)
+                              ? null
+                              : Theme.of(context).colorScheme.secondary,
+                        ),
+                        fixedSize: MaterialStateProperty.all(
+                          Size(
+                            ScreenSize.of(context).width - 40,
+                            50,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (loanPaymentProvider.paying)
+                            SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                strokeWidth: 1,
+                              ),
+                            ),
+                          if (loanPaymentProvider.paying)
+                            const SizedBox(width: 10),
+                          Text(
+                            'Proceed'.tr(),
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

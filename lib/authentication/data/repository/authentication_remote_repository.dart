@@ -9,7 +9,6 @@ class AuthRemoteRepo extends AuthenticationRepository {
   static const _urlBase = String.fromEnvironment('API_URL');
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   final LocalStorage _localStorage = IntegrationIOC.localStorage();
-  final AuthHelper _authHelper = AuthIOC.authHelper();
   @override
   Future<Either<AuthFailure, AuthenticationResult>> login({
     required String username,
@@ -25,8 +24,8 @@ class AuthRemoteRepo extends AuthenticationRepository {
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final result = AuthenticationResult.fromMap(response.data);
-        await _authHelper.saveToken(result.token);
         final userMap = JwtDecoder.decode(result.token);
+        await _localStorage.setString(Keys.token, result.token);
         await _localStorage.setString(Keys.firstName, userMap['fname']);
         await _localStorage.setString(Keys.userName, username);
         await _localStorage.setString(Keys.userId, userMap['id']);

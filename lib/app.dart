@@ -67,6 +67,7 @@ class _AppState extends State<App> {
           routes: {
             ArticlesScreen.routeName: (context) => const ArticlesScreen(),
             AboutScreen.routeName: (context) => const AboutScreen(),
+            ContactUsScreen.routeName: (context) => const ContactUsScreen(),
             LoanApplicationScreen.routeName: (context) =>
                 const LoanApplicationScreen(),
             LoanHistoryScreen.routeName: (context) => const LoanHistoryScreen(),

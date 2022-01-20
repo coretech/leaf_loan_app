@@ -70,7 +70,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Get,
     );
     await metric.start();
     try {
@@ -112,7 +112,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Patch,
     );
     await metric.start();
     try {
@@ -153,7 +153,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Post,
     );
     await metric.start();
     try {
@@ -196,7 +196,7 @@ class DioHttpHelper implements HttpHelper {
   }) async {
     final metric = _firebasePerformance.newHttpMetric(
       url,
-      HttpMethod.Delete,
+      HttpMethod.Put,
     );
     await metric.start();
     try {
@@ -247,7 +247,11 @@ class DioHttpHelper implements HttpHelper {
     HttpMetric metric,
     Response? response,
   ) async {
-    metric.httpResponseCode = response?.statusCode;
+    metric
+      ..httpResponseCode = response?.statusCode
+      ..responsePayloadSize = response?.data?.toString().length;
     await metric.stop();
+    await IntegrationIOC.logger()
+        .log('Response is ${response?.data?.toString() ?? 'null'}');
   }
 }

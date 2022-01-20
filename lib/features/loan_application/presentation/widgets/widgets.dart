@@ -3,6 +3,7 @@ export 'apply_button.dart';
 export 'currency_card.dart';
 export 'form_content_a.dart';
 export 'form_content_b.dart';
+export 'form_content_c.dart';
 export 'loan_amount_picker.dart';
 export 'loan_confirmation_widget.dart';
 export 'loan_currency_picker.dart';

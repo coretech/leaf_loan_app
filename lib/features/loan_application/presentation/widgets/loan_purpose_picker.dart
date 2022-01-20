@@ -10,11 +10,13 @@ class LoanPurposePicker extends StatefulWidget {
     required this.onChanged,
     required this.purposeList,
     required this.selectedPurpose,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final bool loading;
   final ValueChanged<String> onChanged;
   final List<String> purposeList;
   final String? selectedPurpose;
+  final bool shouldShowTitle;
 
   @override
   _LoanPurposePickerState createState() => _LoanPurposePickerState();
@@ -27,13 +29,14 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Choose the loan purpose'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (widget.shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose the loan purpose'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(

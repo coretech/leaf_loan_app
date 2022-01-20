@@ -32,7 +32,9 @@ class LoansList extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       children: [
         _buildActiveLoan(context),
-        ...loans.map((loan) => _buildLoan(context, loan)),
+        ...loans
+            .where((loan) => loan.status.toLowerCase() != 'approved')
+            .map((loan) => _buildLoan(context, loan)),
       ],
     );
   }

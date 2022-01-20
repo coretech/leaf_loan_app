@@ -174,6 +174,26 @@ class ActiveLoanCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: _getTextColor(context)),
+                            text: '${'Status'.tr()}: ',
+                          ),
+                          TextSpan(
+                            style:
+                                Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                            text: 'Open'.tr(),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -219,14 +239,16 @@ class ActiveLoanCard extends StatelessWidget {
                                 .textTheme
                                 .bodyText1
                                 ?.copyWith(color: _getTextColor(context)),
-                            text: '${'Status'.tr()}: ',
+                            text: '${'Applied On'.tr()}: ',
                           ),
                           TextSpan(
                             style:
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: 'Open'.tr(),
+                            text: Formatter.formatDate(
+                              DateTime.parse(loan.createdAt),
+                            ),
                           ),
                         ],
                       ),

@@ -12,12 +12,14 @@ class LoanDurationPicker extends StatefulWidget {
     required this.maxDurationInDays,
     required this.minDurationInDays,
     required this.onChanged,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final int durationInDays;
   final bool loading;
   final int? maxDurationInDays;
   final int? minDurationInDays;
   final ValueChanged<int> onChanged;
+  final bool shouldShowTitle;
 
   @override
   _LoanDurationPickerState createState() => _LoanDurationPickerState();
@@ -39,13 +41,14 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Choose the loan duration'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (widget.shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose the loan duration'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(

@@ -12,27 +12,29 @@ class LoanCurrencyPicker extends StatelessWidget {
     required this.currencies,
     required this.selectedIndex,
     required this.onChanged,
+    this.shouldShowTitle = true,
   }) : super(key: key);
 
   final bool loading;
   final List<Currency> currencies;
   final int selectedIndex;
   final ValueChanged<int> onChanged;
+  final bool shouldShowTitle;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Select a loan currency'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Select a loan currency'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
@@ -44,6 +46,7 @@ class LoanCurrencyPicker extends StatelessWidget {
         ),
         Container(
           height: 110,
+          margin: const EdgeInsets.all(8),
           padding: const EdgeInsets.all(8),
           child: _buildCurrenciesList(),
         ),
@@ -114,6 +117,6 @@ class LoanCurrencyPicker extends StatelessWidget {
   }
 
   Future<void> _launchApp() async {
-    await AppLinks.launchApp();
+    await ExternalLinks.launchApp();
   }
 }

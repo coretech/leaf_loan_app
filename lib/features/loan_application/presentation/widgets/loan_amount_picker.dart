@@ -17,6 +17,7 @@ class LoanAmountPicker extends StatefulWidget {
     required this.maxAmount,
     required this.minAmount,
     required this.onChanged,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final String? fiatCode;
   final double? interestRate;
@@ -25,6 +26,7 @@ class LoanAmountPicker extends StatefulWidget {
   final double? maxAmount;
   final double? minAmount;
   final ValueChanged<double> onChanged;
+  final bool shouldShowTitle;
 
   @override
   State<LoanAmountPicker> createState() => _LoanAmountPickerState();
@@ -44,7 +46,6 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
 
   @override
   void didUpdateWidget(LoanAmountPicker oldWidget) {
-    log('didUpdateWidget', name: 'LoanAmountPicker');
     super.didUpdateWidget(oldWidget);
     if (widget.loanAmount != oldWidget.loanAmount &&
         !_amountFocusNode.hasFocus) {
@@ -57,15 +58,15 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
-
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            'Choose the loan amount'.tr(),
-            style: Theme.of(context).textTheme.headline6,
+        if (widget.shouldShowTitle)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Choose the loan amount'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
@@ -167,8 +168,8 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                         ],
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
-                          final amount = double.parse(value);
-                          if (amount < widget.minAmount!) {
+                          final amount = double.tryParse(value);
+                          if (amount == null || amount < widget.minAmount!) {
                             widget.onChanged(widget.minAmount!);
                           } else if (amount > widget.maxAmount!) {
                             widget.onChanged(widget.maxAmount!);
@@ -178,8 +179,8 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                         },
                         onTap: LoanApplicationAnalytics.amountFieldUsed,
                         validator: (value) {
-                          final amount = double.parse(value ?? '0');
-                          if (amount < widget.minAmount!) {
+                          final amount = double.tryParse(value ?? '0');
+                          if (amount == null || amount < widget.minAmount!) {
                             return 'Amount must be greater than or equal'
                                 ' to ${widget.minAmount}!';
                           } else if (amount > widget.maxAmount!) {

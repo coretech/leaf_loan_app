@@ -11,11 +11,13 @@ class LoanTypeSelection extends StatelessWidget {
     required this.loanTypes,
     required this.onSelection,
     required this.selectedIndex,
+    this.shouldShowTitle = true,
   }) : super(key: key);
   final bool loading;
   final List<LoanType> loanTypes;
   final ValueChanged<int> onSelection;
   final int selectedIndex;
+  final bool shouldShowTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +25,17 @@ class LoanTypeSelection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              'Choose a loan type'.tr(),
-              style: Theme.of(context).textTheme.headline6,
+        if (shouldShowTitle)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(
+                'Choose a loan type'.tr(),
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ),
           ),
-        ),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,

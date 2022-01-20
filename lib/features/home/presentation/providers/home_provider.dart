@@ -53,6 +53,7 @@ class HomeProvider extends ChangeNotifier {
   }
 
   void clear() {
+    activeLoan = null;
     loading = false;
     errorMessage = null;
     notifyListeners();
@@ -88,10 +89,13 @@ class HomeProvider extends ChangeNotifier {
                 '\nAre you connected to the internet?',
           );
           setLoading(value: false);
+        } else if (error == LoanHistoryFailure.noActiveLoan) {
+          setLoading(value: false);
+          notifyListeners();
         }
       },
       (loanData) async {
-        // activeLoan = loanData;
+        activeLoan = loanData;
         setLoading(value: false);
         notifyListeners();
         await getPayments();

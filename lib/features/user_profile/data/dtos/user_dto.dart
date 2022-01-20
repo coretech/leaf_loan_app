@@ -11,9 +11,6 @@ class UserDTO {
     required this.createdAt,
     required this.dob,
     required this.gender,
-    required this.idnumber,
-    required this.idtype,
-    required this.issuingcountry,
     required this.phone,
     required this.status,
     required this.updatedAt,
@@ -29,9 +26,6 @@ class UserDTO {
       createdAt: map['createdAt'],
       dob: map['dob'],
       gender: map['gender'],
-      idnumber: map['idnumber'],
-      idtype: map['idtype'],
-      issuingcountry: map['issuingcountry'],
       phone: map['phone'],
       status: map['status'],
       updatedAt: map['updatedAt'],
@@ -49,9 +43,6 @@ class UserDTO {
   final String createdAt;
   final String dob;
   final String gender;
-  final String idnumber;
-  final String idtype;
-  final String issuingcountry;
   final String phone;
   final String status;
   final String updatedAt;
@@ -66,9 +57,6 @@ class UserDTO {
       createdAt: createdAt,
       dob: dob,
       gender: gender,
-      idNumber: idnumber,
-      idType: idtype,
-      issuingCountry: issuingcountry,
       phone: phone,
       status: status,
       updatedAt: updatedAt,
@@ -100,9 +88,6 @@ class UserDTO {
       createdAt: createdAt ?? this.createdAt,
       dob: dob ?? this.dob,
       gender: gender ?? this.gender,
-      idnumber: idnumber ?? this.idnumber,
-      idtype: idtype ?? this.idtype,
-      issuingcountry: issuingcountry ?? this.issuingcountry,
       phone: phone ?? this.phone,
       status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -119,9 +104,6 @@ class UserDTO {
       'createdAt': createdAt,
       'dob': dob,
       'gender': gender,
-      'idnumber': idnumber,
-      'idtype': idtype,
-      'issuingcountry': issuingcountry,
       'phone': phone,
       'status': status,
       'updatedAt': updatedAt,
@@ -136,8 +118,7 @@ class UserDTO {
   String toString() {
     return 'Data(_id: $id, city: $city, country: $country,'
         ' createdAt: $createdAt, dob: $dob, gender: $gender,'
-        ' idnumber: $idnumber, idtype: $idtype, issuingcountry:'
-        ' $issuingcountry, phone: $phone, status: $status, updatedAt:'
+        ' phone: $phone, status: $status, updatedAt:'
         ' $updatedAt, userid: $userid, email: $email)';
   }
 
@@ -152,9 +133,6 @@ class UserDTO {
         other.createdAt == createdAt &&
         other.dob == dob &&
         other.gender == gender &&
-        other.idnumber == idnumber &&
-        other.idtype == idtype &&
-        other.issuingcountry == issuingcountry &&
         other.phone == phone &&
         other.status == status &&
         other.updatedAt == updatedAt &&
@@ -170,9 +148,6 @@ class UserDTO {
         createdAt.hashCode ^
         dob.hashCode ^
         gender.hashCode ^
-        idnumber.hashCode ^
-        idtype.hashCode ^
-        issuingcountry.hashCode ^
         phone.hashCode ^
         status.hashCode ^
         updatedAt.hashCode ^

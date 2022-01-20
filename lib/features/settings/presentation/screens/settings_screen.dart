@@ -25,7 +25,9 @@ class SettingsScreen extends StatelessWidget {
       body: Consumer<L10nProvider>(
         builder: (context, l10nProvider, _) {
           return ListView(
-            physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             children: [
               ListTile(
                 onTap: () {

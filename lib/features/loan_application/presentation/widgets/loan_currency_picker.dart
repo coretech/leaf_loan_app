@@ -76,7 +76,9 @@ class LoanCurrencyPicker extends StatelessWidget {
       );
     }
     return ListView(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       scrollDirection: Axis.horizontal,
       children: _getCurrencies(),
     );

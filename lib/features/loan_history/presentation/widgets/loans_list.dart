@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/presentation/presentation.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_history/loan_history.dart';
+import 'package:provider/provider.dart';
 
 class LoansList extends StatelessWidget {
   LoansList({
@@ -27,15 +28,23 @@ class LoansList extends StatelessWidget {
     if (loading) {
       return _buildShimmer(context);
     }
-    return ListView(
-      padding: const EdgeInsets.all(5),
-      physics: const BouncingScrollPhysics(),
-      children: [
-        _buildActiveLoan(context),
-        ...loans
-            .where((loan) => loan.status.toLowerCase() != 'approved')
-            .map((loan) => _buildLoan(context, loan)),
-      ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Provider.of<LoanHistoryProvider>(context, listen: false)
+            .getLoans();
+      },
+      child: ListView(
+        padding: const EdgeInsets.all(5),
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+        children: [
+          _buildActiveLoan(context),
+          ...loans
+              .where((loan) => loan.status.toLowerCase() != 'approved')
+              .map((loan) => _buildLoan(context, loan)),
+        ],
+      ),
     );
   }
 

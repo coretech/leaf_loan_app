@@ -16,7 +16,9 @@ class NoLoanContent extends StatelessWidget {
   Widget build(BuildContext context) {
     //a list of big cards with images and titles for the articles
     return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate.fixed(

@@ -43,7 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
           body: LayoutBuilder(
             builder: (context, constraint) {
               return SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(minHeight: constraint.maxHeight),
                   child: IntrinsicHeight(

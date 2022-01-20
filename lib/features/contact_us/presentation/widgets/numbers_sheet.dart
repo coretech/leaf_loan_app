@@ -21,7 +21,9 @@ class NumbersSheet extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              physics: const BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
               children: <Widget>[
                 ListTile(
                   onTap: () => ExternalLinks.callPhoneNumber('+243979085600'),

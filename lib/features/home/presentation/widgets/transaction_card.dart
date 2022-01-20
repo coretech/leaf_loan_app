@@ -83,7 +83,9 @@ class TransactionCard extends StatelessWidget {
 
   static Widget shimmer(BuildContext context) {
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

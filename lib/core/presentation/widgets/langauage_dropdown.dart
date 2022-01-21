@@ -41,7 +41,7 @@ class LanguageDropdown extends StatelessWidget {
                 Text(
                   CountryUtil.getLanguageName(l10nProvider.locale),
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

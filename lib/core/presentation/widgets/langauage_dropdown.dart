@@ -7,8 +7,10 @@ class LanguageDropdown extends StatelessWidget {
   const LanguageDropdown({
     Key? key,
     required this.location,
+    this.onChanged,
   }) : super(key: key);
   final String location;
+  final VoidCallback? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class LanguageDropdown extends StatelessWidget {
               if (locale != null) {
                 l10nProvider.changeLocale(Locale(locale as String));
                 CoreAnalytics.logLanguageChanged(locale, location);
+                onChanged?.call();
               }
             },
             initialValue: l10nProvider.locale.languageCode,

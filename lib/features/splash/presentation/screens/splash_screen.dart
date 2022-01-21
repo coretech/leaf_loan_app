@@ -46,12 +46,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateNext() {
-    if (!_splashProvider.onboardingSeen && !_splashProvider.loading) {
+    if (_splashProvider.onboardingSeen && !_splashProvider.loading) {
       Navigator.of(context).pushReplacementNamed(
         OnboardingScreen.routeName,
       );
     }
-    if (!_splashProvider.authenticated &&
+    if (_splashProvider.authenticated &&
         !_splashProvider.loading &&
         _splashProvider.onboardingSeen) {
       Navigator.of(context).pushReplacementNamed(

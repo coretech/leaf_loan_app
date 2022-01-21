@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intro_slider/intro_slider.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/presentation/widgets/widgets.dart';
+import 'package:loan_app/features/features.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +17,14 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late OnboardingProvider _onboardingProvider;
+  late PageController _pageController;
 
   @override
   void initState() {
+    _pageController = PageController()
+      ..addListener(() {
+        setState(() {});
+      });
     _onboardingProvider = OnboardingProvider();
     _onboardingProvider.addListener(() {
       if (_onboardingProvider.seen && _onboardingProvider.seen) {
@@ -66,31 +71,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       create: (context) => _onboardingProvider,
       child: Builder(
         builder: (context) {
-          return IntroSlider(
-            backgroundColorAllSlides: Theme.of(context).scaffoldBackgroundColor,
-            colorActiveDot: Theme.of(context).primaryColor,
-            doneButtonStyle: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.primary,
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              elevation: 0,
+              toolbarHeight: 100,
+              title: Row(
+                children: const [
+                  Spacer(),
+                  LanguageDropdown(location: 'onboarding'),
+                ],
               ),
             ),
-            listCustomTabs: _slides,
-            nextButtonStyle: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.primary,
-              ),
+            body: PageView(
+              controller: _pageController,
+              children: _slides,
             ),
-            onDonePress: _updateOnboardingStatus,
-            onSkipPress: () {
-              OnboardingAnalytics.logOnboardingSkipped();
-              _updateOnboardingStatus();
-            },
-            showNextBtn: true,
-            showDoneBtn: true,
-            skipButtonStyle: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.secondary,
-              ),
+            bottomNavigationBar: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text('Next'.tr()),
+                ),
+                OnboardingStepIndicator(
+                  total: _slides.length,
+                  controller: _pageController,
+                ),
+                if (_pageController.hasClients &&
+                    _pageController.page?.round() == _slides.length - 1)
+                  TextButton(
+                    onPressed: _updateOnboardingStatus,
+                    child: Text('Done'.tr()),
+                  )
+                else
+                  TextButton(
+                    onPressed: _updateOnboardingStatus,
+                    child: Text('Skip'.tr()),
+                  ),
+              ],
             ),
           );
         },
@@ -104,45 +123,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     required String description,
     required String image,
   }) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: const [
-                Spacer(),
-                LanguageDropdown(location: 'onboarding'),
-              ],
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 35,
+              vertical: 25,
             ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 35,
-                vertical: 25,
-              ),
-              child: Image.asset(
-                image,
-              ),
+            child: Image.asset(
+              image,
             ),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline6?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-            ),
-            const SizedBox(height: 15),
-            Text(
-              description,
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-              textAlign: TextAlign.center,
-            ),
-            const Spacer(),
-          ],
-        ),
+          ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline6?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+          const SizedBox(height: 15),
+          Text(
+            description,
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+            textAlign: TextAlign.center,
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }

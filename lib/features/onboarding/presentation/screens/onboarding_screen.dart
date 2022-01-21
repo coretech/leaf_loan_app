@@ -107,7 +107,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 else
                   TextButton(
                     onPressed: _updateOnboardingStatus,
-                    child: Text('Skip'.tr()),
+                    child: Text(
+                      'Skip'.tr(),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
                   ),
               ],
             ),

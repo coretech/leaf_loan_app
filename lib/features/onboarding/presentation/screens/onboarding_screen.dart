@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 import 'package:loan_app/authentication/authentication.dart';
+import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -74,6 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Theme.of(context).colorScheme.primary,
               ),
             ),
+            listCustomTabs: _slides,
             nextButtonStyle: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
                 Theme.of(context).colorScheme.primary,
@@ -91,26 +92,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Theme.of(context).colorScheme.secondary,
               ),
             ),
-            slides: _slides,
           );
         },
       ),
     );
   }
 
-  Slide _buildSlide(
+  Widget _buildSlide(
     BuildContext context, {
     required String title,
     required String description,
     required String image,
   }) {
-    return Slide(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      centerWidget: Padding(
+    return SafeArea(
+      child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Row(
+              children: const [
+                Spacer(),
+                LanguageDropdown(location: 'onboarding'),
+              ],
+            ),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 35,
@@ -130,10 +136,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Text(
               description,
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
               textAlign: TextAlign.center,
             ),
+            const Spacer(),
           ],
         ),
       ),

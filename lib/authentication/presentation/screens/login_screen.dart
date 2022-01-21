@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loan_app/authentication/authentication.dart';
-import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
@@ -196,9 +196,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      toolbarHeight: 100,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,
+      toolbarHeight: 100,
       title: Row(
         children: [
           Padding(
@@ -220,6 +220,8 @@ class _LoginScreenState extends State<LoginScreen> {
               fontWeight: FontWeight.w300,
             ),
           ),
+          const Spacer(),
+          const LanguageDropdown(location: 'login_screen')
         ],
       ),
     );

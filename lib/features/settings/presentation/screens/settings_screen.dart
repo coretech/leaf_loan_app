@@ -1,9 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/about/about.dart';
-import 'package:loan_app/features/settings/presentation/analytics/analytics.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
@@ -65,27 +64,12 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  String _getLanguageName(Locale locale) {
-    switch (locale.languageCode) {
-      case LocaleCodes.english:
-        return 'English';
-      case LocaleCodes.kinyarwanda:
-        return 'Kinyarwanda';
-      case LocaleCodes.swahili:
-        return 'Swahili';
-      case LocaleCodes.french:
-        return 'French';
-      default:
-        return 'English';
-    }
-  }
-
   Widget _getLanguageWidget(
     BuildContext context,
     L10nProvider l10nProvider,
   ) {
     return Text(
-      _getLanguageName(l10nProvider.locale),
+      CountryUtil.getLanguageName(l10nProvider.locale),
       style: Theme.of(context).textTheme.bodyText1?.copyWith(
             color: Theme.of(context).colorScheme.secondary,
           ),
@@ -109,7 +93,10 @@ class SettingsScreen extends StatelessWidget {
                 for (final locale in supportedLocales)
                   ListTile(
                     onTap: () {
-                      SettingsAnalytics.logLanguageChanged(locale.languageCode);
+                      CoreAnalytics.logLanguageChanged(
+                        locale.languageCode,
+                        'settings',
+                      );
                       l10nProvider.changeLocale(locale);
                       Navigator.of(context).pop();
                     },
@@ -117,7 +104,7 @@ class SettingsScreen extends StatelessWidget {
                         Theme.of(context).colorScheme.primary.withOpacity(0.15),
                     selected:
                         l10nProvider.locale.languageCode == locale.languageCode,
-                    title: Text(_getLanguageName(locale)),
+                    title: Text(CountryUtil.getLanguageName(locale)),
                   ),
               ],
             ),

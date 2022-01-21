@@ -1,5 +1,8 @@
 /* cSpell:disable */
-class FlagUtil {
+import 'package:flutter/widgets.dart';
+import 'package:loan_app/core/constants/constants.dart';
+
+class CountryUtil {
   static String? getCode(String countryName) {
     return _countryMap[countryName];
   }
@@ -249,4 +252,19 @@ class FlagUtil {
     'Zambia': 'ZM',
     'Zimbabwe': 'ZW'
   };
+
+  static String getLanguageName(Locale locale) {
+    switch (locale.languageCode) {
+      case LocaleCodes.english:
+        return 'English';
+      case LocaleCodes.kinyarwanda:
+        return 'Kinyarwanda';
+      case LocaleCodes.swahili:
+        return 'Swahili';
+      case LocaleCodes.french:
+        return 'French';
+      default:
+        return 'English';
+    }
+  }
 }

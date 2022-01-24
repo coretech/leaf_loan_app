@@ -3,7 +3,8 @@ library currency_dto_test;
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loan_app/core/core.dart';
+import 'package:loan_app/core/data/dtos/currency_id_dto.dart';
+import 'package:loan_app/core/domain/entities/currency_id.dart';
 
 void main() {
   const _currencyIdMap = {
@@ -82,7 +83,7 @@ void main() {
     () {
       final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
       final currencyId = currencyIdDto.toEntity();
-      expect(currencyId, isA<Currency>());
+      expect(currencyId, isA<CurrencyId>());
       expect(currencyId.id, 'some_id');
       expect(currencyId.name, 'Rwandan Franc');
       expect(currencyId.fiatCode, 'RWF');
@@ -100,18 +101,18 @@ void main() {
     'be returned',
     () {
       final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
-      final newCurrencyDto = currencyIdDto.copyWith(
+      final newCurrencyIdDto = currencyIdDto.copyWith(
         description: 'This is a new description',
         createdAt: '2021-05-15T12:00:00.000Z',
       );
-      expect(newCurrencyDto, isA<CurrencyIdDto>());
-      expect(currencyIdDto.id, 'some_id');
-      expect(currencyIdDto.name, 'Rwandan Franc');
-      expect(currencyIdDto.fiatcode, 'RWF');
-      expect(currencyIdDto.description, 'This is a new description');
-      expect(currencyIdDto.country, 'Rwanda');
-      expect(currencyIdDto.createdAt, '2021-05-15T12:00:00.000Z');
-      expect(currencyIdDto.updatedAt, '2019-05-15T12:00:00.000Z');
+      expect(newCurrencyIdDto, isA<CurrencyIdDto>());
+      expect(newCurrencyIdDto.id, 'some_id');
+      expect(newCurrencyIdDto.name, 'Rwandan Franc');
+      expect(newCurrencyIdDto.fiatcode, 'RWF');
+      expect(newCurrencyIdDto.description, 'This is a new description');
+      expect(newCurrencyIdDto.country, 'Rwanda');
+      expect(newCurrencyIdDto.createdAt, '2021-05-15T12:00:00.000Z');
+      expect(newCurrencyIdDto.updatedAt, '2019-05-15T12:00:00.000Z');
     },
   );
 

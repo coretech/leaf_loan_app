@@ -94,9 +94,7 @@ void main() {
       final currencyDto = CurrencyDTO.fromMap(_currencyMap);
       final currencyMap = currencyDto.toMap();
       expect(currencyMap, isA<Map<String, dynamic>>());
-      expect(currencyMap['currencyid'], isNull);
-      expect(currencyMap['minloanamount'], 100);
-      expect(currencyMap['maxloanamount'], 1000);
+      expect(currencyMap, _currencyMap);
     },
   );
 

@@ -60,7 +60,7 @@ class CurrencyDTO {
 
   @override
   String toString() =>
-      'Currencie(currencyid: $currencyid, minloanamount: $minloanamount, '
+      'CurrencyDTO(currencyid: $currencyid, minloanamount: $minloanamount, '
       'maxloanamount: $maxloanamount)';
 
   @override

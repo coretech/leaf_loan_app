@@ -160,4 +160,23 @@ void main() {
       expect(hashCode, isA<int>());
     },
   );
+
+  test(
+    'Given a CurrencyIdDto instance , '
+    'When CurrencyIdDto.toString is called, '
+    'Then an a string matching the following format should be returned',
+    () {
+      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDtoString = currencyIdDto.toString();
+      expect(
+        currencyIdDtoString,
+        'Currencyid(_id: ${currencyIdDto.id}, name: ${currencyIdDto.name}, '
+        'fiatcode: ${currencyIdDto.fiatcode}, '
+        'description: ${currencyIdDto.description}, '
+        'country: ${currencyIdDto.country}, createdAt: '
+        '${currencyIdDto.createdAt}, '
+        'updatedAt: ${currencyIdDto.updatedAt})',
+      );
+    },
+  );
 }

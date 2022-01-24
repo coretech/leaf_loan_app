@@ -131,4 +131,19 @@ void main() {
       expect(hashCode, isA<int>());
     },
   );
+  test(
+    'Given a CurrencyDTO instance , '
+    'When CurrencyDTO.toString is called, '
+    'Then an a string matching the following format should be returned',
+    () {
+      final currencyDto = CurrencyDTO.fromMap(_currencyMap);
+      final currencyDTOString = currencyDto.toString();
+      expect(
+        currencyDTOString,
+        'CurrencyDTO(currencyid: ${currencyDto.currencyid}, '
+        'minloanamount: ${currencyDto.minloanamount}, '
+        'maxloanamount: ${currencyDto.maxloanamount})',
+      );
+    },
+  );
 }

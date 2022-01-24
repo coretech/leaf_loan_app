@@ -12,6 +12,7 @@ void main() {
     () {
       const token = 'x';
       final result = TokenUtil.generateBearer(token);
+      expect(result, isA<MapEntry>());
       expect(result.key, 'Authorization');
       expect(result.value, 'Bearer $token');
     },

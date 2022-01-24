@@ -31,7 +31,9 @@ class RecentTransactions extends StatelessWidget {
         Expanded(
           child: ListView(
             shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             children: _buildTransactions(context),
           ),
         ),
@@ -71,7 +73,9 @@ class RecentTransactions extends StatelessWidget {
 
   static Widget shimmer(BuildContext context) {
     return ListView(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       shrinkWrap: true,
       children: [
         const SizedBox(height: 14),

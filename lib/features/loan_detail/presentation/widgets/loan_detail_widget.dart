@@ -17,60 +17,18 @@ class LoanDetailWidget extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              Wrap(
-                alignment: WrapAlignment.spaceEvenly,
-                runAlignment: WrapAlignment.spaceEvenly,
-                spacing: 20,
-                runSpacing: 20,
-                children: [
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: _getTextColor(context),
-                              ),
-                          text: '${loan.currencyId!.fiatCode} ',
-                        ),
-                        TextSpan(
-                          style: Theme.of(context).textTheme.headline6,
-                          text: '${Formatter.formatMoney(
-                            loan.requestedAmount,
-                          )}'
-                              '\n',
-                        ),
-                        TextSpan(
-                          style: Theme.of(context).textTheme.bodyText2,
-                          text: 'Amount'.tr(),
-                        ),
-                      ],
-                    ),
+              Theme(
+                data: ThemeData().copyWith(dividerColor: Colors.transparent),
+                child: ExpansionTile(
+                  childrenPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 20,
                   ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: _getTextColor(context),
-                              ),
-                          text: '${loan.currencyId!.fiatCode} ',
-                        ),
-                        TextSpan(
-                          style: Theme.of(context).textTheme.headline6,
-                          text: '${Formatter.formatMoney(
-                            loan.interestAmount,
-                          )}\n',
-                        ),
-                        TextSpan(
-                          style: Theme.of(context).textTheme.bodyText2,
-                          text: 'Interest',
-                        ),
-                      ],
-                    ),
+                  trailing: Icon(
+                    Icons.info_outline,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  RichText(
+                  title: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       children: [
@@ -81,7 +39,11 @@ class LoanDetailWidget extends StatelessWidget {
                           text: '${loan.currencyId!.fiatCode} ',
                         ),
                         TextSpan(
-                          style: Theme.of(context).textTheme.headline6,
+                          style: TextStyle(
+                            color: _getTextColor(context),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w800,
+                          ),
                           text: '${Formatter.formatMoney(
                             loan.totalAmount,
                           )}'
@@ -89,12 +51,72 @@ class LoanDetailWidget extends StatelessWidget {
                         ),
                         TextSpan(
                           style: Theme.of(context).textTheme.bodyText2,
-                          text: 'Total'.tr(),
+                          text: 'Total Due'.tr(),
                         ),
                       ],
                     ),
                   ),
-                ],
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    ?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                                text: '${loan.currencyId!.fiatCode} ',
+                              ),
+                              TextSpan(
+                                style: Theme.of(context).textTheme.headline6,
+                                text: '${Formatter.formatMoney(
+                                  loan.requestedAmount,
+                                )}'
+                                    '\n',
+                              ),
+                              TextSpan(
+                                style: Theme.of(context).textTheme.bodyText2,
+                                text: 'Amount'.tr(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    ?.copyWith(
+                                      color: _getTextColor(context),
+                                    ),
+                                text: '${loan.currencyId!.fiatCode} ',
+                              ),
+                              TextSpan(
+                                style: Theme.of(context).textTheme.headline6,
+                                text: '${Formatter.formatMoney(
+                                  loan.interestAmount,
+                                )}\n',
+                              ),
+                              TextSpan(
+                                style: Theme.of(context).textTheme.bodyText2,
+                                text: 'Interest',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               if (loanStatusFromString(loan.status) == LoanStatus.approved)
                 Padding(
@@ -103,21 +125,13 @@ class LoanDetailWidget extends StatelessWidget {
                     children: [
                       Text(
                         'Pay before'.tr(),
-                        style: TextStyle(
-                          color: _getTextColor(context),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
                       Text(
                         Formatter.formatDate(
                           DateTime.parse(loan.dueDate),
                         ),
-                        style: TextStyle(
-                          color: _getTextColor(context),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                        ),
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15),

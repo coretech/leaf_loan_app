@@ -45,7 +45,9 @@ class FormContentA extends StatelessWidget {
           );
         }
         return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(

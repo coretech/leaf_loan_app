@@ -118,7 +118,9 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
               ),
               Expanded(
                 child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
                   itemCount: widget.purposeList.length,
                   itemBuilder: (context, index) {
                     return ListTile(

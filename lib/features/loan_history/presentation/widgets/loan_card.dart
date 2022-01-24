@@ -147,6 +147,30 @@ class LoanCard extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          style: Theme.of(context).textTheme.bodyText1,
+                          text: '${'Applied On'.tr()}: ',
+                        ),
+                        TextSpan(
+                          style: _getPaidTextStyle(context),
+                          text: '${Formatter.formatDate(
+                            DateTime.parse(loan.createdAt),
+                          )} ',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               if (_loanHasDetails())
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
@@ -184,6 +208,8 @@ class LoanCard extends StatelessWidget {
         return Theme.of(context).errorColor;
       case LoanStatus.due:
         return Theme.of(context).colorScheme.secondary;
+      case LoanStatus.closed:
+        return Theme.of(context).disabledColor;
     }
   }
 
@@ -198,6 +224,8 @@ class LoanCard extends StatelessWidget {
         return Icons.cancel;
       case LoanStatus.due:
         return Icons.warning;
+      case LoanStatus.closed:
+        return Icons.check_circle;
     }
   }
 
@@ -206,7 +234,7 @@ class LoanCard extends StatelessWidget {
   }
 
   double _getCardHeight() {
-    return 122.5;
+    return 145;
   }
 
   String _getLoanStatus() {
@@ -220,6 +248,8 @@ class LoanCard extends StatelessWidget {
         return 'Pending'.tr();
       case LoanStatus.due:
         return 'Due'.tr();
+      case LoanStatus.closed:
+        return 'Closed'.tr();
     }
   }
 

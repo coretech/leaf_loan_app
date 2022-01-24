@@ -51,7 +51,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           body: Consumer<UserProvider>(
             builder: (context, userProvider, _) {
               return CustomScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 slivers: [
                   SliverAppBar(
                     actions: [

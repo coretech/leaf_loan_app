@@ -131,6 +131,7 @@ void main() {
       expect(hashCode, isA<int>());
     },
   );
+  
   test(
     'Given a CurrencyDTO instance , '
     'When CurrencyDTO.toString is called, '

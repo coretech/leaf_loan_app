@@ -1,4 +1,4 @@
-library currency_dto_test;
+library currency_id_dto_test;
 
 import 'dart:convert';
 
@@ -79,7 +79,7 @@ void main() {
   test(
     'Given a CurrencyIdDto instance, '
     'When CurrencyIdDto.toEntity is called on it, '
-    'Then an instance of Currency should be returned',
+    'Then an instance of CurrencyId should be returned',
     () {
       final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
       final currencyId = currencyIdDto.toEntity();

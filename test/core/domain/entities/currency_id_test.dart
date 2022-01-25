@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loan_app/core/domain/entities/currency.dart';
 import 'package:loan_app/core/domain/entities/currency_id.dart';
 
 void main() {

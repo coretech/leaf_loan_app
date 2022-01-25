@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loan_app/core/data/dtos/currency_dto.dart';
 import 'package:loan_app/core/data/dtos/loan_type_dto.dart';
-import 'package:loan_app/core/domain/entities/currency_id.dart';
 import 'package:loan_app/core/domain/entities/loan_type.dart';
 
 void main() {

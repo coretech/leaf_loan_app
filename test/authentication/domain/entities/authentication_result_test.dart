@@ -80,10 +80,10 @@ void main() {
         token: 'new token',
       );
       expect(newAuthenticationResult, isA<AuthenticationResult>());
-      expect(newAuthenticationResult.status, true);
-      expect(newAuthenticationResult.message, 'message');
-      expect(newAuthenticationResult.type, 'type');
-      expect(newAuthenticationResult.token, 'token');
+      expect(newAuthenticationResult.status, false);
+      expect(newAuthenticationResult.message, 'new message');
+      expect(newAuthenticationResult.type, 'new type');
+      expect(newAuthenticationResult.token, 'new token');
     },
   );
 

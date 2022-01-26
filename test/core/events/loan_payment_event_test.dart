@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loan_app/core/domain/entities/article.dart';
 import 'package:loan_app/core/domain/entities/loan_type.dart';
 import 'package:loan_app/core/events/loan_payment_event.dart';
 import 'package:loan_app/features/loan_history/domain/entities/loan_data.dart';

@@ -69,7 +69,8 @@ void main() {
   test(
     'Given a AuthenticationResult instance, '
     'When AuthenticationResult.copyWith is called on it with arguments, '
-    'Then an instance of AuthenticationResult with different values should be returned',
+    'Then an instance of AuthenticationResult with different values should '
+    'be returned',
     () {
       final authenticationResult =
           AuthenticationResult.fromMap(_authenticationResultMap);

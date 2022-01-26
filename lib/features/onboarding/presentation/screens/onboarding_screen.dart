@@ -91,7 +91,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _pageController.nextPage(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeIn,
+                    );
+                  },
                   child: Text('Next'.tr()),
                 ),
                 OnboardingStepIndicator(

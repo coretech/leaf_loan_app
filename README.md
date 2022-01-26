@@ -1,8 +1,6 @@
 # Leaf Loan App
 
-[![Codemagic build status](https://api.codemagic.io/apps/617fa4d801bcda9fc6054f2a/617fa4d801bcda9fc6054f29/status_badge.svg)](https://codemagic.io/apps/617fa4d801bcda9fc6054f2a/617fa4d801bcda9fc6054f29/latest_build)
-
-[![Coverage Status](https://coveralls.io/repos/github/hellyab/loan_app/badge.svg?branch=develop)](https://coveralls.io/github/hellyab/loan_app?branch=develop)
+[![Codemagic build status](https://api.codemagic.io/apps/617fa4d801bcda9fc6054f2a/617fa4d801bcda9fc6054f29/status_badge.svg)](https://codemagic.io/apps/617fa4d801bcda9fc6054f2a/617fa4d801bcda9fc6054f29/latest_build) [![Coverage Status](https://coveralls.io/repos/github/LeafGlobalFintech/loan_app/badge.svg?branch=develop)](https://coveralls.io/github/LeafGlobalFintech/loan_app?branch=develop)
 
 Leaf Loans allows Leaf customers to apply for, obtain, and pay off microloans. It works in conjunction with Leaf’s core wallet to support the storage and transport of assets across borders.
 

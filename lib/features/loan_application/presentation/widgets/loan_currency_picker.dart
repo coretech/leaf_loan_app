@@ -76,7 +76,9 @@ class LoanCurrencyPicker extends StatelessWidget {
       );
     }
     return ListView(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       scrollDirection: Axis.horizontal,
       children: _getCurrencies(),
     );
@@ -87,7 +89,7 @@ class LoanCurrencyPicker extends StatelessWidget {
       final currencyCards = <Widget>[];
       for (var i = 0; i < currencies.length; i++) {
         final currency = currencies[i];
-        final code = FlagUtil.getCode(currency.currencyId!.country);
+        final code = CountryUtil.getCode(currency.currencyId!.country);
         final flag = Flag.fromString(
           code?.toLowerCase() ?? 'rw',
           height: 25,

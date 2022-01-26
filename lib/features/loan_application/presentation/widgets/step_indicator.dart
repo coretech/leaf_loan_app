@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class StepIndicator extends StatefulWidget {
   const StepIndicator({
@@ -28,31 +29,34 @@ class _StepIndicatorState extends State<StepIndicator> {
       height: 20,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: _buildItems(),
+        children: [
+          RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyText2,
+              children: [
+                TextSpan(
+                  text: '${'Step'.tr()} ',
+                ),
+                TextSpan(
+                  text: '${(widget.controller.page?.round() ?? 0) + 1}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                TextSpan(
+                  text: ' ${'of'.tr()} ',
+                ),
+                TextSpan(
+                  text: '${widget.total}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-    );
-  }
-
-  List<Widget> _buildItems() {
-    final items = <Widget>[];
-    for (var i = 0; i < widget.total; i++) {
-      items.add(
-        _buildItem(i == widget.controller.page),
-      );
-    }
-    return items;
-  }
-
-  Widget _buildItem(bool isActive) {
-    return AnimatedContainer(
-      decoration: BoxDecoration(
-        color: isActive ? Theme.of(context).colorScheme.secondary : Colors.grey,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      duration: const Duration(milliseconds: 250),
-      height: 10,
-      margin: const EdgeInsets.all(2.5),
-      width: 10,
     );
   }
 }

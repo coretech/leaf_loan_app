@@ -34,7 +34,9 @@ class _LoanDetailScreenState extends State<LoanDetailScreen> {
       builder: (context, _) {
         return Scaffold(
           body: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             slivers: [
               LoanDetailAppBar(
                 loan: widget.loan,

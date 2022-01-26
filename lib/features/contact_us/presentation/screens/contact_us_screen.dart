@@ -20,7 +20,9 @@ class ContactUsScreen extends StatelessWidget {
         title: Text('Contact Us'.tr()),
       ),
       body: ListView(
-        physics: const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         children: [
           ListTile(
             leading: const Icon(

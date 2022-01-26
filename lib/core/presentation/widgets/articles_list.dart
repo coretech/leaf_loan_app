@@ -42,7 +42,9 @@ class ArticlesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: const BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       itemBuilder: (context, index) {
         return ArticleCard(
           article: articles[index],

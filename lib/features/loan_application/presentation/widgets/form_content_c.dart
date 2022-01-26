@@ -67,7 +67,9 @@ class FormContentC extends StatelessWidget {
               ),
             );
           },
-          physics: const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           steps: [
             Step(
               content: LoanTypeSelection(

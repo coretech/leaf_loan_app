@@ -87,39 +87,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               controller: _pageController,
               children: _slides,
             ),
-            bottomNavigationBar: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    _pageController.nextPage(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.easeIn,
-                    );
-                  },
-                  child: Text('Next'.tr()),
-                ),
-                OnboardingStepIndicator(
-                  total: _slides.length,
-                  controller: _pageController,
-                ),
-                if (_pageController.hasClients &&
-                    _pageController.page?.round() == _slides.length - 1)
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   TextButton(
-                    onPressed: _updateOnboardingStatus,
-                    child: Text('Done'.tr()),
-                  )
-                else
-                  TextButton(
-                    onPressed: _updateOnboardingStatus,
-                    child: Text(
-                      'Skip'.tr(),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                    onPressed: () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeIn,
+                      );
+                    },
+                    child: Text('Next'.tr()),
+                  ),
+                  OnboardingStepIndicator(
+                    total: _slides.length,
+                    controller: _pageController,
+                  ),
+                  if (_pageController.hasClients &&
+                      _pageController.page?.round() == _slides.length - 1)
+                    TextButton(
+                      onPressed: _updateOnboardingStatus,
+                      child: Text('Done'.tr()),
+                    )
+                  else
+                    TextButton(
+                      onPressed: _updateOnboardingStatus,
+                      child: Text(
+                        'Skip'.tr(),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           );
         },

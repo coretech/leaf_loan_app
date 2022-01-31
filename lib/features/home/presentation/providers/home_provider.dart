@@ -56,6 +56,10 @@ class HomeProvider extends ChangeNotifier {
     activeLoan = null;
     loading = false;
     errorMessage = null;
+    firstName = '';
+    payments = [];
+    paymentsLoaded = false;
+    loadingPayments = false;
     notifyListeners();
   }
 
@@ -72,13 +76,13 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<void> getActiveLoan() async {
+    await Future.delayed(Duration.zero);
+    clear();
     // TODO(Yabsra): this is a dirty hack, fix it
     if (firstName.isEmpty) {
       firstName =
           (await IntegrationIOC.localStorage().getString(Keys.firstName)) ?? '';
     }
-    await Future.delayed(Duration.zero);
-    clear();
     setLoading(value: true);
     final _loanResult = await _loanHistoryRepo.getActiveLoan();
     await _loanResult.fold(

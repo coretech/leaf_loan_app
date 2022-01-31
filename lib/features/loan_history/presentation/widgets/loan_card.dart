@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_history/presentation/widgets/widgets.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanCard extends StatelessWidget {
@@ -278,17 +279,20 @@ class LoanCard extends StatelessWidget {
   }
 
   void _navigateToLoanDetail(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => LoanDetailScreen(
-          loan: loan,
+    if (loanStatusFromString(loan.status) == LoanStatus.pending) {
+      showPendingLoanDialog(context, loan);
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => LoanDetailScreen(
+            loan: loan,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   bool _loanHasDetails() {
-    return loanStatusFromString(loan.status) != LoanStatus.rejected &&
-        loanStatusFromString(loan.status) != LoanStatus.pending;
+    return loanStatusFromString(loan.status) != LoanStatus.rejected;
   }
 }

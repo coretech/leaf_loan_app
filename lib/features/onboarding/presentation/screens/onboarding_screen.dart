@@ -113,6 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     )
                   else
                     TextButton(
+                      key: const Key('skip_button'),
                       onPressed: _updateOnboardingStatus,
                       child: Text(
                         'Skip'.tr(),

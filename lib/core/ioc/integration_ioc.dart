@@ -38,6 +38,32 @@ class IntegrationIOC {
       );
   }
 
+  static Future<void> initMock() async {
+    await HiveLocalStorage.init();
+    _locator
+      ..registerLazySingleton<Analytics>(
+        () => MockFirebaseAnalytics(),
+      )
+      ..registerLazySingleton<EventBusAbstraction>(
+        () => MockEventBus(),
+      )
+      ..registerLazySingleton<HttpHelper>(
+        () => MockDio(),
+      )
+      ..registerLazySingleton<LocalStorage>(
+        () => MockHive(),
+      )
+      ..registerLazySingleton<Logger>(
+        () => MockLogger(),
+      )
+      ..registerLazySingleton<RemoteConfiguration>(
+        () => MockRemoteConfig(),
+      )
+      ..registerLazySingleton<ScoringDataCollectionService>(
+        () => MockCredo(),
+      );
+  }
+
   static void registerI18n(L10n localizations) {
     if (_locator.isRegistered<L10n>()) {
       _locator.unregister<L10n>();

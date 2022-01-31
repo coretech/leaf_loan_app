@@ -57,6 +57,7 @@ class SettingsScreen extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
+              const FormTypeTile(),
             ],
           );
         },
@@ -112,5 +113,63 @@ class SettingsScreen extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class FormTypeTile extends StatefulWidget {
+  const FormTypeTile({Key? key}) : super(key: key);
+
+  @override
+  _FormTypeTileState createState() => _FormTypeTileState();
+}
+
+class _FormTypeTileState extends State<FormTypeTile> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () async {
+        await IntegrationIOC.localStorage().setString(
+          RemoteConfigKeys.formContentType,
+          _getNextType(
+            (await IntegrationIOC.localStorage()
+                    .getString(RemoteConfigKeys.formContentType)) ??
+                'A',
+          ),
+        );
+        setState(() {});
+      },
+      title: const Text(
+        'Form Content Type',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      trailing: FutureBuilder<String?>(
+        future: IntegrationIOC.localStorage().getString(
+          RemoteConfigKeys.formContentType,
+        ),
+        builder: (context, snapshot) {
+          return Text(
+            snapshot.data ?? '-',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  String _getNextType(String type) {
+    switch (type) {
+      case 'A':
+        return 'B';
+      case 'B':
+        return 'C';
+      default:
+        return 'A';
+    }
   }
 }

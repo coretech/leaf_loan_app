@@ -6,6 +6,7 @@ import 'package:firebase_performance/firebase_performance.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/app.dart';
+import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/features_ioc.dart';
 import 'package:loan_app/i18n/ioc/ioc.dart';
@@ -22,8 +23,15 @@ Future<void> main() async {
     ),
   );
   await RemoteConfig.instance.ensureInitialized();
-  await RemoteConfig.instance.fetchAndActivate();
   await IntegrationIOC.init();
+  await RemoteConfig.instance.setDefaults(
+    {
+      RemoteConfigKeys.formContentType: (await IntegrationIOC.localStorage()
+              .getString(RemoteConfigKeys.formContentType)) ??
+          'A',
+      RemoteConfigKeys.showLoanStats: false,
+    },
+  );
   await FeaturesIOC.init();
   await LocalizationIOC.init();
 

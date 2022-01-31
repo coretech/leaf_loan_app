@@ -56,117 +56,132 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                       .tr(values: {'1': widget.loan.loanTypeId.name}),
                 ),
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Row(),
-                    Text(
-                      '${'Your current remaining loan amount is'.tr()} ',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '${widget.loan.currencyId!.fiatCode} ',
+              body: RefreshIndicator(
+                onRefresh: () async {
+                  await loanPaymentProvider.getWallet();
+                },
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Row(),
+                        Text(
+                          '${'Your current remaining loan amount is'.tr()} ',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: '${widget.loan.currencyId!.fiatCode} ',
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                ),
+                              ),
+                              TextSpan(
+                                text: Formatter.formatMoney(
+                                  widget.loan.remainingAmount,
+                                ),
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                  fontSize: 27,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          color: Theme.of(context).colorScheme.secondary,
+                          endIndent: 50,
+                          height: 30,
+                          indent: 50,
+                        ),
+                        if (loanPaymentProvider.loading)
+                          const ShimmerBox(
+                            height: 50,
+                            width: 125,
+                          ),
+                        if (loanPaymentProvider.walletErrorMessage != null)
+                          Text(
+                            loanPaymentProvider.walletErrorMessage!,
                             style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        if (loanPaymentProvider.wallet != null)
+                          LeafBalanceWidget(
+                            balance: _getBalance(loanPaymentProvider.wallet!),
+                            currencyFiat: widget.loan.currencyId!.fiatCode,
+                          ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          controller: _amountController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorMaxLines: 3,
+                            labelText: 'Enter the amount you want to pay'.tr(),
+                            prefixText: '${widget.loan.currencyId!.fiatCode} ',
+                            prefixStyle: TextStyle(
                               color: Theme.of(context).colorScheme.onBackground,
                             ),
                           ),
-                          TextSpan(
-                            text: Formatter.formatMoney(
-                              widget.loan.remainingAmount,
+                          keyboardType: TextInputType.number,
+                          validator: _validateAmount,
+                        ),
+                        if (_validateAmount(_amountController.text) == null)
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 20, left: 20, right: 20),
+                            child: Text(
+                              'You will have {1} {2} left to pay after this payment'
+                                  .tr(
+                                values: {
+                                  '1': Formatter.formatMoney(_getRemaining()),
+                                  '2': widget.loan.currencyId!.fiatCode,
+                                },
+                              ),
+                              style: Theme.of(context).textTheme.caption,
+                              textAlign: TextAlign.center,
                             ),
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onBackground,
-                              fontSize: 27,
-                              fontWeight: FontWeight.w600,
+                          ),
+                        const SizedBox(height: 20),
+                        ElevatedButton.icon(
+                          icon: const Icon(Icons.payment),
+                          label: Text(
+                            'Pay'.tr(),
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          onPressed:
+                              _validateAmount(_amountController.text) == null
+                                  ? _onPay
+                                  : null,
+                          style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all(
+                              Size(
+                                ScreenSize.of(context).width - 40,
+                                50,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Divider(
-                      color: Theme.of(context).colorScheme.secondary,
-                      endIndent: 50,
-                      height: 30,
-                      indent: 50,
-                    ),
-                    if (loanPaymentProvider.loading)
-                      const ShimmerBox(
-                        height: 50,
-                        width: 125,
-                      ),
-                    if (loanPaymentProvider.walletErrorMessage != null)
-                      Text(
-                        loanPaymentProvider.walletErrorMessage!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
-                      ),
-                    if (loanPaymentProvider.wallet != null)
-                      LeafBalanceWidget(
-                        balance: _getBalance(loanPaymentProvider.wallet!),
-                        currencyFiat: widget.loan.currencyId!.fiatCode,
-                      ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: _amountController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        errorMaxLines: 3,
-                        labelText: 'Enter the amount you want to pay'.tr(),
-                        prefixText: '${widget.loan.currencyId!.fiatCode} ',
-                        prefixStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: _validateAmount,
-                    ),
-                    if (_validateAmount(_amountController.text) == null)
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, left: 20, right: 20),
-                        child: Text(
-                          'You will have {1} {2} left to pay after this payment'
-                              .tr(
-                            values: {
-                              '1': Formatter.formatMoney(_getRemaining()),
-                              '2': widget.loan.currencyId!.fiatCode,
-                            },
-                          ),
-                          style: Theme.of(context).textTheme.caption,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    const SizedBox(height: 20),
-                    ElevatedButton.icon(
-                      icon: const Icon(Icons.payment),
-                      label: Text(
-                        'Pay'.tr(),
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      onPressed: _validateAmount(_amountController.text) == null
-                          ? _onPay
-                          : null,
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                          Size(
-                            ScreenSize.of(context).width - 40,
-                            50,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             );

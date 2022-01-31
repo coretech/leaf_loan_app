@@ -41,71 +41,88 @@ class FormContentB extends StatelessWidget {
           controller: controller,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            LoanTypeSelection(
-              loading: loanTypeProvider.loading,
-              loanTypes: loanTypeProvider.loanTypes,
-              onSelection: onLoanTypeSelected,
-              selectedIndex: selectedLoanTypeIndex,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: LoanTypeSelection(
+                loading: loanTypeProvider.loading,
+                loanTypes: loanTypeProvider.loanTypes,
+                onSelection: onLoanTypeSelected,
+                selectedIndex: selectedLoanTypeIndex,
+              ),
             ),
-            LoanCurrencyPicker(
-              currencies: hasLoanTypes
-                  ? loanTypeProvider.loanTypes[selectedLoanTypeIndex].currencies
-                  : [],
-              loading: loanTypeProvider.loading,
-              onChanged: onCurrencySelected,
-              selectedIndex: selectedCurrencyIndex,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: LoanCurrencyPicker(
+                currencies: hasLoanTypes
+                    ? loanTypeProvider
+                        .loanTypes[selectedLoanTypeIndex].currencies
+                    : [],
+                loading: loanTypeProvider.loading,
+                onChanged: onCurrencySelected,
+                selectedIndex: selectedCurrencyIndex,
+              ),
             ),
-            LoanDurationPicker(
-              durationInDays: selectedDurationInDays,
-              loading: loanTypeProvider.loading,
-              maxDurationInDays: hasLoanTypes
-                  ? loanTypeProvider
-                      .loanTypes[selectedLoanTypeIndex].maxDuration
-                  : null,
-              minDurationInDays: hasLoanTypes
-                  ? loanTypeProvider
-                      .loanTypes[selectedLoanTypeIndex].minDuration
-                  : null,
-              onChanged: onDurationInDaysSelected,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: LoanDurationPicker(
+                durationInDays: selectedDurationInDays,
+                loading: loanTypeProvider.loading,
+                maxDurationInDays: hasLoanTypes
+                    ? loanTypeProvider
+                        .loanTypes[selectedLoanTypeIndex].maxDuration
+                    : null,
+                minDurationInDays: hasLoanTypes
+                    ? loanTypeProvider
+                        .loanTypes[selectedLoanTypeIndex].minDuration
+                    : null,
+                onChanged: onDurationInDaysSelected,
+              ),
             ),
-            LoanAmountPicker(
-              fiatCode: hasLoanTypes
-                  ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                      .currencies[selectedCurrencyIndex].currencyId!.fiatCode
-                  : null,
-              interestRate: hasLoanTypes
-                  ? loanTypeProvider
-                      .loanTypes[selectedLoanTypeIndex].interestRate
-                      .toDouble()
-                  : null,
-              loading: loanTypeProvider.loading,
-              loanAmount: loanAmount ??
-                  (hasLoanTypes
-                      ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                          .currencies[selectedCurrencyIndex].maxLoanAmount
-                          .toDouble()
-                      : 0),
-              maxAmount: hasLoanTypes
-                  ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                      .currencies[selectedCurrencyIndex].maxLoanAmount
-                      .toDouble()
-                  : null,
-              minAmount: hasLoanTypes
-                  ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                      .currencies[selectedCurrencyIndex].minLoanAmount
-                      .toDouble()
-                  : null,
-              onChanged: onLoanAmountChanged,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: LoanAmountPicker(
+                fiatCode: hasLoanTypes
+                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
+                        .currencies[selectedCurrencyIndex].currencyId!.fiatCode
+                    : null,
+                interestRate: hasLoanTypes
+                    ? loanTypeProvider
+                        .loanTypes[selectedLoanTypeIndex].interestRate
+                        .toDouble()
+                    : null,
+                loading: loanTypeProvider.loading,
+                loanAmount: loanAmount ??
+                    (hasLoanTypes
+                        ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
+                            .currencies[selectedCurrencyIndex].maxLoanAmount
+                            .toDouble()
+                        : 0),
+                maxAmount: hasLoanTypes
+                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
+                        .currencies[selectedCurrencyIndex].maxLoanAmount
+                        .toDouble()
+                    : null,
+                minAmount: hasLoanTypes
+                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
+                        .currencies[selectedCurrencyIndex].minLoanAmount
+                        .toDouble()
+                    : null,
+                onChanged: onLoanAmountChanged,
+              ),
             ),
-            LoanPurposePicker(
-              loading: loanTypeProvider.loading,
-              onChanged: onPurposeSelected,
-              // TODO(Yabsra): fix this monstrosity
-              purposeList: hasLoanTypes
-                  ? loanTypeProvider.loanTypes[selectedLoanTypeIndex].purpose ??
-                      []
-                  : [],
-              selectedPurpose: selectedPurpose,
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: LoanPurposePicker(
+                loading: loanTypeProvider.loading,
+                onChanged: onPurposeSelected,
+                // TODO(Yabsra): fix this monstrosity
+                purposeList: hasLoanTypes
+                    ? loanTypeProvider
+                            .loanTypes[selectedLoanTypeIndex].purpose ??
+                        []
+                    : [],
+                selectedPurpose: selectedPurpose,
+              ),
             ),
           ],
         );

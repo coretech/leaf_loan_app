@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/about/about.dart';
@@ -128,14 +129,22 @@ class _FormTypeTileState extends State<FormTypeTile> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () async {
+        final current = (await IntegrationIOC.localStorage()
+                .getString(RemoteConfigKeys.formContentType)) ??
+            'A';
+        final next = _getNextType(
+          current,
+        );
         await IntegrationIOC.localStorage().setString(
           RemoteConfigKeys.formContentType,
-          _getNextType(
-            (await IntegrationIOC.localStorage()
-                    .getString(RemoteConfigKeys.formContentType)) ??
-                'A',
-          ),
+          next,
         );
+
+        await RemoteConfig.instance.setDefaults({
+          RemoteConfigKeys.formContentType: next,
+          RemoteConfigKeys.showLoanStats: true,
+        });
+
         setState(() {});
       },
       title: const Text(

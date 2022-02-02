@@ -41,13 +41,13 @@ class _PendingLoanDialog extends StatelessWidget {
                 context,
                 label: 'Interest Amount'.tr(),
                 value: '${loanData.currencyId?.fiatCode} '
-                    '${loanData.interestAmount}',
+                    '${Formatter.formatMoney(loanData.interestAmount)}',
               ),
               _buildLabelAndValue(
                 context,
                 label: 'Total Amount'.tr(),
                 value: '${loanData.currencyId?.fiatCode} '
-                    '${loanData.totalAmount}',
+                    '${Formatter.formatMoney(loanData.totalAmount)}',
               ),
               _buildLabelAndValue(
                 context,

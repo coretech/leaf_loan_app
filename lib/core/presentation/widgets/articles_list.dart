@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
 
 class ArticlesList extends StatelessWidget {
-  const ArticlesList({Key? key}) : super(key: key);
+  const ArticlesList({
+    Key? key,
+    this.scrollable = true,
+  }) : super(key: key);
+  final bool scrollable;
 
   static List<Article> articles = [
     Article(
@@ -41,16 +46,27 @@ class ArticlesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(
-        parent: AlwaysScrollableScrollPhysics(),
-      ),
-      itemBuilder: (context, index) {
-        return ArticleCard(
-          article: articles[index],
-        );
-      },
-      itemCount: articles.length,
+    if (scrollable) {
+      return ListView.builder(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+        itemBuilder: (context, index) {
+          return ArticleCard(
+            article: articles[index],
+          );
+        },
+        itemCount: articles.length,
+      );
+    }
+    return Column(
+      children: articles
+          .map(
+            (article) => ArticleCard(
+              article: article,
+            ),
+          )
+          .toList(),
     );
   }
 }

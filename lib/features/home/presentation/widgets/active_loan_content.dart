@@ -63,7 +63,6 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
                     ),
                   ),
                 // TODO(Yabsra): change this
-
                 if (loanStatusFromString(widget.loan.status) !=
                     LoanStatus.approved)
                   Padding(

@@ -61,6 +61,9 @@ class IntegrationIOC {
       )
       ..registerLazySingleton<ScoringDataCollectionService>(
         () => MockCredo(),
+      )
+      ..registerLazySingleton<L10n>(
+        () => MockL10N(),
       );
   }
 

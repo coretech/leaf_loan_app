@@ -19,10 +19,31 @@ class _PendingLoanDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text(
+              'Pending ${loanData.loanTypeId.name} Loan'.tr(),
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Divider(
+              height: 20,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             _buildLabelAndValue(
               context,
-              label: 'Loan Amount'.tr(),
-              value: Formatter.formatMoney(loanData.totalAmount),
+              label: 'Requested Amount'.tr(),
+              value: '${loanData.currencyId?.fiatCode} '
+                  '${Formatter.formatMoney(loanData.requestedAmount)}',
+            ),
+            _buildLabelAndValue(
+              context,
+              label: 'Interest Amount'.tr(),
+              value: '${loanData.currencyId?.fiatCode} '
+                  '${loanData.interestAmount}',
+            ),
+            _buildLabelAndValue(
+              context,
+              label: 'Total Amount'.tr(),
+              value: '${loanData.currencyId?.fiatCode} '
+                  '${loanData.totalAmount}',
             ),
             _buildLabelAndValue(
               context,
@@ -31,16 +52,30 @@ class _PendingLoanDialog extends StatelessWidget {
             ),
             _buildLabelAndValue(
               context,
-              label: 'Interest Amount'.tr(),
-              value: '${loanData.interestAmount}',
+              label: 'Due Date'.tr(),
+              value: Formatter.formatDate(
+                DateTime.parse(
+                  loanData.dueDate,
+                ),
+              ),
             ),
             _buildLabelAndValue(
               context,
-              label: 'Applied Date'.tr(),
+              label: 'Applied On'.tr(),
               value: Formatter.formatDateWithTime(
                 DateTime.parse(loanData.createdAt),
               ),
             ),
+            TextButton.icon(
+              icon: const Icon(Icons.close),
+              label: Text('Cancel Application'.tr()),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(
+                  Theme.of(context).colorScheme.error,
+                ),
+              ),
+              onPressed: () {},
+            )
           ],
         ),
       ),
@@ -52,25 +87,31 @@ class _PendingLoanDialog extends StatelessWidget {
     required String label,
     required String value,
   }) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style:
-                Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 2.5,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style:
+                  Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16),
+            ),
           ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: Theme.of(context).textTheme.caption?.copyWith(
-                  fontSize: 16,
-                  fontStyle: FontStyle.italic,
-                ),
+          Expanded(
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.caption?.copyWith(
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic,
+                  ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

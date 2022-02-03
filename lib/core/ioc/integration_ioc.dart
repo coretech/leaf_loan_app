@@ -39,7 +39,6 @@ class IntegrationIOC {
   }
 
   static Future<void> initMock() async {
-    await HiveLocalStorage.init();
     _locator
       ..registerLazySingleton<Analytics>(
         () => MockFirebaseAnalytics(),

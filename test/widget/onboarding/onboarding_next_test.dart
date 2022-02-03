@@ -37,10 +37,11 @@ void main() {
     await FeaturesIOC.init();
     await LocalizationIOC.init();
   });
+
   testWidgets(
     'Given the user is on the onboarding screen, '
-    'When skip is tapped, '
-    'Then the user should be redirected to the login screen',
+    'When next is tapped, '
+    'Then the user should be taken to the next page on the onboarding screen',
     (WidgetTester tester) async {
       when(() => IntegrationIOC.localStorage().getBool(Keys.onboardingStatus))
           .thenAnswer((_) async => false);
@@ -48,11 +49,11 @@ void main() {
         const App(),
       );
       await tester.pumpAndSettle(const Duration(seconds: 5));
-      final skipButton = find.byKey(const Key('skip_button'));
+      final skipButton = find.byKey(const Key('next_button'));
       await tester.tap(skipButton);
       await tester.pumpAndSettle(const Duration(seconds: 5));
-      final welcomeText = find.text('Welcome!');
-      expect(welcomeText, findsOneWidget);
+      final easyPaymentText = find.text('Easy Payment');
+      expect(easyPaymentText, findsOneWidget);
     },
   );
 }

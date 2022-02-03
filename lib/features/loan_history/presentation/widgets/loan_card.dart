@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_history/presentation/widgets/widgets.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanCard extends StatelessWidget {
   const LoanCard({
     Key? key,
     required this.loan,
+    required this.hasActiveLoan,
   }) : super(key: key);
 
   final LoanData loan;
+  final bool hasActiveLoan;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class LoanCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
-        onTap: _loanHasDetails() ? () => _navigateToLoanDetail(context) : null,
+        onTap: () => _showLoanDetail(context),
         child: Ink(
           decoration: BoxDecoration(
             border: Border.all(
@@ -171,17 +174,16 @@ class LoanCard extends StatelessWidget {
                   ),
                 ],
               ),
-              if (_loanHasDetails())
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    'View Details'.tr(),
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          fontSize: 12,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  'View Details'.tr(),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                 ),
+              ),
             ],
           ),
         ),
@@ -277,18 +279,27 @@ class LoanCard extends StatelessWidget {
     return Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.green);
   }
 
-  void _navigateToLoanDetail(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => LoanDetailScreen(
-          loan: loan,
+  void _showLoanDetail(BuildContext context) {
+    if (loanStatusFromString(loan.status) == LoanStatus.pending) {
+      showPendingLoanDialog(
+        context,
+        loan: loan,
+        hasActiveLoan: hasActiveLoan,
+      );
+    } else if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
+      showRejectedLoanDialog(
+        context,
+        loan: loan,
+        hasActiveLoan: hasActiveLoan,
+      );
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => LoanDetailScreen(
+            loan: loan,
+          ),
         ),
-      ),
-    );
-  }
-
-  bool _loanHasDetails() {
-    return loanStatusFromString(loan.status) != LoanStatus.rejected &&
-        loanStatusFromString(loan.status) != LoanStatus.pending;
+      );
+    }
   }
 }

@@ -93,6 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
+                    key: const Key('next_button'),
                     onPressed: () {
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 500),
@@ -113,6 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     )
                   else
                     TextButton(
+                      key: const Key('skip_button'),
                       onPressed: _updateOnboardingStatus,
                       child: Text(
                         'Skip'.tr(),

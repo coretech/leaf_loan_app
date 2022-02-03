@@ -4,4 +4,5 @@ export 'event_bus_integration.dart';
 export 'firebase_anayltics_integration.dart';
 export 'firebase_logger.dart';
 export 'hive_local_storage.dart';
+export 'mocks/mocks.dart';
 export 'remote_config_integration.dart';

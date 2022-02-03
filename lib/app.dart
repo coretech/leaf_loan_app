@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -43,7 +45,8 @@ class _AppState extends State<App> {
         builder: (context, l10nProvider, _) => MaterialApp(
           navigatorKey: _navigatorKey,
           navigatorObservers: [
-            FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+            if (!Platform.environment.containsKey('FLUTTER_TEST'))
+              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
           ],
           onGenerateRoute: (settings) {
             if (settings.name == HomeScreen.routeName) {

@@ -47,6 +47,7 @@ class AppLocalizations implements L10n {
   // This method will be called from every widget which needs a localized text
   @override
   String translate(String key, {Map<String, String>? values}) {
+    log('This translate is being called');
     var value = _localizedStrings[key];
     if (value == null) {
       IntegrationIOC.logger().log(

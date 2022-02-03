@@ -15,4 +15,9 @@ class Formatter {
     final currencyFormatter = NumberFormat('#,##0.00', 'en_US');
     return currencyFormatter.format(amount);
   }
+
+  static String formatDateWithTime(DateTime date) {
+    final dateFormat = DateFormat.yMMMMd().add_jm();
+    return dateFormat.format(date);
+  }
 }

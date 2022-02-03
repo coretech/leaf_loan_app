@@ -60,6 +60,7 @@ class LoansList extends StatelessWidget {
 
   Widget _buildLoan(BuildContext context, LoanData loan) {
     return LoanCard(
+      hasActiveLoan: hasActiveLoan,
       loan: loan,
     );
   }

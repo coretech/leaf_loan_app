@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/presentation/analytics/analytics.dart';
-import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_history/presentation/presentation.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
-class CurrentLoanInfo extends StatelessWidget {
-  const CurrentLoanInfo({
+class PendingLoanInfo extends StatelessWidget {
+  const PendingLoanInfo({
     Key? key,
     required this.loan,
   }) : super(key: key);
@@ -18,19 +18,17 @@ class CurrentLoanInfo extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
-        HomeAnalytics.homeLoanCardTapped();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => LoanDetailScreen(
-              loan: loan,
-            ),
-          ),
+        HomeAnalytics.homeLoanCardTappedForPending();
+        showPendingLoanDialog(
+          context,
+          hasActiveLoan: false,
+          loan: loan,
         );
       },
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).disabledColor,
         ),
         child: Stack(
           children: [
@@ -43,34 +41,15 @@ class CurrentLoanInfo extends StatelessWidget {
                   colors: [
                     Colors.white.withOpacity(0.25),
                     Colors.black.withOpacity(0.25),
-                    Theme.of(context).colorScheme.secondary,
+                    Theme.of(context).disabledColor,
                   ],
                 ),
               ),
               padding: const EdgeInsets.all(25),
               child: Column(
-                children: <Widget>[
+                children: [
                   Text(
-                    'Pay before'.tr(),
-                    style: TextStyle(
-                      color: _getTextColor(context),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Text(
-                    _getDate(context),
-                    style: TextStyle(
-                      color: _getTextColor(context),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    'Remaining Amount'.tr(),
+                    'Total Amount'.tr(),
                     style: TextStyle(
                       color: _getTextColor(context),
                       fontSize: 16,
@@ -90,7 +69,7 @@ class CurrentLoanInfo extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: Formatter.formatMoney(loan.remainingAmount),
+                          text: Formatter.formatMoney(loan.totalAmount),
                           style: TextStyle(
                             color: _getTextColor(context),
                             fontSize: 31,
@@ -100,7 +79,38 @@ class CurrentLoanInfo extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Row(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Applied On'.tr(),
+                    style: TextStyle(
+                      color: _getTextColor(context),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    _getDate(context),
+                    style: TextStyle(
+                      color: _getTextColor(context),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'This loan is pending approval.'.tr(),
+                    style: TextStyle(
+                      color: _getTextColor(context),
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: double.infinity,
+                  ),
                 ],
               ),
             ),
@@ -130,6 +140,6 @@ class CurrentLoanInfo extends StatelessWidget {
   }
 
   String _getDate(BuildContext context) {
-    return Formatter.formatDate(DateTime.parse(loan.dueDate));
+    return Formatter.formatDate(DateTime.parse(loan.createdAt));
   }
 }

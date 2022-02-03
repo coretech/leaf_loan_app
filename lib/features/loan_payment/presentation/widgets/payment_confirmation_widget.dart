@@ -58,8 +58,8 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
                               ?.copyWith(fontSize: 16),
                         ),
                         Text(
-                          '${Formatter.formatMoney(widget.amount)}'
-                          ' ${widget.loan.currencyId!.fiatCode}',
+                          '${widget.loan.currencyId!.fiatCode} '
+                          '${Formatter.formatMoney(widget.amount)}',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,
@@ -79,8 +79,8 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
                               ?.copyWith(fontSize: 16),
                         ),
                         Text(
-                          '${Formatter.formatMoney(widget.remainingAmount)} '
-                          '${widget.loan.currencyId!.fiatCode}',
+                          '${widget.loan.currencyId!.fiatCode} '
+                          '${Formatter.formatMoney(widget.remainingAmount)}',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,

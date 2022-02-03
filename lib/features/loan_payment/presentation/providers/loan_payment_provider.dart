@@ -43,6 +43,7 @@ class LoanPaymentProvider extends ChangeNotifier {
   }
 
   Future<void> getWallet() async {
+    
     setLoading(value: true);
 
     final result = await _walletRepository.getWallet();

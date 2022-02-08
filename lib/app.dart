@@ -66,6 +66,7 @@ class _AppState extends State<App> {
                 ),
               );
             }
+            return null;
           },
           routes: {
             ArticlesScreen.routeName: (context) => const ArticlesScreen(),

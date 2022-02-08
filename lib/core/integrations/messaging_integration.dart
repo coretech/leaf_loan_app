@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:loan_app/core/core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 ////Read this for background messaging issues (if any) on android
 ///https://github.com/FirebaseExtended/flutterfire/issues/2223
@@ -48,13 +47,13 @@ class MessagingIntegration implements MessagingService {
 
     //Android notification properties
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'high_importance_channel', // id
-        'High Importance Notifications', // title
-        channelDescription:
-            'This channel is used for important notifications.', // description
-        importance: Importance.high,
-        playSound: true,
-        styleInformation: DefaultStyleInformation(true, true));
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      channelDescription:
+          'This channel is used for important notifications.', // description
+      importance: Importance.high,
+      styleInformation: DefaultStyleInformation(true, true),
+    );
 
     //iOS notification properties
     const iOSPlatformChannelSpecifics = IOSNotificationDetails(

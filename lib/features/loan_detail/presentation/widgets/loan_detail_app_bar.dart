@@ -49,6 +49,7 @@ class LoanDetailAppBar extends StatelessWidget {
     if (loanStatusFromString(loan.status) == LoanStatus.approved) {
       return Theme.of(context).colorScheme.secondary.withRed(210).withBlue(55);
     }
+    return null;
   }
 
   AppBar? _getRemainingAmount(context) {

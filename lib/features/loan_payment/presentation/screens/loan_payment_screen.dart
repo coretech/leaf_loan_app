@@ -246,6 +246,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
               'Leaf Wallet balance'
           .tr();
     }
+    return null;
   }
 
   double _getRemaining() {

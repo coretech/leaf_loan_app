@@ -23,6 +23,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     IntegrationIOC.analytics().logAppOpen();
+    IntegrationIOC.recording.init();
     super.initState();
   }
 

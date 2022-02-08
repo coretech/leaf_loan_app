@@ -64,8 +64,15 @@ class _RejectedLoanDialog extends StatelessWidget {
               ),
               _buildLabelAndValue(
                 context,
-                label: 'Applied On'.tr(),
-                value: Formatter.formatDateWithTime(
+                label: 'Applied Date'.tr(),
+                value: Formatter.formatDate(
+                  DateTime.parse(loanData.createdAt),
+                ),
+              ),
+              _buildLabelAndValue(
+                context,
+                label: 'Applied Date'.tr(),
+                value: Formatter.formatDate(
                   DateTime.parse(loanData.createdAt),
                 ),
               ),
@@ -97,22 +104,19 @@ class _RejectedLoanDialog extends StatelessWidget {
         vertical: 2.5,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            child: Text(
-              label,
-              style:
-                  Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
+          Text(label,
               style: Theme.of(context).textTheme.caption?.copyWith(
                     fontSize: 16,
-                    fontStyle: FontStyle.italic,
-                  ),
-            ),
+                    fontWeight: FontWeight.w300,
+                  )),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                ),
           ),
         ],
       ),

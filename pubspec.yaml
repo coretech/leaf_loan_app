@@ -44,10 +44,13 @@ dependencies:
     #This is the package that allows us to use the Flutter SDK
     flutter:
         sdk: flutter
-    flutter_localizations:
-        sdk: flutter
 
     fluttericon: ^2.0.0
+
+    flutter_localizations:
+        sdk: flutter
+    
+    flutter_smartlook: ^3.0.6
     get_it: ^7.2.0
     hive: ^2.0.4
     hive_flutter: ^1.1.0

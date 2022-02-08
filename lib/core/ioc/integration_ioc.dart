@@ -33,6 +33,9 @@ class IntegrationIOC {
       ..registerLazySingleton<RemoteConfiguration>(
         () => RemoteConfigIntegration(),
       )
+      ..registerLazySingleton<Recording>(
+        () => SmartlookIntegration(),
+      )
       ..registerLazySingleton<ScoringDataCollectionService>(
         () => CredoDataCollectionService(),
       );
@@ -63,6 +66,9 @@ class IntegrationIOC {
       )
       ..registerLazySingleton<L10n>(
         () => MockL10N(),
+      )
+      ..registerLazySingleton<Recording>(
+        () => MockRecording(),
       );
   }
 
@@ -100,6 +106,8 @@ class IntegrationIOC {
   static RemoteConfiguration remoteConfig() {
     return _locator.get<RemoteConfiguration>();
   }
+
+  static Recording get recording => _locator.get<Recording>();
 
   static ScoringDataCollectionService scoringDataCollectionService() {
     return _locator.get<ScoringDataCollectionService>();

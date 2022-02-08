@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/integrations/integrations.dart';
+import 'package:loan_app/core/integrations/messaging_integration.dart';
 
 class IntegrationIOC {
   static final _locator = GetIt.instance;
@@ -35,6 +36,9 @@ class IntegrationIOC {
       )
       ..registerLazySingleton<ScoringDataCollectionService>(
         () => CredoDataCollectionService(),
+      )
+      ..registerLazySingleton<MessagingService>(
+        () => MessagingIntegration(),
       );
   }
 
@@ -96,6 +100,9 @@ class IntegrationIOC {
   static L10n l10n() {
     return _locator.get<L10n>();
   }
+
+  static MessagingService get messagingService =>
+      _locator.get<MessagingService>();
 
   static RemoteConfiguration remoteConfig() {
     return _locator.get<RemoteConfiguration>();

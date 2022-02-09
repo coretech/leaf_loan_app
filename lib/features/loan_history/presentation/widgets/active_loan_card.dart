@@ -24,7 +24,10 @@ class ActiveLoanCard extends StatelessWidget {
         onTap: () {
           Navigator.of(context).pushNamed(
             LoanDetailScreenAlt.routeName,
-            arguments: loan,
+            arguments: LoanDetailScreenAltArgs(
+              hasActiveLoan: true,
+              loan: loan,
+            ),
           );
           // Navigator.of(context).push(
           //   MaterialPageRoute(

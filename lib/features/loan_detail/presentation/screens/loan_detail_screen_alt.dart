@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_application/presentation/screens/loan_application_screen.dart';
 import 'package:loan_app/features/loan_detail/presentation/presentation.dart';
 import 'package:loan_app/features/loan_detail/presentation/widgets/alt/gradient_card.dart';
-
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/presentation/presentation.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -10,10 +11,12 @@ import 'package:loan_app/i18n/i18n.dart';
 class LoanDetailScreenAlt extends StatelessWidget {
   const LoanDetailScreenAlt({
     Key? key,
-    required this.loan,
+    required this.loanDetailArgs,
   }) : super(key: key);
   static const String routeName = '/loan-detail-screen-alt';
-  final LoanData loan;
+  final LoanDetailScreenAltArgs loanDetailArgs;
+  LoanData get loan => loanDetailArgs.loan;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +45,35 @@ class LoanDetailScreenAlt extends StatelessWidget {
                 _loanStatus == LoanStatus.closed)
               _buildLoanPaymentsCard(context),
             _buildLoanInfoCard(context),
+            if (_loanStatus == LoanStatus.rejected &&
+                loanDetailArgs.hasActiveLoan)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: TextButton(
+                  child: Text(
+                    'Apply Again'.tr(),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(LoanApplicationScreen.routeName);
+                  },
+                ),
+              ),
+            if (_loanStatus == LoanStatus.pending &&
+                !loanDetailArgs.hasActiveLoan)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: TextButton.icon(
+                  icon: const Icon(Icons.close),
+                  label: Text('Cancel Application'.tr()),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+              )
           ],
         ),
       ),
@@ -366,4 +398,14 @@ class LoanDetailScreenAlt extends StatelessWidget {
   Color _getBackgroundColor(BuildContext context) {
     return Theme.of(context).disabledColor;
   }
+}
+
+class LoanDetailScreenAltArgs {
+  LoanDetailScreenAltArgs({
+    required this.loan,
+    required this.hasActiveLoan,
+  });
+
+  final LoanData loan;
+  final bool hasActiveLoan;
 }

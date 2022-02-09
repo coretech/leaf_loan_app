@@ -69,10 +69,10 @@ class _AppState extends State<App> {
               );
             }
             if (settings.name == LoanDetailScreenAlt.routeName) {
-              final args = settings.arguments as LoanData?;
+              final args = settings.arguments as LoanDetailScreenAltArgs?;
               return MaterialPageRoute(
                 builder: (context) => LoanDetailScreenAlt(
-                  loan: args!,
+                  loanDetailArgs: args!,
                 ),
               );
             }

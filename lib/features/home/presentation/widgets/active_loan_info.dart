@@ -19,8 +19,13 @@ class ActiveLoanInfo extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       onTap: () {
         HomeAnalytics.homeLoanCardTapped();
-        Navigator.of(context)
-            .pushNamed(LoanDetailScreenAlt.routeName, arguments: loan);
+        Navigator.of(context).pushNamed(
+          LoanDetailScreenAlt.routeName,
+          arguments: LoanDetailScreenAltArgs(
+            hasActiveLoan: true,
+            loan: loan,
+          ),
+        );
         // Navigator.of(context).push(
         //   MaterialPageRoute(
         //     builder: (context) => LoanDetailScreen(

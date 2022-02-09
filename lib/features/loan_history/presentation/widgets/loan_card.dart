@@ -279,8 +279,13 @@ class LoanCard extends StatelessWidget {
   }
 
   void _showLoanDetail(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed(LoanDetailScreenAlt.routeName, arguments: loan);
+    Navigator.of(context).pushNamed(
+      LoanDetailScreenAlt.routeName,
+      arguments: LoanDetailScreenAltArgs(
+        hasActiveLoan: true,
+        loan: loan,
+      ),
+    );
     // if (loanStatusFromString(loan.status) == LoanStatus.pending) {
     //   showPendingLoanDialog(
     //     context,

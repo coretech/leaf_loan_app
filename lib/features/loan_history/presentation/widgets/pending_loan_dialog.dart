@@ -114,7 +114,7 @@ class _PendingLoanDialog extends StatelessWidget {
                   Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Expanded(

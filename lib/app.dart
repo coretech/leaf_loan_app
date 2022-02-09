@@ -76,6 +76,14 @@ class _AppState extends State<App> {
                 ),
               );
             }
+            if (settings.name == LoanTransactionsScreen.routeName) {
+              final args = settings.arguments as LoanData?;
+              return MaterialPageRoute(
+                builder: (context) => LoanTransactionsScreen(
+                  loan: args!,
+                ),
+              );
+            }
           },
           routes: {
             ArticlesScreen.routeName: (context) => const ArticlesScreen(),

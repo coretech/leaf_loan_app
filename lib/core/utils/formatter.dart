@@ -20,4 +20,9 @@ class Formatter {
     final dateFormat = DateFormat.yMMMMd().add_jm();
     return dateFormat.format(date.toLocal());
   }
+
+  static String formatTime(DateTime date) {
+    final dateFormat = DateFormat.jm();
+    return dateFormat.format(date.toLocal());
+  }
 }

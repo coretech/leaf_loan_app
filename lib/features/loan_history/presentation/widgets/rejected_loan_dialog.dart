@@ -64,15 +64,15 @@ class _RejectedLoanDialog extends StatelessWidget {
               ),
               _buildLabelAndValue(
                 context,
-                label: 'Applied Date'.tr(),
+                label: 'Applied On'.tr(),
                 value: Formatter.formatDate(
                   DateTime.parse(loanData.createdAt),
                 ),
               ),
               _buildLabelAndValue(
                 context,
-                label: 'Applied Date'.tr(),
-                value: Formatter.formatDate(
+                label: ''.tr(),
+                value: Formatter.formatTime(
                   DateTime.parse(loanData.createdAt),
                 ),
               ),

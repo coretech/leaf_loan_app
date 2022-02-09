@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 
@@ -10,7 +11,7 @@ class SmartlookIntegration implements Recording {
       smartlookEnabled != 'true' || projectKey.isNotEmpty,
       'Smartlook is enabled but api key is not provided',
     );
-    if (smartlookEnabled == 'true') {
+    if (smartlookEnabled == 'true' && kReleaseMode) {
       final options =
           (SetupOptionsBuilder(projectKey)..StartNewSession = true).build();
 
@@ -25,5 +26,10 @@ class SmartlookIntegration implements Recording {
     await Smartlook.setUserIdentifier(
       username,
     );
+  }
+
+  @override
+  void dispose() {
+    Smartlook.stopRecording();
   }
 }

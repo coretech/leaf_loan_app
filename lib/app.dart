@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/features.dart';
+import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _authHelper.dispose();
+    IntegrationIOC.recording.dispose();
     super.dispose();
   }
 
@@ -64,6 +66,14 @@ class _AppState extends State<App> {
               return MaterialPageRoute(
                 builder: (context) => LoanPaymentScreen(
                   loan: args!.loan,
+                ),
+              );
+            }
+            if (settings.name == LoanDetailScreenAlt.routeName) {
+              final args = settings.arguments as LoanData?;
+              return MaterialPageRoute(
+                builder: (context) => LoanDetailScreenAlt(
+                  loan: args!,
                 ),
               );
             }

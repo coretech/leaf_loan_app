@@ -293,13 +293,15 @@ class LoanCard extends StatelessWidget {
         hasActiveLoan: hasActiveLoan,
       );
     } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => LoanDetailScreen(
-            loan: loan,
-          ),
-        ),
-      );
+      Navigator.of(context)
+          .pushNamed(LoanDetailScreenAlt.routeName, arguments: loan);
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => LoanDetailScreen(
+      //       loan: loan,
+      //     ),
+      //   ),
+      // );
     }
   }
 }

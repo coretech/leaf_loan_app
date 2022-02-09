@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/features.dart';
-import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 

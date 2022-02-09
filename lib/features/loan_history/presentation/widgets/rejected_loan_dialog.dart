@@ -106,11 +106,13 @@ class _RejectedLoanDialog extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  )),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.caption?.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                ),
+          ),
           Text(
             value,
             style: Theme.of(context).textTheme.bodyText2?.copyWith(

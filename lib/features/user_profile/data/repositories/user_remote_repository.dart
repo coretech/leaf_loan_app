@@ -31,7 +31,7 @@ class UserRemoteRepository extends UserRepository {
         _user.userId.firstName,
       );
       await _localStorage.setString(
-        Keys.userName,
+        Keys.username,
         _user.userId.username,
       );
       return Right(_user);

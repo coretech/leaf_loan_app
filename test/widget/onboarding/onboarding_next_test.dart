@@ -34,6 +34,16 @@ void main() {
     when(() => IntegrationIOC.logger().logError(any(), any())).thenAnswer(
       (invocation) async {},
     );
+    when(() => IntegrationIOC.recording.init()).thenAnswer(
+      (invocation) async {},
+    );
+    when(
+      () => IntegrationIOC.recording.setUserInfo(
+        any(),
+      ),
+    ).thenAnswer(
+      (invocation) async {},
+    );
     await FeaturesIOC.init();
     await LocalizationIOC.init();
   });

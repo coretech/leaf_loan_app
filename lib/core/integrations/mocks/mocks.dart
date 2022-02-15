@@ -5,4 +5,5 @@ export 'mock_firebase_analytics.dart';
 export 'mock_hive.dart';
 export 'mock_l10n.dart';
 export 'mock_logger.dart';
+export 'mock_recording.dart';
 export 'mock_remote_config.dart';

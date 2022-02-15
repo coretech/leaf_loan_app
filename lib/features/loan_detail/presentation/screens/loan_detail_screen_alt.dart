@@ -25,18 +25,6 @@ class LoanDetailScreenAlt extends StatelessWidget {
         elevation: 0,
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         title: Text('${loan.loanTypeId.name} Details'.tr()),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.history),
-            onPressed: () => Navigator.pushNamed(
-              context,
-              LoanTransactionsScreen.routeName,
-              arguments: LoanTransactionsScreen(
-                loan: loan,
-              ),
-            ),
-          ),
-        ],
       ),
       body: _buildBody(context),
     );

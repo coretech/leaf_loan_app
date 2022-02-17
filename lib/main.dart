@@ -15,15 +15,16 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
   await FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
-  await RemoteConfig.instance.setConfigSettings(
+  await FirebaseRemoteConfig.instance.setConfigSettings(
     RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
       minimumFetchInterval: Duration.zero,
     ),
   );
-  await RemoteConfig.instance.ensureInitialized();
-  await RemoteConfig.instance.fetchAndActivate();
+  await FirebaseRemoteConfig.instance.ensureInitialized();
+  await FirebaseRemoteConfig.instance.fetchAndActivate();
   await IntegrationIOC.init();
+  await IntegrationIOC.messagingService.init();
   await FeaturesIOC.init();
   await LocalizationIOC.init();
 

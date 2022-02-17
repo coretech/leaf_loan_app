@@ -67,7 +67,14 @@ class _PendingLoanDialog extends StatelessWidget {
               _buildLabelAndValue(
                 context,
                 label: 'Applied On'.tr(),
-                value: Formatter.formatDateWithTime(
+                value: Formatter.formatDate(
+                  DateTime.parse(loanData.createdAt),
+                ),
+              ),
+              _buildLabelAndValue(
+                context,
+                label: ''.tr(),
+                value: Formatter.formatTime(
                   DateTime.parse(loanData.createdAt),
                 ),
               ),
@@ -107,6 +114,9 @@ class _PendingLoanDialog extends StatelessWidget {
               style:
                   Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16),
             ),
+          ),
+          const SizedBox(
+            width: 10,
           ),
           Expanded(
             child: Text(

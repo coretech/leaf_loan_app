@@ -34,7 +34,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> loadUsername() async {
     username =
-        await IntegrationIOC.localStorage().getString(Keys.userName) ?? '';
+        await IntegrationIOC.localStorage().getString(Keys.username) ?? '';
     notifyListeners();
   }
 

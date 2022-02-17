@@ -6,3 +6,4 @@ export 'firebase_logger.dart';
 export 'hive_local_storage.dart';
 export 'mocks/mocks.dart';
 export 'remote_config_integration.dart';
+export 'smartlook_integration.dart';

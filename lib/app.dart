@@ -23,6 +23,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     IntegrationIOC.analytics().logAppOpen();
+    IntegrationIOC.recording.init();
     super.initState();
   }
 
@@ -35,6 +36,7 @@ class _AppState extends State<App> {
   @override
   void dispose() {
     _authHelper.dispose();
+    IntegrationIOC.recording.dispose();
     super.dispose();
   }
 
@@ -66,7 +68,22 @@ class _AppState extends State<App> {
                 ),
               );
             }
-            return null;
+            if (settings.name == LoanDetailScreenAlt.routeName) {
+              final args = settings.arguments as LoanDetailScreenAltArgs?;
+              return MaterialPageRoute(
+                builder: (context) => LoanDetailScreenAlt(
+                  loanDetailArgs: args!,
+                ),
+              );
+            }
+            if (settings.name == LoanTransactionsScreen.routeName) {
+              final args = settings.arguments as LoanData?;
+              return MaterialPageRoute(
+                builder: (context) => LoanTransactionsScreen(
+                  loan: args!,
+                ),
+              );
+            }
           },
           routes: {
             ArticlesScreen.routeName: (context) => const ArticlesScreen(),

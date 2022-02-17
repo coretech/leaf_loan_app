@@ -14,8 +14,8 @@ void main() {
         .thenAnswer((_) async => null);
     when(() => IntegrationIOC.localStorage().getString(Keys.language))
         .thenAnswer((_) async => 'en');
-    when(() => IntegrationIOC.localStorage().getString(Keys.userName))
-        .thenAnswer((_) async => null);
+    when(() => IntegrationIOC.localStorage().getString(Keys.username))
+        .thenAnswer((_) async {});
     when(
       () => IntegrationIOC.localStorage().setBool(
         Keys.onboardingStatus,
@@ -32,6 +32,16 @@ void main() {
       (_) async {},
     );
     when(() => IntegrationIOC.logger().logError(any(), any())).thenAnswer(
+      (invocation) async {},
+    );
+    when(() => IntegrationIOC.recording.init()).thenAnswer(
+      (invocation) async {},
+    );
+    when(
+      () => IntegrationIOC.recording.setUserInfo(
+        any(),
+      ),
+    ).thenAnswer(
       (invocation) async {},
     );
     await FeaturesIOC.init();

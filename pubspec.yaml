@@ -44,7 +44,8 @@ dependencies:
     #This is the package that allows us to use the Flutter SDK
     flutter:
         sdk: flutter
-
+    flutter_local_notifications: ^9.2.0
+  
     flutter_localizations:
         sdk: flutter
     flutter_smartlook: ^3.0.6

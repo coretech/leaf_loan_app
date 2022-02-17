@@ -41,12 +41,11 @@ class LoanDetailScreenAlt extends StatelessWidget {
           children: [
             _buildLoanStatusText(context),
             if (_loanStatus == LoanStatus.approved) _buildPaymentCard(context),
+            _buildLoanInfoCard(context),
             if (_loanStatus == LoanStatus.approved ||
                 _loanStatus == LoanStatus.closed)
               _buildLoanPaymentsCard(context),
-            _buildLoanInfoCard(context),
-            if (_loanStatus == LoanStatus.rejected &&
-                loanDetailArgs.hasActiveLoan)
+            if (_loanStatus == LoanStatus.rejected)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: TextButton(
@@ -59,8 +58,7 @@ class LoanDetailScreenAlt extends StatelessWidget {
                   },
                 ),
               ),
-            if (_loanStatus == LoanStatus.pending &&
-                !loanDetailArgs.hasActiveLoan)
+            if (_loanStatus == LoanStatus.pending)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: TextButton.icon(
@@ -204,7 +202,7 @@ class LoanDetailScreenAlt extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: GradientCard(
-        color: _getBackgroundColor(context),
+        color: Colors.grey[600]!,
         children: [
           Text(
             'Loan Info'.tr(),

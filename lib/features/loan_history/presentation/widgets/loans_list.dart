@@ -71,6 +71,7 @@ class LoansList extends StatelessWidget {
         return loan;
       }
     }
+    return null;
   }
 
   Widget _buildShimmer(BuildContext context) {

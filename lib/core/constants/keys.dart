@@ -4,5 +4,6 @@ class Keys {
   static String onboardingStatus = 'onboardingStatus';
   static String token = 'token';
   static String userId = 'userId';
+  static String deviceToken = 'deviceToken';
   static String username = 'username';
 }

@@ -4,6 +4,7 @@ class AuthenticationAnalytics {
   static void logSignIn(String username, String method) {
     IntegrationIOC.analytics().logLogin(username, method);
     IntegrationIOC.logger().setUserId(username);
+    IntegrationIOC.recording.setUserInfo(username);
   }
 
   static void logLeafWalletButtonTapped() {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
-import 'package:loan_app/features/loan_history/presentation/widgets/widgets.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class LoanCard extends StatelessWidget {
@@ -280,26 +279,33 @@ class LoanCard extends StatelessWidget {
   }
 
   void _showLoanDetail(BuildContext context) {
-    if (loanStatusFromString(loan.status) == LoanStatus.pending) {
-      showPendingLoanDialog(
-        context,
+    Navigator.of(context).pushNamed(
+      LoanDetailScreenAlt.routeName,
+      arguments: LoanDetailScreenAltArgs(
+        hasActiveLoan: true,
         loan: loan,
-        hasActiveLoan: hasActiveLoan,
-      );
-    } else if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
-      showRejectedLoanDialog(
-        context,
-        loan: loan,
-        hasActiveLoan: hasActiveLoan,
-      );
-    } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => LoanDetailScreen(
-            loan: loan,
-          ),
-        ),
-      );
-    }
+      ),
+    );
+    // if (loanStatusFromString(loan.status) == LoanStatus.pending) {
+    //   showPendingLoanDialog(
+    //     context,
+    //     loan: loan,
+    //     hasActiveLoan: hasActiveLoan,
+    //   );
+    // } else if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
+    //   showRejectedLoanDialog(
+    //     context,
+    //     loan: loan,
+    //     hasActiveLoan: hasActiveLoan,
+    //   );
+    // } else {
+    //   Navigator.of(context).push(
+    //     MaterialPageRoute(
+    //       builder: (context) => LoanDetailScreen(
+    //         loan: loan,
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 }

@@ -27,7 +27,7 @@ class AuthRemoteRepo extends AuthenticationRepository {
         final userMap = JwtDecoder.decode(result.token);
         await _localStorage.setString(Keys.token, result.token);
         await _localStorage.setString(Keys.firstName, userMap['fname']);
-        await _localStorage.setString(Keys.userName, username);
+        await _localStorage.setString(Keys.username, username);
         await _localStorage.setString(Keys.userId, userMap['id']);
         return right(result);
       } else {

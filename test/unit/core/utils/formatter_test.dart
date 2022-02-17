@@ -39,7 +39,8 @@ void main() {
     'if formatted with Format.formatDateWithTime',
     () {
       final formattedDate = Formatter.formatDateWithTime(
-          DateTime.parse('2022-01-05T10:48:21.653Z'));
+        DateTime.parse('2022-01-05T10:48:21.653Z'),
+      );
       expect(formattedDate, 'January 5, 2022 1:48 PM');
     },
   );

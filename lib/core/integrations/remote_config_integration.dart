@@ -2,7 +2,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 
 class RemoteConfigIntegration implements RemoteConfiguration {
-  final RemoteConfig _remoteConfig = RemoteConfig.instance;
+  final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   @override
   Map<String, dynamic> getAll() {
     return _remoteConfig.getAll();

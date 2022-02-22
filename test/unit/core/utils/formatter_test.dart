@@ -25,6 +25,37 @@ void main() {
   );
 
   test(
+    '2022-01-05T10:48:21.653Z should be formatted as 5/1/22 '
+    'if formatted with Format.formatDateWithTime',
+    () {
+      final formattedDate =
+          Formatter.formatDateMini(DateTime.parse('2022-01-05T10:48:21.653Z'));
+      expect(formattedDate, '5/1/22');
+    },
+  );
+
+  test(
+    '2022-01-05T10:48:21.653Z should be formatted as January 5, 2022 1:48 PM '
+    'if formatted with Format.formatDateWithTime',
+    () {
+      final formattedDate = Formatter.formatDateWithTime(
+        DateTime.parse('2022-01-05T10:48:21.653Z'),
+      );
+      expect(formattedDate, 'January 5, 2022 10:48 AM');
+    },
+  );
+
+  test(
+    '2022-01-05T10:48:21.653Z should be formatted as January 5, 2022 1:48 PM '
+    'if formatted with Format.formatTime',
+    () {
+      final formattedDate =
+          Formatter.formatTime(DateTime.parse('2022-01-05T10:48:21.653Z'));
+      expect(formattedDate, '10:48 AM');
+    },
+  );
+
+  test(
     '100000.00 should be formatted as 100,000.00 '
     'if formatted with Format.formatMoney',
     () {

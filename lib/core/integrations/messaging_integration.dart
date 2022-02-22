@@ -35,7 +35,7 @@ class MessagingIntegration implements MessagingService {
   Future<void> init() async {
     //FLUTTER LOCAL NOTIFICATIONS
     const initializationSettingsAndroid =
-        AndroidInitializationSettings('@drawable/ic_notification');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const initializationSettingsIOS = IOSInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,

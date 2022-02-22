@@ -14,6 +14,7 @@ class AuthHelper {
   Future<String?> getToken() async {
     return _localStorage.getString(Keys.token);
   }
+
   Future<String?> getUserId() async {
     return _localStorage.getString(Keys.userId);
   }

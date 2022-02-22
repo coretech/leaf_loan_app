@@ -35,22 +35,25 @@ void main() {
   );
 
   test(
-    '2022-01-05T10:48:21.653Z should be formatted as January 5, 2022 1:48 PM '
+    '2022-01-05T10:48:21.653Z should be formatted as January 5, 2022 10:48 AM '
     'if formatted with Format.formatDateWithTime',
     () {
       final formattedDate = Formatter.formatDateWithTime(
         DateTime.parse('2022-01-05T10:48:21.653Z'),
+        toLocal: false,
       );
       expect(formattedDate, 'January 5, 2022 10:48 AM');
     },
   );
 
   test(
-    '2022-01-05T10:48:21.653Z should be formatted as January 5, 2022 1:48 PM '
+    '2022-01-05T10:48:21.653Z should be formatted as January 5, 2022 10:48 AM '
     'if formatted with Format.formatTime',
     () {
-      final formattedDate =
-          Formatter.formatTime(DateTime.parse('2022-01-05T10:48:21.653Z'));
+      final formattedDate = Formatter.formatTime(
+        DateTime.parse('2022-01-05T10:48:21.653Z'),
+        toLocal: false,
+      );
       expect(formattedDate, '10:48 AM');
     },
   );

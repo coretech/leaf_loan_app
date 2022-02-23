@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:loan_app/authentication/data/data.dart';
 import 'package:loan_app/authentication/domain/domain.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
+import 'package:loan_app/core/constants/keys.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -22,55 +23,6 @@ void main() {
     when(() => IntegrationIOC.logger().logError(any(), any())).thenAnswer(
       (invocation) async {},
     );
-    when(
-      () => IntegrationIOC.localStorage().setString(
-        any(),
-        any(),
-      ),
-    ).thenAnswer((invocation) async {});
-    when(
-      () => IntegrationIOC.httpHelper().post(
-        data: {
-          'username': 'username',
-          'password': 'correct password',
-        },
-        url: any(
-          named: 'url',
-          that: contains('/userservice/signin'),
-        ),
-      ),
-    ).thenAnswer((invocation) async {
-      return HttpResponse(
-        statusCode: 200,
-        data: {
-          'status': true,
-          'message': 'User logged in successfully',
-          'type': 'Bearer',
-          'token': _token,
-        },
-      );
-    });
-    when(
-      () => IntegrationIOC.httpHelper().post(
-        data: {
-          'username': 'username',
-          'password': 'wrong password',
-        },
-        url: any(
-          named: 'url',
-          that: contains('/userservice/signin'),
-        ),
-      ),
-    ).thenAnswer((invocation) async {
-      return HttpResponse(
-        statusCode: 200,
-        data: {
-          'code': 401,
-          'status': false,
-          'message': 'Username or Password is incorrect'
-        },
-      );
-    });
   });
 
   test(
@@ -79,6 +31,31 @@ void main() {
     'Then an instance of Right<AuthenticationResult> with '
     'token and etc should be returned',
     () async {
+      //Setup mocks
+      when(
+        () => IntegrationIOC.httpHelper().post(
+          data: {
+            'username': 'username',
+            'password': 'correct password',
+          },
+          url: any(
+            named: 'url',
+            that: contains('/userservice/signin'),
+          ),
+        ),
+      ).thenAnswer((invocation) async {
+        return HttpResponse(
+          statusCode: 200,
+          data: {
+            'status': true,
+            'message': 'User logged in successfully',
+            'type': 'Bearer',
+            'token': _token,
+          },
+        );
+      });
+
+      //Start test
       final authRemoteRepo = AuthRemoteRepo();
       final response = await authRemoteRepo.login(
         username: 'username',
@@ -102,6 +79,30 @@ void main() {
     'When AuthRemoteRepo.login is called with the credentials, '
     'Then an instance of Left with error message',
     () async {
+      //Setup mocks
+      when(
+        () => IntegrationIOC.httpHelper().post(
+          data: {
+            'username': 'username',
+            'password': 'wrong password',
+          },
+          url: any(
+            named: 'url',
+            that: contains('/userservice/signin'),
+          ),
+        ),
+      ).thenAnswer((invocation) async {
+        return HttpResponse(
+          statusCode: 200,
+          data: {
+            'code': 401,
+            'status': false,
+            'message': 'Username or Password is incorrect'
+          },
+        );
+      });
+
+      //Start test
       final authRemoteRepo = AuthRemoteRepo();
       final response = await authRemoteRepo.login(
         username: 'username',
@@ -115,6 +116,45 @@ void main() {
         },
         (r) {},
       );
+    },
+  );
+
+  test(
+    'Given an authenticated user, '
+    'When AuthRemoteRepo.isAuthenticated is called, '
+    'Then an a bool with true value should be returned',
+    () async {
+      //Setup mocks
+      when(() => IntegrationIOC.localStorage().getString(Keys.token))
+          .thenAnswer((invocation) async {
+        return _token;
+      });
+
+      //Start test
+      final authRemoteRepo = AuthRemoteRepo();
+      final status = await authRemoteRepo.isAuthenticated();
+      expect(status, isA<bool>());
+      expect(status, true);
+    },
+  );
+
+  
+  test(
+    'Given an unauthenticated user, '
+    'When AuthRemoteRepo.isAuthenticated is called, '
+    'Then an a bool with false value should be returned',
+    () async {
+      //Setup mocks
+      when(() => IntegrationIOC.localStorage().getString(Keys.token))
+          .thenAnswer((invocation) async {
+        return null;
+      });
+
+      //Start test
+      final authRemoteRepo = AuthRemoteRepo();
+      final status = await authRemoteRepo.isAuthenticated();
+      expect(status, isA<bool>());
+      expect(status, false);
     },
   );
 }

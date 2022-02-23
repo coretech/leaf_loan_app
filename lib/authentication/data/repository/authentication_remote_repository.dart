@@ -34,6 +34,7 @@ class AuthRemoteRepo extends AuthenticationRepository {
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }
     } catch (e, stacktrace) {
+      print(e);
       await IntegrationIOC.logger().logError(e, stacktrace);
       return left(AuthFailure(reason: Reason.serverError));
     }

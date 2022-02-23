@@ -15,10 +15,13 @@ class AuthRemoteRepo extends AuthenticationRepository {
     required String password,
   }) async {
     try {
+      final deviceToken =
+          await IntegrationIOC.localStorage().getString(Keys.deviceToken);
       final response = await _httpHelper.post(
         data: {
           'username': username,
           'password': password,
+          'devicetoken': deviceToken ?? '',
         },
         url: '$_urlBase/userservice/signin',
       );

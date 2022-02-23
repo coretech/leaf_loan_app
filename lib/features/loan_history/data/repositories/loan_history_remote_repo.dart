@@ -44,7 +44,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
     try {
       final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.get(
-        url: '${URLs.baseURL}/loanservice/loans/active',
+        url: '${URLs.baseURL}/loanservice/loans/ongoing',
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),

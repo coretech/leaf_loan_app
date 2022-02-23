@@ -138,7 +138,6 @@ void main() {
     },
   );
 
-  
   test(
     'Given an unauthenticated user, '
     'When AuthRemoteRepo.isAuthenticated is called, '

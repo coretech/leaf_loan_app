@@ -23,6 +23,12 @@ void main() {
     when(() => IntegrationIOC.logger().logError(any(), any())).thenAnswer(
       (invocation) async {},
     );
+    when(
+      () => IntegrationIOC.localStorage().setString(
+        any(),
+        any(),
+      ),
+    ).thenAnswer((invocation) async {});
   });
 
   test(

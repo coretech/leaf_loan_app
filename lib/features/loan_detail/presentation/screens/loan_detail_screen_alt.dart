@@ -155,7 +155,7 @@ class LoanDetailScreenAlt extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'You have to pay in'.tr(),
+                  text: 'You have'.tr(),
                   style: TextStyle(
                     color: _getTextColor(context),
                     fontStyle: FontStyle.italic,
@@ -170,7 +170,7 @@ class LoanDetailScreenAlt extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: 'days'.tr(),
+                  text: 'days to finish payment'.tr(),
                   style: TextStyle(
                     color: _getTextColor(context),
                     fontStyle: FontStyle.italic,
@@ -305,7 +305,7 @@ class LoanDetailScreenAlt extends StatelessWidget {
           _buildDivider(context),
           _buildLoanInfoRow(
             context,
-            'Total Due',
+            'Total',
             '${Formatter.formatMoney(loan.totalAmount)} '
                 '${loan.currencyId!.fiatCode}',
           ),

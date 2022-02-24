@@ -51,7 +51,7 @@ class LoanDetailWidget extends StatelessWidget {
                         ),
                         TextSpan(
                           style: Theme.of(context).textTheme.bodyText2,
-                          text: 'Total Due'.tr(),
+                          text: 'Total'.tr(),
                         ),
                       ],
                     ),

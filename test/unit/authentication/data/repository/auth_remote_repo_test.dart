@@ -29,6 +29,11 @@ void main() {
         any(),
       ),
     ).thenAnswer((invocation) async {});
+    when(
+      () => IntegrationIOC.localStorage().getString(Keys.deviceToken),
+    ).thenAnswer((invocation) async {
+      return 'deviceToken';
+    });
   });
 
   test(
@@ -43,6 +48,7 @@ void main() {
           data: {
             'username': 'username',
             'password': 'correct password',
+            'devicetoken': 'deviceToken',
           },
           url: any(
             named: 'url',
@@ -91,6 +97,7 @@ void main() {
           data: {
             'username': 'username',
             'password': 'wrong password',
+            'devicetoken': 'deviceToken',
           },
           url: any(
             named: 'url',

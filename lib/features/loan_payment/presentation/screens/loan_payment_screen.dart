@@ -75,12 +75,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                             width: 125,
                           ),
                         if (loanPaymentProvider.walletErrorMessage != null)
-                          Text(
-                            loanPaymentProvider.walletErrorMessage!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          ),
+                          _buildErrorWidget(loanPaymentProvider, context),
                         if (loanPaymentProvider.wallet != null)
                           LeafBalanceWidget(
                             balance: _getBalance(loanPaymentProvider.wallet!),
@@ -117,6 +112,42 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
           },
         );
       },
+    );
+  }
+
+  Widget _buildErrorWidget(
+    LoanPaymentProvider loanPaymentProvider,
+    BuildContext context,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            loanPaymentProvider.errorMessage!,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.error,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          TextButton.icon(
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).colorScheme.error,
+            ),
+            label: Text(
+              'Retry'.tr(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+            onPressed: () async {
+              await loanPaymentProvider.getWallet();
+            },
+          ),
+        ],
+      ),
     );
   }
 

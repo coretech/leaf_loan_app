@@ -22,20 +22,20 @@ class ActiveLoanCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
-          Navigator.of(context).pushNamed(
-            LoanDetailScreenAlt.routeName,
-            arguments: LoanDetailScreenAltArgs(
-              hasActiveLoan: true,
-              loan: loan,
-            ),
-          );
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => LoanDetailScreen(
-          //       loan: loan,
-          //     ),
+          // Navigator.of(context).pushNamed(
+          //   LoanDetailScreenAlt.routeName,
+          //   arguments: LoanDetailScreenAltArgs(
+          //     hasActiveLoan: true,
+          //     loan: loan,
           //   ),
           // );
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => LoanDetailScreen(
+                loan: loan,
+              ),
+            ),
+          );
         },
         child: Ink(
           decoration: BoxDecoration(

@@ -22,20 +22,20 @@ class ActiveLoanCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(15),
         onTap: () {
-          // Navigator.of(context).pushNamed(
-          //   LoanDetailScreenAlt.routeName,
-          //   arguments: LoanDetailScreenAltArgs(
-          //     hasActiveLoan: true,
-          //     loan: loan,
-          //   ),
-          // );
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => LoanDetailScreen(
-                loan: loan,
-              ),
+          Navigator.of(context).pushNamed(
+            LoanDetailScreenAlt.routeName,
+            arguments: LoanDetailScreenAltArgs(
+              hasActiveLoan: true,
+              loan: loan,
             ),
           );
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => LoanDetailScreen(
+          //       loan: loan,
+          //     ),
+          //   ),
+          // );
         },
         child: Ink(
           decoration: BoxDecoration(
@@ -271,14 +271,6 @@ class ActiveLoanCard extends StatelessWidget {
 
   Color _getColor(BuildContext context) {
     if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
-      return Theme.of(context).errorColor;
-    }
-    return Theme.of(context).colorScheme.secondary;
-  }
-
-  Color _getGradientColor(BuildContext context) {
-    if (loanStatusFromString(loan.status) == LoanStatus.rejected ||
-        loanStatusFromString(loan.status) == LoanStatus.due) {
       return Theme.of(context).errorColor;
     }
     return Theme.of(context).colorScheme.secondary;

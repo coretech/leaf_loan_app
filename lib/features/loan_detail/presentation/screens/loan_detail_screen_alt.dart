@@ -87,42 +87,48 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               ChangeNotifierProvider<LoanCancellationProvider>.value(
                 value: _loanCancellationProvider,
                 builder: (context, _) {
-                  return Builder(builder: (context) {
-                    return Consumer<LoanCancellationProvider>(
-                      builder: (context, cancellationProvider, _) => Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: TextButton.icon(
-                          icon: cancellationProvider.loading
-                              ? SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                  return Builder(
+                    builder: (context) {
+                      return Consumer<LoanCancellationProvider>(
+                        builder: (context, cancellationProvider, _) => Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: TextButton.icon(
+                            icon: cancellationProvider.loading
+                                ? SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 1,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.close,
                                   ),
-                                )
-                              : const Icon(
-                                  Icons.close,
-                                ),
-                          label: Text('Cancel Application'.tr()),
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.error,
+                            label: Text('Cancel Application'.tr()),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all(
+                                Theme.of(context).colorScheme.error,
+                              ),
                             ),
+                            onPressed: () async {
+                              final password =
+                                  await showPinConfirmationSheet(context);
+                              if (password != null) {
+                                await cancellationProvider
+                                    .cancelLoanApplication(
+                                  loan.id,
+                                  password,
+                                );
+                              }
+                            },
                           ),
-                          onPressed: () async {
-                            final password =
-                                await showPinConfirmationSheet(context);
-                            if (password != null) {
-                              await cancellationProvider.cancelLoanApplication(
-                                  loan.id, password);
-                            }
-                          },
                         ),
-                      ),
-                    );
-                  });
+                      );
+                    },
+                  );
                 },
               )
           ],

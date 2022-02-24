@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:loan_app/features/user_profile/data/dtos/dtos.dart';
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 
 class UserIdDTO {
   UserIdDTO({
-    required this.roleid,
     required this.status,
     required this.id,
     required this.fname,
@@ -18,9 +16,6 @@ class UserIdDTO {
 
   factory UserIdDTO.fromMap(Map<String, dynamic> map) {
     return UserIdDTO(
-      roleid:
-          // ignore: avoid_dynamic_calls
-          List<RoleIdDTO>.from(map['roleid']?.map((x) => RoleIdDTO.fromMap(x))),
       status: map['status'],
       id: map['_id'],
       fname: map['fname'],
@@ -34,7 +29,6 @@ class UserIdDTO {
   factory UserIdDTO.fromJson(String source) =>
       UserIdDTO.fromMap(json.decode(source));
 
-  final List<RoleIdDTO> roleid;
   final String status;
   final String id;
   final String fname;
@@ -45,7 +39,6 @@ class UserIdDTO {
 
   UserId toEntity() {
     return UserId(
-      roleId: roleid.map((x) => x.toEntity()).toList(),
       status: status,
       id: id,
       firstName: fname,
@@ -67,7 +60,6 @@ class UserIdDTO {
     String? updatedAt,
   }) {
     return UserIdDTO(
-      roleid: roleid ?? this.roleid,
       status: status ?? this.status,
       id: id ?? this.id,
       fname: fname ?? this.fname,
@@ -80,7 +72,6 @@ class UserIdDTO {
 
   Map<String, dynamic> toMap() {
     return {
-      'roleid': roleid.map((x) => x.toMap()).toList(),
       'status': status,
       '_id': id,
       'fname': fname,
@@ -95,7 +86,7 @@ class UserIdDTO {
 
   @override
   String toString() {
-    return 'Userid(roleid: $roleid, status: $status, _id: $id, fname: $fname, '
+    return 'Userid(status: $status, _id: $id, fname: $fname, '
         'lname: $lname, username: $username, createdAt: $createdAt, updatedAt:'
         ' $updatedAt)';
   }
@@ -105,7 +96,6 @@ class UserIdDTO {
     if (identical(this, other)) return true;
 
     return other is UserIdDTO &&
-        listEquals(other.roleid, roleid) &&
         other.status == status &&
         other.id == id &&
         other.fname == fname &&
@@ -117,8 +107,7 @@ class UserIdDTO {
 
   @override
   int get hashCode {
-    return roleid.hashCode ^
-        status.hashCode ^
+    return status.hashCode ^
         id.hashCode ^
         fname.hashCode ^
         lname.hashCode ^

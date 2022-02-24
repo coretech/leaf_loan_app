@@ -116,28 +116,65 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Divider(
+                  color: Theme.of(context).colorScheme.secondary,
+                  endIndent: 30,
+                  indent: 30,
+                ),
+              ),
               Expanded(
-                child: ListView.builder(
+                child: ListView(
                   physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics(),
                   ),
-                  itemCount: widget.purposeList.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      selected:
-                          widget.purposeList[index] == widget.selectedPurpose,
-                      title: Text(widget.purposeList[index]),
-                      onTap: () {
-                        Navigator.pop(context, widget.purposeList[index]);
-                      },
-                    );
-                  },
+                  children: [
+                    ...widget.purposeList.map((purpose) {
+                      return ListTile(
+                        selected: purpose == widget.selectedPurpose,
+                        title: Text(purpose),
+                        onTap: () {
+                          Navigator.pop(context, purpose);
+                        },
+                      );
+                    }).toList(),
+                    _buildOtherField(),
+                  ],
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget _buildOtherField() {
+    final purpose = widget.purposeList.contains(widget.selectedPurpose)
+        ? ''
+        : widget.selectedPurpose;
+    return ListTile(
+      title: TextFormField(
+        initialValue: purpose,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: 'Other'.tr(),
+        ),
+        onChanged: (value) {
+          widget.onChanged(value);
+        },
+      ),
+      trailing: IconButton(
+        icon: Icon(
+          Icons.check,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
     );
   }
 }

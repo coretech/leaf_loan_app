@@ -43,4 +43,28 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
       return Left(LoanApplicationFailure());
     }
   }
+
+  @override
+  Future<Either<LoanCancellationFailure, bool>> cancel({
+    required String loanId,
+    required String password,
+  }) async {
+    try {
+      final token = await _authHelper.getToken() ?? '';
+      final response = await _httpHelper.delete(
+        url: '${URLs.baseURL}/loanservice/loans/$loanId/$password',
+        headers: Map.fromEntries([
+          TokenUtil.generateBearer(token),
+        ]),
+      );
+      if (response.statusCode < 400 && response.statusCode >= 200) {
+        return const Right(true);
+      } else {
+        return Left(LoanCancellationFailure());
+      }
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
+      return Left(LoanCancellationFailure());
+    }
+  }
 }

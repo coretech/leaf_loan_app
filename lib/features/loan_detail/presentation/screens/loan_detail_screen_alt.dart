@@ -7,15 +7,40 @@ import 'package:loan_app/features/loan_detail/presentation/widgets/alt/gradient_
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/presentation/presentation.dart';
 import 'package:loan_app/i18n/i18n.dart';
+import 'package:provider/provider.dart';
 
-class LoanDetailScreenAlt extends StatelessWidget {
+class LoanDetailScreenAlt extends StatefulWidget {
   const LoanDetailScreenAlt({
     Key? key,
     required this.loanDetailArgs,
   }) : super(key: key);
   static const String routeName = '/loan-detail-screen-alt';
   final LoanDetailScreenAltArgs loanDetailArgs;
-  LoanData get loan => loanDetailArgs.loan;
+
+  @override
+  State<LoanDetailScreenAlt> createState() => _LoanDetailScreenAltState();
+}
+
+class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
+  LoanData get loan => widget.loanDetailArgs.loan;
+  late LoanCancellationProvider _loanCancellationProvider;
+
+  @override
+  void initState() {
+    _loanCancellationProvider = LoanCancellationProvider()
+      ..addListener(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              _loanCancellationProvider.errorMessage!,
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +84,46 @@ class LoanDetailScreenAlt extends StatelessWidget {
                 ),
               ),
             if (_loanStatus == LoanStatus.pending)
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: TextButton.icon(
-                  icon: const Icon(Icons.close),
-                  label: Text('Cancel Application'.tr()),
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.error,
-                    ),
-                  ),
-                  onPressed: () {},
-                ),
+              ChangeNotifierProvider<LoanCancellationProvider>.value(
+                value: _loanCancellationProvider,
+                builder: (context, _) {
+                  return Builder(builder: (context) {
+                    return Consumer<LoanCancellationProvider>(
+                      builder: (context, cancellationProvider, _) => Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: TextButton.icon(
+                          icon: cancellationProvider.loading
+                              ? SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.close,
+                                ),
+                          label: Text('Cancel Application'.tr()),
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all(
+                              Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                          onPressed: () async {
+                            final password =
+                                await showPinConfirmationSheet(context);
+                            if (password != null) {
+                              await cancellationProvider.cancelLoanApplication(
+                                  loan.id, password);
+                            }
+                          },
+                        ),
+                      ),
+                    );
+                  });
+                },
               )
           ],
         ),

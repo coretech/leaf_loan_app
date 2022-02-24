@@ -128,27 +128,16 @@ class LoanDetailWidget extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Loan Purpose'.tr(),
-                            style: TextStyle(
-                              color: _getTextColor(context),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
+                            loan.loanPurpose,
+                            style: Theme.of(context).textTheme.headline6,
                           ),
                           Text(
-                            loan.loanPurpose,
-                            style: TextStyle(
-                              color: _getTextColor(context),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w300,
-                            ),
+                            'Loan Purpose'.tr(),
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         ],
                       ),

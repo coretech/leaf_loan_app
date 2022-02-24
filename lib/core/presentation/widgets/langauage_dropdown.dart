@@ -44,7 +44,7 @@ class LanguageDropdown extends StatelessWidget {
                 Text(
                   CountryUtil.getLanguageName(l10nProvider.locale),
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Colors.grey[600],
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -52,7 +52,7 @@ class LanguageDropdown extends StatelessWidget {
                 const SizedBox(width: 8),
                 Icon(
                   Icons.language,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Colors.grey[600],
                 ),
               ],
             ),

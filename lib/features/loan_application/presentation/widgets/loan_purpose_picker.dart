@@ -100,51 +100,53 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
   }
 
   Future<String?> _showPurposeDialog() async {
-    return showModalBottomSheet(
+    return showDialog(
       context: context,
       builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          height: MediaQuery.of(context).size.height * 0.5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 25,
-                child: Text(
-                  'Loan Purpose'.tr(),
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Divider(
-                  color: Theme.of(context).colorScheme.secondary,
-                  endIndent: 30,
-                  indent: 30,
-                ),
-              ),
-              Expanded(
-                child: ListView(
-                  physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics(),
+        return Dialog(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 25,
+                  child: Text(
+                    'Loan Purpose'.tr(),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
-                  children: [
-                    ...widget.purposeList.map((purpose) {
-                      return ListTile(
-                        selected: purpose == widget.selectedPurpose,
-                        title: Text(purpose),
-                        onTap: () {
-                          Navigator.pop(context, purpose);
-                        },
-                      );
-                    }).toList(),
-                    _buildOtherField(),
-                  ],
                 ),
-              ),
-              SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Divider(
+                    color: Theme.of(context).colorScheme.secondary,
+                    endIndent: 30,
+                    indent: 30,
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    children: [
+                      ...widget.purposeList.map((purpose) {
+                        return ListTile(
+                          selected: purpose == widget.selectedPurpose,
+                          title: Text(purpose),
+                          onTap: () {
+                            Navigator.pop(context, purpose);
+                          },
+                        );
+                      }).toList(),
+                      _buildOtherField(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

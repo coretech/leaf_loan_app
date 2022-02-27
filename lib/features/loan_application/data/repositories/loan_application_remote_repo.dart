@@ -55,6 +55,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
         url: '${URLs.baseURL}/loanservice/loans/$loanId/$password',
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
+          MapEntry('password', password),
         ]),
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {

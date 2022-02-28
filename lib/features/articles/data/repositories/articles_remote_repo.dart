@@ -8,7 +8,7 @@ import 'package:loan_app/core/domain/entities/article.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/articles/data/dtos/dtos.dart';
-import 'package:loan_app/features/articles/domain/articles_repository.dart';
+import 'package:loan_app/features/articles/domain/domain.dart';
 
 class ArticlesRemoteRepo implements ArticlesRepository {
   final AuthHelper _authHelper = AuthIOC.authHelper();

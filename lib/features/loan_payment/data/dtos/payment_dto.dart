@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/features/features.dart';
 
 class PaymentDto {
@@ -95,7 +94,10 @@ class PaymentDto {
 
   @override
   String toString() {
-    return 'PaymentDto(status: $status, id: $id, customerid: $customerid, principalamount: $principalamount, interestamount: $interestamount, paymentamount: $paymentamount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PaymentDto(status: $status, id: $id, customerid: $customerid, '
+        'principalamount: $principalamount, interestamount: $interestamount, '
+        'paymentamount: $paymentamount, createdAt: $createdAt, '
+        'updatedAt: $updatedAt)';
   }
 
   @override

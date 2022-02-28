@@ -8,7 +8,6 @@ class Payment {
     required this.principalAmount,
     required this.interestAmount,
     required this.paymentAmount,
-    required this.currencyId,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -19,7 +18,6 @@ class Payment {
   final double principalAmount;
   final double interestAmount;
   final double paymentAmount;
-  final String currencyId;
   final String createdAt;
   final String updatedAt;
 
@@ -31,7 +29,6 @@ class Payment {
     double? principalAmount,
     double? interestAmount,
     double? paymentAmount,
-    String? currencyId,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -42,7 +39,6 @@ class Payment {
       principalAmount: principalAmount ?? this.principalAmount,
       interestAmount: interestAmount ?? this.interestAmount,
       paymentAmount: paymentAmount ?? this.paymentAmount,
-      currencyId: currencyId ?? this.currencyId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -52,8 +48,8 @@ class Payment {
   String toString() {
     return 'Payment(status: $status, _id: $id, customerId: $customerId, '
         'principalAmount: $principalAmount, interestAmount: '
-        '$interestAmount, paymentAmount: $paymentAmount, currencyId: '
-        '$currencyId, createdAt: $createdAt, updatedAt: $updatedAt)';
+        '$interestAmount, paymentAmount: $paymentAmount, '
+        'createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -67,7 +63,6 @@ class Payment {
         other.principalAmount == principalAmount &&
         other.interestAmount == interestAmount &&
         other.paymentAmount == paymentAmount &&
-        other.currencyId == currencyId &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
@@ -80,7 +75,6 @@ class Payment {
         principalAmount.hashCode ^
         interestAmount.hashCode ^
         paymentAmount.hashCode ^
-        currencyId.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode;
   }

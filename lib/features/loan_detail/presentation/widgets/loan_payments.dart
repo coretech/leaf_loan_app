@@ -25,14 +25,21 @@ class LoanPayments extends StatelessWidget {
         }
         if (loanDetailProvider.errorMessage != null) {
           return SliverList(
-            delegate: SliverChildListDelegate.fixed([
-              Center(
-                child: CustomErrorWidget(
-                  message: loanDetailProvider.errorMessage!,
-                  onRetry: loanDetailProvider.getPayments,
+            delegate: SliverChildListDelegate.fixed(
+              [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: CustomErrorWidget(
+                        message: loanDetailProvider.errorMessage!,
+                        onRetry: loanDetailProvider.getPayments,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ]),
+              ],
+            ),
           );
         }
         if (loanDetailProvider.payments.isEmpty) {

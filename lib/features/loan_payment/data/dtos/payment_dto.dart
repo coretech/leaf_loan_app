@@ -18,10 +18,13 @@ class PaymentDto {
   factory PaymentDto.fromMap(Map<String, dynamic> map) {
     return PaymentDto(
       status: map['status'] ?? '',
-      id: map['id'] ?? '',
+      id: map['_id'] ?? '',
       customerid: map['customerid'] ?? '',
+      // ignore: avoid_dynamic_calls
       principalamount: map['principalamount']?.toDouble() ?? 0.0,
+      // ignore: avoid_dynamic_calls
       interestamount: map['interestamount']?.toDouble() ?? 0.0,
+      // ignore: avoid_dynamic_calls
       paymentamount: map['paymentamount']?.toDouble() ?? 0.0,
       createdAt: map['createdAt'] ?? '',
       updatedAt: map['updatedAt'] ?? '',
@@ -40,7 +43,7 @@ class PaymentDto {
   final String createdAt;
   final String updatedAt;
 
-  Payment toEntity (){
+  Payment toEntity() {
     return Payment(
       status: status,
       id: id,
@@ -98,27 +101,27 @@ class PaymentDto {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is PaymentDto &&
-      other.status == status &&
-      other.id == id &&
-      other.customerid == customerid &&
-      other.principalamount == principalamount &&
-      other.interestamount == interestamount &&
-      other.paymentamount == paymentamount &&
-      other.createdAt == createdAt &&
-      other.updatedAt == updatedAt;
+        other.status == status &&
+        other.id == id &&
+        other.customerid == customerid &&
+        other.principalamount == principalamount &&
+        other.interestamount == interestamount &&
+        other.paymentamount == paymentamount &&
+        other.createdAt == createdAt &&
+        other.updatedAt == updatedAt;
   }
 
   @override
   int get hashCode {
     return status.hashCode ^
-      id.hashCode ^
-      customerid.hashCode ^
-      principalamount.hashCode ^
-      interestamount.hashCode ^
-      paymentamount.hashCode ^
-      createdAt.hashCode ^
-      updatedAt.hashCode;
+        id.hashCode ^
+        customerid.hashCode ^
+        principalamount.hashCode ^
+        interestamount.hashCode ^
+        paymentamount.hashCode ^
+        createdAt.hashCode ^
+        updatedAt.hashCode;
   }
 }

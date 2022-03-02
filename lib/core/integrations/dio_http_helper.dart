@@ -234,7 +234,8 @@ class DioHttpHelper implements HttpHelper {
   }
 
   HttpResponse _buildResponseWithError(DioError error, StackTrace stackTrace) {
-    if (error.response?.statusCode != 401) {
+    if (error.response?.statusCode != 401 &&
+        error.response?.statusCode != 404) {
       IntegrationIOC.logger().logError(error, stackTrace);
     }
     return HttpResponse(

@@ -16,7 +16,7 @@ class LoanHistoryProvider extends ChangeNotifier {
     });
   }
 
-  final _loanTypeRepository = LoanHistoryIOC.loanHistoryRepo();
+  final _loanHistoryRepository = LoanHistoryIOC.loanHistoryRepo();
 
   final _eventBus = IntegrationIOC.eventBus();
 
@@ -51,7 +51,7 @@ class LoanHistoryProvider extends ChangeNotifier {
 
   Future<void> getLoans() async {
     setLoading(value: true);
-    final resultEither = await _loanTypeRepository.getLoans();
+    final resultEither = await _loanHistoryRepository.getLoans();
     resultEither.fold(
       (l) {
         setErrorMessage(

@@ -122,21 +122,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                           ),
                                     ),
                                   ),
-                                if (_shouldShowStats)
-                                  CarouselSlider(
-                                    options: CarouselOptions(
-                                      autoPlay: true,
-                                      autoPlayInterval:
-                                          const Duration(seconds: 5),
-                                      height: 160,
-                                    ),
-                                    items: const [
-                                      TotalLoanAmountCard(),
-                                      TotalNumberOfLoansCard(),
-                                      AverageLoanAmountCard(),
-                                      AverageLoanDurationCard(),
-                                    ],
-                                  ),
+                                if (_shouldShowStats) const StatsCarousel(),
                                 if (_shouldShowStats) const _ProvideDivider(),
                                 TextButton.icon(
                                   onPressed: () {

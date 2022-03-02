@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/articles/ioc/ioc.dart';
 import 'package:loan_app/features/articles/presentation/providers/providers.dart';
+import 'package:loan_app/features/user_profile/presentation/providers/stats_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProviderWrapper extends StatelessWidget {
@@ -12,8 +13,15 @@ class ProviderWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ArticlesProvider>.value(
-      value: ArticlesIOC.articlesProvider,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ArticlesProvider>.value(
+          value: ArticlesIOC.articlesProvider,
+        ),
+        ChangeNotifierProvider<StatsProvider>(
+          create: (_) => StatsProvider()..getStats(),
+        ),
+      ],
       child: child,
     );
   }

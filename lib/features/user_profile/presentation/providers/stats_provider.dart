@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/core/domain/entities/entities.dart';
-import 'package:loan_app/features/features.dart';
+import 'package:loan_app/features/user_profile/domain/domain.dart';
+import 'package:loan_app/features/user_profile/ioc/ioc.dart';
 
-class ArticlesProvider extends ChangeNotifier {
-  final _articlesRepository = ArticlesIOC.articlesRepo;
+class StatsProvider extends ChangeNotifier {
+  final _statsRepository = UserIOC.statsRepo;
 
-  List<Article> _articles = [];
+  List<Stat> _stats = [];
 
-  List<Article> get articles => _articles;
+  List<Stat> get stats => _stats;
 
   bool loading = false;
 
@@ -34,18 +34,18 @@ class ArticlesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getArticles() async {
+  Future<void> getStats() async {
     clear();
     setLoading(value: true);
-    final resultEither = await _articlesRepository.getArticles();
+    final resultEither = await _statsRepository.getStats();
     resultEither.fold(
       (l) {
         setErrorMessage(
-          value: "We couldn't get any articles. Please try again.",
+          value: "We couldn't get your loan stats. Please try again.",
         );
       },
       (r) {
-        _articles = r;
+        _stats = r;
       },
     );
     setLoading(value: false);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:loan_app/core/core.dart';
-import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';

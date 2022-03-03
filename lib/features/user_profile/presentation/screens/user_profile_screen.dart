@@ -74,68 +74,68 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   SliverList(
                     delegate: SliverChildListDelegate.fixed(
                       [
-                        if (userProvider.errorMessage != null)
-                          SizedBox(
-                            height: ScreenSize.of(context).height -
-                                kToolbarHeight -
-                                kBottomNavigationBarHeight,
-                            child: Center(
-                              child: CustomErrorWidget(
-                                message: userProvider.errorMessage!,
-                                onRetry: userProvider.getUser,
-                              ),
-                            ),
-                          )
-                        else
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                const NameWidget(),
-                                const _ProvideDivider(),
-                                const ContactInfo(),
-                                const SizedBox(height: 20),
-                                TextButton.icon(
-                                  onPressed: () {
-                                    UserProfileAnalytics.logEditProfileTapped(
-                                      _userProvider.user?.userId.username,
-                                    );
-                                    _launchApp();
-                                  },
-                                  icon: const Icon(Icons.edit_outlined),
-                                  label: Text('Edit on Leaf Wallet'.tr()),
-                                ),
-                                const _ProvideDivider(),
-                                if (_shouldShowStats)
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 20,
-                                    ),
-                                    child: Text(
-                                      'Loan Stats'.tr(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle1
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              if (userProvider.errorMessage != null)
+                                Center(
+                                  child: CustomErrorWidget(
+                                    message: userProvider.errorMessage!,
+                                    onRetry: userProvider.getUser,
                                   ),
-                                if (_shouldShowStats) const StatsCarousel(),
-                                if (_shouldShowStats) const _ProvideDivider(),
-                                TextButton.icon(
-                                  onPressed: () {
-                                    UserProfileAnalytics.logLogOutTapped(
-                                      _userProvider.user?.userId.username,
-                                    );
-                                    AuthIOC.authHelper().logOut();
-                                  },
-                                  icon: const Icon(Icons.exit_to_app),
-                                  label: Text('Log Out'.tr()),
                                 ),
-                              ],
-                            ),
+                              if (userProvider.errorMessage == null)
+                                Column(
+                                  children: [
+                                    const NameWidget(),
+                                    const _ProvideDivider(),
+                                    const ContactInfo(),
+                                    const SizedBox(height: 20),
+                                    TextButton.icon(
+                                      onPressed: () {
+                                        UserProfileAnalytics
+                                            .logEditProfileTapped(
+                                          _userProvider.user?.userId.username,
+                                        );
+                                        _launchApp();
+                                      },
+                                      icon: const Icon(Icons.edit_outlined),
+                                      label: Text('Edit on Leaf Wallet'.tr()),
+                                    ),
+                                  ],
+                                ),
+                              const _ProvideDivider(),
+                              if (_shouldShowStats)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 20,
+                                  ),
+                                  child: Text(
+                                    'Loan Stats'.tr(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle1
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ),
+                              if (_shouldShowStats) const StatsCarousel(),
+                              if (_shouldShowStats) const _ProvideDivider(),
+                              TextButton.icon(
+                                onPressed: () {
+                                  UserProfileAnalytics.logLogOutTapped(
+                                    _userProvider.user?.userId.username,
+                                  );
+                                  AuthIOC.authHelper().logOut();
+                                },
+                                icon: const Icon(Icons.exit_to_app),
+                                label: Text('Log Out'.tr()),
+                              ),
+                            ],
                           ),
+                        ),
                       ],
                     ),
                   ),

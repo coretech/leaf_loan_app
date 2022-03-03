@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:loan_app/authentication/authentication.dart';
@@ -22,6 +24,7 @@ class AuthRemoteRepo extends AuthenticationRepository {
           'username': username,
           'password': password,
           'devicetoken': deviceToken ?? '',
+          'model': Platform.operatingSystem,
         },
         url: '$_urlBase/userservice/signin',
       );

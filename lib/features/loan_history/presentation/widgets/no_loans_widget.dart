@@ -19,7 +19,7 @@ class NoLoansWidget extends StatelessWidget {
           angle: math.pi / 2,
           child: Text(
             ':)',
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.headline4,
           ),
         ),
         const SizedBox(
@@ -27,7 +27,7 @@ class NoLoansWidget extends StatelessWidget {
         ),
         Text(
           "You haven't taken a loan on Leaf".tr(),
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.subtitle1,
         ),
         Padding(
           padding: const EdgeInsets.all(20),

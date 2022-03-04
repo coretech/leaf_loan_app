@@ -9,6 +9,13 @@ abstract class LoanApplicationRepository {
     required String loanTypeId,
     required String password,
   });
+
+  Future<Either<LoanCancellationFailure, bool>> cancel({
+    required String loanId,
+    required String password,
+  });
 }
 
 class LoanApplicationFailure {}
+
+class LoanCancellationFailure {}

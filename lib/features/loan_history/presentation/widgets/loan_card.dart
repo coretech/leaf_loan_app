@@ -275,6 +275,15 @@ class LoanCard extends StatelessWidget {
   }
 
   TextStyle? _getStatusTextStyle(BuildContext context) {
+    if (loanStatusFromString(loan.status) == LoanStatus.pending) {
+      return Theme.of(context).textTheme.bodyText2?.copyWith(
+            color: Theme.of(context).colorScheme.secondary,
+          );
+    } else if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
+      return Theme.of(context).textTheme.bodyText2?.copyWith(
+            color: Theme.of(context).colorScheme.error,
+          );
+    }
     return Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.green);
   }
 

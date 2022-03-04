@@ -1,4 +1,5 @@
 import 'package:loan_app/authentication/ioc/ioc.dart';
+import 'package:loan_app/features/articles/ioc/ioc.dart';
 import 'package:loan_app/features/home/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 import 'package:loan_app/features/loan_history/ioc/ioc.dart';
@@ -15,5 +16,6 @@ class FeaturesIOC {
     await LoanHistoryIOC.init();
     await LoanPaymentIOC.init();
     await HomeIOC.init();
+    await ArticlesIOC.init();
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/features/features.dart';
 
 class PaymentDto {
@@ -11,22 +10,23 @@ class PaymentDto {
     required this.principalamount,
     required this.interestamount,
     required this.paymentamount,
-    required this.currencyid,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory PaymentDto.fromMap(Map<String, dynamic> map) {
     return PaymentDto(
-      status: map['status'],
-      id: map['_id'],
-      customerid: map['customerid'],
-      principalamount: double.parse(map['principalamount'].toString()),
-      interestamount: double.parse(map['interestamount'].toString()),
-      paymentamount: double.parse(map['paymentamount'].toString()),
-      currencyid: map['currencyid'],
-      createdAt: map['createdAt'],
-      updatedAt: map['updatedAt'],
+      status: map['status'] ?? '',
+      id: map['_id'] ?? '',
+      customerid: map['customerid'] ?? '',
+      // ignore: avoid_dynamic_calls
+      principalamount: map['principalamount']?.toDouble() ?? 0.0,
+      // ignore: avoid_dynamic_calls
+      interestamount: map['interestamount']?.toDouble() ?? 0.0,
+      // ignore: avoid_dynamic_calls
+      paymentamount: map['paymentamount']?.toDouble() ?? 0.0,
+      createdAt: map['createdAt'] ?? '',
+      updatedAt: map['updatedAt'] ?? '',
     );
   }
 
@@ -39,11 +39,10 @@ class PaymentDto {
   final double principalamount;
   final double interestamount;
   final double paymentamount;
-  final String currencyid;
   final String createdAt;
   final String updatedAt;
 
-  Payment toEntity (){
+  Payment toEntity() {
     return Payment(
       status: status,
       id: id,
@@ -51,7 +50,6 @@ class PaymentDto {
       principalAmount: principalamount,
       interestAmount: interestamount,
       paymentAmount: paymentamount,
-      currencyId: currencyid,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -61,11 +59,9 @@ class PaymentDto {
     String? status,
     String? id,
     String? customerid,
-    LoanTypeDTO? loanid,
     double? principalamount,
     double? interestamount,
     double? paymentamount,
-    String? currencyid,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -76,7 +72,6 @@ class PaymentDto {
       principalamount: principalamount ?? this.principalamount,
       interestamount: interestamount ?? this.interestamount,
       paymentamount: paymentamount ?? this.paymentamount,
-      currencyid: currencyid ?? this.currencyid,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -90,7 +85,6 @@ class PaymentDto {
       'principalamount': principalamount,
       'interestamount': interestamount,
       'paymentamount': paymentamount,
-      'currencyid': currencyid,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
@@ -100,10 +94,10 @@ class PaymentDto {
 
   @override
   String toString() {
-    return 'PaymentDto(status: $status, _id: $id, customerid: $customerid, '
-        'principalamount: $principalamount, interestamount: '
-        '$interestamount, paymentamount: $paymentamount, currencyid: '
-        '$currencyid, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PaymentDto(status: $status, id: $id, customerid: $customerid, '
+        'principalamount: $principalamount, interestamount: $interestamount, '
+        'paymentamount: $paymentamount, createdAt: $createdAt, '
+        'updatedAt: $updatedAt)';
   }
 
   @override
@@ -117,7 +111,6 @@ class PaymentDto {
         other.principalamount == principalamount &&
         other.interestamount == interestamount &&
         other.paymentamount == paymentamount &&
-        other.currencyid == currencyid &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
@@ -130,7 +123,6 @@ class PaymentDto {
         principalamount.hashCode ^
         interestamount.hashCode ^
         paymentamount.hashCode ^
-        currencyid.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode;
   }

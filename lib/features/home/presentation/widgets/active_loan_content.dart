@@ -109,7 +109,7 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
               ),
             ),
             const ArticlesList(
-              scrollable: false,
+              type: ArticleListType.nonScrollable,
             )
           ],
         ),

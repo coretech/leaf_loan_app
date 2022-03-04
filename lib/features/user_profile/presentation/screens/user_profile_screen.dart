@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/constants/constants.dart';
@@ -122,21 +121,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                           ),
                                     ),
                                   ),
-                                if (_shouldShowStats)
-                                  CarouselSlider(
-                                    options: CarouselOptions(
-                                      autoPlay: true,
-                                      autoPlayInterval:
-                                          const Duration(seconds: 5),
-                                      height: 160,
-                                    ),
-                                    items: const [
-                                      TotalLoanAmountCard(),
-                                      TotalNumberOfLoansCard(),
-                                      AverageLoanAmountCard(),
-                                      AverageLoanDurationCard(),
-                                    ],
-                                  ),
+                                if (_shouldShowStats) const StatsCarousel(),
                                 if (_shouldShowStats) const _ProvideDivider(),
                                 TextButton.icon(
                                   onPressed: () {

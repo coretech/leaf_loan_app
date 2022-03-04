@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/contact_us/contact_us.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:package_info/package_info.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -61,34 +59,6 @@ class _AboutScreenState extends State<AboutScreen> {
             },
             title: Text(
               'Privacy Policy'.tr(),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.contact_support_outlined,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            onTap: () {
-              Navigator.of(context).pushNamed(ContactUsScreen.routeName);
-            },
-            title: Text(
-              'Contact us'.tr(),
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.share_outlined,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            onTap: () {
-              Share.share(
-                'Hey there! Download Leaf Loans! http://onelink.to/leafloans',
-              );
-            },
-            title: Text(
-              'Share App'.tr(),
-              style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
           const Spacer(),

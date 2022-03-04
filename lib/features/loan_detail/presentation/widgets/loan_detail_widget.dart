@@ -28,33 +28,44 @@ class LoanDetailWidget extends StatelessWidget {
                     Icons.info_outline,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
-                  title: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          style: Theme.of(context).textTheme.caption?.copyWith(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      const SizedBox(
+                        width: 40,
+                      ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              style:
+                                  Theme.of(context).textTheme.caption?.copyWith(
+                                        color: _getTextColor(context),
+                                      ),
+                              text: '${loan.currencyId!.fiatCode} ',
+                            ),
+                            TextSpan(
+                              style: TextStyle(
                                 color: _getTextColor(context),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w800,
                               ),
-                          text: '${loan.currencyId!.fiatCode} ',
+                              text: '${Formatter.formatMoney(
+                                loan.totalAmount,
+                              )}'
+                                  '\n',
+                            ),
+                            TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              text: 'Total'.tr(),
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          style: TextStyle(
-                            color: _getTextColor(context),
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                          ),
-                          text: '${Formatter.formatMoney(
-                            loan.totalAmount,
-                          )}'
-                              '\n',
-                        ),
-                        TextSpan(
-                          style: Theme.of(context).textTheme.bodyText2,
-                          text: 'Total Due'.tr(),
-                        ),
-                      ],
-                    ),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
                   children: [
                     Row(
@@ -115,6 +126,22 @@ class LoanDetailWidget extends StatelessWidget {
                         ),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loan.loanPurpose,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          Text(
+                            'Loan Purpose'.tr(),
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -151,7 +178,7 @@ class LoanDetailWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
             ],
           ),
         );

@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:loan_app/features/features.dart';
+import 'package:loan_app/features/user_profile/domain/domain.dart';
 import 'package:loan_app/features/user_profile/presentation/providers/stats_provider.dart';
+import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 

@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/constants/constants.dart';

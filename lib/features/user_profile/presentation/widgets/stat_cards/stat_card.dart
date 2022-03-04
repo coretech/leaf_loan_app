@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/user_profile/presentation/widgets/widgets.dart';
 import 'package:loan_app/i18n/i18n.dart';
 

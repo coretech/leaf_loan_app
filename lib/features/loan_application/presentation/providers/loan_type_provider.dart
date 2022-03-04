@@ -27,16 +27,16 @@ class LoanTypeProvider extends ChangeNotifier {
   void clear() {
     loading = false;
     errorMessage = null;
-    notifyListeners();
   }
 
   List<LoanType> loanTypes = [];
 
   bool get hasLoanTypes => loanTypes.isNotEmpty;
 
-  bool get canShowTypes => hasLoanTypes && !loading;
+  bool get canShowTypes => hasLoanTypes && !loading && errorMessage == null;
 
   Future<void> getLoanTypes() async {
+    await Future.delayed(Duration.zero);
     clear();
     setLoading(value: true);
     final loanTypesEither = await loanTypeRepository.getLoanTypes();

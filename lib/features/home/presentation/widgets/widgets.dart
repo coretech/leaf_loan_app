@@ -4,6 +4,7 @@ export 'active_loan_info.dart';
 export 'big_persistent_apply_button.dart';
 export 'home_app_bar.dart';
 export 'loan_action_buttons.dart';
+export 'max_loan_amount_text.dart';
 export 'no_loan_content.dart';
 export 'pending_loan_info.dart';
 export 'recent_transactions.dart';

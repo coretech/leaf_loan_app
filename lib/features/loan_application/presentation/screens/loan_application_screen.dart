@@ -29,8 +29,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   @override
   void initState() {
     super.initState();
-    _loanTypeProvider = LoanTypeProvider()
-      ..getLoanTypes()
+    _loanTypeProvider = LoanApplicationIOC.loanTypeProvider
       ..addListener(_loanApplicationListener);
   }
 

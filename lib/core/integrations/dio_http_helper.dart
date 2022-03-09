@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:firebase_performance/firebase_performance.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
@@ -234,7 +234,8 @@ class DioHttpHelper implements HttpHelper {
   }
 
   HttpResponse _buildResponseWithError(DioError error, StackTrace stackTrace) {
-    if (error.response?.statusCode != 401) {
+    if (error.response?.statusCode != 401 &&
+        error.response?.statusCode != 404) {
       IntegrationIOC.logger().logError(error, stackTrace);
     }
     return HttpResponse(

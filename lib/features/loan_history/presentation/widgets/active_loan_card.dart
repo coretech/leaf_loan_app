@@ -59,9 +59,8 @@ class ActiveLoanCard extends StatelessWidget {
                 end: Alignment.topLeft,
                 colors: [
                   Colors.white.withOpacity(0.25),
-                  _getGradientColor(context).withRed(205),
-                  _getGradientColor(context).withRed(205).withGreen(150),
-                  _getGradientColor(context),
+                  Colors.black.withOpacity(0.25),
+                  Theme.of(context).colorScheme.secondary,
                 ],
               ),
             ),
@@ -272,14 +271,6 @@ class ActiveLoanCard extends StatelessWidget {
 
   Color _getColor(BuildContext context) {
     if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
-      return Theme.of(context).errorColor;
-    }
-    return Theme.of(context).colorScheme.secondary;
-  }
-
-  Color _getGradientColor(BuildContext context) {
-    if (loanStatusFromString(loan.status) == LoanStatus.rejected ||
-        loanStatusFromString(loan.status) == LoanStatus.due) {
       return Theme.of(context).errorColor;
     }
     return Theme.of(context).colorScheme.secondary;

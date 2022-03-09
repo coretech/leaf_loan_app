@@ -70,16 +70,11 @@ class NoLoanContent extends StatelessWidget {
             ],
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return ArticleCard(
-                article: ArticlesList.articles[index],
-              );
-            },
-            childCount: ArticlesList.articles.length,
+        const SliverFillRemaining(
+          child: ArticlesList(
+            type: ArticleListType.nonScrollable,
           ),
-        ),
+        )
       ],
     );
   }

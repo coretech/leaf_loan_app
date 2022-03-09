@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/about/about.dart';
+import 'package:loan_app/features/contact_us/presentation/screens/screens.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -40,6 +42,40 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 trailing: _getLanguageWidget(context, l10nProvider),
+              ),
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pushNamed(ContactUsScreen.routeName);
+                },
+                title: Text(
+                  'Contact us'.tr(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.contact_support_outlined,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              ListTile(
+                onTap: () {
+                  Share.share(
+                    'Hey there! Download Leaf Loans! http://onelink.to/leafloans',
+                  );
+                },
+                title: Text(
+                  'Share App'.tr(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.share_outlined,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
               ListTile(
                 onTap: () {

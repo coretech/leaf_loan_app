@@ -20,16 +20,29 @@ class PaymentDetailCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            Formatter.formatDate(
-              DateTime.parse(payment.createdAt),
-            ),
-            style: TextStyle(
-              color: Theme.of(context).hintColor,
-              fontWeight: FontWeight.w900,
-              fontSize: 16,
-              letterSpacing: 0.75,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                Formatter.formatDate(
+                  DateTime.parse(payment.createdAt),
+                ),
+                style: TextStyle(
+                  color: Theme.of(context).hintColor,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                  letterSpacing: 0.75,
+                ),
+              ),
+              Text(
+                payment.status,
+                style: TextStyle(
+                  color: Theme.of(context).hintColor,
+                  fontStyle: FontStyle.italic,
+                  letterSpacing: 0.75,
+                ),
+              ),
+            ],
           ),
           Card(
             margin: const EdgeInsets.symmetric(vertical: 2.5),
@@ -82,19 +95,19 @@ class PaymentDetailCard extends StatelessWidget {
   }
 
   static Widget shimmer(BuildContext context) {
-    return  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ShimmerBox(
-            height: 12.5,
-            width: 100,
-          ),
-          const SizedBox(height: 5),
-          ShimmerBox(
-            height: 50,
-            width: ScreenSize.of(context).width,
-          ),
-        ],
-      );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const ShimmerBox(
+          height: 12.5,
+          width: 100,
+        ),
+        const SizedBox(height: 5),
+        ShimmerBox(
+          height: 50,
+          width: ScreenSize.of(context).width,
+        ),
+      ],
+    );
   }
 }

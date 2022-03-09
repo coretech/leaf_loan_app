@@ -196,7 +196,7 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                       ' ${widget.fiatCode}',
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    Text('Total Due'.tr()),
+                    Text('Total'.tr()),
                   ],
                 ),
               ],

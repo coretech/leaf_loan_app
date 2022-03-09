@@ -1,11 +1,8 @@
-import 'package:flutter/foundation.dart';
-
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 
 class UserId {
   UserId({
     required this.id,
-    required this.roleId,
     required this.status,
     required this.firstName,
     required this.lastName,
@@ -15,7 +12,6 @@ class UserId {
   });
 
   final String id;
-  final List<RoleId> roleId;
   final String status;
   final String firstName;
   final String lastName;
@@ -35,7 +31,6 @@ class UserId {
   }) {
     return UserId(
       id: id ?? this.id,
-      roleId: roleId ?? this.roleId,
       status: status ?? this.status,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -51,7 +46,6 @@ class UserId {
 
     return other is UserId &&
         other.id == id &&
-        listEquals(other.roleId, roleId) &&
         other.status == status &&
         other.firstName == firstName &&
         other.lastName == lastName &&
@@ -63,7 +57,6 @@ class UserId {
   @override
   int get hashCode {
     return id.hashCode ^
-        roleId.hashCode ^
         status.hashCode ^
         firstName.hashCode ^
         lastName.hashCode ^

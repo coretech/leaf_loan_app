@@ -25,13 +25,18 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
   late TextEditingController _amountController;
   late LoanPaymentProvider _loanPaymentProvider;
   double balance = 0;
+  double amount = 0;
 
   @override
   void initState() {
     super.initState();
     _amountController = TextEditingController()
       ..addListener(() {
-        setState(() {});
+        if (_validateAmount(_amountController.text) == null) {
+          setState(() {
+            amount = double.parse(_amountController.text);
+          });
+        }
       });
     _loanPaymentProvider = LoanPaymentProvider()
       ..getWallet()
@@ -203,6 +208,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             prefixStyle: TextStyle(
               color: Theme.of(context).colorScheme.onBackground,
             ),
+            suffixIcon: _buildMaxButton(),
           ),
           keyboardType: TextInputType.number,
           validator: _validateAmount,
@@ -237,11 +243,26 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     );
   }
 
+  Widget _buildMaxButton() {
+    return TextButton(
+      child: const Text(
+        'Max',
+      ),
+      onPressed: () {
+        _amountController.text = widget.loan.remainingAmount.toString();
+        amount = widget.loan.remainingAmount;
+      },
+    );
+  }
+
   Future<void> _onPay() async {
     LoanPaymentAnalytics.loanPaymentPayButtonTapped();
+    if (widget.loan.remainingAmount - amount < 0.01) {
+      amount = widget.loan.remainingAmount;
+    }
     final paid = await showPaymentConfirmationSheet(
       context,
-      amount: double.parse(_amountController.text),
+      amount: amount,
       loan: widget.loan,
       loanPaymentProvider: _loanPaymentProvider,
       remainingAmount: _getRemaining(),
@@ -281,7 +302,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
   }
 
   double _getRemaining() {
-    return widget.loan.remainingAmount - double.parse(_amountController.text);
+    return widget.loan.remainingAmount - amount;
   }
 
   double _getBalance(Wallet wallet) {
@@ -291,9 +312,8 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             walletDetail.currencyId.fiatCode ==
             widget.loan.currencyId!.fiatCode,
       );
-      // ignore: join_return_with_assignment
-      balance = activeCurrency.balance;
-      return balance;
+
+      return activeCurrency.balance;
     } catch (_) {
       return 0;
     }

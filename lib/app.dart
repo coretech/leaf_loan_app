@@ -113,7 +113,8 @@ class _AppState extends State<App> {
                   secondary: Colors.orange,
                 ),
               ),
-              title: 'Leaf Loans'.tr(),
+              title: 'Leaf Loans',
+
               darkTheme: ThemeData.dark().copyWith(
                 primaryColor: Colors.green,
                 colorScheme: ColorScheme.dark(

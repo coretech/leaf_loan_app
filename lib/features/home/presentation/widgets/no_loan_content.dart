@@ -47,10 +47,7 @@ class NoLoanContent extends StatelessWidget {
             ],
           ),
         ),
-        SliverPersistentHeader(
-          delegate: BigPersistentApplyButton(),
-          pinned: true,
-        ),
+        const BigPersistentApplyButton(),
         SliverList(
           delegate: SliverChildListDelegate.fixed(
             [

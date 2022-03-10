@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:loan_app/features/loan_application/data/data.dart';
-import 'package:loan_app/features/loan_application/domain/domain.dart';
+import 'package:loan_app/features/loan_application/loan_application.dart';
 
 class LoanApplicationIOC {
   static final _locator = GetIt.instance;
@@ -12,6 +11,9 @@ class LoanApplicationIOC {
       )
       ..registerLazySingleton<LoanApplicationRepository>(
         () => LoanApplicationRemoteRepo(),
+      )
+      ..registerLazySingleton<LoanTypeProvider>(
+        () => LoanTypeProvider(),
       );
   }
 
@@ -21,5 +23,9 @@ class LoanApplicationIOC {
 
   static LoanApplicationRepository loanApplicationRepo() {
     return _locator.get<LoanApplicationRepository>();
+  }
+
+  static LoanTypeProvider get loanTypeProvider {
+    return _locator.get<LoanTypeProvider>();
   }
 }

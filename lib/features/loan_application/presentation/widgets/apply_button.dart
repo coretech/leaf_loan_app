@@ -9,17 +9,11 @@ class ApplyButton {
     bool mini = false,
     required VoidCallback onTap,
   }) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: onTap,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.orange),
         fixedSize: MaterialStateProperty.all(
           mini ? const Size(135, 30) : const Size(200, 50),
-        ),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
         ),
       ),
       child: Text(

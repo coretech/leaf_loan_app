@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loan_app/authentication/data/data.dart';
@@ -49,6 +51,7 @@ void main() {
             'username': 'username',
             'password': 'correct password',
             'devicetoken': 'deviceToken',
+            'model': Platform.operatingSystem,
           },
           url: any(
             named: 'url',
@@ -87,7 +90,7 @@ void main() {
   );
 
   test(
-    'Given wrong  user credentials, '
+    'Given wrong user credentials, '
     'When AuthRemoteRepo.login is called with the credentials, '
     'Then an instance of Left with error message',
     () async {
@@ -98,6 +101,7 @@ void main() {
             'username': 'username',
             'password': 'wrong password',
             'devicetoken': 'deviceToken',
+            'model': Platform.operatingSystem,
           },
           url: any(
             named: 'url',

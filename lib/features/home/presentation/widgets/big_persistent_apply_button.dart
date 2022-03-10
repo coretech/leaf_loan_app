@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/features/home/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
-class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
-  BigPersistentApplyButton();
+class BigPersistentApplyButton extends StatelessWidget {
+  const BigPersistentApplyButton({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return SliverPersistentHeader(
+      delegate: BigPersistentApplyButtonDelegate(),
+      pinned: true,
+    );
+  }
+}
+
+class BigPersistentApplyButtonDelegate extends SliverPersistentHeaderDelegate {
   @override
   double get maxExtent => 100;
 
@@ -68,13 +79,7 @@ class BigPersistentApplyButton extends SliverPersistentHeaderDelegate {
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
-                '${'You can take loans up to'.tr()} RWF 50,000',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontSize: 12,
-                ),
-              ),
+              const MaxLoanAmountText(),
             ],
           ),
         ),

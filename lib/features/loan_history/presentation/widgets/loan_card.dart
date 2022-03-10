@@ -209,6 +209,8 @@ class LoanCard extends StatelessWidget {
         return Theme.of(context).errorColor;
       case LoanStatus.due:
         return Theme.of(context).colorScheme.secondary;
+      case LoanStatus.cancelled:
+        return Theme.of(context).colorScheme.error;
       case LoanStatus.closed:
         return Theme.of(context).disabledColor;
     }
@@ -222,6 +224,8 @@ class LoanCard extends StatelessWidget {
       case LoanStatus.pending:
         return Icons.hourglass_empty;
       case LoanStatus.rejected:
+        return Icons.cancel;
+      case LoanStatus.cancelled:
         return Icons.cancel;
       case LoanStatus.due:
         return Icons.warning;
@@ -247,6 +251,8 @@ class LoanCard extends StatelessWidget {
         return 'Rejected'.tr();
       case LoanStatus.pending:
         return 'Pending'.tr();
+      case LoanStatus.cancelled:
+        return 'Cancelled'.tr();
       case LoanStatus.due:
         return 'Due'.tr();
       case LoanStatus.closed:
@@ -279,7 +285,8 @@ class LoanCard extends StatelessWidget {
       return Theme.of(context).textTheme.bodyText2?.copyWith(
             color: Theme.of(context).colorScheme.secondary,
           );
-    } else if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
+    } else if (loanStatusFromString(loan.status) == LoanStatus.rejected ||
+        loanStatusFromString(loan.status) == LoanStatus.cancelled) {
       return Theme.of(context).textTheme.bodyText2?.copyWith(
             color: Theme.of(context).colorScheme.error,
           );

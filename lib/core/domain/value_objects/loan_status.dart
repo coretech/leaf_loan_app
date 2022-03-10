@@ -1,4 +1,4 @@
-enum LoanStatus { approved, closed, pending, rejected, due }
+enum LoanStatus { approved, closed, pending, rejected, due, cancelled }
 
 LoanStatus loanStatusFromString(String status) {
   switch (status.toLowerCase()) {
@@ -12,6 +12,8 @@ LoanStatus loanStatusFromString(String status) {
       return LoanStatus.due;
     case 'closed':
       return LoanStatus.closed;
+    case 'cancelled':
+      return LoanStatus.cancelled;
     default:
       return LoanStatus.pending;
   }

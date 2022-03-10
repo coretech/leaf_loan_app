@@ -140,6 +140,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       setState(() {
         currentStep++;
       });
+      FocusManager.instance.primaryFocus?.unfocus();
     } else if (!_amountIsValid() && currentStep == 3) {
       showSnackbar('Loan amount is invalid!'.tr());
     }
@@ -159,6 +160,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
           curve: Curves.ease,
         );
       });
+      FocusManager.instance.primaryFocus?.unfocus();
     } else if (!_amountIsValid() && _pageController.page == 3) {
       showSnackbar('Loan amount is invalid!'.tr());
     }

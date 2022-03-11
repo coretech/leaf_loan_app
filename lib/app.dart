@@ -113,6 +113,8 @@ class _AppState extends State<App> {
                   secondary: Colors.orange,
                 ),
               ),
+              title: 'Leaf Loans',
+
               darkTheme: ThemeData.dark().copyWith(
                 primaryColor: Colors.green,
                 colorScheme: ColorScheme.dark(
@@ -135,7 +137,7 @@ class _AppState extends State<App> {
                     return supportedLocale;
                   }
                 }
-                // If the locale of the device is not supported, use the first 
+                // If the locale of the device is not supported, use the first
                 // one from the list (English, in this case).
                 return supportedLocales.first;
               },

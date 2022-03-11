@@ -40,7 +40,7 @@ class _NavButtonsState extends State<NavButtons> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (widget.pageController.page != 0)
+              if ((widget.pageController.page ?? 0) != 0)
                 Expanded(
                   child: ElevatedButton(
                     onPressed: loading ? null : widget.onPrev,
@@ -49,7 +49,7 @@ class _NavButtonsState extends State<NavButtons> {
                     ),
                   ),
                 ),
-              if (widget.pageController.page != 0)
+              if ((widget.pageController.page ?? 0) != 0)
                 const SizedBox(
                   width: 40,
                 ),

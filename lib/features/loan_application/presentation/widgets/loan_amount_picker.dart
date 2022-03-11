@@ -35,6 +35,17 @@ class LoanAmountPicker extends StatefulWidget {
 class _LoanAmountPickerState extends State<LoanAmountPicker> {
   late TextEditingController _amountController;
   final FocusNode _amountFocusNode = FocusNode();
+
+  double get _sliderValue {
+    if (widget.loanAmount < widget.minAmount!) {
+      return widget.minAmount!;
+    } else if (widget.loanAmount > widget.maxAmount!) {
+      return widget.maxAmount!;
+    } else {
+      return widget.loanAmount;
+    }
+  }
+
   @override
   void initState() {
     log('initState', name: 'LoanAmountPicker');
@@ -86,7 +97,7 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
             min: widget.minAmount!,
             onChanged: !widget.loading ? _onValueChanged : null,
             onChangeEnd: (_) => LoanApplicationAnalytics.sliderUsed(),
-            value: widget.loanAmount,
+            value: _sliderValue,
           )
         else
           Padding(
@@ -169,10 +180,8 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
                           final amount = double.tryParse(value);
-                          if (amount == null || amount < widget.minAmount!) {
+                          if (amount == null) {
                             widget.onChanged(widget.minAmount!);
-                          } else if (amount > widget.maxAmount!) {
-                            widget.onChanged(widget.maxAmount!);
                           } else {
                             widget.onChanged(amount);
                           }

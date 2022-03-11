@@ -29,15 +29,28 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
   void initState() {
     _loanCancellationProvider = LoanCancellationProvider()
       ..addListener(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _loanCancellationProvider.errorMessage!,
-              style: const TextStyle(color: Colors.white),
+        if (_loanCancellationProvider.errorMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                _loanCancellationProvider.errorMessage!,
+                style: const TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.red,
             ),
-            backgroundColor: Colors.red,
-          ),
-        );
+          );
+        } else if (!_loanCancellationProvider.loading) {
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Loan application cancelled!'.tr(),
+                style: const TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       });
     super.initState();
   }
@@ -99,9 +112,8 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
                                     width: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 1,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
+                                      color:
+                                          Theme.of(context).colorScheme.error,
                                     ),
                                   )
                                 : const Icon(

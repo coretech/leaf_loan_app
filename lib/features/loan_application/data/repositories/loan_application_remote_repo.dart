@@ -52,7 +52,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     try {
       final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.delete(
-        url: '${URLs.baseURL}/loanservice/loans/$loanId/$password',
+        url: '${URLs.baseURL}/loanservice/loans/$loanId',
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
           MapEntry('password', password),

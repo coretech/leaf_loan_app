@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/features.dart';
 import 'package:loan_app/features/home/presentation/analytics/analytics.dart';
-import 'package:loan_app/features/loan_history/domain/domain.dart';
-import 'package:loan_app/features/loan_history/presentation/presentation.dart';
 import 'package:loan_app/i18n/i18n.dart';
 
 class PendingLoanInfo extends StatelessWidget {

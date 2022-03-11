@@ -136,9 +136,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   void _onStepperNext() {
-    setState(() {
-      currentStep++;
-    });
+    if (_amountIsValid() || currentStep != 3) {
+      setState(() {
+        currentStep++;
+      });
+      FocusManager.instance.primaryFocus?.unfocus();
+    } else if (!_amountIsValid() && currentStep == 3) {
+      showSnackbar('Loan amount is invalid!'.tr());
+    }
   }
 
   void _onOnStepperBack() {
@@ -148,12 +153,17 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   void _onNext() {
-    setState(() {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.ease,
-      );
-    });
+    if (_amountIsValid() || _pageController.page != 3) {
+      setState(() {
+        _pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      });
+      FocusManager.instance.primaryFocus?.unfocus();
+    } else if (!_amountIsValid() && _pageController.page == 3) {
+      showSnackbar('Loan amount is invalid!'.tr());
+    }
   }
 
   void _onPrev() {
@@ -226,8 +236,21 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   bool _canSubmit() {
     return _loanTypeProvider.canShowTypes &&
-        _loanAmount != null &&
+        _amountIsValid() &&
         _selectedPurpose != null;
+  }
+
+  bool _amountIsValid([double? amount]) {
+    amount ??= _loanAmount;
+    final currentLoan = _loanTypeProvider
+        .loanTypes[_selectedLoanTypeIndex].currencies[_selectedCurrencyIndex];
+    return amount != null &&
+        amount <= currentLoan.maxLoanAmount &&
+        amount >= currentLoan.minLoanAmount;
+  }
+
+  void showAmountErrorSnackbar() {
+    showSnackbar('Please select a proper loan amount'.tr());
   }
 
   Future<void> _onSubmit() async {

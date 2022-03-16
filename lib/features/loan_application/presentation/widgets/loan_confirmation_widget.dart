@@ -130,7 +130,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                       ),
                       Expanded(
                         child: Text(
-                          '${widget.loanType.interestRate}',
+                          '${widget.loanType.interestRate}%',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,

@@ -163,20 +163,20 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
       title: TextFormField(
         initialValue: purpose,
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
           labelText: 'Other'.tr(),
+          suffixIcon: TextButton(
+            onPressed: () {
+              if (widget.selectedPurpose?.isNotEmpty ?? false) {
+                Navigator.of(context).pop();
+              }
+            },
+            child: Text(
+              'Save'.tr(),
+            ),
+          ),
         ),
         onChanged: (value) {
           widget.onChanged(value);
-        },
-      ),
-      trailing: IconButton(
-        icon: Icon(
-          Icons.check,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        onPressed: () {
-          Navigator.of(context).pop();
         },
       ),
     );

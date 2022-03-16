@@ -201,28 +201,10 @@ class _LoginScreenState extends State<LoginScreen> {
       title: Padding(
         padding: const EdgeInsets.only(top: 35),
         child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 8,
-                left: 8,
-                right: 4,
-                top: 8,
-              ),
-              child: Image.asset(
-                'assets/images/leaf_logo_green.png',
-                height: 40,
-              ),
-            ),
-            Text(
-              'Loans'.tr(),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            const Spacer(),
-            const LanguageDropdown(location: 'login_screen')
+          children: const [
+            LeafLoansLogo(),
+             Spacer(),
+             LanguageDropdown(location: 'login_screen')
           ],
         ),
       ),

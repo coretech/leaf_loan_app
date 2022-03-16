@@ -26,13 +26,6 @@ class ActiveLoanInfo extends StatelessWidget {
             loan: loan,
           ),
         );
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => LoanDetailScreen(
-        //       loan: loan,
-        //     ),
-        //   ),
-        // );
       },
       child: Ink(
         decoration: BoxDecoration(

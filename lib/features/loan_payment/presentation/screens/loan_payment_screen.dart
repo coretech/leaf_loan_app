@@ -210,7 +210,8 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             ),
             suffixIcon: _buildMaxButton(),
           ),
-          keyboardType: TextInputType.number,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          
           validator: _validateAmount,
         ),
         if (_validateAmount(_amountController.text) == null)

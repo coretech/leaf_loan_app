@@ -177,7 +177,9 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                             RegExp(r'^\d+\.?\d{0,2}'),
                           ),
                         ],
-                        keyboardType: TextInputType.number,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           final amount = double.tryParse(value);
                           if (amount == null) {

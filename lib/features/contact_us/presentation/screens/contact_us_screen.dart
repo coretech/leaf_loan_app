@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/contact_us/presentation/presentation.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -8,6 +10,10 @@ class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({Key? key}) : super(key: key);
 
   static const String routeName = '/contact-us';
+
+  String get whatsAppPhoneNumber => IntegrationIOC.remoteConfig.getString(
+        RemoteConfigKeys.whatsAppContactNumber,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +35,8 @@ class ContactUsScreen extends StatelessWidget {
               FontAwesome5.whatsapp,
               color: Color(0xff43D854),
             ),
-            onTap: () => ExternalLinks.openWhatsapp('+16156024821'),
-            subtitle: const Text('+1 (615) 602-4821'),
+            onTap: () => ExternalLinks.openWhatsapp(whatsAppPhoneNumber),
+            subtitle: Text(whatsAppPhoneNumber),
             title: const Text('WhatsApp'),
           ),
           ListTile(

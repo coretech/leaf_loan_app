@@ -22,7 +22,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   double? _loanAmount;
   int currentStep = 0;
 
-  final _remoteConfig = IntegrationIOC.remoteConfig();
+  final _remoteConfig = IntegrationIOC.remoteConfig;
 
   final PageController _pageController = PageController();
 

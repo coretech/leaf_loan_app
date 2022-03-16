@@ -110,7 +110,7 @@ class IntegrationIOC {
   static MessagingService get messagingService =>
       _locator.get<MessagingService>();
 
-  static RemoteConfiguration remoteConfig() {
+  static RemoteConfiguration get remoteConfig {
     return _locator.get<RemoteConfiguration>();
   }
 

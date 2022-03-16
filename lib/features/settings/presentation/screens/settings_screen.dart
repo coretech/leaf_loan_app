@@ -48,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
                   Navigator.of(context).pushNamed(ContactUsScreen.routeName);
                 },
                 title: Text(
-                  'Contact us'.tr(),
+                  'Contact Us'.tr(),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

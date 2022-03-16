@@ -107,7 +107,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                       Expanded(
                         child: Text(
                           '${widget.selectedCurrency.currencyId!.fiatCode} '
-                          '${widget.amount}',
+                          '${Formatter.formatMoney(widget.amount)}',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,

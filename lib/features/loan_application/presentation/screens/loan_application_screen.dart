@@ -258,7 +258,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     final success = await showModalBottomSheet(
       context: context,
       enableDrag: false,
-      isDismissible: false,
+      isDismissible: true,
       builder: (context) => LoanConfirmationWidget(
         amount: _loanAmount!,
         durationDays: _selectedDurationInDays,

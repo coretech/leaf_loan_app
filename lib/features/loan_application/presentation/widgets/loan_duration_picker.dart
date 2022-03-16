@@ -52,9 +52,11 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                    ' sed do eiusmod tempor incididunt ut labore et dolore '
-                    'magna'
+            'Please choose a date within the window for paying back this '
+                    "loan in full. Leaf's shortest minimum duration is 60 "
+                    'days, though you may pay back your loan any time after '
+                    'you receive it. The loan will automatically close once '
+                    'fully paid.'
                 .tr(),
             style: Theme.of(context).textTheme.caption,
           ),

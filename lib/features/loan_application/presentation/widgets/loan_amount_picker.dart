@@ -241,11 +241,11 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${widget.minAmount!} ${widget.fiatCode!}',
+          '${Formatter.formatMoney(widget.minAmount!)} ${widget.fiatCode!}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
         Text(
-          '${widget.maxAmount!} ${widget.fiatCode!}',
+          '${Formatter.formatMoney(widget.maxAmount!)} ${widget.fiatCode!}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],

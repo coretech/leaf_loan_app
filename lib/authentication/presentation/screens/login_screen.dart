@@ -54,10 +54,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Text(
                           'Welcome!'.tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              ?.copyWith(fontSize: 55),
+                          style:
+                              Theme.of(context).textTheme.headline1?.copyWith(
+                                    fontSize: 55,
+                                  ),
+                          textAlign: TextAlign.center,
                         ),
                         const Spacer(),
                         _buildAuthCard(context),

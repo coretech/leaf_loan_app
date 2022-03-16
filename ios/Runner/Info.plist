@@ -27,11 +27,11 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Music!</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>$(PRODUCT_NAME) asks you to grant access to calendar events for verifying</string>
+	<string>Leaf Loans asks you to grant access to calendar events for verifying</string>
 	<key>NSCameraUsageDescription</key>
 	<string>camera</string>
 	<key>NSContactsUsageDescription</key>
-	<string>$(PRODUCT_NAME) asks you to grant access to contacts info for verifying</string>
+	<string>Leaf Loans asks you to grant access to contacts info for verifying</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Always and when in use!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -45,9 +45,9 @@
 	<key>NSMotionUsageDescription</key>
 	<string>motion</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) asks you to grant access to photo and video for verifying</string>
+	<string>Leaf Loans asks you to grant access to photo and video for verifying</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>$(PRODUCT_NAME) asks you to grant access to calendar reminders for verifying</string>
+	<string>Leaf Loans asks you to grant access to calendar reminders for verifying</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>speech</string>
 	<key>UIBackgroundModes</key>
@@ -72,8 +72,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>kTCCServiceMediaLibrary</key>
-	<string>media</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>

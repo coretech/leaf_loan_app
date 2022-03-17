@@ -312,7 +312,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             walletDetail.currencyId.fiatCode ==
             widget.loan.currencyId!.fiatCode,
       );
-
+      balance = activeCurrency.balance;
       return activeCurrency.balance;
     } catch (_) {
       return 0;

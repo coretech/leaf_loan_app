@@ -81,9 +81,10 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                    ' sed do eiusmod tempor incididunt ut labore et dolore '
-                    'magna'
+            'Please choose an amount within the range. You can use the '
+                    'slider or the box to input the amount you want. '
+                    'Interest will be automatically added and the total '
+                    'will be displayed at the bottom.'
                 .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
@@ -177,7 +178,9 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
                             RegExp(r'^\d+\.?\d{0,2}'),
                           ),
                         ],
-                        keyboardType: TextInputType.number,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         onChanged: (value) {
                           final amount = double.tryParse(value);
                           if (amount == null) {
@@ -238,11 +241,11 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${widget.minAmount!} ${widget.fiatCode!}',
+          '${Formatter.formatMoney(widget.minAmount!)} ${widget.fiatCode!}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
         Text(
-          '${widget.maxAmount!} ${widget.fiatCode!}',
+          '${Formatter.formatMoney(widget.maxAmount!)} ${widget.fiatCode!}',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],

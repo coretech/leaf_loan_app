@@ -78,6 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               toolbarHeight: 100,
               title: Row(
                 children: const [
+                  LeafLoansLogo(),
                   Spacer(),
                   LanguageDropdown(location: 'onboarding'),
                 ],
@@ -87,43 +88,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               controller: _pageController,
               children: _slides,
             ),
-            bottomNavigationBar: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    key: const Key('next_button'),
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeIn,
-                      );
-                    },
-                    child: Text('Next'.tr()),
-                  ),
-                  OnboardingStepIndicator(
-                    total: _slides.length,
-                    controller: _pageController,
-                  ),
-                  if (_pageController.hasClients &&
-                      _pageController.page?.round() == _slides.length - 1)
-                    TextButton(
-                      onPressed: _updateOnboardingStatus,
-                      child: Text('Done'.tr()),
-                    )
-                  else
-                    TextButton(
-                      key: const Key('skip_button'),
-                      onPressed: _updateOnboardingStatus,
-                      child: Text(
-                        'Skip'.tr(),
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
+            bottomNavigationBar: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (!_pageController.hasClients ||
+                        _pageController.page?.round() != _slides.length - 1)
+                      Expanded(
+                        child: TextButton(
+                          key: const Key('next_button'),
+                          onPressed: () {
+                            _pageController.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeIn,
+                            );
+                          },
+                          child: Text('Next'.tr()),
+                        ),
+                      )
+                    else
+                      const Spacer(),
+                    OnboardingStepIndicator(
+                      total: _slides.length,
+                      controller: _pageController,
+                    ),
+                    if (_pageController.hasClients &&
+                        _pageController.page?.round() == _slides.length - 1)
+                      Expanded(
+                        child: TextButton(
+                          onPressed: _updateOnboardingStatus,
+                          child: Text('Done'.tr()),
+                        ),
+                      )
+                    else
+                      Expanded(
+                        child: TextButton(
+                          key: const Key('skip_button'),
+                          onPressed: _updateOnboardingStatus,
+                          child: Text(
+                            'Skip'.tr(),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

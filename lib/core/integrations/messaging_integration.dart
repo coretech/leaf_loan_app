@@ -91,6 +91,13 @@ class MessagingIntegration implements MessagingService {
         );
         currentId += 1;
       }
+      // if (message.data != null) {
+      //   log('onMessage: $message');
+      // }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      log('onMessageOpenedApp: $message');
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
-import 'package:loan_app/i18n/i18n_extension.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class LoanApplicationScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   double? _loanAmount;
   int currentStep = 0;
 
-  final _remoteConfig = IntegrationIOC.remoteConfig();
+  final _remoteConfig = IntegrationIOC.remoteConfig;
 
   final PageController _pageController = PageController();
 
@@ -258,7 +258,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     final success = await showModalBottomSheet(
       context: context,
       enableDrag: false,
-      isDismissible: false,
+      isDismissible: true,
       builder: (context) => LoanConfirmationWidget(
         amount: _loanAmount!,
         durationDays: _selectedDurationInDays,

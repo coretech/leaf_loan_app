@@ -19,7 +19,7 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   late UserProvider _userProvider;
-  final _remoteConfig = IntegrationIOC.remoteConfig();
+  final _remoteConfig = IntegrationIOC.remoteConfig;
   late bool _shouldShowStats;
 
   @override

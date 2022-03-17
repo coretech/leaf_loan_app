@@ -40,9 +40,11 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                    ' sed do eiusmod tempor incididunt ut labore et dolore'
-                    ' magna'
+            'Please choose the closest reason for requesting this loan. '
+                    "This will not impact your loan's approval and is "
+                    'strictly for informational purposes. If you do '
+                    "not see an appropriate category, choose 'Other' "
+                    'and input a reason.'
                 .tr(),
             style: Theme.of(context).textTheme.caption,
           ),
@@ -161,20 +163,20 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
       title: TextFormField(
         initialValue: purpose,
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
           labelText: 'Other'.tr(),
+          suffixIcon: TextButton(
+            onPressed: () {
+              if (widget.selectedPurpose?.isNotEmpty ?? false) {
+                Navigator.of(context).pop();
+              }
+            },
+            child: Text(
+              'Save'.tr(),
+            ),
+          ),
         ),
         onChanged: (value) {
           widget.onChanged(value);
-        },
-      ),
-      trailing: IconButton(
-        icon: Icon(
-          Icons.check,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        onPressed: () {
-          Navigator.of(context).pop();
         },
       ),
     );

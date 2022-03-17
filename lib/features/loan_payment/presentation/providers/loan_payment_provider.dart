@@ -39,18 +39,19 @@ class LoanPaymentProvider extends ChangeNotifier {
   void clear() {
     loading = false;
     errorMessage = null;
+    walletErrorMessage = null;
     notifyListeners();
   }
 
   Future<void> getWallet() async {
-    
+    clear();
     setLoading(value: true);
 
     final result = await _walletRepository.getWallet();
     result.fold(
       (error) {
         walletErrorMessage =
-            "We couldn't fetch wallet balance. Please refresh the page.";
+            "We couldn't fetch wallet balance. Please try again.";
       },
       (wallet) {
         this.wallet = wallet;

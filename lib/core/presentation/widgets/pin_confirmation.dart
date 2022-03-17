@@ -93,6 +93,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
 Future<String?> showPinConfirmationSheet(BuildContext context) async {
   return showModalBottomSheet(
     context: context,
+    isDismissible: true,
     isScrollControlled: true,
     builder: (context) => const PinConfirmation(),
   );

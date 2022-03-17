@@ -25,11 +25,6 @@ class PendingLoanInfo extends StatelessWidget {
             hasActiveLoan: false,
           ),
         );
-        showPendingLoanDialog(
-          context,
-          hasActiveLoan: false,
-          loan: loan,
-        );
       },
       child: Ink(
         decoration: BoxDecoration(

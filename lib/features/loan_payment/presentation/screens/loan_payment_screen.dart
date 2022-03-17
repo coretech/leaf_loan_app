@@ -130,7 +130,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            loanPaymentProvider.errorMessage!,
+            loanPaymentProvider.walletErrorMessage!,
             style: TextStyle(
               color: Theme.of(context).colorScheme.error,
             ),
@@ -211,7 +211,6 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             suffixIcon: _buildMaxButton(),
           ),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          
           validator: _validateAmount,
         ),
         if (_validateAmount(_amountController.text) == null)

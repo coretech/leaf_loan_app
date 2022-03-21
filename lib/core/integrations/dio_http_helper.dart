@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:firebase_performance/firebase_performance.dart';
@@ -43,6 +45,10 @@ class DioHttpHelper implements HttpHelper {
         queryParameters: params,
       );
       await _stopMetric(metric, response);
+      log(
+        '${response.statusCode} $url',
+        name: 'DELETE',
+      );
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
@@ -85,6 +91,10 @@ class DioHttpHelper implements HttpHelper {
         queryParameters: params,
       );
       await _stopMetric(metric, response);
+      log(
+        '${response.statusCode} $url',
+        name: 'GET',
+      );
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
@@ -125,6 +135,10 @@ class DioHttpHelper implements HttpHelper {
         queryParameters: params,
       );
       await _stopMetric(metric, response);
+      log(
+        '${response.statusCode} $url',
+        name: 'PATCH',
+      );
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
@@ -169,6 +183,10 @@ class DioHttpHelper implements HttpHelper {
         queryParameters: params,
       );
       await _stopMetric(metric, response);
+      log(
+        '${response.statusCode} $url',
+        name: 'POST',
+      );
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);
@@ -209,6 +227,10 @@ class DioHttpHelper implements HttpHelper {
         queryParameters: params,
       );
       await _stopMetric(metric, response);
+      log(
+        '${response.statusCode} $url',
+        name: 'PUT',
+      );
       final httpResponse = _buildResponse(response);
       if (processResponse) {
         onResponse(httpResponse);

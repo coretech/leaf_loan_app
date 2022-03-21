@@ -55,7 +55,9 @@ void main() {
       when(() => IntegrationIOC.localStorage().getBool(Keys.onboardingStatus))
           .thenAnswer((_) async => false);
       await tester.pumpWidget(
-        const App(),
+        App(
+          navigatorKey: GlobalKey<NavigatorState>(),
+        ),
       );
       await tester.pumpAndSettle(const Duration(seconds: 5));
       final skipButton = find.byKey(const Key('skip_button'));

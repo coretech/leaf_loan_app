@@ -7,7 +7,6 @@ import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 import 'package:loan_app/features/user_profile/ioc/ioc.dart';
 
 class LoanPaymentProvider extends ChangeNotifier {
-
   Wallet? wallet;
 
   bool loading = false;
@@ -69,6 +68,7 @@ class LoanPaymentProvider extends ChangeNotifier {
     required String loanId,
     required String password,
   }) async {
+    clear();
     paying = true;
     notifyListeners();
     final result = await _loanTypeRepository.payLoan(

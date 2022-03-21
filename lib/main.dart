@@ -11,6 +11,7 @@ import 'package:loan_app/features/features_ioc.dart';
 import 'package:loan_app/i18n/ioc/ioc.dart';
 
 Future<void> main() async {
+  final navigatorKey = GlobalKey<NavigatorState>();
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
@@ -24,14 +25,18 @@ Future<void> main() async {
   await FirebaseRemoteConfig.instance.ensureInitialized();
   await FirebaseRemoteConfig.instance.fetchAndActivate();
   await IntegrationIOC.init();
-  await IntegrationIOC.messagingService.init();
+  await IntegrationIOC.messagingService.init(navigatorKey);
   await FeaturesIOC.init();
   await LocalizationIOC.init();
 
   await runZonedGuarded<Future<void>>(
     () async {
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-      runApp(const App());
+      runApp(
+        App(
+          navigatorKey: navigatorKey,
+        ),
+      );
     },
     (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
   );

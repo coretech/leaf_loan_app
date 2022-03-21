@@ -11,14 +11,18 @@ import 'package:loan_app/provider_wrapper.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+  const App({
+    Key? key,
+    required this.navigatorKey,
+  }) : super(key: key);
+
+  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
   final AuthHelper _authHelper = AuthIOC.authHelper();
 
   @override
@@ -48,7 +52,7 @@ class _AppState extends State<App> {
         child: Consumer<L10nProvider>(
           builder: (context, l10nProvider, _) {
             return MaterialApp(
-              navigatorKey: _navigatorKey,
+              navigatorKey: widget.navigatorKey,
               navigatorObservers: [
                 if (!Platform.environment.containsKey('FLUTTER_TEST'))
                   FirebaseAnalyticsObserver(
@@ -153,7 +157,7 @@ class _AppState extends State<App> {
   void _setUpLogOutListener() {
     _authHelper.authenticationStream.listen((loggedOut) {
       if (loggedOut) {
-        _navigatorKey.currentState!.pushNamedAndRemoveUntil(
+        widget.navigatorKey.currentState!.pushNamedAndRemoveUntil(
           '/',
           (_) => false,
         );

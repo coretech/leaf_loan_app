@@ -32,11 +32,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     super.initState();
     _amountController = TextEditingController()
       ..addListener(() {
-        if (_validateAmount(_amountController.text) == null) {
-          setState(() {
-            amount = double.parse(_amountController.text);
-          });
-        }
+        setState(() {
+          amount = double.tryParse(_amountController.text) ?? 0;
+        });
       });
     _loanPaymentProvider = LoanPaymentProvider()
       ..getWallet()

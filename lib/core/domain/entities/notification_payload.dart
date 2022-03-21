@@ -1,9 +1,13 @@
 class NotificationPayload {
   NotificationPayload({
-    required this.id,
+    required this.loanId,
+    this.paymentId,
     required this.type,
   });
 
-  final String id;
-  final String type;
+  final String loanId;
+  final String? paymentId;
+  final NotificationType type;
 }
+
+enum NotificationType { payment, loanStatusUpdate }

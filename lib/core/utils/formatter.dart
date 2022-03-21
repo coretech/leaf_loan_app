@@ -18,7 +18,11 @@ class Formatter {
   }
 
   static String formatMoney(double amount) {
-    final currencyFormatter = NumberFormat('#,##0.00', 'en_US');
+    late NumberFormat currencyFormatter;
+    if (amount < 1 && amount > 0) {
+      currencyFormatter = NumberFormat('#,##0.0000', 'en_US');
+    }
+    currencyFormatter = NumberFormat('#,##0.00', 'en_US');
     return currencyFormatter.format(amount);
   }
 

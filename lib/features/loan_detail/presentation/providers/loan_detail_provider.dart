@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:loan_app/core/events/events.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_history/ioc/ioc.dart';
 import 'package:loan_app/features/loan_payment/domain/domain.dart';
 import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
 
@@ -16,11 +17,22 @@ class LoanDetailProvider extends ChangeNotifier {
       );
       await getPayments();
     });
+
+    _eventBus.on<NotificationEvent>().listen((event) async {
+      var loanId = '';
+      if (event is PaymentNotificationEvent) {
+        loanId = event.payload.loanId;
+      } else if (event is LoanNotificationEvent) {
+        loanId = event.payload.loanId;
+      }
+      await updateLoanDetail(loanId);
+    });
   }
 
   final _loanPaymentRepo = LoanPaymentIOC.loanPaymentRepo();
+  final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo();
 
-  final _eventBus = IntegrationIOC.eventBus();
+  final _eventBus = IntegrationIOC.eventBus;
 
   bool loading = false;
 
@@ -54,6 +66,22 @@ class LoanDetailProvider extends ChangeNotifier {
   void setLoan(LoanData loan) {
     this.loan = loan;
     notifyListeners();
+  }
+
+  Future<void> updateLoanDetail(String loanId) async {
+    final loanEither = await _loanHistoryRepo.getLoanById(loanId);
+
+    await loanEither.fold(
+      (_) async => getPayments(),
+      (updatedLoan) async {
+        setLoan(
+          loan!.copyWith(
+            remainingAmount: updatedLoan.remainingAmount,
+          ),
+        );
+        await getPayments();
+      },
+    );
   }
 
   Future<void> getPayments() async {

@@ -1,14 +1,20 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/loan_detail/presentation/screens/screens.dart';
+import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_history/ioc/ioc.dart';
 
 ////Read this for background messaging issues (if any) on android
 ///https://github.com/FirebaseExtended/flutterfire/issues/2223
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  log('on background called $message');
+  // await Firebase.initializeApp();
 }
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
@@ -31,11 +37,14 @@ Future<void> savePushToken(String token) async {
 int currentId = 0;
 
 class MessagingIntegration implements MessagingService {
+  late GlobalKey<NavigatorState> navigatorKey;
   @override
-  Future<void> init() async {
+  Future<void> init(GlobalKey<NavigatorState> navigatorKey) async {
+    this.navigatorKey = navigatorKey;
+
     //FLUTTER LOCAL NOTIFICATIONS
     const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_stat');
     const initializationSettingsIOS = IOSInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
@@ -43,6 +52,7 @@ class MessagingIntegration implements MessagingService {
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
+      onSelectNotification: _parseDataAndCallOnOpen,
     );
 
     //Android notification properties
@@ -52,7 +62,7 @@ class MessagingIntegration implements MessagingService {
       channelDescription:
           'This channel is used for important notifications.', // description
       importance: Importance.high,
-      styleInformation: DefaultStyleInformation(true, true),
+      styleInformation: BigTextStyleInformation(''),
     );
 
     //iOS notification properties
@@ -80,6 +90,19 @@ class MessagingIntegration implements MessagingService {
 
     await _firebaseMessaging.requestPermission();
 
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (RemoteMessage message) async {
+        log('onMessageOpenedApp: $message');
+        await onNotificationOpened(message.data);
+      },
+      onDone: () {
+        log('on done called');
+      },
+      onError: (_, __) {
+        log('on error called');
+      },
+    );
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.notification != null) {
         final _currentId = currentId;
@@ -88,16 +111,12 @@ class MessagingIntegration implements MessagingService {
           message.notification?.title,
           message.notification?.body,
           platformChannelSpecifics,
+          payload: json.encode(message.data),
         );
         currentId += 1;
       }
-      // if (message.data != null) {
-      //   log('onMessage: $message');
-      // }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log('onMessageOpenedApp: $message');
+      await emitNotificationEvent(message.data);
+      log('onMessage: $message');
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -111,5 +130,87 @@ class MessagingIntegration implements MessagingService {
     _firebaseMessaging.onTokenRefresh.listen((token) async {
       await savePushToken(token);
     });
+  }
+
+  void _parseDataAndCallOnOpen(String? payload) {
+    if (payload != null) {
+      final payloadMap = json.decode(payload);
+      onNotificationOpened(payloadMap);
+    }
+  }
+
+  Future<void> onNotificationOpened(Map<String, dynamic> payload) async {
+    final notificationPayload =
+        NotificationPayloadDto.fromMap(payload).toEntity();
+    await navigate(notificationPayload);
+  }
+
+  Future<void> emitNotificationEvent(Map<String, dynamic> payload) async {
+    final notificationPayload =
+        NotificationPayloadDto.fromMap(payload).toEntity();
+    final eventBus = IntegrationIOC.eventBus;
+    switch (notificationPayload.type) {
+      case NotificationType.loanStatusUpdate:
+        eventBus.fire(LoanNotificationEvent(payload: notificationPayload));
+        break;
+      case NotificationType.payment:
+        eventBus.fire(PaymentNotificationEvent(payload: notificationPayload));
+        break;
+    }
+  }
+
+  Future<void> navigate(NotificationPayload payload) async {
+    switch (payload.type) {
+      case NotificationType.loanStatusUpdate:
+        await navigatorKey.currentState?.push(
+          MaterialPageRoute(
+            builder: (context) {
+              return LoaderScreen<LoanData>(
+                onDone: _navigateToLoanDetail,
+                loaderProvider: LoaderProvider<LoanData>(
+                  loader: () => LoanHistoryIOC.loanHistoryRepo()
+                      .getLoanById(payload.loanId),
+                )..load(),
+              );
+            },
+          ),
+        );
+        break;
+      case NotificationType.payment:
+        await navigatorKey.currentState?.push(
+          MaterialPageRoute(
+            builder: (context) {
+              return LoaderScreen<LoanData>(
+                onDone: _navigateToLoanTransactions,
+                loaderProvider: LoaderProvider<LoanData>(
+                  loader: () => LoanHistoryIOC.loanHistoryRepo()
+                      .getLoanById(payload.loanId),
+                )..load(),
+              );
+            },
+          ),
+        );
+        break;
+    }
+  }
+
+  Future<void> _navigateToLoanDetail(LoanData loan) async {
+    final args = LoanDetailScreenAltArgs(
+      hasActiveLoan: true,
+      loan: loan,
+    );
+    navigatorKey.currentState?.pop();
+    await navigatorKey.currentState?.pushNamed(
+      LoanDetailScreenAlt.routeName,
+      arguments: args,
+    );
+  }
+
+  Future<void> _navigateToLoanTransactions(LoanData loan) async {
+    navigatorKey.currentState?.pop();
+    await navigatorKey.currentState?.pushNamed(
+      LoanTransactionsScreen.routeName,
+      arguments: loan,
+    );
   }
 }

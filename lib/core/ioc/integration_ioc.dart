@@ -87,7 +87,7 @@ class IntegrationIOC {
     return _locator.get<Analytics>();
   }
 
-  static EventBusAbstraction eventBus() {
+  static EventBusAbstraction get eventBus {
     return _locator.get<EventBusAbstraction>();
   }
 

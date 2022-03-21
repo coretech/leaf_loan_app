@@ -19,7 +19,7 @@ class LoanPaymentProvider extends ChangeNotifier {
 
   final _loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
   final _walletRepository = UserIOC.walletRepo();
-  final _eventBus = IntegrationIOC.eventBus();
+  final _eventBus = IntegrationIOC.eventBus;
 
   void setLoading({required bool value}) {
     loading = value;
@@ -68,6 +68,7 @@ class LoanPaymentProvider extends ChangeNotifier {
     required String loanId,
     required String password,
   }) async {
+    clear();
     paying = true;
     notifyListeners();
     final result = await _loanTypeRepository.payLoan(

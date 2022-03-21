@@ -153,7 +153,8 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                       ),
                       Expanded(
                         child: Text(
-                          '${_getAmountDue()}',
+                          '${widget.selectedCurrency.currencyId!.fiatCode} '
+                          '${Formatter.formatMoney(_getAmountDue())}',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,

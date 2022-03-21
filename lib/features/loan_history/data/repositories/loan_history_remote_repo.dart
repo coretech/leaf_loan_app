@@ -67,4 +67,29 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
       return const Left(LoanHistoryFailure.error);
     }
   }
+
+  @override
+  Future<Either<LoanHistoryFailure, LoanData>> getLoanById(
+    String loanId,
+  ) async {
+    try {
+      final token = await _authHelper.getToken() ?? '';
+      final response = await _httpHelper.get(
+        url: '${URLs.baseURL}/loanservice/loans/$loanId',
+        headers: Map.fromEntries([
+          TokenUtil.generateBearer(token),
+        ]),
+      );
+      if (response.statusCode < 400 && response.statusCode >= 200) {
+        final responseDto = ResponseDto.fromMap(response.data);
+        if (responseDto.data != null) {
+          return Right(LoanDataDto.fromMap(responseDto.data).toEntity());
+        }
+      }
+      return const Left(LoanHistoryFailure.noActiveLoan);
+    } catch (e, stacktrace) {
+      await IntegrationIOC.logger().logError(e, stacktrace);
+      return const Left(LoanHistoryFailure.error);
+    }
+  }
 }

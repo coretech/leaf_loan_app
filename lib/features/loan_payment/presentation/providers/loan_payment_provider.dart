@@ -7,6 +7,7 @@ import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 import 'package:loan_app/features/user_profile/ioc/ioc.dart';
 
 class LoanPaymentProvider extends ChangeNotifier {
+
   Wallet? wallet;
 
   bool loading = false;
@@ -19,7 +20,7 @@ class LoanPaymentProvider extends ChangeNotifier {
 
   final _loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
   final _walletRepository = UserIOC.walletRepo();
-  final _eventBus = IntegrationIOC.eventBus();
+  final _eventBus = IntegrationIOC.eventBus;
 
   void setLoading({required bool value}) {
     loading = value;

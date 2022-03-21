@@ -22,11 +22,16 @@ class LoanDetailScreenAlt extends StatefulWidget {
 }
 
 class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
-  LoanData get loan => widget.loanDetailArgs.loan;
+  // LoanData get loan => _loan;
+
+  // late LoanData _loan = widget.loanDetailArgs.loan;
   late LoanCancellationProvider _loanCancellationProvider;
+  late LoanDetailProvider _loanDetailProvider;
 
   @override
   void initState() {
+    _loanDetailProvider = LoanDetailProvider()
+      ..setLoan(widget.loanDetailArgs.loan);
     _loanCancellationProvider = LoanCancellationProvider()
       ..addListener(() {
         if (_loanCancellationProvider.errorMessage != null) {
@@ -52,23 +57,36 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
           );
         }
       });
+    // _loan = _loanDetailProvider.loan!;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-        foregroundColor: Theme.of(context).colorScheme.onSurface,
-        title: Text('${loan.loanTypeId.name} Details'.tr()),
+    return ChangeNotifierProvider.value(
+      value: _loanDetailProvider,
+      child: Consumer<LoanDetailProvider>(
+        builder: (context, loanDetailProvider, __) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              elevation: 0,
+              foregroundColor: Theme.of(context).colorScheme.onSurface,
+              title: Text(
+                '${loanDetailProvider.loan!.loanTypeId.name} Details'.tr(),
+              ),
+            ),
+            body: _buildBody(context, loanDetailProvider),
+          );
+        },
       ),
-      body: _buildBody(context),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(
+    BuildContext context,
+    LoanDetailProvider loanDetailProvider,
+  ) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(
         parent: AlwaysScrollableScrollPhysics(),
@@ -77,12 +95,13 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            _buildLoanStatusText(context),
-            if (_loanStatus == LoanStatus.approved) _buildPaymentCard(context),
-            _buildLoanInfoCard(context),
+            _buildLoanStatusText(context, loanDetailProvider),
+            if (_loanStatus == LoanStatus.approved)
+              _buildPaymentCard(context, loanDetailProvider),
+            _buildLoanInfoCard(context, loanDetailProvider),
             if (_loanStatus == LoanStatus.approved ||
                 _loanStatus == LoanStatus.closed)
-              _buildLoanPaymentsCard(context),
+              _buildLoanPaymentsCard(context, loanDetailProvider),
             if (_loanStatus == LoanStatus.rejected)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
@@ -131,7 +150,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
                               if (password != null) {
                                 await cancellationProvider
                                     .cancelLoanApplication(
-                                  loan.id,
+                                  _loanDetailProvider.loan!.id,
                                   password,
                                 );
                               }
@@ -149,7 +168,10 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
     );
   }
 
-  Widget _buildLoanStatusText(BuildContext context) {
+  Widget _buildLoanStatusText(
+    BuildContext context,
+    LoanDetailProvider loanDetailProvider,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: _getColor(context),
@@ -172,7 +194,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
         width: double.infinity,
         child: Center(
           child: Text(
-            loan.status,
+            loanDetailProvider.loan!.status,
             style: TextStyle(
               color: _getStatusColor(context),
             ),
@@ -182,7 +204,10 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
     );
   }
 
-  Widget _buildPaymentCard(BuildContext context) {
+  Widget _buildPaymentCard(
+    BuildContext context,
+    LoanDetailProvider loanDetailProvider,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: GradientCard(
@@ -203,13 +228,15 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: '${loan.currencyId!.fiatCode} ',
+                  text: '${loanDetailProvider.loan!.currencyId!.fiatCode} ',
                   style: TextStyle(
                     color: _getTextColor(context),
                   ),
                 ),
                 TextSpan(
-                  text: Formatter.formatMoney(loan.remainingAmount),
+                  text: Formatter.formatMoney(
+                    loanDetailProvider.loan!.remainingAmount,
+                  ),
                   style: TextStyle(
                     color: _getTextColor(context),
                     fontSize: 31,
@@ -259,7 +286,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               Navigator.of(context).pushNamed(
                 LoanPaymentScreen.routeName,
                 arguments: LoanPaymentScreenArguments(
-                  loan: loan,
+                  loan: loanDetailProvider.loan!,
                 ),
               );
             },
@@ -269,7 +296,11 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
     );
   }
 
-  Widget _buildLoanInfoCard(BuildContext context) {
+  Widget _buildLoanInfoCard(
+    BuildContext context,
+    LoanDetailProvider loanDetailProvider,
+  ) {
+    final loan = loanDetailProvider.loan!;
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: GradientCard(
@@ -282,7 +313,11 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
                 ),
           ),
           _buildDivider(context),
-          _buildLoanInfoRow(context, 'Loan Type', loan.loanTypeId.name),
+          _buildLoanInfoRow(
+            context,
+            'Loan Type',
+            loan.loanTypeId.name,
+          ),
           _buildLoanInfoRow(
             context,
             'Requested Amount',
@@ -361,7 +396,11 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
     );
   }
 
-  Widget _buildLoanPaymentsCard(BuildContext context) {
+  Widget _buildLoanPaymentsCard(
+    BuildContext context,
+    LoanDetailProvider loanDetailProvider,
+  ) {
+    final loan = loanDetailProvider.loan!;
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: GradientCard(
@@ -392,7 +431,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
             '${Formatter.formatMoney(loan.remainingAmount)} '
                 '${loan.currencyId!.fiatCode}',
           ),
-          _buildTransactionsButton(context),
+          _buildTransactionsButton(context, loanDetailProvider),
         ],
       ),
     );
@@ -409,7 +448,11 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
     );
   }
 
-  Widget _buildTransactionsButton(BuildContext context) {
+  Widget _buildTransactionsButton(
+    BuildContext context,
+    LoanDetailProvider loanDetailProvider,
+  ) {
+    final loan = loanDetailProvider.loan!;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ElevatedButton(
@@ -426,7 +469,9 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
     );
   }
 
-  LoanStatus get _loanStatus => loanStatusFromString(loan.status);
+  LoanStatus get _loanStatus => loanStatusFromString(
+        _loanDetailProvider.loan!.status,
+      );
 
   Color _getTextColor(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -438,14 +483,18 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
   }
 
   int _getRemainingDays() {
-    final days = DateTime.parse(loan.dueDate).difference(DateTime.now()).inDays;
+    final days = DateTime.parse(_loanDetailProvider.loan!.dueDate)
+        .difference(DateTime.now())
+        .inDays;
     return days.isNegative ? 0 : days;
   }
 
   Color _getColor(BuildContext context) {
-    if (loanStatusFromString(loan.status) == LoanStatus.rejected) {
+    if (loanStatusFromString(_loanDetailProvider.loan!.status) ==
+        LoanStatus.rejected) {
       return Theme.of(context).errorColor;
-    } else if (loanStatusFromString(loan.status) == LoanStatus.approved) {
+    } else if (loanStatusFromString(_loanDetailProvider.loan!.status) ==
+        LoanStatus.approved) {
       return Theme.of(context).colorScheme.primary;
     }
     return Theme.of(context).disabledColor;

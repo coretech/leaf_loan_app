@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +36,7 @@ class MessagingIntegration implements MessagingService {
   Future<void> init() async {
     //FLUTTER LOCAL NOTIFICATIONS
     const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_stat');
     const initializationSettingsIOS = IOSInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
@@ -43,6 +44,7 @@ class MessagingIntegration implements MessagingService {
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
+      onSelectNotification: _parseDataAndCallOnOpen,
     );
 
     //Android notification properties
@@ -52,7 +54,7 @@ class MessagingIntegration implements MessagingService {
       channelDescription:
           'This channel is used for important notifications.', // description
       importance: Importance.high,
-      styleInformation: DefaultStyleInformation(true, true),
+      styleInformation: BigTextStyleInformation(''),
     );
 
     //iOS notification properties
@@ -88,16 +90,17 @@ class MessagingIntegration implements MessagingService {
           message.notification?.title,
           message.notification?.body,
           platformChannelSpecifics,
+          payload: json.encode(message.data),
         );
         currentId += 1;
       }
-      // if (message.data != null) {
-      //   log('onMessage: $message');
-      // }
+      await emitNotificationEvent(message.data);
+      log('onMessage: $message');
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       log('onMessageOpenedApp: $message');
+      await onNotificationOpened(message.data);
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -111,5 +114,28 @@ class MessagingIntegration implements MessagingService {
     _firebaseMessaging.onTokenRefresh.listen((token) async {
       await savePushToken(token);
     });
+  }
+
+  void _parseDataAndCallOnOpen(String? payload) {
+    if (payload != null) {
+      final payloadMap = json.decode(payload);
+      onNotificationOpened(payloadMap);
+    }
+  }
+
+  Future<void> onNotificationOpened(Map<String, dynamic> payload) async {}
+
+  Future<void> emitNotificationEvent(Map<String, dynamic> payload) async {
+    final notificationPayload =
+        NotificationPayloadDto.fromMap(payload).toEntity();
+    final eventBus = IntegrationIOC.eventBus;
+    switch (notificationPayload.type) {
+      case NotificationType.loanStatusUpdate:
+        eventBus.fire(LoanNotificationEvent(payload: notificationPayload));
+        break;
+      case NotificationType.payment:
+        eventBus.fire(PaymentNotificationEvent(payload: notificationPayload));
+        break;
+    }
   }
 }

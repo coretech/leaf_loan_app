@@ -29,32 +29,36 @@ class _LoanDetailScreenState extends State<LoanDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
+    return ChangeNotifierProvider<LoanDetailProvider>.value(
       value: _loanDetailProvider,
       builder: (context, _) {
-        return Scaffold(
-          body: CustomScrollView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            slivers: [
-              LoanDetailAppBar(
-                loan: widget.loan,
-              ),
-              const SliverList(
-                delegate: SliverChildListDelegate.fixed(
-                  [
-                    LoanDetailWidget(),
-                  ],
+        return Consumer<LoanDetailProvider>(
+          builder: (context, loanDetailProvider, _) {
+            return Scaffold(
+              body: CustomScrollView(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
                 ),
+                slivers: [
+                  LoanDetailAppBar(
+                    loan: loanDetailProvider.loan!,
+                  ),
+                  const SliverList(
+                    delegate: SliverChildListDelegate.fixed(
+                      [
+                        LoanDetailWidget(),
+                      ],
+                    ),
+                  ),
+                  SliverPersistentHeader(
+                    delegate: PaymentsHistoryColumnLabels(),
+                    pinned: true,
+                  ),
+                  const LoanPayments()
+                ],
               ),
-              SliverPersistentHeader(
-                delegate: PaymentsHistoryColumnLabels(),
-                pinned: true,
-              ),
-              const LoanPayments()
-            ],
-          ),
+            );
+          },
         );
       },
     );

@@ -17,6 +17,10 @@ class HomeProvider extends ChangeNotifier {
     _eventBus.on<LoanPaymentSuccess>().listen((event) async {
       await getActiveLoan();
     });
+
+    _eventBus.on<NotificationEvent>().listen((event) async {
+      await getActiveLoan();
+    });
   }
 
   bool loading = false;
@@ -35,7 +39,7 @@ class HomeProvider extends ChangeNotifier {
   final _scoringDataCollectionService =
       IntegrationIOC.scoringDataCollectionService();
 
-  final _eventBus = IntegrationIOC.eventBus();
+  final _eventBus = IntegrationIOC.eventBus;
 
   void setLoading({required bool value}) {
     loading = value;

@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <application
-        android:label="loan_app"
+        android:label="Leaf Loans"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
@@ -37,6 +37,10 @@
             <meta-data
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
+              />
+            <meta-data
+              android:name="com.google.firebase.messaging.default_notification_icon"
+              android:resource="@drawable/ic_stat" 
               />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

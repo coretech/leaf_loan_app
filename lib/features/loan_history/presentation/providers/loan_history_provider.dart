@@ -14,11 +14,15 @@ class LoanHistoryProvider extends ChangeNotifier {
     _eventBus.on<LoanPaymentSuccess>().listen((event) async {
       await getLoans();
     });
+
+    _eventBus.on<NotificationEvent>().listen((event) async {
+      await getLoans();
+    });
   }
 
   final _loanHistoryRepository = LoanHistoryIOC.loanHistoryRepo();
 
-  final _eventBus = IntegrationIOC.eventBus();
+  final _eventBus = IntegrationIOC.eventBus;
 
   List<LoanData> _loanHistory = [];
 

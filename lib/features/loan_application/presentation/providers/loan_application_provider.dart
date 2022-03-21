@@ -5,7 +5,7 @@ import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 
 class LoanApplicationProvider extends ChangeNotifier {
   final _loanTypeRepository = LoanApplicationIOC.loanApplicationRepo();
-  final _eventBus = IntegrationIOC.eventBus();
+  final _eventBus = IntegrationIOC.eventBus;
 
   bool loading = false;
   bool completed = false;

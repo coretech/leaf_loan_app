@@ -321,6 +321,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
 
   void _loanPaymentListener() {
     if (_loanPaymentProvider.errorMessage != null) {
+      Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

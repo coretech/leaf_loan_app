@@ -24,7 +24,7 @@ class UserRemoteRepository extends UserRepository {
         ]),
       );
       final _responseDto = ResponseDto.fromMap(_response.data);
-      final _userDto = UserDTO.fromMap(_responseDto.data);
+      final _userDto = UserDto.fromMap(_responseDto.data);
       final _user = _userDto.toEntity();
       await _localStorage.setString(
         Keys.firstName,

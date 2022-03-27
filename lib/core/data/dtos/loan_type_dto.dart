@@ -1,59 +1,52 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:loan_app/core/data/dtos/currency_dto.dart';
+import 'package:loan_app/core/domain/domain.dart';
 
-import 'package:loan_app/core/data/dtos/dtos.dart';
-import 'package:loan_app/core/domain/entities/entities.dart';
-
-class LoanTypeDTO {
-  LoanTypeDTO({
+class LoanTypeDto {
+  LoanTypeDto({
     required this.purpose,
     required this.id,
     required this.name,
     required this.description,
     required this.currencies,
-    required this.minduration,
-    required this.maxduration,
-    required this.interestrate,
+    required this.minDuration,
+    required this.maxDuration,
+    required this.interestRate,
     required this.image,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
-  factory LoanTypeDTO.fromMap(Map<String, dynamic> map) {
-    return LoanTypeDTO(
-      purpose:
-          map['purpose'] != null ? List<String>.from(map['purpose']) : null,
-      id: map['_id'],
-      name: map['name'],
-      description: map['description'],
-      currencies: List<CurrencyDTO>.from(
-        // ignore: avoid_dynamic_calls
-        map['currencies']?.map((x) => CurrencyDTO.fromMap(x)),
+  factory LoanTypeDto.fromMap(Map<String, dynamic> map) {
+    return LoanTypeDto(
+      purpose: List<String>.from(map['purpose']),
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      description: map['description'] ?? '',
+      currencies: List<CurrencyDto>.from(
+        map['currencies']?.map((x) => CurrencyDto.fromMap(x)),
       ),
-      minduration: map['minduration'],
-      maxduration: map['maxduration'],
-      interestrate: map['interestrate'],
-      image: map['image'],
-      createdAt: map['createdAt'],
-      updatedAt: map['updatedAt'],
+      minDuration: map['minDuration']?.toInt() ?? 0,
+      maxDuration: map['maxDuration']?.toInt() ?? 0,
+      interestRate: map['interestRate']?.toInt() ?? 0,
+      image: map['image'] ?? '',
     );
   }
 
-  factory LoanTypeDTO.fromJson(String source) =>
-      LoanTypeDTO.fromMap(json.decode(source));
+  factory LoanTypeDto.fromJson(String source) =>
+      LoanTypeDto.fromMap(json.decode(source));
 
-  final List<String>? purpose;
+  final List<String> purpose;
   final String id;
   final String name;
   final String description;
-  final List<CurrencyDTO> currencies;
-  final int minduration;
-  final int maxduration;
-  final int interestrate;
+  final List<CurrencyDto> currencies;
+  final int minDuration;
+  final int maxDuration;
+  final int interestRate;
   final String image;
-  final String createdAt;
-  final String updatedAt;
 
   LoanType toEntity() {
     return LoanType(
@@ -62,56 +55,50 @@ class LoanTypeDTO {
       name: name,
       description: description,
       currencies: List<Currency>.from(currencies.map((x) => x.toEntity())),
-      minDuration: minduration,
-      maxDuration: maxduration,
-      interestRate: interestrate,
+      minDuration: minDuration,
+      maxDuration: maxDuration,
+      interestRate: interestRate,
       image: image,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      createdAt: '',
+      updatedAt: '',
     );
   }
 
-  LoanTypeDTO copyWith({
+  LoanTypeDto copyWith({
     List<String>? purpose,
     String? id,
     String? name,
     String? description,
-    List<CurrencyDTO>? currencies,
-    int? minduration,
-    int? maxduration,
-    int? interestrate,
+    List<CurrencyDto>? currencies,
+    int? minDuration,
+    int? maxDuration,
+    int? interestRate,
     String? image,
-    String? createdAt,
-    String? updatedAt,
   }) {
-    return LoanTypeDTO(
+    return LoanTypeDto(
       purpose: purpose ?? this.purpose,
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
       currencies: currencies ?? this.currencies,
-      minduration: minduration ?? this.minduration,
-      maxduration: maxduration ?? this.maxduration,
-      interestrate: interestrate ?? this.interestrate,
+      minDuration: minDuration ?? this.minDuration,
+      maxDuration: maxDuration ?? this.maxDuration,
+      interestRate: interestRate ?? this.interestRate,
       image: image ?? this.image,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'purpose': purpose,
-      '_id': id,
+      'id': id,
       'name': name,
       'description': description,
       'currencies': currencies.map((x) => x.toMap()).toList(),
-      'minduration': minduration,
-      'maxduration': maxduration,
-      'interestrate': interestrate,
+      'minDuration': minDuration,
+      'maxDuration': maxDuration,
+      'interestRate': interestRate,
       'image': image,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
     };
   }
 
@@ -119,28 +106,26 @@ class LoanTypeDTO {
 
   @override
   String toString() {
-    return 'LoanTypeDTO(purpose: $purpose, _id: $id, name: $name, description:'
-        ' $description, currencies: $currencies, minduration: $minduration, '
-        'maxduration: $maxduration, interestrate: $interestrate, image: '
-        '$image, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'LoanTypeDto(purpose: $purpose, id: $id, name: $name, description: '
+        '$description, currencies: $currencies, minDuration: $minDuration, '
+        'maxDuration: $maxDuration, interestRate: $interestRate, '
+        'image: $image)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is LoanTypeDTO &&
+    return other is LoanTypeDto &&
         listEquals(other.purpose, purpose) &&
         other.id == id &&
         other.name == name &&
         other.description == description &&
         listEquals(other.currencies, currencies) &&
-        other.minduration == minduration &&
-        other.maxduration == maxduration &&
-        other.interestrate == interestrate &&
-        other.image == image &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.minDuration == minDuration &&
+        other.maxDuration == maxDuration &&
+        other.interestRate == interestRate &&
+        other.image == image;
   }
 
   @override
@@ -150,11 +135,9 @@ class LoanTypeDTO {
         name.hashCode ^
         description.hashCode ^
         currencies.hashCode ^
-        minduration.hashCode ^
-        maxduration.hashCode ^
-        interestrate.hashCode ^
-        image.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
+        minDuration.hashCode ^
+        maxDuration.hashCode ^
+        interestRate.hashCode ^
+        image.hashCode;
   }
 }

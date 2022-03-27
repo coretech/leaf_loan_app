@@ -27,7 +27,7 @@ class LoanTypeRemoteRepo extends LoanTypeRepository {
         final responseDto = ResponseDto.fromMap(response.data);
         final loanTypes = (responseDto.data as List<dynamic>)
             .map(
-              (loanType) => LoanTypeDTO.fromMap(loanType).toEntity(),
+              (loanType) => LoanTypeDto.fromMap(loanType).toEntity(),
             )
             .toList();
         return Right(loanTypes);

@@ -3,7 +3,7 @@ library currency_id_dto_test;
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loan_app/core/data/dtos/currency_id_dto.dart';
+import 'package:loan_app/core/data/dtos/currency_id_dto_old.dart';
 import 'package:loan_app/core/domain/entities/currency_id.dart';
 
 void main() {
@@ -22,7 +22,7 @@ void main() {
     'When the constructor is called with the values, '
     'Then an instance of CurrencyIdDto with the values should be created',
     () {
-      final currencyIdDto = CurrencyIdDto(
+      final currencyIdDto = CurrencyIdDtoOld(
         id: 'some_id',
         name: 'Rwandan Franc',
         fiatcode: 'RWF',
@@ -31,7 +31,7 @@ void main() {
         createdAt: '2019-05-15T12:00:00.000Z',
         updatedAt: '2019-05-15T12:00:00.000Z',
       );
-      expect(currencyIdDto, isA<CurrencyIdDto>());
+      expect(currencyIdDto, isA<CurrencyIdDtoOld>());
       expect(currencyIdDto.id, 'some_id');
       expect(currencyIdDto.name, 'Rwandan Franc');
       expect(currencyIdDto.fiatcode, 'RWF');
@@ -47,8 +47,8 @@ void main() {
     'When CurrencyIdDto.fromMap is called with the map, '
     'Then an instance of CurrencyIdDto should be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
-      expect(currencyIdDto, isA<CurrencyIdDto>());
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
+      expect(currencyIdDto, isA<CurrencyIdDtoOld>());
       expect(currencyIdDto.id, 'some_id');
       expect(currencyIdDto.name, 'Rwandan Franc');
       expect(currencyIdDto.fiatcode, 'RWF');
@@ -65,8 +65,8 @@ void main() {
     'Then an instance of CurrencyIdDto should be returned',
     () {
       final currencyJson = jsonEncode(_currencyIdMap);
-      final currencyIdDto = CurrencyIdDto.fromJson(currencyJson);
-      expect(currencyIdDto, isA<CurrencyIdDto>());
+      final currencyIdDto = CurrencyIdDtoOld.fromJson(currencyJson);
+      expect(currencyIdDto, isA<CurrencyIdDtoOld>());
       expect(currencyIdDto.id, 'some_id');
       expect(currencyIdDto.name, 'Rwandan Franc');
       expect(currencyIdDto.fiatcode, 'RWF');
@@ -81,7 +81,7 @@ void main() {
     'When CurrencyIdDto.toEntity is called on it, '
     'Then an instance of CurrencyId should be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       final currencyId = currencyIdDto.toEntity();
       expect(currencyId, isA<CurrencyId>());
       expect(currencyId.id, 'some_id');
@@ -100,12 +100,12 @@ void main() {
     'Then an instance of CurrencyIdDto with different values should '
     'be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       final newCurrencyIdDto = currencyIdDto.copyWith(
         description: 'This is a new description',
         createdAt: '2021-05-15T12:00:00.000Z',
       );
-      expect(newCurrencyIdDto, isA<CurrencyIdDto>());
+      expect(newCurrencyIdDto, isA<CurrencyIdDtoOld>());
       expect(newCurrencyIdDto.id, 'some_id');
       expect(newCurrencyIdDto.name, 'Rwandan Franc');
       expect(newCurrencyIdDto.fiatcode, 'RWF');
@@ -121,7 +121,7 @@ void main() {
     'When CurrencyIdDto.toMap is called on it, '
     'Then a map that has all the right values should be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       final currencyIdMap = currencyIdDto.toMap();
       expect(currencyIdMap, isA<Map<String, dynamic>>());
       expect(currencyIdMap, _currencyIdMap);
@@ -133,7 +133,7 @@ void main() {
     'When CurrencyIdDto.toJson is called on it, '
     'Then a json string that has all the right values should be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       final currencyJson = currencyIdDto.toJson();
       final expectedJsonValue = jsonEncode(_currencyIdMap);
       expect(currencyJson, expectedJsonValue);
@@ -145,8 +145,8 @@ void main() {
     'When they are compared with ==, '
     'Then evaluation of the expression should be true',
     () {
-      final currencyIdDto1 = CurrencyIdDto.fromMap(_currencyIdMap);
-      final currencyIdDto2 = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto1 = CurrencyIdDtoOld.fromMap(_currencyIdMap);
+      final currencyIdDto2 = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       expect(currencyIdDto1 == currencyIdDto2, true);
     },
   );
@@ -156,7 +156,7 @@ void main() {
     'When CurrencyIdDto.hashCode is called, '
     'Then an integer value should be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       final hashCode = currencyIdDto.hashCode;
       expect(hashCode, isA<int>());
     },
@@ -167,7 +167,7 @@ void main() {
     'When CurrencyIdDto.toString is called, '
     'Then an a string matching the following format should be returned',
     () {
-      final currencyIdDto = CurrencyIdDto.fromMap(_currencyIdMap);
+      final currencyIdDto = CurrencyIdDtoOld.fromMap(_currencyIdMap);
       final currencyIdDtoString = currencyIdDto.toString();
       expect(
         currencyIdDtoString,

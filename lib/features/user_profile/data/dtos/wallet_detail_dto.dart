@@ -16,7 +16,7 @@ class WalletDetailDto {
       balance: double.parse(map['balance'].toString()),
       createddate: map['createddate'],
       id: map['_id'],
-      currencyid: CurrencyIdDto.fromMap(map['currencyid']),
+      currencyid: CurrencyIdDtoOld.fromMap(map['currencyid']),
     );
   }
 
@@ -26,7 +26,7 @@ class WalletDetailDto {
   final double balance;
   final String createddate;
   final String id;
-  final CurrencyIdDto currencyid;
+  final CurrencyIdDtoOld currencyid;
 
   WalletDetail toEntity() {
     return WalletDetail(
@@ -41,7 +41,7 @@ class WalletDetailDto {
     double? balance,
     String? createddate,
     String? id,
-    CurrencyIdDto? currencyid,
+    CurrencyIdDtoOld? currencyid,
   }) {
     return WalletDetailDto(
       balance: balance ?? this.balance,

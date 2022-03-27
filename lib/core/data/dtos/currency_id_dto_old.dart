@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:loan_app/core/domain/entities/entities.dart';
 
 
-class CurrencyIdDto {
-  CurrencyIdDto({
+class CurrencyIdDtoOld {
+  CurrencyIdDtoOld({
     required this.id,
     required this.name,
     required this.fiatcode,
@@ -14,8 +14,8 @@ class CurrencyIdDto {
     required this.updatedAt,
   });
 
-  factory CurrencyIdDto.fromMap(Map<String, dynamic> map) {
-    return CurrencyIdDto(
+  factory CurrencyIdDtoOld.fromMap(Map<String, dynamic> map) {
+    return CurrencyIdDtoOld(
       id: map['_id'],
       name: map['name'],
       fiatcode: map['fiatcode'],
@@ -26,8 +26,8 @@ class CurrencyIdDto {
     );
   }
 
-  factory CurrencyIdDto.fromJson(String source) =>
-      CurrencyIdDto.fromMap(json.decode(source));
+  factory CurrencyIdDtoOld.fromJson(String source) =>
+      CurrencyIdDtoOld.fromMap(json.decode(source));
 
   final String id;
   final String name;
@@ -49,7 +49,7 @@ class CurrencyIdDto {
     );
   }
 
-  CurrencyIdDto copyWith({
+  CurrencyIdDtoOld copyWith({
     String? id,
     String? name,
     String? fiatcode,
@@ -58,7 +58,7 @@ class CurrencyIdDto {
     String? createdAt,
     String? updatedAt,
   }) {
-    return CurrencyIdDto(
+    return CurrencyIdDtoOld(
       id: id ?? this.id,
       name: name ?? this.name,
       fiatcode: fiatcode ?? this.fiatcode,
@@ -94,7 +94,7 @@ class CurrencyIdDto {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CurrencyIdDto &&
+    return other is CurrencyIdDtoOld &&
         other.id == id &&
         other.name == name &&
         other.fiatcode == fiatcode &&

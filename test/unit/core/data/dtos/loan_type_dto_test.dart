@@ -230,8 +230,8 @@ void main() {
       final loanTypeDtoString = loanTypeDto.toString();
       expect(
         loanTypeDtoString,
-        'LoanTypeDtoOld(purpose: ${loanTypeDto.purpose}, _id: ${loanTypeDto.id}, '
-        'name: ${loanTypeDto.name}, description:'
+        'LoanTypeDtoOld(purpose: ${loanTypeDto.purpose}, _id: '
+        '${loanTypeDto.id}, name: ${loanTypeDto.name}, description:'
         ' ${loanTypeDto.description}, currencies: ${loanTypeDto.currencies}, '
         'minduration: ${loanTypeDto.minduration}, '
         'maxduration: ${loanTypeDto.maxduration}, interestrate: '

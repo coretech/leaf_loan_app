@@ -27,7 +27,7 @@ class ArticlesRemoteRepo implements ArticlesRepository {
         final responseDto = ResponseDto.fromMap(response.data);
         final articles = (responseDto.data as List<dynamic>)
             .map(
-              (article) => ArticleDTO.fromMap(article).toEntity(),
+              (article) => ArticleDto.fromMap(article).toEntity(),
             )
             .toList();
         return Right(articles);

@@ -2,57 +2,47 @@ import 'dart:convert';
 
 import 'package:loan_app/core/domain/entities/entities.dart';
 
-class ArticleDTO {
-  ArticleDTO({
+class ArticleDto {
+  final String id;
+  final String title;
+  final String description;
+  final String linkUrl;
+  final String imageUrl;
+  final String createdAt;
+  ArticleDto({
     required this.id,
     required this.title,
     required this.description,
-    required this.linkurl,
-    required this.imageurl,
+    required this.linkUrl,
+    required this.imageUrl,
+    required this.createdAt,
   });
-
-  factory ArticleDTO.fromMap(Map<String, dynamic> map) {
-    return ArticleDTO(
-      id: map['_id'] ?? '',
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      linkurl: map['linkurl'] ?? '',
-      imageurl: map['imageurl'] ?? '',
-    );
-  }
-
-  factory ArticleDTO.fromJson(String source) =>
-      ArticleDTO.fromMap(json.decode(source));
 
   Article toEntity() {
     return Article(
       title: title,
       description: description,
-      url: linkurl,
-      imageUrl: imageurl,
-      id: '',
+      url: linkUrl,
+      imageUrl: imageUrl,
+      id: id,
     );
   }
 
-  final String id;
-  final String title;
-  final String description;
-  final String linkurl;
-  final String imageurl;
-
-  ArticleDTO copyWith({
+  ArticleDto copyWith({
     String? id,
     String? title,
     String? description,
-    String? linkurl,
-    String? imageurl,
+    String? linkUrl,
+    String? imageUrl,
+    String? createdAt,
   }) {
-    return ArticleDTO(
+    return ArticleDto(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      linkurl: linkurl ?? this.linkurl,
-      imageurl: imageurl ?? this.imageurl,
+      linkUrl: linkUrl ?? this.linkUrl,
+      imageUrl: imageUrl ?? this.imageUrl,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -61,29 +51,44 @@ class ArticleDTO {
       'id': id,
       'title': title,
       'description': description,
-      'linkurl': linkurl,
-      'imageurl': imageurl,
+      'linkUrl': linkUrl,
+      'imageUrl': imageUrl,
+      'createdAt': createdAt,
     };
+  }
+
+  factory ArticleDto.fromMap(Map<String, dynamic> map) {
+    return ArticleDto(
+      id: map['id'] ?? '',
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      linkUrl: map['linkUrl'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+      createdAt: map['createdAt'] ?? '',
+    );
   }
 
   String toJson() => json.encode(toMap());
 
+  factory ArticleDto.fromJson(String source) =>
+      ArticleDto.fromMap(json.decode(source));
+
   @override
   String toString() {
-    return 'ArticleDTO(id: $id, title: $title, description: $description, '
-        'linkurl: $linkurl, imageurl: $imageurl)';
+    return 'ArticleDto(id: $id, title: $title, description: $description, linkUrl: $linkUrl, imageUrl: $imageUrl, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ArticleDTO &&
+    return other is ArticleDto &&
         other.id == id &&
         other.title == title &&
         other.description == description &&
-        other.linkurl == linkurl &&
-        other.imageurl == imageurl;
+        other.linkUrl == linkUrl &&
+        other.imageUrl == imageUrl &&
+        other.createdAt == createdAt;
   }
 
   @override
@@ -91,7 +96,8 @@ class ArticleDTO {
     return id.hashCode ^
         title.hashCode ^
         description.hashCode ^
-        linkurl.hashCode ^
-        imageurl.hashCode;
+        linkUrl.hashCode ^
+        imageUrl.hashCode ^
+        createdAt.hashCode;
   }
 }

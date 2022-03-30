@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:loan_app/core/data/dtos/dtos.dart';
-
+import 'package:loan_app/core/domain/entities/entities.dart';
+import 'package:loan_app/features/user_profile/domain/domain.dart';
 
 class WalletDto {
   final double balance;
@@ -10,6 +11,30 @@ class WalletDto {
     required this.balance,
     required this.currency,
   });
+
+  Wallet toEntity() {
+    return Wallet(
+      createdAt: '',
+      customerId: '',
+      id: '',
+      updatedAt: '',
+      walletDetail: [
+        WalletDetail(
+            balance: balance,
+            createdDate: '',
+            currencyId: CurrencyId(
+              country: '',
+              createdAt: '',
+              description: '',
+              fiatCode: '',
+              id: '',
+              name: '',
+              updatedAt: '',
+            ),
+            id: '')
+      ],
+    );
+  }
 
   WalletDto copyWith({
     double? balance,

@@ -15,15 +15,9 @@ void main() {
         description: 'description',
         currencies: [
           Currency(
-            currencyId: CurrencyId(
-              id: 'some_id',
-              name: 'Rwandan Franc',
-              fiatCode: 'RWF',
-              description: 'Rwandan Franc',
-              country: 'Rwanda',
-              createdAt: '2019-05-15T12:00:00.000Z',
-              updatedAt: '2019-05-15T12:00:00.000Z',
-            ),
+            id: '',
+            fiatCode: 'KES',
+            name: 'KESC',
             minLoanAmount: 100,
             maxLoanAmount: 1000,
           ),

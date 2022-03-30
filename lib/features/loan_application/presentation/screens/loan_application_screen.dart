@@ -269,7 +269,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
             .currencies[_selectedCurrencyIndex],
       ),
     );
-    if (success) {
+    if (success ?? false) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

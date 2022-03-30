@@ -67,7 +67,7 @@ class LoanDataDto {
       remainingAmount: remainingAmount,
       duration: duration,
       requestDate: requestDate,
-      createdAt: '',
+      createdAt: requestDate,
       updatedAt: '',
     );
   }
@@ -127,10 +127,10 @@ class LoanDataDto {
       loanPurpose: map['loanpurpose'] ?? '',
       currency: CurrencyDto.fromMap(map['currency']),
       dueDate: map['duedate'] ?? '',
-      requestedAmount: map['requestedamount']?.toInt() ?? 0,
-      interestAmount: map['interestamount']?.toInt() ?? 0,
-      totalAmount: map['totalamount']?.toInt() ?? 0,
-      remainingAmount: map['remainingamount']?.toInt() ?? 0,
+      requestedAmount: map['requestedamount']?.toDouble() ?? 0,
+      interestAmount: map['interestamount']?.toDouble() ?? 0,
+      totalAmount: map['totalamount']?.toDouble() ?? 0,
+      remainingAmount: map['remainingamount']?.toDouble() ?? 0,
       duration: map['duration']?.toInt() ?? 0,
       requestDate: map['requestdate'] ?? '',
     );

@@ -8,12 +8,13 @@ void main() {
     'Then an instance of Currency with the values should be created',
     () {
       final currency = Currency(
-        currencyId: null,
+        id: '',
+        fiatCode: 'KES',
+        name: 'KESC',
         minLoanAmount: 100,
         maxLoanAmount: 1000,
       );
       expect(currency, isA<Currency>());
-      expect(currency.currencyId, isNull);
       expect(currency.minLoanAmount, 100);
       expect(currency.maxLoanAmount, 1000);
     },
@@ -25,7 +26,9 @@ void main() {
     'Then an instance of Currency with different values should be returned',
     () {
       final currency = Currency(
-        currencyId: null,
+        id: '',
+        fiatCode: 'KES',
+        name: 'KESC',
         minLoanAmount: 100,
         maxLoanAmount: 1000,
       );
@@ -34,7 +37,6 @@ void main() {
         minLoanAmount: 200,
       );
       expect(newCurrency, isA<Currency>());
-      expect(newCurrency.currencyId, isNull);
       expect(newCurrency.minLoanAmount, 200);
       expect(newCurrency.maxLoanAmount, 2000);
     },
@@ -46,12 +48,16 @@ void main() {
     'Then evaluation of the expression should be true',
     () {
       final currency1 = Currency(
-        currencyId: null,
+        id: '',
+        fiatCode: 'KES',
+        name: 'KESC',
         minLoanAmount: 100,
         maxLoanAmount: 1000,
       );
       final currency2 = Currency(
-        currencyId: null,
+        id: '',
+        fiatCode: 'KES',
+        name: 'KESC',
         minLoanAmount: 100,
         maxLoanAmount: 1000,
       );
@@ -65,7 +71,9 @@ void main() {
     'Then an integer value should be returned',
     () {
       final currency = Currency(
-        currencyId: null,
+        id: '',
+        fiatCode: 'KES',
+        name: 'KESC',
         minLoanAmount: 100,
         maxLoanAmount: 1000,
       );

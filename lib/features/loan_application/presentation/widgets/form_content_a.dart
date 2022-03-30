@@ -89,11 +89,8 @@ class FormContentA extends StatelessWidget {
                 ),
                 LoanAmountPicker(
                   fiatCode: hasLoanTypes
-                      ? loanTypeProvider
-                          .loanTypes[selectedLoanTypeIndex]
-                          .currencies[selectedCurrencyIndex]
-                          .currencyId!
-                          .fiatCode
+                      ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
+                          .currencies[selectedCurrencyIndex].fiatCode
                       : null,
                   interestRate: hasLoanTypes
                       ? loanTypeProvider

@@ -47,7 +47,7 @@ class CurrencyCard extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        currency.currencyId!.fiatCode,
+                        currency.fiatCode,
                         style: Theme.of(context).textTheme.headline6?.copyWith(
                               fontSize: 14,
                             ),

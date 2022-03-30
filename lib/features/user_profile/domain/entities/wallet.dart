@@ -1,40 +1,21 @@
-import 'package:flutter/foundation.dart';
-import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
+import 'package:loan_app/core/domain/domain.dart';
 
 class Wallet {
+  final double balance;
+  final Currency currency;
   Wallet({
-    required this.id,
-    required this.customerId,
-    required this.walletDetail,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.balance,
+    required this.currency,
   });
-  final String id;
-  final String customerId;
-  final List<WalletDetail> walletDetail;
-  final String createdAt;
-  final String updatedAt;
 
   Wallet copyWith({
-    String? id,
-    String? customerId,
-    List<WalletDetail>? walletDetail,
-    String? createdAt,
-    String? updatedAt,
+    double? balance,
+    Currency? currency,
   }) {
     return Wallet(
-      id: id ?? this.id,
-      customerId: customerId ?? this.customerId,
-      walletDetail: walletDetail ?? this.walletDetail,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      balance: balance ?? this.balance,
+      currency: currency ?? this.currency,
     );
-  }
-
-  @override
-  String toString() {
-    return 'Wallet(_id: $id, customerId: $customerId, walletDetail: '
-        '$walletDetail, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -42,19 +23,13 @@ class Wallet {
     if (identical(this, other)) return true;
 
     return other is Wallet &&
-        other.id == id &&
-        other.customerId == customerId &&
-        listEquals(other.walletDetail, walletDetail) &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.balance == balance &&
+        other.currency == currency;
   }
 
   @override
-  int get hashCode {
-    return id.hashCode ^
-        customerId.hashCode ^
-        walletDetail.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
-  }
+  int get hashCode => balance.hashCode ^ currency.hashCode;
+
+  @override
+  String toString() => 'Wallet(balance: $balance, currency: $currency)';
 }

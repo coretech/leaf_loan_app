@@ -79,9 +79,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                           ),
                         if (loanPaymentProvider.walletErrorMessage != null)
                           _buildErrorWidget(loanPaymentProvider, context),
-                        if (loanPaymentProvider.wallet != null)
+                        if (loanPaymentProvider.wallets.isNotEmpty)
                           LeafBalanceWidget(
-                            balance: _getBalance(loanPaymentProvider.wallet!),
+                            balance: _getBalance(loanPaymentProvider.wallets),
                             currencyFiat: widget.loan.currencyId!.fiatCode,
                           ),
                         const SizedBox(height: 20),
@@ -303,11 +303,11 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
     return widget.loan.remainingAmount - amount;
   }
 
-  double _getBalance(Wallet wallet) {
+  double _getBalance(List<Wallet> wallets) {
     try {
-      final activeCurrency = wallet.walletDetail.firstWhere(
-        (walletDetail) =>
-            walletDetail.currencyId.fiatCode ==
+      final activeCurrency = wallets.firstWhere(
+        (wallet) =>
+            wallet.currency.fiatCode ==
             widget.loan.currencyId!.fiatCode,
       );
       balance = activeCurrency.balance;

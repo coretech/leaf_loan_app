@@ -106,7 +106,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                       ),
                       Expanded(
                         child: Text(
-                          '${widget.selectedCurrency.currencyId!.fiatCode} '
+                          '${widget.selectedCurrency.fiatCode} '
                           '${Formatter.formatMoney(widget.amount)}',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
@@ -153,7 +153,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
                       ),
                       Expanded(
                         child: Text(
-                          '${widget.selectedCurrency.currencyId!.fiatCode} '
+                          '${widget.selectedCurrency.fiatCode} '
                           '${Formatter.formatMoney(_getAmountDue())}',
                           style: Theme.of(context).textTheme.caption?.copyWith(
                                 fontSize: 16,
@@ -286,7 +286,7 @@ class _LoanConfirmationWidgetState extends State<LoanConfirmationWidget> {
     if (pinCode != null) {
       await _loanApplicationProvider.apply(
         amount: widget.amount,
-        currencyId: widget.selectedCurrency.currencyId!.id,
+        currencyId: widget.selectedCurrency.id,
         duration: widget.durationDays,
         loanPurpose: widget.purpose,
         loanTypeId: widget.loanType.id,

@@ -62,7 +62,6 @@ void main() {
       final currencyDto = CurrencyDto.fromMap(_currencyMap);
       final currency = currencyDto.toEntity();
       expect(currency, isA<Currency>());
-      expect(currency.currencyId, isNull);
       expect(currency.minLoanAmount, 100);
       expect(currency.maxLoanAmount, 1000);
     },

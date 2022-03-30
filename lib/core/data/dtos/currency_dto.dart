@@ -6,8 +6,8 @@ class CurrencyDto {
   final String id;
   final String fiatCode;
   final String name;
-  final int minLoanAmount;
-  final int maxLoanAmount;
+  final double minLoanAmount;
+  final double maxLoanAmount;
   CurrencyDto({
     required this.id,
     required this.fiatCode,
@@ -18,15 +18,9 @@ class CurrencyDto {
 
   Currency toEntity() {
     return Currency(
-      currencyId: CurrencyId(
-        id: id,
-        updatedAt: '',
-        description: '',
-        createdAt: '',
-        name: name,
-        fiatCode: fiatCode,
-        country: '',
-      ),
+      id: id,
+      fiatCode: fiatCode,
+      name: name,
       minLoanAmount: minLoanAmount,
       maxLoanAmount: maxLoanAmount,
     );
@@ -36,8 +30,8 @@ class CurrencyDto {
     String? id,
     String? fiatCode,
     String? name,
-    int? minLoanAmount,
-    int? maxLoanAmount,
+    double? minLoanAmount,
+    double? maxLoanAmount,
   }) {
     return CurrencyDto(
       id: id ?? this.id,
@@ -63,8 +57,8 @@ class CurrencyDto {
       id: map['id'] ?? '',
       fiatCode: map['fiatcode'] ?? '',
       name: map['name'] ?? '',
-      minLoanAmount: map['minloanamount']?.toInt() ?? 0,
-      maxLoanAmount: map['maxloanamount']?.toInt() ?? 0,
+      minLoanAmount: map['minloanamount']?.toDouble() ?? 0,
+      maxLoanAmount: map['maxloanamount']?.toDouble() ?? 0,
     );
   }
 

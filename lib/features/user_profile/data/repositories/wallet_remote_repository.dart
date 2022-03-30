@@ -14,7 +14,7 @@ class WalletRemoteRepository implements WalletRepository {
   final AuthHelper _authHelper = AuthIOC.authHelper();
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   @override
-  Future<Either<WalletFailure, Wallet>> getWallet() async {
+  Future<Either<WalletFailure, List<Wallet>>> getWallet() async {
     try {
       final token = await _authHelper.getToken() ?? '';
       final response = await _httpHelper.get(
@@ -24,9 +24,12 @@ class WalletRemoteRepository implements WalletRepository {
         ]),
       );
       final responseDto = ResponseDto.fromMap(response.data);
-      final _walletDto = WalletDto.fromMap(responseDto.data);
-      final _wallet = _walletDto.toEntity();
-      return Right(_wallet);
+      final _wallets = (responseDto.data as List<dynamic>)
+          .map(
+            (walletDto) => WalletDto.fromMap(walletDto).toEntity(),
+          )
+          .toList();
+      return Right(_wallets);
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
       return left(WalletFailure());

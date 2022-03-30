@@ -30,7 +30,7 @@ class LoanTypeDto {
       ),
       minDuration: map['minduration']?.toInt() ?? 0,
       maxDuration: map['maxduration']?.toInt() ?? 0,
-      interestRate: map['interestdate']?.toInt() ?? 0,
+      interestRate: map['interestrate']?.toDouble() ?? 0,
       image: map['image'] ?? '',
     );
   }
@@ -45,7 +45,7 @@ class LoanTypeDto {
   final List<CurrencyDto> currencies;
   final int minDuration;
   final int maxDuration;
-  final int interestRate;
+  final double interestRate;
   final String image;
 
   LoanType toEntity() {
@@ -72,7 +72,7 @@ class LoanTypeDto {
     List<CurrencyDto>? currencies,
     int? minDuration,
     int? maxDuration,
-    int? interestRate,
+    double? interestRate,
     String? image,
   }) {
     return LoanTypeDto(

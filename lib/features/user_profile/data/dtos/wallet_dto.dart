@@ -14,25 +14,8 @@ class WalletDto {
 
   Wallet toEntity() {
     return Wallet(
-      createdAt: '',
-      customerId: '',
-      id: '',
-      updatedAt: '',
-      walletDetail: [
-        WalletDetail(
-            balance: balance,
-            createdDate: '',
-            currencyId: CurrencyId(
-              country: '',
-              createdAt: '',
-              description: '',
-              fiatCode: '',
-              id: '',
-              name: '',
-              updatedAt: '',
-            ),
-            id: '')
-      ],
+      balance: balance,
+      currency: currency.toEntity(),
     );
   }
 

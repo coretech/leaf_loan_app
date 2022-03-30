@@ -7,7 +7,7 @@ import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 import 'package:loan_app/features/user_profile/ioc/ioc.dart';
 
 class LoanPaymentProvider extends ChangeNotifier {
-  Wallet? wallet;
+  List<Wallet> wallets = [];
 
   bool loading = false;
 
@@ -53,8 +53,8 @@ class LoanPaymentProvider extends ChangeNotifier {
         walletErrorMessage =
             "We couldn't fetch wallet balance. Please try again.";
       },
-      (wallet) {
-        this.wallet = wallet;
+      (wallets) {
+        this.wallets = wallets;
       },
     );
 

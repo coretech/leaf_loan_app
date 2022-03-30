@@ -16,7 +16,7 @@ class LoanCurrencyPicker extends StatelessWidget {
   }) : super(key: key);
 
   final bool loading;
-  final List<Currency> currencies;
+  final List<LoanCurrency> currencies;
   final int selectedIndex;
   final ValueChanged<int> onChanged;
   final bool shouldShowTitle;
@@ -89,14 +89,15 @@ class LoanCurrencyPicker extends StatelessWidget {
       final currencyCards = <Widget>[];
       for (var i = 0; i < currencies.length; i++) {
         final currency = currencies[i];
-        final code = CountryUtil.getCode(CurrencyUtil.getCountryName(currency.fiatCode));
+        final code =
+            CountryUtil.getCode(CurrencyUtil.getCountryName(currency.fiatCode));
         final flag = Flag.fromString(
           code?.toLowerCase() ?? 'rw',
           height: 25,
           width: 50,
         );
         currencyCards.add(
-          CurrencyCard(
+          LoanCurrencyCard(
             currency: currency,
             flag: flag,
             index: i,

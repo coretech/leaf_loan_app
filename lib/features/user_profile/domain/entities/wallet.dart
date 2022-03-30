@@ -1,12 +1,13 @@
 import 'package:loan_app/core/domain/domain.dart';
 
 class Wallet {
-  final double balance;
-  final Currency currency;
   Wallet({
     required this.balance,
     required this.currency,
   });
+
+  final double balance;
+  final Currency currency;
 
   Wallet copyWith({
     double? balance,

@@ -95,24 +95,20 @@ class FormContentA extends StatelessWidget {
                   interestRate: hasLoanTypes
                       ? loanTypeProvider
                           .loanTypes[selectedLoanTypeIndex].interestRate
-                          .toDouble()
                       : null,
                   loading: loanTypeProvider.loading,
                   loanAmount: loanAmount ??
                       (hasLoanTypes
                           ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
                               .currencies[selectedCurrencyIndex].maxLoanAmount
-                              .toDouble()
                           : 0),
                   maxAmount: hasLoanTypes
                       ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
                           .currencies[selectedCurrencyIndex].maxLoanAmount
-                          .toDouble()
                       : null,
                   minAmount: hasLoanTypes
                       ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
                           .currencies[selectedCurrencyIndex].minLoanAmount
-                          .toDouble()
                       : null,
                   onChanged: onLoanAmountChanged,
                 ),

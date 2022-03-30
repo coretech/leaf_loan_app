@@ -285,7 +285,7 @@ class CurrencyUtil {
     'XPF': 'Wallis And Futuna',
     'XPT': 'Zz10_platinum',
     'XRE': 'Zz02_rinet Funds Code',
-    'XSU': 'Sistema Unitario De Compensacion Regional De Pagos \"Sucre',
+    'XSU': 'Sistema Unitario De Compensacion Regional De Pagos "Sucre',
     'XTS': 'Zz06_testing_code',
     'XUA': 'Member Countries Of The African Development Bank Group',
     'XXX': 'Zz07_no_currency',

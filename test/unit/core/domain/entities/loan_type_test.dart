@@ -1,7 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loan_app/core/domain/entities/currency.dart';
-import 'package:loan_app/core/domain/entities/currency_id.dart';
-import 'package:loan_app/core/domain/entities/loan_type.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 
 void main() {
   test(
@@ -14,7 +12,7 @@ void main() {
         name: 'name',
         description: 'description',
         currencies: [
-          Currency(
+          LoanCurrency(
             id: '',
             fiatCode: 'KES',
             name: 'KESC',

@@ -1,13 +1,10 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 
 class StatDto {
-  final String id;
-  final String title;
-  final String description;
-  final String unit;
-  final num value;
   StatDto({
     required this.id,
     required this.title,
@@ -15,6 +12,25 @@ class StatDto {
     required this.unit,
     required this.value,
   });
+
+  factory StatDto.fromMap(Map<String, dynamic> map) {
+    return StatDto(
+      id: map['id'] ?? '',
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      unit: map['unit'] ?? '',
+      value: map['value']?.toInt() ?? 0,
+    );
+  }
+
+  factory StatDto.fromJson(String source) =>
+      StatDto.fromMap(json.decode(source));
+
+  final String id;
+  final String title;
+  final String description;
+  final String unit;
+  final num value;
 
   StatDto copyWith({
     String? id,
@@ -51,20 +67,7 @@ class StatDto {
     };
   }
 
-  factory StatDto.fromMap(Map<String, dynamic> map) {
-    return StatDto(
-      id: map['id'] ?? '',
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      unit: map['unit'] ?? '',
-      value: map['value']?.toInt() ?? 0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory StatDto.fromJson(String source) =>
-      StatDto.fromMap(json.decode(source));
 
   @override
   String toString() {

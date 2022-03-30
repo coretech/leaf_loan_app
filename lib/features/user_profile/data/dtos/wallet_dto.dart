@@ -1,16 +1,28 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:loan_app/core/data/dtos/dtos.dart';
-import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/features/user_profile/domain/domain.dart';
 
 class WalletDto {
-  final double balance;
-  final CurrencyDto currency;
   WalletDto({
     required this.balance,
     required this.currency,
   });
+
+  factory WalletDto.fromMap(Map<String, dynamic> map) {
+    return WalletDto(
+      balance: map['balance']?.toDouble() ?? 0.0,
+      currency: CurrencyDto.fromMap(map['currency']),
+    );
+  }
+
+  factory WalletDto.fromJson(String source) =>
+      WalletDto.fromMap(json.decode(source));
+
+  final double balance;
+  final CurrencyDto currency;
 
   Wallet toEntity() {
     return Wallet(
@@ -36,17 +48,7 @@ class WalletDto {
     };
   }
 
-  factory WalletDto.fromMap(Map<String, dynamic> map) {
-    return WalletDto(
-      balance: map['balance']?.toDouble() ?? 0.0,
-      currency: CurrencyDto.fromMap(map['currency']),
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory WalletDto.fromJson(String source) =>
-      WalletDto.fromMap(json.decode(source));
 
   @override
   String toString() => 'WalletDto(balance: $balance, currency: $currency)';

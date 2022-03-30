@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/core/data/dtos/currency_dto.dart';
+import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/domain/domain.dart';
 
 class LoanTypeDto {
@@ -25,8 +25,8 @@ class LoanTypeDto {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
-      currencies: List<CurrencyDto>.from(
-        map['currencies']?.map((x) => CurrencyDto.fromMap(x)),
+      currencies: List<LoanCurrencyDto>.from(
+        map['currencies']?.map((x) => LoanCurrencyDto.fromMap(x)),
       ),
       minDuration: map['minduration']?.toInt() ?? 0,
       maxDuration: map['maxDuration']?.toInt() ?? 0,
@@ -42,7 +42,7 @@ class LoanTypeDto {
   final String id;
   final String name;
   final String description;
-  final List<CurrencyDto> currencies;
+  final List<LoanCurrencyDto> currencies;
   final int minDuration;
   final int maxDuration;
   final double interestRate;
@@ -54,7 +54,7 @@ class LoanTypeDto {
       id: id,
       name: name,
       description: description,
-      currencies: List<Currency>.from(currencies.map((x) => x.toEntity())),
+      currencies: List<LoanCurrency>.from(currencies.map((x) => x.toEntity())),
       minDuration: minDuration,
       maxDuration: maxDuration,
       interestRate: interestRate,
@@ -69,7 +69,7 @@ class LoanTypeDto {
     String? id,
     String? name,
     String? description,
-    List<CurrencyDto>? currencies,
+    List<LoanCurrencyDto>? currencies,
     int? minDuration,
     int? maxDuration,
     double? interestRate,

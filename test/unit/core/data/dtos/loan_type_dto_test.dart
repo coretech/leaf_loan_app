@@ -37,7 +37,7 @@ void main() {
         name: 'name',
         description: 'description',
         currencies: [
-          CurrencyDto(
+          LoanCurrencyDto(
             minLoanAmount: 100,
             maxLoanAmount: 1000,
             fiatCode: 'KES',
@@ -216,13 +216,14 @@ void main() {
       final loanTypeDto = LoanTypeDto.fromMap(_loanTypeMap);
       final loanTypeDtoString = loanTypeDto.toString();
       expect(
-          loanTypeDtoString,
-          'LoanTypeDto(purpose: ${loanTypeDto.purpose}, _id: '
-          '${loanTypeDto.id}, name: ${loanTypeDto.name}, description:'
-          ' ${loanTypeDto.description}, currencies: ${loanTypeDto.currencies}, '
-          'minDuration: ${loanTypeDto.minDuration}, '
-          'maxDuration: ${loanTypeDto.maxDuration}, interestRate: '
-          '${loanTypeDto.interestRate}, image: ');
+        loanTypeDtoString,
+        'LoanTypeDto(purpose: ${loanTypeDto.purpose}, _id: '
+        '${loanTypeDto.id}, name: ${loanTypeDto.name}, description:'
+        ' ${loanTypeDto.description}, currencies: ${loanTypeDto.currencies}, '
+        'minDuration: ${loanTypeDto.minDuration}, '
+        'maxDuration: ${loanTypeDto.maxDuration}, interestRate: '
+        '${loanTypeDto.interestRate}, image: ',
+      );
     },
   );
 }

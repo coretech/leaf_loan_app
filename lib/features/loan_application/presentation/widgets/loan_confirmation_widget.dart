@@ -18,7 +18,7 @@ class LoanConfirmationWidget extends StatefulWidget {
   final double amount;
   final int durationDays;
   final String purpose;
-  final Currency selectedCurrency;
+  final LoanCurrency selectedCurrency;
   final LoanType loanType;
 
   @override

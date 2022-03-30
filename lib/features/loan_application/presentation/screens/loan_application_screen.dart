@@ -193,8 +193,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       _selectedCurrencyIndex = 0;
       _selectedLoanTypeIndex = value;
       _loanAmount = _loanTypeProvider
-          .loanTypes[value].currencies[_selectedCurrencyIndex].minLoanAmount
-          .toDouble();
+          .loanTypes[value].currencies[_selectedCurrencyIndex].minLoanAmount;
     });
   }
 
@@ -202,8 +201,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     setState(() {
       _selectedCurrencyIndex = value;
       _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
-          .currencies[_selectedCurrencyIndex].minLoanAmount
-          .toDouble();
+          .currencies[_selectedCurrencyIndex].minLoanAmount;
     });
   }
 
@@ -298,8 +296,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     if (_loanTypeProvider.loanTypes.isNotEmpty) {
       setState(() {
         _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
-            .currencies[_selectedCurrencyIndex].minLoanAmount
-            .toDouble();
+            .currencies[_selectedCurrencyIndex].minLoanAmount;
       });
     }
   }

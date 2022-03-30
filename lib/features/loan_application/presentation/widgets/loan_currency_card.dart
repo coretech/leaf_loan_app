@@ -2,8 +2,8 @@ import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
 
-class CurrencyCard extends StatelessWidget {
-  const CurrencyCard({
+class LoanCurrencyCard extends StatelessWidget {
+  const LoanCurrencyCard({
     Key? key,
     required this.currency,
     required this.flag,
@@ -12,7 +12,7 @@ class CurrencyCard extends StatelessWidget {
     required this.selectedIndex,
   }) : super(key: key);
 
-  final Currency currency;
+  final LoanCurrency currency;
   final Flag flag;
   final int index;
   final ValueChanged<int> onTap;

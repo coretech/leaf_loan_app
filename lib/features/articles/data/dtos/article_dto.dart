@@ -3,12 +3,6 @@ import 'dart:convert';
 import 'package:loan_app/core/domain/entities/entities.dart';
 
 class ArticleDto {
-  final String id;
-  final String title;
-  final String description;
-  final String linkUrl;
-  final String imageUrl;
-  final String createdAt;
   ArticleDto({
     required this.id,
     required this.title,
@@ -17,6 +11,27 @@ class ArticleDto {
     required this.imageUrl,
     required this.createdAt,
   });
+
+  factory ArticleDto.fromMap(Map<String, dynamic> map) {
+    return ArticleDto(
+      id: map['id'] ?? '',
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      linkUrl: map['linkurl'] ?? '',
+      imageUrl: map['imageurl'] ?? '',
+      createdAt: map['createdAt'] ?? '',
+    );
+  }
+
+  factory ArticleDto.fromJson(String source) =>
+      ArticleDto.fromMap(json.decode(source));
+
+  final String id;
+  final String title;
+  final String description;
+  final String linkUrl;
+  final String imageUrl;
+  final String createdAt;
 
   Article toEntity() {
     return Article(
@@ -57,25 +72,13 @@ class ArticleDto {
     };
   }
 
-  factory ArticleDto.fromMap(Map<String, dynamic> map) {
-    return ArticleDto(
-      id: map['id'] ?? '',
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      linkUrl: map['linkurl'] ?? '',
-      imageUrl: map['imageurl'] ?? '',
-      createdAt: map['createdAt'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory ArticleDto.fromJson(String source) =>
-      ArticleDto.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'ArticleDto(id: $id, title: $title, description: $description, linkUrl: $linkUrl, imageUrl: $imageUrl, createdAt: $createdAt)';
+    return 'ArticleDto(id: $id, title: $title, description: '
+        '$description, linkUrl: $linkUrl, imageUrl: $imageUrl, '
+        'createdAt: $createdAt)';
   }
 
   @override

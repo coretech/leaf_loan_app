@@ -1,17 +1,11 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:loan_app/core/data/data.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 
 class PaymentDto {
-  final String status;
-  final String id;
-  final String loanId;
-  final double principalAmount;
-  final double interestAmount;
-  final double paymentAmount;
-  final CurrencyDto currency;
-  final String createdAt;
   PaymentDto({
     required this.status,
     required this.id,
@@ -22,6 +16,31 @@ class PaymentDto {
     required this.currency,
     required this.createdAt,
   });
+
+  factory PaymentDto.fromMap(Map<String, dynamic> map) {
+    return PaymentDto(
+      status: map['status'] ?? '',
+      id: map['id'] ?? '',
+      loanId: map['loanid'] ?? '',
+      principalAmount: map['principalamount']?.toDouble() ?? 0.0,
+      interestAmount: map['interestamount']?.toDouble() ?? 0.0,
+      paymentAmount: map['paymentamount']?.toInt() ?? 0,
+      currency: CurrencyDto.fromMap(map['currency']),
+      createdAt: map['createdAt'] ?? '',
+    );
+  }
+
+  factory PaymentDto.fromJson(String source) =>
+      PaymentDto.fromMap(json.decode(source));
+
+  final String status;
+  final String id;
+  final String loanId;
+  final double principalAmount;
+  final double interestAmount;
+  final double paymentAmount;
+  final CurrencyDto currency;
+  final String createdAt;
 
   Payment toEntity() {
     return Payment(
@@ -71,23 +90,7 @@ class PaymentDto {
     };
   }
 
-  factory PaymentDto.fromMap(Map<String, dynamic> map) {
-    return PaymentDto(
-      status: map['status'] ?? '',
-      id: map['id'] ?? '',
-      loanId: map['loanid'] ?? '',
-      principalAmount: map['principalamount']?.toDouble() ?? 0.0,
-      interestAmount: map['interestamount']?.toDouble() ?? 0.0,
-      paymentAmount: map['paymentamount']?.toInt() ?? 0,
-      currency: CurrencyDto.fromMap(map['currency']),
-      createdAt: map['createdAt'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory PaymentDto.fromJson(String source) =>
-      PaymentDto.fromMap(json.decode(source));
 
   @override
   String toString() {

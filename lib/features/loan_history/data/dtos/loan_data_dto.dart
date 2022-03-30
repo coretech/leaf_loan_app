@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:loan_app/core/data/data.dart';
@@ -5,18 +7,6 @@ import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 
 class LoanDataDto {
-  final String status;
-  final String id;
-  final String loanType;
-  final String loanPurpose;
-  final CurrencyDto currency;
-  final String dueDate;
-  final double requestedAmount;
-  final double interestAmount;
-  final double totalAmount;
-  final double remainingAmount;
-  final int duration;
-  final String requestDate;
   LoanDataDto({
     required this.status,
     required this.id,
@@ -31,6 +21,26 @@ class LoanDataDto {
     required this.duration,
     required this.requestDate,
   });
+
+  factory LoanDataDto.fromMap(Map<String, dynamic> map) {
+    return LoanDataDto(
+      status: map['status'] ?? '',
+      id: map['id'] ?? '',
+      loanType: map['loantype'] ?? '',
+      loanPurpose: map['loanpurpose'] ?? '',
+      currency: CurrencyDto.fromMap(map['currency']),
+      dueDate: map['duedate'] ?? '',
+      requestedAmount: map['requestedamount']?.toDouble() ?? 0,
+      interestAmount: map['interestamount']?.toDouble() ?? 0,
+      totalAmount: map['totalamount']?.toDouble() ?? 0,
+      remainingAmount: map['remainingamount']?.toDouble() ?? 0,
+      duration: map['duration']?.toInt() ?? 0,
+      requestDate: map['requestdate'] ?? '',
+    );
+  }
+
+  factory LoanDataDto.fromJson(String source) =>
+      LoanDataDto.fromMap(json.decode(source));
 
   LoanData toEntity() {
     return LoanData(
@@ -61,7 +71,7 @@ class LoanDataDto {
         updatedAt: '',
       ),
       dueDate: dueDate,
-      requestedAmount: requestedAmount.toDouble(),
+      requestedAmount: requestedAmount,
       interestAmount: interestAmount,
       totalAmount: totalAmount,
       remainingAmount: remainingAmount,
@@ -71,6 +81,19 @@ class LoanDataDto {
       updatedAt: '',
     );
   }
+
+  final String status;
+  final String id;
+  final String loanType;
+  final String loanPurpose;
+  final CurrencyDto currency;
+  final String dueDate;
+  final double requestedAmount;
+  final double interestAmount;
+  final double totalAmount;
+  final double remainingAmount;
+  final int duration;
+  final String requestDate;
 
   LoanDataDto copyWith({
     String? status,
@@ -119,27 +142,7 @@ class LoanDataDto {
     };
   }
 
-  factory LoanDataDto.fromMap(Map<String, dynamic> map) {
-    return LoanDataDto(
-      status: map['status'] ?? '',
-      id: map['id'] ?? '',
-      loanType: map['loantype'] ?? '',
-      loanPurpose: map['loanpurpose'] ?? '',
-      currency: CurrencyDto.fromMap(map['currency']),
-      dueDate: map['duedate'] ?? '',
-      requestedAmount: map['requestedamount']?.toDouble() ?? 0,
-      interestAmount: map['interestamount']?.toDouble() ?? 0,
-      totalAmount: map['totalamount']?.toDouble() ?? 0,
-      remainingAmount: map['remainingamount']?.toDouble() ?? 0,
-      duration: map['duration']?.toInt() ?? 0,
-      requestDate: map['requestdate'] ?? '',
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory LoanDataDto.fromJson(String source) =>
-      LoanDataDto.fromMap(json.decode(source));
 
   @override
   String toString() {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:loan_app/core/data/data.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 
 class PaymentDto {
@@ -122,64 +123,4 @@ class PaymentDto {
         currency.hashCode ^
         createdAt.hashCode;
   }
-}
-
-class CurrencyDto {
-  final String id;
-  final String fiatCode;
-  final String name;
-  CurrencyDto({
-    required this.id,
-    required this.fiatCode,
-    required this.name,
-  });
-
-  CurrencyDto copyWith({
-    String? id,
-    String? fiatCode,
-    String? name,
-  }) {
-    return CurrencyDto(
-      id: id ?? this.id,
-      fiatCode: fiatCode ?? this.fiatCode,
-      name: name ?? this.name,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'fiatCode': fiatCode,
-      'name': name,
-    };
-  }
-
-  factory CurrencyDto.fromMap(Map<String, dynamic> map) {
-    return CurrencyDto(
-      id: map['id'] ?? '',
-      fiatCode: map['fiatCode'] ?? '',
-      name: map['name'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory CurrencyDto.fromJson(String source) =>
-      CurrencyDto.fromMap(json.decode(source));
-
-  @override
-  String toString() => 'CurrencyDto(id: $id, fiatCode: $fiatCode, name: $name)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is CurrencyDto &&
-        other.id == id &&
-        other.fiatCode == fiatCode &&
-        other.name == name;
-  }
-
-  @override
-  int get hashCode => id.hashCode ^ fiatCode.hashCode ^ name.hashCode;
 }

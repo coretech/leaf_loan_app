@@ -1,79 +1,59 @@
 import 'dart:convert';
 
-import 'package:loan_app/features/features.dart';
+import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 
 class PaymentDto {
+  final String status;
+  final String id;
+  final String loanId;
+  final double principalAmount;
+  final double interestAmount;
+  final double paymentAmount;
+  final CurrencyDto currency;
+  final String createdAt;
   PaymentDto({
     required this.status,
     required this.id,
-    required this.customerid,
-    required this.principalamount,
-    required this.interestamount,
-    required this.paymentamount,
+    required this.loanId,
+    required this.principalAmount,
+    required this.interestAmount,
+    required this.paymentAmount,
+    required this.currency,
     required this.createdAt,
-    required this.updatedAt,
   });
-
-  factory PaymentDto.fromMap(Map<String, dynamic> map) {
-    return PaymentDto(
-      status: map['status'] ?? '',
-      id: map['_id'] ?? '',
-      customerid: map['customerid'] ?? '',
-      // ignore: avoid_dynamic_calls
-      principalamount: map['principalamount']?.toDouble() ?? 0.0,
-      // ignore: avoid_dynamic_calls
-      interestamount: map['interestamount']?.toDouble() ?? 0.0,
-      // ignore: avoid_dynamic_calls
-      paymentamount: map['paymentamount']?.toDouble() ?? 0.0,
-      createdAt: map['createdAt'] ?? '',
-      updatedAt: map['updatedAt'] ?? '',
-    );
-  }
-
-  factory PaymentDto.fromJson(String source) =>
-      PaymentDto.fromMap(json.decode(source));
-
-  final String status;
-  final String id;
-  final String customerid;
-  final double principalamount;
-  final double interestamount;
-  final double paymentamount;
-  final String createdAt;
-  final String updatedAt;
 
   Payment toEntity() {
     return Payment(
       status: status,
       id: id,
-      customerId: customerid,
-      principalAmount: principalamount,
-      interestAmount: interestamount,
-      paymentAmount: paymentamount,
+      customerId: '',
+      principalAmount: principalAmount,
+      interestAmount: interestAmount,
+      paymentAmount: paymentAmount,
       createdAt: createdAt,
-      updatedAt: updatedAt,
+      updatedAt: '',
     );
   }
 
   PaymentDto copyWith({
     String? status,
     String? id,
-    String? customerid,
-    double? principalamount,
-    double? interestamount,
-    double? paymentamount,
+    String? loanId,
+    double? principalAmount,
+    double? interestAmount,
+    double? paymentAmount,
+    CurrencyDto? currency,
     String? createdAt,
-    String? updatedAt,
   }) {
     return PaymentDto(
       status: status ?? this.status,
       id: id ?? this.id,
-      customerid: customerid ?? this.customerid,
-      principalamount: principalamount ?? this.principalamount,
-      interestamount: interestamount ?? this.interestamount,
-      paymentamount: paymentamount ?? this.paymentamount,
+      loanId: loanId ?? this.loanId,
+      principalAmount: principalAmount ?? this.principalAmount,
+      interestAmount: interestAmount ?? this.interestAmount,
+      paymentAmount: paymentAmount ?? this.paymentAmount,
+      currency: currency ?? this.currency,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -81,23 +61,39 @@ class PaymentDto {
     return {
       'status': status,
       'id': id,
-      'customerid': customerid,
-      'principalamount': principalamount,
-      'interestamount': interestamount,
-      'paymentamount': paymentamount,
+      'loanId': loanId,
+      'principalAmount': principalAmount,
+      'interestAmount': interestAmount,
+      'paymentAmount': paymentAmount,
+      'currency': currency.toMap(),
       'createdAt': createdAt,
-      'updatedAt': updatedAt,
     };
+  }
+
+  factory PaymentDto.fromMap(Map<String, dynamic> map) {
+    return PaymentDto(
+      status: map['status'] ?? '',
+      id: map['id'] ?? '',
+      loanId: map['loanId'] ?? '',
+      principalAmount: map['principalAmount']?.toDouble() ?? 0.0,
+      interestAmount: map['interestAmount']?.toDouble() ?? 0.0,
+      paymentAmount: map['paymentAmount']?.toInt() ?? 0,
+      currency: CurrencyDto.fromMap(map['currency']),
+      createdAt: map['createdAt'] ?? '',
+    );
   }
 
   String toJson() => json.encode(toMap());
 
+  factory PaymentDto.fromJson(String source) =>
+      PaymentDto.fromMap(json.decode(source));
+
   @override
   String toString() {
-    return 'PaymentDto(status: $status, id: $id, customerid: $customerid, '
-        'principalamount: $principalamount, interestamount: $interestamount, '
-        'paymentamount: $paymentamount, createdAt: $createdAt, '
-        'updatedAt: $updatedAt)';
+    return 'PaymentDto(status: $status, id: $id, loanId: $loanId, '
+        'principalAmount: $principalAmount, interestAmount: $interestAmount, '
+        'paymentAmount: $paymentAmount, currency: $currency, '
+        'createdAt: $createdAt)';
   }
 
   @override
@@ -107,23 +103,83 @@ class PaymentDto {
     return other is PaymentDto &&
         other.status == status &&
         other.id == id &&
-        other.customerid == customerid &&
-        other.principalamount == principalamount &&
-        other.interestamount == interestamount &&
-        other.paymentamount == paymentamount &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.loanId == loanId &&
+        other.principalAmount == principalAmount &&
+        other.interestAmount == interestAmount &&
+        other.paymentAmount == paymentAmount &&
+        other.currency == currency &&
+        other.createdAt == createdAt;
   }
 
   @override
   int get hashCode {
     return status.hashCode ^
         id.hashCode ^
-        customerid.hashCode ^
-        principalamount.hashCode ^
-        interestamount.hashCode ^
-        paymentamount.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
+        loanId.hashCode ^
+        principalAmount.hashCode ^
+        interestAmount.hashCode ^
+        paymentAmount.hashCode ^
+        currency.hashCode ^
+        createdAt.hashCode;
   }
+}
+
+class CurrencyDto {
+  final String id;
+  final String fiatCode;
+  final String name;
+  CurrencyDto({
+    required this.id,
+    required this.fiatCode,
+    required this.name,
+  });
+
+  CurrencyDto copyWith({
+    String? id,
+    String? fiatCode,
+    String? name,
+  }) {
+    return CurrencyDto(
+      id: id ?? this.id,
+      fiatCode: fiatCode ?? this.fiatCode,
+      name: name ?? this.name,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'fiatCode': fiatCode,
+      'name': name,
+    };
+  }
+
+  factory CurrencyDto.fromMap(Map<String, dynamic> map) {
+    return CurrencyDto(
+      id: map['id'] ?? '',
+      fiatCode: map['fiatCode'] ?? '',
+      name: map['name'] ?? '',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CurrencyDto.fromJson(String source) =>
+      CurrencyDto.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'CurrencyDto(id: $id, fiatCode: $fiatCode, name: $name)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CurrencyDto &&
+        other.id == id &&
+        other.fiatCode == fiatCode &&
+        other.name == name;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ fiatCode.hashCode ^ name.hashCode;
 }

@@ -28,7 +28,7 @@ class StatsRemoteRepository implements StatsRepository {
         final responseDto = ResponseDto.fromMap(response.data);
         final stats = (responseDto.data as List<dynamic>).map(
           (data) {
-            return StatDTO.fromMap(data).toEntity();
+            return StatDto.fromMap(data).toEntity();
           },
         ).toList();
         return Right(stats);

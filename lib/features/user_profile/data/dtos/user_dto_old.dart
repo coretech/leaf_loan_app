@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:loan_app/features/user_profile/data/dtos/dtos.dart';
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 
-class UserDto {
-  UserDto({
+class UserDtoOld {
+  UserDtoOld({
     required this.id,
     required this.city,
     required this.country,
@@ -18,8 +18,8 @@ class UserDto {
     this.email,
   });
 
-  factory UserDto.fromMap(Map<String, dynamic> map) {
-    return UserDto(
+  factory UserDtoOld.fromMap(Map<String, dynamic> map) {
+    return UserDtoOld(
       id: map['_id'],
       city: map['city'],
       country: map['country'],
@@ -34,8 +34,8 @@ class UserDto {
     );
   }
 
-  factory UserDto.fromJson(String source) =>
-      UserDto.fromMap(json.decode(source));
+  factory UserDtoOld.fromJson(String source) =>
+      UserDtoOld.fromMap(json.decode(source));
 
   final String id;
   final String city;
@@ -65,7 +65,7 @@ class UserDto {
     );
   }
 
-  UserDto copyWith({
+  UserDtoOld copyWith({
     String? id,
     String? city,
     String? country,
@@ -81,7 +81,7 @@ class UserDto {
     UserIdDTO? userid,
     String? email,
   }) {
-    return UserDto(
+    return UserDtoOld(
       id: id ?? this.id,
       city: city ?? this.city,
       country: country ?? this.country,
@@ -126,7 +126,7 @@ class UserDto {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is UserDto &&
+    return other is UserDtoOld &&
         other.id == id &&
         other.city == city &&
         other.country == country &&

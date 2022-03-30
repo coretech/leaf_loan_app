@@ -123,16 +123,16 @@ class LoanDataDto {
     return LoanDataDto(
       status: map['status'] ?? '',
       id: map['id'] ?? '',
-      loanType: map['loanType'] ?? '',
-      loanPurpose: map['loanPurpose'] ?? '',
+      loanType: map['loantype'] ?? '',
+      loanPurpose: map['loanpurpose'] ?? '',
       currency: CurrencyDto.fromMap(map['currency']),
-      dueDate: map['dueDate'] ?? '',
-      requestedAmount: map['requestedAmount']?.toInt() ?? 0,
-      interestAmount: map['interestAmount']?.toInt() ?? 0,
-      totalAmount: map['totalAmount']?.toInt() ?? 0,
-      remainingAmount: map['remainingAmount']?.toInt() ?? 0,
+      dueDate: map['duedate'] ?? '',
+      requestedAmount: map['requestedamount']?.toInt() ?? 0,
+      interestAmount: map['interestamount']?.toInt() ?? 0,
+      totalAmount: map['totalamount']?.toInt() ?? 0,
+      remainingAmount: map['remainingamount']?.toInt() ?? 0,
       duration: map['duration']?.toInt() ?? 0,
-      requestDate: map['requestDate'] ?? '',
+      requestDate: map['requestdate'] ?? '',
     );
   }
 

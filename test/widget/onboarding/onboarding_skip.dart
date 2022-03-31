@@ -15,7 +15,7 @@ void main() {
     when(() => IntegrationIOC.localStorage().getString(Keys.language))
         .thenAnswer((_) async => 'en');
     when(() => IntegrationIOC.localStorage().getString(Keys.username))
-        .thenAnswer((_) async {});
+        .thenAnswer((_) async => null);
     when(
       () => IntegrationIOC.localStorage().setBool(
         Keys.onboardingStatus,

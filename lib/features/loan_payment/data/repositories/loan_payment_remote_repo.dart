@@ -115,11 +115,8 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final responseDto = ResponseDto.fromMap(response.data);
-        // ignore: avoid_dynamic_calls
-        final loanId = responseDto.data['loanid'];
-        // ignore: avoid_dynamic_calls
-        loanId['currencyid'] = null;
-        final loan = LoanDataDto.fromMap(loanId).toEntity();
+
+        final loan = LoanDataDto.fromMap(responseDto.data).toEntity();
         return Right(loan);
       } else {
         return Left(LoanPaymentFailure());

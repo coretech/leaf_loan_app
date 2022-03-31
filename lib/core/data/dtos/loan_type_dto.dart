@@ -28,7 +28,7 @@ class LoanTypeDto {
       currencies: List<LoanCurrencyDto>.from(
         map['currencies']?.map((x) => LoanCurrencyDto.fromMap(x)),
       ),
-      minDuration: map['minduration']?.toInt() ?? 0,
+      minDuration: map['minDuration']?.toInt() ?? 0,
       maxDuration: map['maxDuration']?.toInt() ?? 0,
       interestRate: map['interestRate']?.toDouble() ?? 0,
       image: map['image'] ?? '',

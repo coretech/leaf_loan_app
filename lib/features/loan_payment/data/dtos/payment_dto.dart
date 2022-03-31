@@ -22,9 +22,9 @@ class PaymentDto {
       status: map['status'] ?? '',
       id: map['id'] ?? '',
       loanId: map['loanid'] ?? '',
-      principalAmount: map['principalamount']?.toDouble() ?? 0.0,
-      interestAmount: map['interestamount']?.toDouble() ?? 0.0,
-      paymentAmount: map['paymentamount']?.toInt() ?? 0,
+      principalAmount: map['principalAmount']?.toDouble() ?? 0.0,
+      interestAmount: map['interestAmount']?.toDouble() ?? 0.0,
+      paymentAmount: map['paymentAmount']?.toDouble() ?? 0.0,
       currency: CurrencyDto.fromMap(map['currency']),
       createdAt: map['createdAt'] ?? '',
     );

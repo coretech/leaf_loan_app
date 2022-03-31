@@ -15,7 +15,7 @@ class CurrencyDto {
   factory CurrencyDto.fromMap(Map<String, dynamic> map) {
     return CurrencyDto(
       id: map['id'] ?? '',
-      fiatCode: map['fiatcode'] ?? '',
+      fiatCode: map['fiatCode'] ?? '',
       name: map['name'] ?? '',
     );
   }

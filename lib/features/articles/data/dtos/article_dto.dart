@@ -17,8 +17,8 @@ class ArticleDto {
       id: map['id'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
-      linkUrl: map['linkurl'] ?? '',
-      imageUrl: map['imageurl'] ?? '',
+      linkUrl: map['linkUrl'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
       createdAt: map['createdAt'] ?? '',
     );
   }

@@ -4,10 +4,9 @@ class LoanData {
   LoanData({
     required this.status,
     required this.id,
-    required this.customerId,
-    required this.loanTypeId,
+    required this.loanType,
     required this.loanPurpose,
-    required this.currencyId,
+    required this.currency,
     required this.dueDate,
     required this.requestedAmount,
     required this.interestAmount,
@@ -15,16 +14,13 @@ class LoanData {
     required this.remainingAmount,
     required this.duration,
     required this.requestDate,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   final String status;
   final String id;
-  final String customerId;
-  final LoanType loanTypeId;
+  final String loanType;
   final String loanPurpose;
-  final CurrencyId? currencyId;
+  final Currency currency;
   final String dueDate;
   final double requestedAmount;
   final double interestAmount;
@@ -32,16 +28,13 @@ class LoanData {
   final double remainingAmount;
   final int duration;
   final String requestDate;
-  final String createdAt;
-  final String updatedAt;
 
   LoanData copyWith({
     String? status,
     String? id,
-    String? customerId,
-    LoanType? loanTypeId,
+    String? loanType,
     String? loanPurpose,
-    CurrencyId? currencyId,
+    Currency? currency,
     String? dueDate,
     double? requestedAmount,
     double? interestAmount,
@@ -49,16 +42,13 @@ class LoanData {
     double? remainingAmount,
     int? duration,
     String? requestDate,
-    String? createdAt,
-    String? updatedAt,
   }) {
     return LoanData(
       status: status ?? this.status,
       id: id ?? this.id,
-      customerId: customerId ?? this.customerId,
-      loanTypeId: loanTypeId ?? this.loanTypeId,
+      loanType: loanType ?? this.loanType,
       loanPurpose: loanPurpose ?? this.loanPurpose,
-      currencyId: currencyId ?? this.currencyId,
+      currency: currency ?? this.currency,
       dueDate: dueDate ?? this.dueDate,
       requestedAmount: requestedAmount ?? this.requestedAmount,
       interestAmount: interestAmount ?? this.interestAmount,
@@ -66,8 +56,6 @@ class LoanData {
       remainingAmount: remainingAmount ?? this.remainingAmount,
       duration: duration ?? this.duration,
       requestDate: requestDate ?? this.requestDate,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -78,48 +66,40 @@ class LoanData {
     return other is LoanData &&
         other.status == status &&
         other.id == id &&
-        other.customerId == customerId &&
-        other.loanTypeId == loanTypeId &&
+        other.loanType == loanType &&
         other.loanPurpose == loanPurpose &&
-        other.currencyId == currencyId &&
+        other.currency == currency &&
         other.dueDate == dueDate &&
         other.requestedAmount == requestedAmount &&
         other.interestAmount == interestAmount &&
         other.totalAmount == totalAmount &&
         other.remainingAmount == remainingAmount &&
         other.duration == duration &&
-        other.requestDate == requestDate &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.requestDate == requestDate;
   }
 
   @override
   int get hashCode {
     return status.hashCode ^
         id.hashCode ^
-        customerId.hashCode ^
-        loanTypeId.hashCode ^
+        loanType.hashCode ^
         loanPurpose.hashCode ^
-        currencyId.hashCode ^
+        currency.hashCode ^
         dueDate.hashCode ^
         requestedAmount.hashCode ^
         interestAmount.hashCode ^
         totalAmount.hashCode ^
         remainingAmount.hashCode ^
         duration.hashCode ^
-        requestDate.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
+        requestDate.hashCode;
   }
 
   @override
   String toString() {
-    return 'LoanData(status: $status, id: $id, customerId: $customerId, '
-        'loanTypeId: $loanTypeId, loanPurpose: $loanPurpose, currencyId: '
-        '$currencyId, dueDate: $dueDate, requestedAmount: $requestedAmount, '
-        'interestAmount: $interestAmount, totalAmount: $totalAmount, '
-        'remainingAmount: $remainingAmount, duration: $duration, '
-        'requestDate: $requestDate, createdAt: $createdAt, '
-        'updatedAt: $updatedAt)';
+    return 'LoanData(status: $status, id: $id, loanType: $loanType, '
+        'loanPurpose: $loanPurpose, currency: $currency, dueDate: '
+        '$dueDate, requestedAmount: $requestedAmount, interestAmount: '
+        '$interestAmount, totalAmount: $totalAmount, remainingAmount: '
+        '$remainingAmount, duration: $duration, requestDate: $requestDate)';
   }
 }

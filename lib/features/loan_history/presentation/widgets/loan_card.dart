@@ -47,7 +47,7 @@ class LoanCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    loan.loanTypeId.name,
+                    loan.loanType,
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: 18,
                         ),
@@ -76,7 +76,7 @@ class LoanCard extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             fontSize: 12,
                           ),
-                          text: '${loan.currencyId!.fiatCode} ',
+                          text: '${loan.currency.fiatCode} ',
                         ),
                         TextSpan(
                           style: _getAmountTextStyle(context),
@@ -122,7 +122,7 @@ class LoanCard extends StatelessWidget {
                             color: Theme.of(context).colorScheme.onSurface,
                             fontSize: 12,
                           ),
-                          text: '${loan.currencyId!.fiatCode} ',
+                          text: '${loan.currency.fiatCode} ',
                         ),
                         TextSpan(
                           style: _getPaidTextStyle(context),
@@ -165,7 +165,7 @@ class LoanCard extends StatelessWidget {
                         TextSpan(
                           style: _getPaidTextStyle(context),
                           text: '${Formatter.formatDate(
-                            DateTime.parse(loan.createdAt),
+                            DateTime.parse(loan.requestDate),
                           )} ',
                         ),
                       ],

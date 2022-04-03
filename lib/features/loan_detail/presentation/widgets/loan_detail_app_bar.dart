@@ -29,7 +29,7 @@ class LoanDetailAppBar extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(loan.loanTypeId.name),
+          Text(loan.loanType),
           if (loanStatusFromString(loan.status) == LoanStatus.approved)
             const Spacer(),
           if (loanStatusFromString(loan.status) == LoanStatus.approved)

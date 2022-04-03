@@ -71,7 +71,7 @@ class ActiveLoanCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      loan.loanTypeId.name,
+                      loan.loanType,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             color: _getTextColor(context),
                             fontSize: 18,
@@ -122,7 +122,7 @@ class ActiveLoanCard extends StatelessWidget {
                           color: _getTextColor(context),
                           fontSize: 12,
                         ),
-                        text: '${loan.currencyId!.fiatCode} ',
+                        text: '${loan.currency.fiatCode} ',
                       ),
                       TextSpan(
                         style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -168,7 +168,7 @@ class ActiveLoanCard extends StatelessWidget {
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: '${loan.currencyId!.fiatCode} ',
+                            text: '${loan.currency.fiatCode} ',
                           ),
                           TextSpan(
                             style: Theme.of(context)
@@ -223,7 +223,7 @@ class ActiveLoanCard extends StatelessWidget {
                                 Theme.of(context).textTheme.caption?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                            text: '${loan.currencyId!.fiatCode} ',
+                            text: '${loan.currency.fiatCode} ',
                           ),
                           TextSpan(
                             style: Theme.of(context)
@@ -253,7 +253,7 @@ class ActiveLoanCard extends StatelessWidget {
                                       color: _getTextColor(context),
                                     ),
                             text: Formatter.formatDate(
-                              DateTime.parse(loan.createdAt),
+                              DateTime.parse(loan.requestDate),
                             ),
                           ),
                         ],

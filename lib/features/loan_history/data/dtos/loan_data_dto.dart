@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:loan_app/core/data/data.dart';
-import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 
 class LoanDataDto {
@@ -44,41 +43,18 @@ class LoanDataDto {
 
   LoanData toEntity() {
     return LoanData(
-      status: status,
-      id: id,
-      customerId: '',
-      loanTypeId: LoanType(
-        createdAt: '',
-        currencies: [],
-        description: '',
-        id: '',
-        image: '',
-        name: loanType,
-        updatedAt: '',
-        interestRate: 0,
-        maxDuration: 0,
-        minDuration: 0,
-        purpose: [''],
-      ),
-      loanPurpose: loanPurpose,
-      currencyId: CurrencyId(
-        country: '',
-        createdAt: '',
-        description: '',
-        fiatCode: currency.fiatCode,
-        id: currency.id,
-        name: currency.name,
-        updatedAt: '',
-      ),
+      currency: currency.toEntity(),
       dueDate: dueDate,
-      requestedAmount: requestedAmount,
-      interestAmount: interestAmount,
-      totalAmount: totalAmount,
-      remainingAmount: remainingAmount,
       duration: duration,
+      id: id,
+      interestAmount: interestAmount,
+      loanPurpose: loanPurpose,
+      loanType: loanType,
+      remainingAmount: remainingAmount,
       requestDate: requestDate,
-      createdAt: requestDate,
-      updatedAt: '',
+      requestedAmount: requestedAmount,
+      status: status,
+      totalAmount: totalAmount,
     );
   }
 

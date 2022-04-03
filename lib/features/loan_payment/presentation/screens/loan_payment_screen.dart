@@ -82,7 +82,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
                         if (loanPaymentProvider.wallets.isNotEmpty)
                           LeafBalanceWidget(
                             balance: _getBalance(loanPaymentProvider.wallets),
-                            currencyFiat: widget.loan.currencyId!.fiatCode,
+                            currencyFiat: widget.loan.currency.fiatCode,
                           ),
                         const SizedBox(height: 20),
                         _buildTextFieldWithMessages(context),
@@ -168,7 +168,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
           text: TextSpan(
             children: [
               TextSpan(
-                text: '${widget.loan.currencyId!.fiatCode} ',
+                text: '${widget.loan.currency.fiatCode} ',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
@@ -202,7 +202,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
             ),
             errorMaxLines: 3,
             labelText: 'Enter the amount you want to pay'.tr(),
-            prefixText: '${widget.loan.currencyId!.fiatCode} ',
+            prefixText: '${widget.loan.currency.fiatCode} ',
             prefixStyle: TextStyle(
               color: Theme.of(context).colorScheme.onBackground,
             ),
@@ -218,7 +218,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
               'You will have {1} {2} left to pay after this payment'.tr(
                 values: {
                   '1': Formatter.formatMoney(_getRemaining()),
-                  '2': widget.loan.currencyId!.fiatCode,
+                  '2': widget.loan.currency.fiatCode,
                 },
               ),
               style: Theme.of(context).textTheme.caption,
@@ -236,7 +236,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
       elevation: 0,
       foregroundColor: Theme.of(context).colorScheme.onBackground,
       title: Text(
-        'Pay for your {1}'.tr(values: {'1': widget.loan.loanTypeId.name}),
+        'Pay for your {1}'.tr(values: {'1': widget.loan.loanType}),
       ),
     );
   }
@@ -306,9 +306,7 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
   double _getBalance(List<Wallet> wallets) {
     try {
       final activeCurrency = wallets.firstWhere(
-        (wallet) =>
-            wallet.currency.fiatCode ==
-            widget.loan.currencyId!.fiatCode,
+        (wallet) => wallet.currency.fiatCode == widget.loan.currency.fiatCode,
       );
       balance = activeCurrency.balance;
       return activeCurrency.balance;

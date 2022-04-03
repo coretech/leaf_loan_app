@@ -73,7 +73,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               elevation: 0,
               foregroundColor: Theme.of(context).colorScheme.onSurface,
               title: Text(
-                '${loanDetailProvider.loan!.loanTypeId.name} Details'.tr(),
+                '${loanDetailProvider.loan!.loanType} Details'.tr(),
               ),
             ),
             body: _buildBody(context, loanDetailProvider),
@@ -228,7 +228,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: '${loanDetailProvider.loan!.currencyId!.fiatCode} ',
+                  text: '${loanDetailProvider.loan!.currency.fiatCode} ',
                   style: TextStyle(
                     color: _getTextColor(context),
                   ),
@@ -316,35 +316,35 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
           _buildLoanInfoRow(
             context,
             'Loan Type',
-            loan.loanTypeId.name,
+            loan.loanType,
           ),
           _buildLoanInfoRow(
             context,
             'Requested Amount',
             '${Formatter.formatMoney(loan.requestedAmount)} '
-                '${loan.currencyId!.fiatCode}',
+                '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
             'Interest Amount',
             '${Formatter.formatMoney(loan.interestAmount)} '
-                '${loan.currencyId!.fiatCode}',
+                '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
             'Total Amount',
             '${Formatter.formatMoney(loan.totalAmount)} '
-                '${loan.currencyId!.fiatCode}',
+                '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
             'Applied On',
-            Formatter.formatDate(DateTime.parse(loan.createdAt)),
+            Formatter.formatDate(DateTime.parse(loan.requestDate)),
           ),
           _buildLoanInfoRow(
             context,
             '',
-            Formatter.formatTime(DateTime.parse(loan.createdAt)),
+            Formatter.formatTime(DateTime.parse(loan.requestDate)),
           ),
           _buildLoanInfoRow(context, 'Duration', '${loan.duration} days'),
           _buildLoanInfoRow(
@@ -417,19 +417,19 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
             context,
             'Total',
             '${Formatter.formatMoney(loan.totalAmount)} '
-                '${loan.currencyId!.fiatCode}',
+                '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
             'Paid Amount',
             '${Formatter.formatMoney(loan.totalAmount - loan.remainingAmount)} '
-                '${loan.currencyId!.fiatCode}',
+                '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
             'Remaining Amount',
             '${Formatter.formatMoney(loan.remainingAmount)} '
-                '${loan.currencyId!.fiatCode}',
+                '${loan.currency.fiatCode}',
           ),
           _buildTransactionsButton(context, loanDetailProvider),
         ],

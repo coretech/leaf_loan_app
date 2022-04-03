@@ -25,7 +25,7 @@ class _PendingLoanDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Pending ${loanData.loanTypeId.name}'.tr(),
+                'Pending ${loanData.loanType}'.tr(),
                 style: Theme.of(context).textTheme.headline6,
               ),
               Divider(
@@ -35,19 +35,19 @@ class _PendingLoanDialog extends StatelessWidget {
               _buildLabelAndValue(
                 context,
                 label: 'Requested Amount'.tr(),
-                value: '${loanData.currencyId?.fiatCode} '
+                value: '${loanData.currency.fiatCode} '
                     '${Formatter.formatMoney(loanData.requestedAmount)}',
               ),
               _buildLabelAndValue(
                 context,
                 label: 'Interest Amount'.tr(),
-                value: '${loanData.currencyId?.fiatCode} '
+                value: '${loanData.currency.fiatCode} '
                     '${Formatter.formatMoney(loanData.interestAmount)}',
               ),
               _buildLabelAndValue(
                 context,
                 label: 'Total Amount'.tr(),
-                value: '${loanData.currencyId?.fiatCode} '
+                value: '${loanData.currency.fiatCode} '
                     '${Formatter.formatMoney(loanData.totalAmount)}',
               ),
               _buildLabelAndValue(
@@ -68,14 +68,14 @@ class _PendingLoanDialog extends StatelessWidget {
                 context,
                 label: 'Applied On'.tr(),
                 value: Formatter.formatDate(
-                  DateTime.parse(loanData.createdAt),
+                  DateTime.parse(loanData.requestDate),
                 ),
               ),
               _buildLabelAndValue(
                 context,
                 label: ''.tr(),
                 value: Formatter.formatTime(
-                  DateTime.parse(loanData.createdAt),
+                  DateTime.parse(loanData.requestDate),
                 ),
               ),
               if (!hasActiveLoan)

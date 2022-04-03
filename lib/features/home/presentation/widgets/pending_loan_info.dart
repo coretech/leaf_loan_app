@@ -64,7 +64,7 @@ class PendingLoanInfo extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: '${loan.currencyId!.fiatCode} ',
+                          text: '${loan.currency.fiatCode} ',
                           style: TextStyle(
                             color: _getTextColor(context),
                           ),
@@ -141,6 +141,6 @@ class PendingLoanInfo extends StatelessWidget {
   }
 
   String _getDate(BuildContext context) {
-    return Formatter.formatDate(DateTime.parse(loan.createdAt));
+    return Formatter.formatDate(DateTime.parse(loan.requestDate));
   }
 }

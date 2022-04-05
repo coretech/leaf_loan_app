@@ -40,8 +40,8 @@ void main() {
         description: 'description',
         currencies: [
           LoanCurrencyDto(
-            minLoanAmount: 100.0,
-            maxLoanAmount: 1000.0,
+            minLoanAmount: 100,
+            maxLoanAmount: 1000,
             fiatCode: 'KES',
             id: '',
             name: 'KESC',

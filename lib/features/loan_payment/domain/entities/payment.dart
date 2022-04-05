@@ -46,7 +46,7 @@ class Payment {
 
   @override
   String toString() {
-    return 'Payment(status: $status, _id: $id, customerId: $customerId, '
+    return 'Payment(status: $status, id: $id, customerId: $customerId, '
         'principalAmount: $principalAmount, interestAmount: '
         '$interestAmount, paymentAmount: $paymentAmount, '
         'createdAt: $createdAt, updatedAt: $updatedAt)';

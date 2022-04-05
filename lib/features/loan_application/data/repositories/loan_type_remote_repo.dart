@@ -9,7 +9,7 @@ import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_application/domain/domain.dart';
 
-class LoanTypeRemoteRepo extends LoanTypeRepository {
+class LoanTypeRemoteRepo implements LoanTypeRepository {
   final AuthHelper _authHelper = AuthIOC.authHelper();
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
   @override

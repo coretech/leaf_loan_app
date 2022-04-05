@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/authentication/authentication.dart';
-import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/home.dart';
 import 'package:loan_app/features/onboarding/onboarding.dart';
 import 'package:loan_app/features/splash/presentation/providers/providers.dart';
@@ -15,13 +14,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late OnboardingStatusRepo onboardingStatusRepo;
-  late ScoringDataCollectionService scoringDataCollectionService;
   late SplashProvider _splashProvider;
   @override
   void initState() {
-    onboardingStatusRepo = OnboardingStatusHiveRepo();
-    scoringDataCollectionService = CredoDataCollectionService();
     _splashProvider = SplashProvider()..initializeApp();
     _splashProvider
       ..addListener(_navigateNext)

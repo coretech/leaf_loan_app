@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/features/articles/ioc/ioc.dart';
 import 'package:loan_app/features/articles/presentation/providers/providers.dart';
 import 'package:loan_app/features/user_profile/presentation/providers/stats_provider.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class ProviderWrapper extends StatelessWidget {
@@ -21,6 +22,9 @@ class ProviderWrapper extends StatelessWidget {
         ChangeNotifierProvider<StatsProvider>(
           create: (_) => StatsProvider()..getStats(),
         ),
+        ChangeNotifierProvider<L10nProvider>(
+          create: (_) => LocalizationIOC.l10nProvider(),
+        )
       ],
       child: child,
     );

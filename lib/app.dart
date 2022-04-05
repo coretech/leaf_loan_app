@@ -48,109 +48,106 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return ProviderWrapper(
-      child: LocalizationWrapper(
-        child: Consumer<L10nProvider>(
-          builder: (context, l10nProvider, _) {
-            return MaterialApp(
-              navigatorKey: widget.navigatorKey,
-              navigatorObservers: [
-                if (!Platform.environment.containsKey('FLUTTER_TEST'))
-                  FirebaseAnalyticsObserver(
-                    analytics: FirebaseAnalytics.instance,
+      child: Consumer<L10nProvider>(
+        builder: (context, l10nProvider, _) {
+          return MaterialApp(
+            navigatorKey: widget.navigatorKey,
+            navigatorObservers: [
+              if (!Platform.environment.containsKey('FLUTTER_TEST'))
+                FirebaseAnalyticsObserver(
+                  analytics: FirebaseAnalytics.instance,
+                ),
+            ],
+            onGenerateRoute: (settings) {
+              if (settings.name == HomeScreen.routeName) {
+                final args = settings.arguments as HomeScreenArguments?;
+                return MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    hasTransactions: args?.hasTransactions ?? false,
+                    hasLoan: args?.hasLoan ?? false,
                   ),
-              ],
-              onGenerateRoute: (settings) {
-                if (settings.name == HomeScreen.routeName) {
-                  final args = settings.arguments as HomeScreenArguments?;
-                  return MaterialPageRoute(
-                    builder: (context) => HomeScreen(
-                      hasTransactions: args?.hasTransactions ?? false,
-                      hasLoan: args?.hasLoan ?? false,
-                    ),
-                  );
-                }
-                if (settings.name == LoanPaymentScreen.routeName) {
-                  final args =
-                      settings.arguments as LoanPaymentScreenArguments?;
-                  return MaterialPageRoute(
-                    builder: (context) => LoanPaymentScreen(
-                      loan: args!.loan,
-                    ),
-                  );
-                }
-                if (settings.name == LoanDetailScreenAlt.routeName) {
-                  final args = settings.arguments as LoanDetailScreenAltArgs?;
-                  return MaterialPageRoute(
-                    builder: (context) => LoanDetailScreenAlt(
-                      loanDetailArgs: args!,
-                    ),
-                  );
-                }
-                if (settings.name == LoanTransactionsScreen.routeName) {
-                  final args = settings.arguments as LoanData?;
-                  return MaterialPageRoute(
-                    builder: (context) => LoanTransactionsScreen(
-                      loan: args!,
-                    ),
-                  );
-                }
-                return null;
-              },
-              routes: {
-                ArticlesScreen.routeName: (context) => const ArticlesScreen(),
-                AboutScreen.routeName: (context) => const AboutScreen(),
-                ContactUsScreen.routeName: (context) => const ContactUsScreen(),
-                LoanApplicationScreen.routeName: (context) =>
-                    const LoanApplicationScreen(),
-                LoanHistoryScreen.routeName: (context) =>
-                    const LoanHistoryScreen(),
-                LoginScreen.routeName: (context) => const LoginScreen(),
-                OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
-                SplashScreen.routeName: (ctx) => const SplashScreen(),
-                SettingsScreen.routeName: (ctx) => const SettingsScreen(),
-                UserProfileScreen.routeName: (ctx) => const UserProfileScreen(),
-              },
-              theme: ThemeData(
-                primaryColor: Colors.green,
-                primarySwatch: Colors.green,
-                colorScheme: const ColorScheme.light(
-                  primary: Colors.green,
-                  secondary: Colors.orange,
-                ),
+                );
+              }
+              if (settings.name == LoanPaymentScreen.routeName) {
+                final args = settings.arguments as LoanPaymentScreenArguments?;
+                return MaterialPageRoute(
+                  builder: (context) => LoanPaymentScreen(
+                    loan: args!.loan,
+                  ),
+                );
+              }
+              if (settings.name == LoanDetailScreenAlt.routeName) {
+                final args = settings.arguments as LoanDetailScreenAltArgs?;
+                return MaterialPageRoute(
+                  builder: (context) => LoanDetailScreenAlt(
+                    loanDetailArgs: args!,
+                  ),
+                );
+              }
+              if (settings.name == LoanTransactionsScreen.routeName) {
+                final args = settings.arguments as LoanData?;
+                return MaterialPageRoute(
+                  builder: (context) => LoanTransactionsScreen(
+                    loan: args!,
+                  ),
+                );
+              }
+              return null;
+            },
+            routes: {
+              ArticlesScreen.routeName: (context) => const ArticlesScreen(),
+              AboutScreen.routeName: (context) => const AboutScreen(),
+              ContactUsScreen.routeName: (context) => const ContactUsScreen(),
+              LoanApplicationScreen.routeName: (context) =>
+                  const LoanApplicationScreen(),
+              LoanHistoryScreen.routeName: (context) =>
+                  const LoanHistoryScreen(),
+              LoginScreen.routeName: (context) => const LoginScreen(),
+              OnboardingScreen.routeName: (ctx) => const OnboardingScreen(),
+              SplashScreen.routeName: (ctx) => const SplashScreen(),
+              SettingsScreen.routeName: (ctx) => const SettingsScreen(),
+              UserProfileScreen.routeName: (ctx) => const UserProfileScreen(),
+            },
+            theme: ThemeData(
+              primaryColor: Colors.green,
+              primarySwatch: Colors.green,
+              colorScheme: const ColorScheme.light(
+                primary: Colors.green,
+                secondary: Colors.orange,
               ),
-              title: 'Leaf Loans',
+            ),
+            title: 'Leaf Loans',
 
-              darkTheme: ThemeData.dark().copyWith(
-                primaryColor: Colors.green,
-                colorScheme: ColorScheme.dark(
-                  primary: Colors.green,
-                  secondary: Colors.orange.withGreen(210).withBlue(55),
-                ),
+            darkTheme: ThemeData.dark().copyWith(
+              primaryColor: Colors.green,
+              colorScheme: ColorScheme.dark(
+                primary: Colors.green,
+                secondary: Colors.orange.withGreen(210).withBlue(55),
               ),
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              // Returns a locale which will be used by the app
-              localeResolutionCallback: (locale, supportedLocales) {
-                // Check if the current device locale is supported
+            ),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            // Returns a locale which will be used by the app
+            localeResolutionCallback: (locale, supportedLocales) {
+              // Check if the current device locale is supported
 
-                for (final supportedLocale in supportedLocales) {
-                  if (supportedLocale.languageCode == locale?.languageCode) {
-                    return supportedLocale;
-                  }
+              for (final supportedLocale in supportedLocales) {
+                if (supportedLocale.languageCode == locale?.languageCode) {
+                  return supportedLocale;
                 }
-                // If the locale of the device is not supported, use the first
-                // one from the list (English, in this case).
-                return supportedLocales.first;
-              },
-              supportedLocales: AppLocalizations.supportedLocales,
-              locale: l10nProvider.locale,
-            );
-          },
-        ),
+              }
+              // If the locale of the device is not supported, use the first
+              // one from the list (English, in this case).
+              return supportedLocales.first;
+            },
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: l10nProvider.locale,
+          );
+        },
       ),
     );
   }
@@ -159,7 +156,7 @@ class _AppState extends State<App> {
     _authHelper.authenticationStream.listen((loggedOut) {
       if (loggedOut) {
         widget.navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          '/',
+          '/', //change to SplashScreen.routename
           (_) => false,
         );
       }

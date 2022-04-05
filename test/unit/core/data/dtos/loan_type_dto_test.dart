@@ -8,22 +8,24 @@ import 'package:loan_app/core/domain/entities/loan_type.dart';
 
 void main() {
   const _currencyMap = {
-    'currencyid': null,
-    'minLoanAmount': 100,
-    'maxLoanAmount': 1000,
+    'id': '',
+    'fiatCode': '',
+    'name': '',
+    'minLoanAmount': 100.0,
+    'maxLoanAmount': 1000.0,
   };
 
   const _loanTypeMap = {
     'purpose': [
       'purpose1',
     ],
-    '_id': 'id',
+    'id': 'id',
     'name': 'name',
     'description': 'description',
     'currencies': [_currencyMap],
     'minDuration': 1,
     'maxDuration': 60,
-    'interestRate': 1,
+    'interestRate': 1.0,
     'image': 'image',
   };
 
@@ -38,8 +40,8 @@ void main() {
         description: 'description',
         currencies: [
           LoanCurrencyDto(
-            minLoanAmount: 100,
-            maxLoanAmount: 1000,
+            minLoanAmount: 100.0,
+            maxLoanAmount: 1000.0,
             fiatCode: 'KES',
             id: '',
             name: 'KESC',
@@ -58,11 +60,11 @@ void main() {
       expect(loanTypeDto.name, 'name');
       expect(loanTypeDto.description, 'description');
       expect(loanTypeDto.currencies.length, 1);
-      expect(loanTypeDto.currencies[0].minLoanAmount, 100);
-      expect(loanTypeDto.currencies[0].maxLoanAmount, 1000);
+      expect(loanTypeDto.currencies[0].minLoanAmount, 100.0);
+      expect(loanTypeDto.currencies[0].maxLoanAmount, 1000.0);
       expect(loanTypeDto.minDuration, 1);
       expect(loanTypeDto.maxDuration, 60);
-      expect(loanTypeDto.interestRate, 1);
+      expect(loanTypeDto.interestRate, 1.0);
       expect(loanTypeDto.image, 'image');
       expect(loanTypeDto.purpose.length, 1);
       expect(loanTypeDto.purpose[0], 'purpose1');
@@ -80,11 +82,11 @@ void main() {
       expect(loanTypeDto.name, 'name');
       expect(loanTypeDto.description, 'description');
       expect(loanTypeDto.currencies.length, 1);
-      expect(loanTypeDto.currencies[0].minLoanAmount, 100);
-      expect(loanTypeDto.currencies[0].maxLoanAmount, 1000);
+      expect(loanTypeDto.currencies[0].minLoanAmount, 100.0);
+      expect(loanTypeDto.currencies[0].maxLoanAmount, 1000.0);
       expect(loanTypeDto.minDuration, 1);
       expect(loanTypeDto.maxDuration, 60);
-      expect(loanTypeDto.interestRate, 1);
+      expect(loanTypeDto.interestRate, 1.0);
       expect(loanTypeDto.image, 'image');
       expect(loanTypeDto.purpose.length, 1);
       expect(loanTypeDto.purpose[0], 'purpose1');
@@ -103,11 +105,11 @@ void main() {
       expect(loanTypeDto.name, 'name');
       expect(loanTypeDto.description, 'description');
       expect(loanTypeDto.currencies.length, 1);
-      expect(loanTypeDto.currencies[0].minLoanAmount, 100);
-      expect(loanTypeDto.currencies[0].maxLoanAmount, 1000);
+      expect(loanTypeDto.currencies[0].minLoanAmount, 100.0);
+      expect(loanTypeDto.currencies[0].maxLoanAmount, 1000.0);
       expect(loanTypeDto.minDuration, 1);
       expect(loanTypeDto.maxDuration, 60);
-      expect(loanTypeDto.interestRate, 1);
+      expect(loanTypeDto.interestRate, 1.0);
       expect(loanTypeDto.image, 'image');
       expect(loanTypeDto.purpose.length, 1);
       expect(loanTypeDto.purpose[0], 'purpose1');
@@ -125,11 +127,11 @@ void main() {
       expect(loanType.name, 'name');
       expect(loanType.description, 'description');
       expect(loanType.currencies.length, 1);
-      expect(loanType.currencies[0].minLoanAmount, 100);
-      expect(loanType.currencies[0].maxLoanAmount, 1000);
+      expect(loanType.currencies[0].minLoanAmount, 100.0);
+      expect(loanType.currencies[0].maxLoanAmount, 1000.0);
       expect(loanType.minDuration, 1);
       expect(loanType.maxDuration, 60);
-      expect(loanType.interestRate, 1);
+      expect(loanType.interestRate, 1.0);
       expect(loanType.image, 'image');
       expect(loanType.purpose?.length, 1);
       expect(loanType.purpose?[0], 'purpose1');
@@ -151,11 +153,11 @@ void main() {
       expect(newLoanTypeDto.name, 'name');
       expect(newLoanTypeDto.description, 'This is a new description');
       expect(newLoanTypeDto.currencies.length, 1);
-      expect(newLoanTypeDto.currencies[0].minLoanAmount, 100);
-      expect(newLoanTypeDto.currencies[0].maxLoanAmount, 1000);
+      expect(newLoanTypeDto.currencies[0].minLoanAmount, 100.0);
+      expect(newLoanTypeDto.currencies[0].maxLoanAmount, 1000.0);
       expect(newLoanTypeDto.minDuration, 1);
       expect(newLoanTypeDto.maxDuration, 60);
-      expect(newLoanTypeDto.interestRate, 1);
+      expect(newLoanTypeDto.interestRate, 1.0);
       expect(newLoanTypeDto.image, 'image');
       expect(newLoanTypeDto.purpose.length, 1);
       expect(newLoanTypeDto.purpose[0], 'purpose1');
@@ -181,7 +183,7 @@ void main() {
     () {
       final loanTypeDto = LoanTypeDto.fromMap(_loanTypeMap);
       final currencyJson = loanTypeDto.toJson();
-      final expectedJsonValue = jsonEncode(_loanTypeMap);
+      final expectedJsonValue = json.encode(_loanTypeMap);
       expect(currencyJson, expectedJsonValue);
     },
   );
@@ -217,12 +219,12 @@ void main() {
       final loanTypeDtoString = loanTypeDto.toString();
       expect(
         loanTypeDtoString,
-        'LoanTypeDto(purpose: ${loanTypeDto.purpose}, _id: '
+        'LoanTypeDto(purpose: ${loanTypeDto.purpose}, id: '
         '${loanTypeDto.id}, name: ${loanTypeDto.name}, description:'
         ' ${loanTypeDto.description}, currencies: ${loanTypeDto.currencies}, '
         'minDuration: ${loanTypeDto.minDuration}, '
         'maxDuration: ${loanTypeDto.maxDuration}, interestRate: '
-        '${loanTypeDto.interestRate}, image: ',
+        '${loanTypeDto.interestRate}, image: image)',
       );
     },
   );

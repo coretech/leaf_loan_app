@@ -4,13 +4,15 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loan_app/core/data/dtos/dtos.dart';
-import 'package:loan_app/core/domain/entities/currency.dart';
+import 'package:loan_app/core/domain/domain.dart';
 
 void main() {
   const _currencyMap = {
-    'currencyId': null,
-    'minLoanAmount': 100,
-    'maxLoanAmount': 1000,
+    'id': '',
+    'fiatCode': 'KES',
+    'name': 'KESC',
+    'minLoanAmount': 100.0,
+    'maxLoanAmount': 1000.0,
   };
 
   test(
@@ -62,7 +64,7 @@ void main() {
     () {
       final currencyDto = LoanCurrencyDto.fromMap(_currencyMap);
       final currency = currencyDto.toEntity();
-      expect(currency, isA<Currency>());
+      expect(currency, isA<LoanCurrency>());
       expect(currency.minLoanAmount, 100);
       expect(currency.maxLoanAmount, 1000);
     },
@@ -140,7 +142,8 @@ void main() {
       final currencyDTOString = currencyDto.toString();
       expect(
         currencyDTOString,
-        'LoanCurrencyDto('
+        'LoanCurrencyDto(id: ${currencyDto.id}, fiatCode: '
+        '${currencyDto.fiatCode}, name: ${currencyDto.name}, '
         'minLoanAmount: ${currencyDto.minLoanAmount}, '
         'maxLoanAmount: ${currencyDto.maxLoanAmount})',
       );

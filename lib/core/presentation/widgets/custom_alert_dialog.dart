@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
@@ -49,7 +50,7 @@ class CustomAlertDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: onTap as void Function()?,
-          child: Text(buttontext ?? 'Okay'),
+          child: Text(buttontext ?? 'Okay'.tr()),
         )
       ],
     );

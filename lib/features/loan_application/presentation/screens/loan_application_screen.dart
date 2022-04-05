@@ -46,8 +46,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0,
                 foregroundColor: Theme.of(context).colorScheme.onSurface,
-                title: const Text(
-                  'Apply for a loan',
+                title: Text(
+                  'Apply for a loan'.tr(),
                 ),
               ),
               body: _buildContent(),
@@ -224,11 +224,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       _onSubmit();
     } else {
       if (_loanAmount == null) {
-        showSnackbar('Please select loan amount');
+        showSnackbar('Please select loan amount!'.tr());
       } else if (_selectedPurpose == null) {
-        showSnackbar('Please select loan purpose');
+        showSnackbar('Please select loan purpose!'.tr());
       } else if (_selectedDurationInDays < 61) {
-        showSnackbar('Please select a proper loan duration');
+        showSnackbar('Please select a proper loan duration!'.tr());
       }
     }
   }

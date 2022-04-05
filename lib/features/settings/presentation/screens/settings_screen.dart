@@ -34,9 +34,9 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   _showChangeLanguagePopup(context, l10nProvider);
                 },
-                title: const Text(
-                  'Language',
-                  style: TextStyle(
+                title: Text(
+                  'Language'.tr(),
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -81,9 +81,9 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(AboutScreen.routeName);
                 },
-                title: const Text(
-                  'About',
-                  style: TextStyle(
+                title: Text(
+                  'About'.tr(),
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),

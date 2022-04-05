@@ -119,7 +119,7 @@ class LoanDetailWidget extends StatelessWidget {
                               ),
                               TextSpan(
                                 style: Theme.of(context).textTheme.bodyText2,
-                                text: 'Interest',
+                                text: 'Interest'.tr(),
                               ),
                             ],
                           ),

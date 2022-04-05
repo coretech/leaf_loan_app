@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_application/presentation/presentation.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class FormContentA extends StatelessWidget {
@@ -140,9 +141,9 @@ class FormContentA extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(fontSize: 18),
+                  child: Text(
+                    'Submit'.tr(),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
               ],

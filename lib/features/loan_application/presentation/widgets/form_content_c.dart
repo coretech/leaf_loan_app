@@ -51,17 +51,17 @@ class FormContentC extends StatelessWidget {
                   if (details.currentStep > 0)
                     TextButton(
                       onPressed: onBackPressed,
-                      child: const Text('Back'),
+                      child: Text('Back'.tr()),
                     ),
                   if (details.currentStep < 4)
                     TextButton(
                       onPressed: onNextPressed,
-                      child: const Text('Next'),
+                      child: Text('Next'.tr()),
                     ),
                   if (details.currentStep == 4)
                     ElevatedButton(
                       onPressed: onSubmitPressed,
-                      child: const Text('Submit'),
+                      child: Text('Submit'.tr()),
                     ),
                 ],
               ),

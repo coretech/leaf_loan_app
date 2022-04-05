@@ -243,8 +243,8 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
 
   Widget _buildMaxButton() {
     return TextButton(
-      child: const Text(
-        'Max',
+      child: Text(
+        'Max'.tr(),
       ),
       onPressed: () {
         _amountController.text = widget.loan.remainingAmount.toString();
@@ -269,9 +269,9 @@ class _LoanPaymentScreenState extends State<LoanPaymentScreen> {
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
-              'Payment successfully completed!',
+              'Payment successfully completed!'.tr(),
             ),
           ),
         );

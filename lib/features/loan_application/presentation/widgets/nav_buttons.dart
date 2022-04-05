@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_application/presentation/presentation.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 class NavButtons extends StatefulWidget {
@@ -44,8 +45,8 @@ class _NavButtonsState extends State<NavButtons> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: loading ? null : widget.onPrev,
-                    child: const Text(
-                      'Previous',
+                    child: Text(
+                      'Previous'.tr(),
                     ),
                   ),
                 ),
@@ -70,9 +71,9 @@ class _NavButtonsState extends State<NavButtons> {
 
   String _getText() {
     if (widget.pageController.page != 4) {
-      return 'Next';
+      return 'Next'.tr();
     } else {
-      return 'Submit';
+      return 'Submit'.tr();
     }
   }
 

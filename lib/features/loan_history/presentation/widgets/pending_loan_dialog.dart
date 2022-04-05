@@ -53,7 +53,7 @@ class _PendingLoanDialog extends StatelessWidget {
               _buildLabelAndValue(
                 context,
                 label: 'Loan Duration'.tr(),
-                value: '${loanData.duration} days',
+                value: '${loanData.duration} ${'days'.tr()}',
               ),
               _buildLabelAndValue(
                 context,

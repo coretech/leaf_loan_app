@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class NumbersSheet extends StatelessWidget {
   const NumbersSheet({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class NumbersSheet extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Leaf Phone Numbers',
+            'Leaf Phone Numbers'.tr(),
             style: Theme.of(context).textTheme.headline6,
           ),
           Divider(
@@ -35,8 +36,8 @@ class NumbersSheet extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: () => ExternalLinks.callPhoneNumber('+254713793554'),
-                  subtitle: const Text('+254713793554'),
+                  onTap: () => ExternalLinks.callPhoneNumber('+254207641420'),
+                  subtitle: const Text('+254207641420'),
                   title: const Text('Kenya'),
                   trailing: Icon(
                     Icons.call_outlined,
@@ -53,8 +54,8 @@ class NumbersSheet extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: () => ExternalLinks.callPhoneNumber('+256784603454'),
-                  subtitle: const Text('+256784603454'),
+                  onTap: () => ExternalLinks.callPhoneNumber('+256206300895'),
+                  subtitle: const Text('+256206300895'),
                   title: const Text('Uganda'),
                   trailing: Icon(
                     Icons.call_outlined,

@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loan_app/core/core.dart';
-import 'package:path_provider/path_provider.dart';
 
 class AppLocalizations implements L10n {
   AppLocalizations(this.locale);
@@ -49,9 +47,7 @@ class AppLocalizations implements L10n {
   String translate(String key, {Map<String, String>? values}) {
     var value = _localizedStrings[key];
     if (value == null) {
-      IntegrationIOC.logger().log(
-        'Missing translation key: $key',
-      );
+      _saveKey(key);
       value = key;
     }
     if (values != null) {
@@ -62,19 +58,10 @@ class AppLocalizations implements L10n {
     return value!;
   }
 
-  // ignore: unused_element
   Future<void> _saveKey(key) async {
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final appDocPath = appDocDir.path;
-    final file = File('$appDocPath/missing_keys.txt');
-    if (!file.existsSync()) {
-      file.createSync();
-    }
-    log(appDocPath);
-    file.writeAsStringSync(
-      '"$key":"$key",\n',
-      mode: FileMode.append,
-    );
+    final database = FirebaseDatabase.instance;
+    final ref = database.ref().child('missing_keys/$key');
+    await ref.set('');
   }
 }
 

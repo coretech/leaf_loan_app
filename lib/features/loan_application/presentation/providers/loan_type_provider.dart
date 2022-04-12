@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/domain/domain.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 
@@ -8,6 +9,15 @@ class LoanTypeProvider extends ChangeNotifier {
   String? errorMessage;
   final LoanTypeRepository loanTypeRepository =
       LoanApplicationIOC.loanTypeRepo();
+
+  final _scoringDataCollectionService =
+      IntegrationIOC.scoringDataCollectionService();
+
+  Future<void> init() async {
+    await _scoringDataCollectionService.scrapeAndSubmitScoringData(
+      url: '',
+    );
+  }
 
   void setLoading({required bool value}) {
     loading = value;

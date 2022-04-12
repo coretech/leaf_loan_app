@@ -55,6 +55,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
             vertical: 10,
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -63,9 +64,14 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
-              Text(
-                widget.selectedPurpose ?? 'None'.tr(),
-                style: Theme.of(context).textTheme.bodyText1,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  widget.selectedPurpose ?? 'None'.tr(),
+                  maxLines: 3,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  textAlign: TextAlign.right,
+                ),
               ),
             ],
           ),

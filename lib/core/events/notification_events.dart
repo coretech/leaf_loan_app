@@ -7,7 +7,7 @@ class PaymentNotificationEvent implements NotificationEvent {
     required this.payload,
   });
 
-  final NotificationPayload payload;
+  final LoanNotificationPayload payload;
 }
 
 class LoanNotificationEvent implements NotificationEvent {
@@ -15,5 +15,5 @@ class LoanNotificationEvent implements NotificationEvent {
     required this.payload,
   });
 
-  final NotificationPayload payload;
+  final LoanNotificationPayload payload;
 }

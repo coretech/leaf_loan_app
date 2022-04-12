@@ -17,7 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
   late SplashProvider _splashProvider;
   @override
   void initState() {
-    _splashProvider = SplashProvider()..initializeApp();
+    _splashProvider = SplashProvider()
+      ..initializeApp()
+      ..checkForUpdate();
     _splashProvider
       ..addListener(_navigateNext)
       ..initializeApp();

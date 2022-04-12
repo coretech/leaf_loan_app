@@ -1,19 +1,17 @@
 import 'dart:convert';
 
-import 'package:loan_app/core/domain/entities/entities.dart';
+import 'package:loan_app/core/domain/domain.dart';
 
 class NotificationPayloadDto {
   NotificationPayloadDto({
-    required this.loanId,
+    required this.path,
     required this.type,
-    required this.paymentId,
   });
 
   factory NotificationPayloadDto.fromMap(Map<String, dynamic> map) {
     return NotificationPayloadDto(
-      loanId: map['loanid'] ?? '',
+      path: map['path'] ?? '',
       type: map['type'] ?? '',
-      paymentId: map['paymentId'] ?? '',
     );
   }
 
@@ -22,54 +20,47 @@ class NotificationPayloadDto {
 
   NotificationPayload toEntity() {
     return NotificationPayload(
-      loanId: loanId,
+      path: path,
       type: notificationTypeFromString(type),
-      paymentId: paymentId,
     );
   }
 
-  final String loanId;
+  final String path;
   final String type;
-  final String paymentId;
 
   NotificationPayloadDto copyWith({
-    String? loanId,
+    String? path,
     String? type,
-    String? paymentId,
   }) {
     return NotificationPayloadDto(
-      loanId: loanId ?? this.loanId,
+      path: path ?? this.path,
       type: type ?? this.type,
-      paymentId: paymentId ?? this.paymentId,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'loanid': loanId,
+      'path': path,
       'type': type,
-      'paymentid': paymentId,
     };
   }
 
   String toJson() => json.encode(toMap());
 
   @override
-  String toString() => 'NotificationPayloadDto(loanId: $loanId, type: $type, '
-      'paymentId: $paymentId)';
+  String toString() => 'NotificationPayloadDto(path: $path, type: $type)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is NotificationPayloadDto &&
-        other.loanId == loanId &&
-        other.type == type &&
-        other.paymentId == paymentId;
+        other.path == path &&
+        other.type == type;
   }
 
   @override
-  int get hashCode => loanId.hashCode ^ type.hashCode ^ paymentId.hashCode;
+  int get hashCode => path.hashCode ^ type.hashCode;
 }
 
 NotificationType notificationTypeFromString(String type) {
@@ -78,6 +69,10 @@ NotificationType notificationTypeFromString(String type) {
       return NotificationType.payment;
     case 'loan':
       return NotificationType.loanStatusUpdate;
+    case 'appUpdate':
+      return NotificationType.appUpdate;
+    case 'navigationWithoutPayload':
+      return NotificationType.navigationWithoutPayload;
     default:
       return NotificationType.loanStatusUpdate;
   }

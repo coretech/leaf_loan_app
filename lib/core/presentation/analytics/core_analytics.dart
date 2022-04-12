@@ -5,7 +5,7 @@ class CoreAnalytics {
     String languageCode,
     String componentLocation,
   ) {
-    IntegrationIOC.analytics().logEvent(
+    IntegrationIOC.analytics.logEvent(
       'language_changed',
       parameters: <String, dynamic>{
         'language_code': languageCode,

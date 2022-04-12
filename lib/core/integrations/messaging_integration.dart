@@ -140,14 +140,25 @@ class MessagingIntegration implements MessagingService {
   }
 
   Future<void> onNotificationOpened(Map<String, dynamic> payload) async {
-    final notificationPayload =
-        NotificationPayloadDto.fromMap(payload).toEntity();
-    await navigate(notificationPayload);
+    final loanType = notificationTypeFromString(payload['type']);
+    switch (loanType) {
+      case NotificationType.loanStatusUpdate:
+      case NotificationType.payment:
+        final notificationPayload =
+            LoanNotificationPayloadDto.fromMap(payload).toEntity();
+        await navigate(notificationPayload);
+        break;
+
+      case NotificationType.appUpdate:
+      case NotificationType.immediateAppUpdate:
+      case NotificationType.navigationWithoutPayload:
+        break;
+    }
   }
 
   Future<void> emitNotificationEvent(Map<String, dynamic> payload) async {
     final notificationPayload =
-        NotificationPayloadDto.fromMap(payload).toEntity();
+        LoanNotificationPayloadDto.fromMap(payload).toEntity();
     final eventBus = IntegrationIOC.eventBus;
     switch (notificationPayload.type) {
       case NotificationType.loanStatusUpdate:
@@ -156,10 +167,23 @@ class MessagingIntegration implements MessagingService {
       case NotificationType.payment:
         eventBus.fire(PaymentNotificationEvent(payload: notificationPayload));
         break;
+      case NotificationType.appUpdate:
+        await IntegrationIOC.updater.startFlexibleUpdate();
+        break;
+      case NotificationType.immediateAppUpdate:
+        await IntegrationIOC.updater.performImmediateUpdate();
+        break;
+      case NotificationType.navigationWithoutPayload:
+        final notificationPayload =
+            NotificationPayloadDto.fromMap(payload).toEntity();
+        if (routeNames.contains(notificationPayload.path)) {
+          await navigatorKey.currentState?.pushNamed(notificationPayload.path);
+        }
+        break;
     }
   }
 
-  Future<void> navigate(NotificationPayload payload) async {
+  Future<void> navigate(LoanNotificationPayload payload) async {
     switch (payload.type) {
       case NotificationType.loanStatusUpdate:
         await navigatorKey.currentState?.push(
@@ -190,6 +214,10 @@ class MessagingIntegration implements MessagingService {
             },
           ),
         );
+        break;
+      case NotificationType.appUpdate:
+      case NotificationType.immediateAppUpdate:
+      case NotificationType.navigationWithoutPayload:
         break;
     }
   }

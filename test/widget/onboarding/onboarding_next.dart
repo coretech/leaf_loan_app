@@ -22,10 +22,10 @@ void main() {
         any(),
       ),
     ).thenAnswer((invocation) async {});
-    when(() => IntegrationIOC.analytics().logAppOpen()).thenAnswer(
+    when(() => IntegrationIOC.analytics.logAppOpen()).thenAnswer(
       (_) async {},
     );
-    when(() => IntegrationIOC.analytics().logEvent(any())).thenAnswer(
+    when(() => IntegrationIOC.analytics.logEvent(any())).thenAnswer(
       (_) async {},
     );
     when(() => IntegrationIOC.logger().log(any())).thenAnswer(

@@ -27,7 +27,7 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    IntegrationIOC.analytics().logAppOpen();
+    IntegrationIOC.analytics.logAppOpen();
     IntegrationIOC.recording.init();
     super.initState();
   }
@@ -156,7 +156,7 @@ class _AppState extends State<App> {
     _authHelper.authenticationStream.listen((loggedOut) {
       if (loggedOut) {
         widget.navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          '/', //change to SplashScreen.routename
+          SplashScreen.routeName,
           (_) => false,
         );
       }

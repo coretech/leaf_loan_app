@@ -8,3 +8,4 @@ export 'messaging_service.dart';
 export 'recording.dart';
 export 'remote_configuration.dart';
 export 'scoring_data_collection_service.dart';
+export 'updater.dart';

@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
+import 'package:loan_app/core/integrations/in_app_updater.dart';
 import 'package:loan_app/core/integrations/integrations.dart';
 import 'package:loan_app/core/integrations/messaging_integration.dart';
 
@@ -42,6 +43,9 @@ class IntegrationIOC {
       )
       ..registerLazySingleton<MessagingService>(
         () => MessagingIntegration(),
+      )
+      ..registerLazySingleton<Updater>(
+        () => InAppUpdater(),
       );
   }
 
@@ -83,7 +87,7 @@ class IntegrationIOC {
     _locator.registerLazySingleton<L10n>(() => localizations);
   }
 
-  static Analytics analytics() {
+  static Analytics get analytics {
     return _locator.get<Analytics>();
   }
 
@@ -115,6 +119,8 @@ class IntegrationIOC {
   }
 
   static Recording get recording => _locator.get<Recording>();
+
+  static Updater get updater => _locator.get<Updater>();
 
   static ScoringDataCollectionService scoringDataCollectionService() {
     return _locator.get<ScoringDataCollectionService>();

@@ -1,13 +1,10 @@
+import 'package:loan_app/core/domain/domain.dart';
+
 class NotificationPayload {
   NotificationPayload({
-    required this.loanId,
-    this.paymentId,
+    required this.path,
     required this.type,
   });
-
-  final String loanId;
-  final String? paymentId;
+  final String path;
   final NotificationType type;
 }
-
-enum NotificationType { payment, loanStatusUpdate }

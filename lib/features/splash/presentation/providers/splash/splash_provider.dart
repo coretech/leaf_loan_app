@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/onboarding/ioc/ioc.dart';
 
 class SplashProvider extends ChangeNotifier {
@@ -11,6 +12,18 @@ class SplashProvider extends ChangeNotifier {
   final _authenticationRepository = AuthIOC.authRepo();
 
   final _onboardingStatusRepo = OnboardingIOC.onboardingStatusRepo();
+  final _updater = IntegrationIOC.updater;
+
+  Future<void> checkForUpdate() async {
+    try {
+      final updateInfo = await _updater.checkForUpdate();
+      if (updateInfo.immediateUpdate) {
+        await _updater.performImmediateUpdate();
+      }
+    } catch (e) {
+      errorMessage = e.toString();
+    }
+  }
 
   Future<void> initializeApp() async {
     loading = true;

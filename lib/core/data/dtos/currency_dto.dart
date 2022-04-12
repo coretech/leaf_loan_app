@@ -1,79 +1,85 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
-import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
 
-class CurrencyDTO {
-  CurrencyDTO({
-    this.currencyid,
-    required this.minloanamount,
-    required this.maxloanamount,
+
+class CurrencyDto {
+  CurrencyDto({
+    required this.id,
+    required this.fiatCode,
+    required this.name,
   });
 
-  factory CurrencyDTO.fromMap(Map<String, dynamic> map) {
-    return CurrencyDTO(
-      // ignore: avoid_dynamic_calls
-      currencyid: (map['currencyid'] is String || map['currencyid'] == null)
-          ? null
-          : CurrencyIdDto.fromMap(map['currencyid']),
-      minloanamount: map['minloanamount'],
-      maxloanamount: map['maxloanamount'],
+  factory CurrencyDto.fromMap(Map<String, dynamic> map) {
+    return CurrencyDto(
+      id: map['id'] ?? '',
+      fiatCode: map['fiatCode'] ?? '',
+      name: map['name'] ?? '',
     );
   }
 
-  factory CurrencyDTO.fromJson(String source) =>
-      CurrencyDTO.fromMap(json.decode(source));
+  factory CurrencyDto.fromJson(String source) =>
+      CurrencyDto.fromMap(json.decode(source));
 
-  final CurrencyIdDto? currencyid;
-  final int minloanamount;
-  final int maxloanamount;
+  final String id;
+  final String fiatCode;
+  final String name;
+
 
   Currency toEntity() {
     return Currency(
-      currencyId: currencyid?.toEntity(),
-      minLoanAmount: minloanamount,
-      maxLoanAmount: maxloanamount,
+      id: id,
+      fiatCode: fiatCode,
+      name: name,
     );
   }
 
-  CurrencyDTO copyWith({
-    CurrencyIdDto? currencyid,
-    int? minloanamount,
-    int? maxloanamount,
+  CurrencyDto copyWith({
+    String? id,
+    String? fiatCode,
+    String? name,
+    double? minLoanAmount,
+    double? maxLoanAmount,
   }) {
-    return CurrencyDTO(
-      currencyid: currencyid ?? this.currencyid,
-      minloanamount: minloanamount ?? this.minloanamount,
-      maxloanamount: maxloanamount ?? this.maxloanamount,
+    return CurrencyDto(
+      id: id ?? this.id,
+      fiatCode: fiatCode ?? this.fiatCode,
+      name: name ?? this.name,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'currencyid': currencyid?.toMap(),
-      'minloanamount': minloanamount,
-      'maxloanamount': maxloanamount,
+      'id': id,
+      'fiatCode': fiatCode,
+      'name': name,
     };
   }
 
   String toJson() => json.encode(toMap());
 
   @override
-  String toString() =>
-      'CurrencyDTO(currencyid: $currencyid, minloanamount: $minloanamount, '
-      'maxloanamount: $maxloanamount)';
+  String toString() {
+    return 'CurrencyDto(id: $id, fiatCode: $fiatCode, '
+        'name: $name)';
+  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CurrencyDTO &&
-        other.currencyid == currencyid &&
-        other.minloanamount == minloanamount &&
-        other.maxloanamount == maxloanamount;
+    return other is CurrencyDto &&
+        other.id == id &&
+        other.fiatCode == fiatCode &&
+        other.name == name;
   }
 
   @override
-  int get hashCode =>
-      currencyid.hashCode ^ minloanamount.hashCode ^ maxloanamount.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        fiatCode.hashCode ^
+        name.hashCode;
+  }
 }

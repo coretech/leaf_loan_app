@@ -51,17 +51,17 @@ class FormContentC extends StatelessWidget {
                   if (details.currentStep > 0)
                     TextButton(
                       onPressed: onBackPressed,
-                      child: const Text('Back'),
+                      child: Text('Back'.tr()),
                     ),
                   if (details.currentStep < 4)
                     TextButton(
                       onPressed: onNextPressed,
-                      child: const Text('Next'),
+                      child: Text('Next'.tr()),
                     ),
                   if (details.currentStep == 4)
                     ElevatedButton(
                       onPressed: onSubmitPressed,
-                      child: const Text('Submit'),
+                      child: Text('Submit'.tr()),
                     ),
                 ],
               ),
@@ -127,29 +127,25 @@ class FormContentC extends StatelessWidget {
               content: LoanAmountPicker(
                 fiatCode: hasLoanTypes
                     ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].currencyId!.fiatCode
+                        .currencies[selectedCurrencyIndex].fiatCode
                     : null,
                 interestRate: hasLoanTypes
                     ? loanTypeProvider
                         .loanTypes[selectedLoanTypeIndex].interestRate
-                        .toDouble()
                     : null,
                 loading: loanTypeProvider.loading,
                 loanAmount: loanAmount ??
                     (hasLoanTypes
                         ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
                             .currencies[selectedCurrencyIndex].maxLoanAmount
-                            .toDouble()
                         : 0),
                 maxAmount: hasLoanTypes
                     ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
                         .currencies[selectedCurrencyIndex].maxLoanAmount
-                        .toDouble()
                     : null,
                 minAmount: hasLoanTypes
                     ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
                         .currencies[selectedCurrencyIndex].minLoanAmount
-                        .toDouble()
                     : null,
                 onChanged: onLoanAmountChanged,
                 shouldShowTitle: false,

@@ -78,9 +78,9 @@ class _MaxLoanAmountTextState extends State<MaxLoanAmountText> {
       if (loanTypeProvider.canShowTypes) {
         for (final loanType in loanTypeProvider.loanTypes) {
           for (final currency in loanType.currencies) {
-            if ((maxAmounts[currency.currencyId!.fiatCode] ?? 0) <
+            if ((maxAmounts[currency.fiatCode] ?? 0) <
                 currency.maxLoanAmount) {
-              maxAmounts[currency.currencyId!.fiatCode] =
+              maxAmounts[currency.fiatCode] =
                   currency.maxLoanAmount;
             }
           }

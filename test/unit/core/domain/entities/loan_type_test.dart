@@ -1,7 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:loan_app/core/domain/entities/currency.dart';
-import 'package:loan_app/core/domain/entities/currency_id.dart';
-import 'package:loan_app/core/domain/entities/loan_type.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
 
 void main() {
   test(
@@ -14,16 +12,10 @@ void main() {
         name: 'name',
         description: 'description',
         currencies: [
-          Currency(
-            currencyId: CurrencyId(
-              id: 'some_id',
-              name: 'Rwandan Franc',
-              fiatCode: 'RWF',
-              description: 'Rwandan Franc',
-              country: 'Rwanda',
-              createdAt: '2019-05-15T12:00:00.000Z',
-              updatedAt: '2019-05-15T12:00:00.000Z',
-            ),
+          LoanCurrency(
+            id: '',
+            fiatCode: 'KES',
+            name: 'KESC',
             minLoanAmount: 100,
             maxLoanAmount: 1000,
           ),

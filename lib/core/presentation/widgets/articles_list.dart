@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/articles/ioc/ioc.dart';
 import 'package:loan_app/features/articles/presentation/providers/providers.dart';
+import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
 /// [ArticlesList] should be wrapped in
@@ -48,7 +49,7 @@ class ArticlesList extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           TextButton(
-            child: const Text('Retry'),
+            child: Text('Retry'.tr()),
             onPressed: () {
               ArticlesIOC.articlesProvider.getArticles();
             },
@@ -65,10 +66,10 @@ class ArticlesList extends StatelessWidget {
   }
 
   Widget _buildNoArticles(BuildContext context) {
-    return const Center(
+    return Center(
       child: Text(
-        'No articles found',
-        style: TextStyle(
+        'No articles found'.tr(),
+        style: const TextStyle(
           fontStyle: FontStyle.italic,
         ),
       ),

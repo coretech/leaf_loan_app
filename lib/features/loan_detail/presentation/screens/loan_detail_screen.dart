@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/features/loan_detail/loan_detail.dart';
 import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
-
+// TODO(Yabsra): deprecate this
 class LoanDetailScreen extends StatefulWidget {
   const LoanDetailScreen({
     Key? key,

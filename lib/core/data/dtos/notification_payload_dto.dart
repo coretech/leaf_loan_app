@@ -13,7 +13,7 @@ class NotificationPayloadDto {
     return NotificationPayloadDto(
       loanId: map['loanid'] ?? '',
       type: map['type'] ?? '',
-      paymentId: map['paymentid'] ?? '',
+      paymentId: map['paymentId'] ?? '',
     );
   }
 

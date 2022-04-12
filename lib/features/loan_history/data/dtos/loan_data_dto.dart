@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:loan_app/core/data/data.dart';
@@ -7,40 +9,32 @@ class LoanDataDto {
   LoanDataDto({
     required this.status,
     required this.id,
-    required this.customerid,
-    required this.loantypeid,
-    required this.loanpurpose,
-    required this.currencyid,
-    required this.duedate,
-    required this.requestedamount,
-    required this.interestamount,
-    required this.totalamount,
-    required this.remainingamount,
+    required this.loanType,
+    required this.loanPurpose,
+    required this.currency,
+    required this.dueDate,
+    required this.requestedAmount,
+    required this.interestAmount,
+    required this.totalAmount,
+    required this.remainingAmount,
     required this.duration,
-    required this.requestdate,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.requestDate,
   });
 
   factory LoanDataDto.fromMap(Map<String, dynamic> map) {
     return LoanDataDto(
-      status: map['status'],
-      id: map['_id'],
-      customerid: map['customerid'],
-      loantypeid: LoanTypeDTO.fromMap(map['loantypeid'] ?? map['loanid']),
-      loanpurpose: map['loanpurpose'],
-      currencyid: map['currencyid'] != null
-          ? CurrencyIdDto.fromMap(map['currencyid'])
-          : null,
-      duedate: map['duedate'],
-      requestedamount: double.parse(map['requestedamount'].toString()),
-      interestamount: double.parse(map['interestamount'].toString()),
-      totalamount: double.parse(map['totalamount'].toString()),
-      remainingamount: double.parse(map['remainingamount'].toString()),
-      duration: map['duration'],
-      requestdate: map['requestdate'],
-      createdAt: map['createdAt'],
-      updatedAt: map['updatedAt'],
+      status: map['status'] ?? '',
+      id: map['id'] ?? '',
+      loanType: map['loanType'] ?? '',
+      loanPurpose: map['loanPurpose'] ?? '',
+      currency: CurrencyDto.fromMap(map['currency']),
+      dueDate: map['dueDate'] ?? '',
+      requestedAmount: map['requestedAmount']?.toDouble() ?? 0,
+      interestAmount: map['interestAmount']?.toDouble() ?? 0,
+      totalAmount: map['totalAmount']?.toDouble() ?? 0,
+      remainingAmount: map['remainingAmount']?.toDouble() ?? 0,
+      duration: map['duration']?.toInt() ?? 0,
+      requestDate: map['requestDate'] ?? '',
     );
   }
 
@@ -49,93 +43,78 @@ class LoanDataDto {
 
   LoanData toEntity() {
     return LoanData(
-      status: status,
-      id: id,
-      customerId: customerid,
-      loanTypeId: loantypeid.toEntity(),
-      loanPurpose: loanpurpose,
-      currencyId: currencyid?.toEntity(),
-      dueDate: duedate,
-      requestedAmount: requestedamount,
-      interestAmount: interestamount,
-      totalAmount: totalamount,
-      remainingAmount: remainingamount,
+      currency: currency.toEntity(),
+      dueDate: dueDate,
       duration: duration,
-      requestDate: requestdate,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      id: id,
+      interestAmount: interestAmount,
+      loanPurpose: loanPurpose,
+      loanType: loanType,
+      remainingAmount: remainingAmount,
+      requestDate: requestDate,
+      requestedAmount: requestedAmount,
+      status: status,
+      totalAmount: totalAmount,
     );
   }
 
   final String status;
   final String id;
-  final String customerid;
-  final LoanTypeDTO loantypeid;
-  final String loanpurpose;
-  final CurrencyIdDto? currencyid;
-  final String duedate;
-  final double requestedamount;
-  final double interestamount;
-  final double totalamount;
-  final double remainingamount;
+  final String loanType;
+  final String loanPurpose;
+  final CurrencyDto currency;
+  final String dueDate;
+  final double requestedAmount;
+  final double interestAmount;
+  final double totalAmount;
+  final double remainingAmount;
   final int duration;
-  final String requestdate;
-  final String createdAt;
-  final String updatedAt;
+  final String requestDate;
 
   LoanDataDto copyWith({
     String? status,
     String? id,
-    String? customerid,
-    LoanTypeDTO? loantypeid,
-    String? loanpurpose,
-    CurrencyIdDto? currencyid,
-    String? duedate,
-    double? requestedamount,
-    double? interestamount,
-    double? totalamount,
-    double? remainingamount,
+    String? loanType,
+    String? loanPurpose,
+    CurrencyDto? currency,
+    String? dueDate,
+    double? requestedAmount,
+    double? interestAmount,
+    double? totalAmount,
+    double? remainingAmount,
     int? duration,
-    String? requestdate,
-    String? createdAt,
-    String? updatedAt,
+    String? requestDate,
   }) {
     return LoanDataDto(
       status: status ?? this.status,
       id: id ?? this.id,
-      customerid: customerid ?? this.customerid,
-      loantypeid: loantypeid ?? this.loantypeid,
-      loanpurpose: loanpurpose ?? this.loanpurpose,
-      currencyid: currencyid ?? this.currencyid,
-      duedate: duedate ?? this.duedate,
-      requestedamount: requestedamount ?? this.requestedamount,
-      interestamount: interestamount ?? this.interestamount,
-      totalamount: totalamount ?? this.totalamount,
-      remainingamount: remainingamount ?? this.remainingamount,
+      loanType: loanType ?? this.loanType,
+      loanPurpose: loanPurpose ?? this.loanPurpose,
+      currency: currency ?? this.currency,
+      dueDate: dueDate ?? this.dueDate,
+      requestedAmount: requestedAmount ?? this.requestedAmount,
+      interestAmount: interestAmount ?? this.interestAmount,
+      totalAmount: totalAmount ?? this.totalAmount,
+      remainingAmount: remainingAmount ?? this.remainingAmount,
       duration: duration ?? this.duration,
-      requestdate: requestdate ?? this.requestdate,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      requestDate: requestDate ?? this.requestDate,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'status': status,
-      '_id': id,
-      'customerid': customerid,
-      'loantypeid': loantypeid.toMap(),
-      'loanpurpose': loanpurpose,
-      'currencyid': currencyid?.toMap(),
-      'duedate': duedate,
-      'requestedamount': requestedamount,
-      'interestamount': interestamount,
-      'totalamount': totalamount,
-      'remainingamount': remainingamount,
+      'id': id,
+      'loanType': loanType,
+      'loanPurpose': loanPurpose,
+      'currency': currency.toMap(),
+      'dueDate': dueDate,
+      'requestedAmount': requestedAmount,
+      'interestAmount': interestAmount,
+      'totalAmount': totalAmount,
+      'remainingAmount': remainingAmount,
       'duration': duration,
-      'requestdate': requestdate,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
+      'requestDate': requestDate,
     };
   }
 
@@ -143,12 +122,11 @@ class LoanDataDto {
 
   @override
   String toString() {
-    return 'LoanDataDto(status: $status, _id: $id, customerid: $customerid, '
-        'loantypeid: $loantypeid, loanpurpose: $loanpurpose, currencyid: '
-        '$currencyid, duedate: $duedate, requestedamount: $requestedamount, '
-        'interestamount: $interestamount, totalamount: $totalamount, '
-        'remainingamount: $remainingamount, duration: $duration, requestdate: '
-        '$requestdate, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'LoanDataDto(status: $status, id: $id, loanType: $loanType, '
+        'loanPurpose: $loanPurpose, currency: $currency, dueDate: $dueDate, '
+        'requestedAmount: $requestedAmount, interestAmount: $interestAmount, '
+        'totalAmount: $totalAmount, remainingAmount: $remainingAmount, '
+        'duration: $duration, requestDate: $requestDate)';
   }
 
   @override
@@ -158,37 +136,31 @@ class LoanDataDto {
     return other is LoanDataDto &&
         other.status == status &&
         other.id == id &&
-        other.customerid == customerid &&
-        other.loantypeid == loantypeid &&
-        other.loanpurpose == loanpurpose &&
-        other.currencyid == currencyid &&
-        other.duedate == duedate &&
-        other.requestedamount == requestedamount &&
-        other.interestamount == interestamount &&
-        other.totalamount == totalamount &&
-        other.remainingamount == remainingamount &&
+        other.loanType == loanType &&
+        other.loanPurpose == loanPurpose &&
+        other.currency == currency &&
+        other.dueDate == dueDate &&
+        other.requestedAmount == requestedAmount &&
+        other.interestAmount == interestAmount &&
+        other.totalAmount == totalAmount &&
+        other.remainingAmount == remainingAmount &&
         other.duration == duration &&
-        other.requestdate == requestdate &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.requestDate == requestDate;
   }
 
   @override
   int get hashCode {
     return status.hashCode ^
         id.hashCode ^
-        customerid.hashCode ^
-        loantypeid.hashCode ^
-        loanpurpose.hashCode ^
-        currencyid.hashCode ^
-        duedate.hashCode ^
-        requestedamount.hashCode ^
-        interestamount.hashCode ^
-        totalamount.hashCode ^
-        remainingamount.hashCode ^
+        loanType.hashCode ^
+        loanPurpose.hashCode ^
+        currency.hashCode ^
+        dueDate.hashCode ^
+        requestedAmount.hashCode ^
+        interestAmount.hashCode ^
+        totalAmount.hashCode ^
+        remainingAmount.hashCode ^
         duration.hashCode ^
-        requestdate.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
+        requestDate.hashCode;
   }
 }

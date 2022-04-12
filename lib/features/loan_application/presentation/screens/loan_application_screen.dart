@@ -46,8 +46,8 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0,
                 foregroundColor: Theme.of(context).colorScheme.onSurface,
-                title: const Text(
-                  'Apply for a loan',
+                title: Text(
+                  'Apply for a loan'.tr(),
                 ),
               ),
               body: _buildContent(),
@@ -193,8 +193,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       _selectedCurrencyIndex = 0;
       _selectedLoanTypeIndex = value;
       _loanAmount = _loanTypeProvider
-          .loanTypes[value].currencies[_selectedCurrencyIndex].minLoanAmount
-          .toDouble();
+          .loanTypes[value].currencies[_selectedCurrencyIndex].minLoanAmount;
     });
   }
 
@@ -202,8 +201,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     setState(() {
       _selectedCurrencyIndex = value;
       _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
-          .currencies[_selectedCurrencyIndex].minLoanAmount
-          .toDouble();
+          .currencies[_selectedCurrencyIndex].minLoanAmount;
     });
   }
 
@@ -226,11 +224,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       _onSubmit();
     } else {
       if (_loanAmount == null) {
-        showSnackbar('Please select loan amount');
+        showSnackbar('Please select loan amount!'.tr());
       } else if (_selectedPurpose == null) {
-        showSnackbar('Please select loan purpose');
+        showSnackbar('Please select loan purpose!'.tr());
       } else if (_selectedDurationInDays < 61) {
-        showSnackbar('Please select a proper loan duration');
+        showSnackbar('Please select a proper loan duration!'.tr());
       }
     }
   }
@@ -269,7 +267,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
             .currencies[_selectedCurrencyIndex],
       ),
     );
-    if (success) {
+    if (success ?? false) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -298,8 +296,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     if (_loanTypeProvider.loanTypes.isNotEmpty) {
       setState(() {
         _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
-            .currencies[_selectedCurrencyIndex].minLoanAmount
-            .toDouble();
+            .currencies[_selectedCurrencyIndex].minLoanAmount;
       });
     }
   }

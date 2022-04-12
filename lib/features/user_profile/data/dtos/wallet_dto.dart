@@ -1,102 +1,67 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:loan_app/features/user_profile/data/dtos/dtos.dart';
-import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
+import 'package:loan_app/core/data/dtos/dtos.dart';
+import 'package:loan_app/features/user_profile/domain/domain.dart';
 
 class WalletDto {
   WalletDto({
-    required this.id,
-    required this.customerid,
-    required this.walletdetail,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.balance,
+    required this.currency,
   });
 
   factory WalletDto.fromMap(Map<String, dynamic> map) {
     return WalletDto(
-      id: map['_id'],
-      customerid: map['customerid'],
-      walletdetail: List<WalletDetailDto>.from(
-        // ignore: avoid_dynamic_calls
-        map['walletdetail'].map((x) => WalletDetailDto.fromMap(x)),
-      ),
-      createdAt: map['createdAt'],
-      updatedAt: map['updatedAt'],
+      balance: map['balance']?.toDouble() ?? 0.0,
+      currency: CurrencyDto.fromMap(map['currency']),
     );
   }
 
   factory WalletDto.fromJson(String source) =>
       WalletDto.fromMap(json.decode(source));
 
-  final String id;
-  final String customerid;
-  final List<WalletDetailDto> walletdetail;
-  final String createdAt;
-  final String updatedAt;
+  final double balance;
+  final CurrencyDto currency;
 
   Wallet toEntity() {
     return Wallet(
-      id: id,
-      customerId: customerid,
-      walletDetail: walletdetail.map((x) => x.toEntity()).toList(),
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      balance: balance,
+      currency: currency.toEntity(),
     );
   }
 
   WalletDto copyWith({
-    String? id,
-    String? customerid,
-    List<WalletDetailDto>? walletdetail,
-    String? createdAt,
-    String? updatedAt,
+    double? balance,
+    CurrencyDto? currency,
   }) {
     return WalletDto(
-      id: id ?? this.id,
-      customerid: customerid ?? this.customerid,
-      walletdetail: walletdetail ?? this.walletdetail,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      balance: balance ?? this.balance,
+      currency: currency ?? this.currency,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'createdAt': createdAt,
-      'customerid': customerid,
-      'updatedAt': updatedAt,
-      'walletdetail': walletdetail.map((x) => x.toMap()).toList(),
+      'balance': balance,
+      'currency': currency.toMap(),
     };
   }
 
   String toJson() => json.encode(toMap());
 
   @override
-  String toString() {
-    return 'WalletDto(_id: $id, customerid: $customerid, walletdetail: '
-        '$walletdetail, createdAt: $createdAt, updatedAt: $updatedAt)';
-  }
+  String toString() => 'WalletDto(balance: $balance, currency: $currency)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is WalletDto &&
-        other.id == id &&
-        other.customerid == customerid &&
-        listEquals(other.walletdetail, walletdetail) &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.balance == balance &&
+        other.currency == currency;
   }
 
   @override
-  int get hashCode {
-    return id.hashCode ^
-        customerid.hashCode ^
-        walletdetail.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
-  }
+  int get hashCode => balance.hashCode ^ currency.hashCode;
 }

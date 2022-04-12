@@ -37,6 +37,7 @@ class AuthRemoteRepo extends AuthenticationRepository {
         await _localStorage.setString(Keys.userId, userMap['id']);
         return right(result);
       } else {
+        // TODO(Yabsra): locked acc
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }
     } catch (e, stacktrace) {

@@ -1,53 +1,70 @@
 import 'dart:convert';
 
-import 'package:loan_app/features/user_profile/data/dtos/dtos.dart';
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 
-class UserDTO {
-  UserDTO({
+class UserDto {
+  UserDto({
     required this.id,
     required this.city,
     required this.country,
     required this.createdAt,
     required this.dob,
+    required this.email,
     required this.gender,
+    required this.idNumber,
+    required this.idType,
+    required this.issuingCountry,
     required this.phone,
     required this.status,
+    required this.street,
     required this.updatedAt,
-    required this.userid,
-    this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.username,
   });
 
-  factory UserDTO.fromMap(Map<String, dynamic> map) {
-    return UserDTO(
-      id: map['_id'],
-      city: map['city'],
-      country: map['country'],
-      createdAt: map['createdAt'],
-      dob: map['dob'],
-      gender: map['gender'],
-      phone: map['phone'],
-      status: map['status'],
-      updatedAt: map['updatedAt'],
-      userid: UserIdDTO.fromMap(map['userid']),
-      email: map['email'],
+  factory UserDto.fromMap(Map<String, dynamic> map) {
+    return UserDto(
+      id: map['id'] ?? '',
+      city: map['city'] ?? '',
+      country: map['country'] ?? '',
+      createdAt: map['createdAt'] ?? '',
+      dob: map['dob'] ?? '',
+      email: map['email'] ?? '',
+      gender: map['gender'] ?? '',
+      idNumber: map['idNumber'] ?? '',
+      idType: map['idType'] ?? '',
+      issuingCountry: map['issuingCountry'] ?? '',
+      phone: map['phone'] ?? '',
+      status: map['status'] ?? '',
+      street: map['street'] ?? '',
+      updatedAt: map['updatedAt'] ?? '',
+      firstName: map['firstName'] ?? '',
+      lastName: map['lastName'] ?? '',
+      username: map['username'] ?? '',
     );
   }
 
-  factory UserDTO.fromJson(String source) =>
-      UserDTO.fromMap(json.decode(source));
+  factory UserDto.fromJson(String source) =>
+      UserDto.fromMap(json.decode(source));
 
   final String id;
   final String city;
   final String country;
   final String createdAt;
   final String dob;
+  final String email;
   final String gender;
+  final String idNumber;
+  final String idType;
+  final String issuingCountry;
   final String phone;
   final String status;
+  final String street;
   final String updatedAt;
-  final UserIdDTO userid;
-  final String? email;
+  final String firstName;
+  final String lastName;
+  final String username;
 
   User toEntity() {
     return User(
@@ -60,55 +77,78 @@ class UserDTO {
       phone: phone,
       status: status,
       updatedAt: updatedAt,
-      userId: userid.toEntity(),
+      userId: UserId(
+        id: id,
+        status: status,
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      ),
       email: email,
     );
   }
 
-  UserDTO copyWith({
+  UserDto copyWith({
     String? id,
     String? city,
     String? country,
     String? createdAt,
     String? dob,
+    String? email,
     String? gender,
-    String? idnumber,
-    String? idtype,
-    String? issuingcountry,
+    String? idNumber,
+    String? idType,
+    String? issuingCountry,
     String? phone,
     String? status,
+    String? street,
     String? updatedAt,
-    UserIdDTO? userid,
-    String? email,
+    String? firstName,
+    String? lastName,
+    String? username,
   }) {
-    return UserDTO(
+    return UserDto(
       id: id ?? this.id,
       city: city ?? this.city,
       country: country ?? this.country,
       createdAt: createdAt ?? this.createdAt,
       dob: dob ?? this.dob,
+      email: email ?? this.email,
       gender: gender ?? this.gender,
+      idNumber: idNumber ?? this.idNumber,
+      idType: idType ?? this.idType,
+      issuingCountry: issuingCountry ?? this.issuingCountry,
       phone: phone ?? this.phone,
       status: status ?? this.status,
+      street: street ?? this.street,
       updatedAt: updatedAt ?? this.updatedAt,
-      userid: userid ?? this.userid,
-      email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      username: username ?? this.username,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': id,
+      'id': id,
       'city': city,
       'country': country,
       'createdAt': createdAt,
       'dob': dob,
+      'email': email,
       'gender': gender,
+      'idNumber': idNumber,
+      'idType': idType,
+      'issuingCountry': issuingCountry,
       'phone': phone,
       'status': status,
+      'street': street,
       'updatedAt': updatedAt,
-      'userid': userid.toMap(),
-      'email': email,
+      'firstName': firstName,
+      'lastName': lastName,
+      'username': username,
     };
   }
 
@@ -116,28 +156,35 @@ class UserDTO {
 
   @override
   String toString() {
-    return 'Data(_id: $id, city: $city, country: $country,'
-        ' createdAt: $createdAt, dob: $dob, gender: $gender,'
-        ' phone: $phone, status: $status, updatedAt:'
-        ' $updatedAt, userid: $userid, email: $email)';
+    return 'UserDto(id: $id, city: $city, country: $country, createdAt: '
+        '$createdAt, dob: $dob, email: $email, gender: $gender, idNumber: '
+        '$idNumber, idType: $idType, issuingCountry: $issuingCountry, phone: '
+        '$phone, status: $status, street: $street, updatedAt: $updatedAt, '
+        'firstName: $firstName, lastName: $lastName, username: $username)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is UserDTO &&
+    return other is UserDto &&
         other.id == id &&
         other.city == city &&
         other.country == country &&
         other.createdAt == createdAt &&
         other.dob == dob &&
+        other.email == email &&
         other.gender == gender &&
+        other.idNumber == idNumber &&
+        other.idType == idType &&
+        other.issuingCountry == issuingCountry &&
         other.phone == phone &&
         other.status == status &&
+        other.street == street &&
         other.updatedAt == updatedAt &&
-        other.userid == userid &&
-        other.email == email;
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.username == username;
   }
 
   @override
@@ -147,11 +194,17 @@ class UserDTO {
         country.hashCode ^
         createdAt.hashCode ^
         dob.hashCode ^
+        email.hashCode ^
         gender.hashCode ^
+        idNumber.hashCode ^
+        idType.hashCode ^
+        issuingCountry.hashCode ^
         phone.hashCode ^
         status.hashCode ^
+        street.hashCode ^
         updatedAt.hashCode ^
-        userid.hashCode ^
-        email.hashCode;
+        firstName.hashCode ^
+        lastName.hashCode ^
+        username.hashCode;
   }
 }

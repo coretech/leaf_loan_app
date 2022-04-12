@@ -19,10 +19,10 @@ class LoanType {
   final String id;
   final String name;
   final String description;
-  final List<Currency> currencies;
+  final List<LoanCurrency> currencies;
   final int minDuration;
   final int maxDuration;
-  final int interestRate;
+  final double interestRate;
   final String image;
   final String createdAt;
   final String updatedAt;
@@ -32,10 +32,10 @@ class LoanType {
     String? id,
     String? name,
     String? description,
-    List<Currency>? currencies,
+    List<LoanCurrency>? currencies,
     int? minDuration,
     int? maxDuration,
-    int? interestRate,
+    double? interestRate,
     String? image,
     String? createdAt,
     String? updatedAt,

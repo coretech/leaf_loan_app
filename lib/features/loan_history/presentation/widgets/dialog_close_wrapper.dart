@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/i18n/i18n.dart';
 
 class DialogCloseWrapper extends StatelessWidget {
   const DialogCloseWrapper({
@@ -25,7 +26,7 @@ class DialogCloseWrapper extends StatelessWidget {
                 Theme.of(context).colorScheme.secondary,
               ),
             ),
-            child: const Text('Close'),
+            child: Text('Close'.tr()),
           ),
         ],
       );

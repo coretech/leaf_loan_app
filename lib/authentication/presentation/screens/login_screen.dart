@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/core.dart';
+import 'package:loan_app/features/home/presentation/screens/screens.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
 
@@ -231,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Leaf Wallet Credentials',
       );
       Navigator.of(context).pushNamedAndRemoveUntil(
-        '/home',
+        HomeScreen.routeName,
         (route) => false,
       );
     }

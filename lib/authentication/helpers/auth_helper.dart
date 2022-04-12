@@ -20,7 +20,7 @@ class AuthHelper {
   }
 
   Future<String?> saveToken(String token) async {
-    return _localStorage.getString(Keys.token);
+    return _localStorage.getString(Keys.token);//
   }
 
   Stream<bool> get authenticationStream =>

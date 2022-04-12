@@ -30,7 +30,7 @@ class WalletDetail {
   @override
   String toString() {
     return 'WalletDetailDTO(balance: $balance, createdDate: $createdDate, '
-        '_id: $id, currencyId: $currencyId)';
+        'id: $id, currencyId: $currencyId)';
   }
 
   @override

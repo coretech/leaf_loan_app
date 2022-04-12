@@ -64,7 +64,7 @@ class LoanPayments extends StatelessWidget {
                   horizontal: 15,
                 ),
                 child: PaymentDetailCard(
-                  currencyFiat: loanDetailProvider.loan!.currencyId!.fiatCode,
+                  currencyFiat: loanDetailProvider.loan!.currency.fiatCode,
                   payment: loanDetailProvider.payments[index],
                 ),
               );

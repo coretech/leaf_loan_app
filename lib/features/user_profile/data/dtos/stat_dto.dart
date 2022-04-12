@@ -1,57 +1,46 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:convert';
 
 import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
 
-class StatDTO {
-  StatDTO({
+class StatDto {
+  StatDto({
+    required this.id,
     required this.title,
     required this.description,
     required this.unit,
     required this.value,
   });
 
-  factory StatDTO.fromJson(String source) =>
-      StatDTO.fromMap(json.decode(source));
-
-  factory StatDTO.fromMap(Map<String, dynamic> map) {
-    return StatDTO(
+  factory StatDto.fromMap(Map<String, dynamic> map) {
+    return StatDto(
+      id: map['id'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       unit: map['unit'] ?? '',
-      value: map['value'],
+      value: map['value']?.toInt() ?? 0,
     );
   }
 
+  factory StatDto.fromJson(String source) =>
+      StatDto.fromMap(json.decode(source));
+
+  final String id;
   final String title;
   final String description;
   final String unit;
-  final dynamic value;
+  final num value;
 
-  Stat toEntity() {
-    if (value is num) {
-      return CountStat(
-        title: title,
-        description: description,
-        unit: unit,
-        value: value,
-      );
-    } else {
-      return MoneyStat(
-        title: title,
-        description: description,
-        unit: unit,
-        value: value,
-      );
-    }
-  }
-
-  StatDTO copyWith({
+  StatDto copyWith({
+    String? id,
     String? title,
     String? description,
     String? unit,
-    dynamic value,
+    num? value,
   }) {
-    return StatDTO(
+    return StatDto(
+      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       unit: unit ?? this.unit,
@@ -59,8 +48,18 @@ class StatDTO {
     );
   }
 
+  Stat toEntity() {
+    return CountStat(
+      title: title,
+      description: description,
+      unit: unit,
+      value: value,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'unit': unit,
@@ -72,15 +71,16 @@ class StatDTO {
 
   @override
   String toString() {
-    return 'StatDTO(title: $title, description: $description, '
-        'unit: $unit, value: $value)';
+    return 'StatDto(id: $id, title: $title, description: $description,'
+        ' unit: $unit, value: $value)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is StatDTO &&
+    return other is StatDto &&
+        other.id == id &&
         other.title == title &&
         other.description == description &&
         other.unit == unit &&
@@ -89,7 +89,8 @@ class StatDTO {
 
   @override
   int get hashCode {
-    return title.hashCode ^
+    return id.hashCode ^
+        title.hashCode ^
         description.hashCode ^
         unit.hashCode ^
         value.hashCode;

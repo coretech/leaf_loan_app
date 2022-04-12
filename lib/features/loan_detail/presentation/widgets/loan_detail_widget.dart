@@ -44,7 +44,7 @@ class LoanDetailWidget extends StatelessWidget {
                                   Theme.of(context).textTheme.caption?.copyWith(
                                         color: _getTextColor(context),
                                       ),
-                              text: '${loan.currencyId!.fiatCode} ',
+                              text: '${loan.currency.fiatCode} ',
                             ),
                             TextSpan(
                               style: TextStyle(
@@ -82,7 +82,7 @@ class LoanDetailWidget extends StatelessWidget {
                                     ?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                                text: '${loan.currencyId!.fiatCode} ',
+                                text: '${loan.currency.fiatCode} ',
                               ),
                               TextSpan(
                                 style: Theme.of(context).textTheme.headline6,
@@ -109,7 +109,7 @@ class LoanDetailWidget extends StatelessWidget {
                                     ?.copyWith(
                                       color: _getTextColor(context),
                                     ),
-                                text: '${loan.currencyId!.fiatCode} ',
+                                text: '${loan.currency.fiatCode} ',
                               ),
                               TextSpan(
                                 style: Theme.of(context).textTheme.headline6,
@@ -119,7 +119,7 @@ class LoanDetailWidget extends StatelessWidget {
                               ),
                               TextSpan(
                                 style: Theme.of(context).textTheme.bodyText2,
-                                text: 'Interest',
+                                text: 'Interest'.tr(),
                               ),
                             ],
                           ),

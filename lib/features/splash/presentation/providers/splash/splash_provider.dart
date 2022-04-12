@@ -7,7 +7,6 @@ class SplashProvider extends ChangeNotifier {
   bool loading = true;
   bool authenticated = false;
   bool onboardingSeen = false;
-  bool scoringCompleted = false;
 
   final _authenticationRepository = AuthIOC.authRepo();
 

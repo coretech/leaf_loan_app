@@ -73,7 +73,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               elevation: 0,
               foregroundColor: Theme.of(context).colorScheme.onSurface,
               title: Text(
-                '${loanDetailProvider.loan!.loanTypeId.name} Details'.tr(),
+                '${loanDetailProvider.loan!.loanType} ${'Details'.tr()}',
               ),
             ),
             body: _buildBody(context, loanDetailProvider),
@@ -228,7 +228,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: '${loanDetailProvider.loan!.currencyId!.fiatCode} ',
+                  text: '${loanDetailProvider.loan!.currency.fiatCode} ',
                   style: TextStyle(
                     color: _getTextColor(context),
                   ),
@@ -315,46 +315,50 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
           _buildDivider(context),
           _buildLoanInfoRow(
             context,
-            'Loan Type',
-            loan.loanTypeId.name,
+            'Loan Type'.tr(),
+            loan.loanType,
           ),
           _buildLoanInfoRow(
             context,
-            'Requested Amount',
+            'Requested Amount'.tr(),
             '${Formatter.formatMoney(loan.requestedAmount)} '
-                '${loan.currencyId!.fiatCode}',
+            '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
-            'Interest Amount',
+            'Interest Amount'.tr(),
             '${Formatter.formatMoney(loan.interestAmount)} '
-                '${loan.currencyId!.fiatCode}',
+            '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
-            'Total Amount',
+            'Total Amount'.tr(),
             '${Formatter.formatMoney(loan.totalAmount)} '
-                '${loan.currencyId!.fiatCode}',
+            '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
-            'Applied On',
-            Formatter.formatDate(DateTime.parse(loan.createdAt)),
+            'Applied On'.tr(),
+            Formatter.formatDate(DateTime.parse(loan.requestDate)),
           ),
           _buildLoanInfoRow(
             context,
             '',
-            Formatter.formatTime(DateTime.parse(loan.createdAt)),
+            Formatter.formatTime(DateTime.parse(loan.requestDate)),
           ),
-          _buildLoanInfoRow(context, 'Duration', '${loan.duration} days'),
           _buildLoanInfoRow(
             context,
-            'Due Date',
+            'Duration'.tr(),
+            '${loan.duration} ${'days'.tr()}',
+          ),
+          _buildLoanInfoRow(
+            context,
+            'Due Date'.tr(),
             Formatter.formatDate(DateTime.parse(loan.dueDate)),
           ),
           _buildLoanInfoRow(
             context,
-            'Loan Purpose',
+            'Loan Purpose'.tr(),
             loan.loanPurpose,
           ),
         ],
@@ -415,21 +419,21 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
           _buildDivider(context),
           _buildLoanInfoRow(
             context,
-            'Total',
+            'Total'.tr(),
             '${Formatter.formatMoney(loan.totalAmount)} '
-                '${loan.currencyId!.fiatCode}',
+            '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
-            'Paid Amount',
+            'Paid Amount'.tr(),
             '${Formatter.formatMoney(loan.totalAmount - loan.remainingAmount)} '
-                '${loan.currencyId!.fiatCode}',
+            '${loan.currency.fiatCode}',
           ),
           _buildLoanInfoRow(
             context,
-            'Remaining Amount',
+            'Remaining Amount'.tr(),
             '${Formatter.formatMoney(loan.remainingAmount)} '
-                '${loan.currencyId!.fiatCode}',
+            '${loan.currency.fiatCode}',
           ),
           _buildTransactionsButton(context, loanDetailProvider),
         ],

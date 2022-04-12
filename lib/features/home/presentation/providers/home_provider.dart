@@ -36,8 +36,6 @@ class HomeProvider extends ChangeNotifier {
 
   final _loanPaymentRepo = LoanPaymentIOC.loanPaymentRepo();
   final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo();
-  final _scoringDataCollectionService =
-      IntegrationIOC.scoringDataCollectionService();
 
   final _eventBus = IntegrationIOC.eventBus;
 
@@ -71,12 +69,6 @@ class HomeProvider extends ChangeNotifier {
     activeLoan = loan;
     notifyListeners();
     await getPayments();
-  }
-
-  Future<void> init() async {
-    await _scoringDataCollectionService.scrapeAndSubmitScoringData(
-      url: '',
-    );
   }
 
   Future<void> getActiveLoan() async {

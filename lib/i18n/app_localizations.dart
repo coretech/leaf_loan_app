@@ -62,7 +62,7 @@ class AppLocalizations implements L10n {
     final database = FirebaseDatabase.instance;
     final ref =
         database.ref().child('missing_keys/${locale.languageCode}').push();
-    await ref.set({key});
+    await ref.set({'key': key});
   }
 }
 

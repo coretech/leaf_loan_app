@@ -29,13 +29,6 @@ class ActiveLoanCard extends StatelessWidget {
               loan: loan,
             ),
           );
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => LoanDetailScreen(
-          //       loan: loan,
-          //     ),
-          //   ),
-          // );
         },
         child: Ink(
           decoration: BoxDecoration(
@@ -95,7 +88,11 @@ class ActiveLoanCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'January 15, 2022',
+                  Formatter.formatDate(
+                    DateTime.parse(
+                      loan.dueDate,
+                    ),
+                  ),
                   style: TextStyle(
                     color: _getTextColor(context),
                     fontSize: 20,

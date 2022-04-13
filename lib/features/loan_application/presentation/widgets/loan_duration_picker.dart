@@ -147,6 +147,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
       setState(() {
         _selectedDate = date;
       });
+      widget.onChanged(date.difference(DateTime.now()).inDays);
     }
   }
 }

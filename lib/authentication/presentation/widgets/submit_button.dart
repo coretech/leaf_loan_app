@@ -6,17 +6,12 @@ import 'package:provider/provider.dart';
 class SubmitButton extends StatelessWidget {
   const SubmitButton({
     Key? key,
-    required AuthProvider authProvider,
-    required TextEditingController usernameController,
-    required TextEditingController passwordController,
-  })  : _authProvider = authProvider,
-        _usernameController = usernameController,
-        _passwordController = passwordController,
+    required this.authProvider,
+    required this.onPressed,
+  }) :
         super(key: key);
-
-  final AuthProvider _authProvider;
-  final TextEditingController _usernameController;
-  final TextEditingController _passwordController;
+final AuthProvider authProvider;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +20,7 @@ class SubmitButton extends StatelessWidget {
       builder: (context, loading, _) {
         return ElevatedButton(
           onPressed: !loading
-              ? () {
-                  _authProvider.login(
-                    username: _usernameController.text,
-                    password: _passwordController.text,
-                  );
-                }
+              ? onPressed
               : null,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith(

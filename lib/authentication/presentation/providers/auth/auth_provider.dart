@@ -46,14 +46,18 @@ class AuthProvider extends ChangeNotifier {
     loading = true;
     setErrorMessage('');
     notifyListeners();
-    final authEither = await _authenticationRepository.login(
-      username: username,
-      password: password,
-    );
-    authEither.fold(
-      (failure) => setErrorMessage(_getMessage(failure.reason)),
-      (success) => loggedIn = true,
-    );
+    if (username.isNotEmpty && password.isNotEmpty) {
+      final authEither = await _authenticationRepository.login(
+        username: username,
+        password: password,
+      );
+      authEither.fold(
+        (failure) => setErrorMessage(_getMessage(failure.reason)),
+        (success) => loggedIn = true,
+      );
+    } else {
+      setErrorMessage(_getMessage(Reason.invalidCredentials));
+    }
     loading = false;
     notifyListeners();
   }

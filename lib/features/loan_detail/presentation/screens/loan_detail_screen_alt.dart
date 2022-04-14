@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_application/presentation/screens/loan_application_screen.dart';
@@ -44,8 +45,8 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               backgroundColor: Colors.red,
             ),
           );
-        } else if (!_loanCancellationProvider.loading && _loanCancellationProvider.cancelled) {
-          Navigator.of(context).pop();
+        } else if (!_loanCancellationProvider.loading &&
+            _loanCancellationProvider.cancelled) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
@@ -55,9 +56,11 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               backgroundColor: Colors.red,
             ),
           );
+          SchedulerBinding.instance?.addPostFrameCallback((_) {
+            Navigator.of(context).pop();
+          });
         }
       });
-    // _loan = _loanDetailProvider.loan!;
     super.initState();
   }
 

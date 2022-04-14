@@ -47,11 +47,9 @@ class LoanCancellationProvider extends ChangeNotifier {
       (error) => setErrorMessage(value: 'Error canceling loan application'),
       (value) {
         setCancellationStatus(value: true);
-        setLoading(value: false);
         _eventBus.fire(LoanApplicationEvent.cancel);
       },
     );
     setLoading(value: false);
-    notifyListeners();
   }
 }

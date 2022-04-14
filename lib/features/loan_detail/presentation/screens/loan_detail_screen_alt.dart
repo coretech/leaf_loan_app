@@ -44,7 +44,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               backgroundColor: Colors.red,
             ),
           );
-        } else if (!_loanCancellationProvider.loading) {
+        } else if (!_loanCancellationProvider.loading && _loanCancellationProvider.cancelled) {
           Navigator.of(context).pop();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

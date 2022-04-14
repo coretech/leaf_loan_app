@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:loan_app/core/events/events.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
 
 class LoanCancellationProvider extends ChangeNotifier {
   final _loanApplicationRepo = LoanApplicationIOC.loanApplicationRepo();
+  final _eventBus = IntegrationIOC.eventBus;
 
   bool loading = false;
-  bool cancellationStatus = false;
+  bool cancelled = false;
 
   String? errorMessage;
 
@@ -15,7 +18,7 @@ class LoanCancellationProvider extends ChangeNotifier {
   }
 
   void setCancellationStatus({required bool value}) {
-    cancellationStatus = value;
+    cancelled = value;
     notifyListeners();
   }
 
@@ -43,8 +46,9 @@ class LoanCancellationProvider extends ChangeNotifier {
     result.fold(
       (error) => setErrorMessage(value: 'Error canceling loan application'),
       (value) {
-        setLoading(value: false);
         setCancellationStatus(value: true);
+        setLoading(value: false);
+        _eventBus.fire(LoanApplicationEvent.cancel);
       },
     );
     setLoading(value: false);

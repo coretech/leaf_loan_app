@@ -37,7 +37,10 @@ class AuthRemoteRepo extends AuthenticationRepository {
         await _localStorage.setString(Keys.userId, userMap['id']);
         return right(result);
       } else {
-        // TODO(Yabsra): locked acc
+        if (((response.data as Map<String, dynamic>)['message'] as String)
+            .contains('locked')) {
+          return left(AuthFailure(reason: Reason.accountLocked));
+        }
         return left(AuthFailure(reason: Reason.invalidCredentials));
       }
     } catch (e, stacktrace) {

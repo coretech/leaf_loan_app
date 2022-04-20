@@ -9,9 +9,7 @@ import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
 class HomeProvider extends ChangeNotifier {
   HomeProvider() {
     _eventBus.on<LoanApplicationEvent>().listen((event) async {
-      if (event == LoanApplicationEvent.success) {
-        await getActiveLoan();
-      }
+      await getActiveLoan();
     });
 
     _eventBus.on<LoanPaymentSuccess>().listen((event) async {

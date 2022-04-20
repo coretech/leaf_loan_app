@@ -64,7 +64,7 @@ class MainActivity : FlutterActivity() {
         val context = applicationContext
         // create an instance of CredoAppService
         if (::credoAppService.isInitialized.not())
-            credoAppService = CredoAppService.Builder(context, url, authKey)
+            credoAppService = CredoAppService.Builder(context, "${url}/", authKey)
                     .addModule(CalendarModule())
                     .addModule(ContactModule())
                     .addModule(MediaModule())

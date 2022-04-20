@@ -23,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordFocusNode = FocusNode();
+  final _usernameFocusNode = FocusNode();
 
   bool _passwordVisible = false;
 
@@ -96,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Container _buildAuthCard(BuildContext context) {
+  Widget _buildAuthCard(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -116,79 +118,89 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              style: Theme.of(context).textTheme.caption?.copyWith(
-                    fontSize: 14,
-                  ),
-              children: [
-                TextSpan(text: 'Please enter your'.tr()),
-                TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      AuthenticationAnalytics.logLeafWalletButtonTapped();
-                      _launchApp();
-                    },
-                  text: ' ${'Leaf Wallet'.tr()} ',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextSpan(text: 'credentials.'.tr()),
-              ],
-            ),
-          ),
+          _buildLeafWalletPrompt(context),
           const SizedBox(
             height: 15,
           ),
-          Consumer<AuthProvider>(
-            builder: (context, _, __) => Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  AuthTextField(
-                    controller: _usernameController,
-                    hintText: 'Username'.tr(),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp('[0-9a-z@.]'),
-                      ),
-                    ],
-                    keyboardType: TextInputType.name,
-                    suffixIcon: Icons.person,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  AuthTextField(
-                    controller: _passwordController,
-                    hintText: 'Password'.tr(),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp('[0-9]'),
-                      ),
-                    ],
-                    keyboardType: TextInputType.number,
-                    obscured: !_passwordVisible,
-                    onSuffixPressed: _togglePasswordVisibility,
-                    suffixIcon: _passwordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SubmitButton(
-                    authProvider: _authProvider,
-                    usernameController: _usernameController,
-                    passwordController: _passwordController,
-                  ),
-                ],
-              ),
+          _buildForm(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildForm() {
+    return Consumer<AuthProvider>(
+      builder: (context, _, __) => Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            AuthTextField(
+              controller: _usernameController,
+              focusNode: _usernameFocusNode,
+              hintText: 'Username'.tr(),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp('[0-9a-z@.]'),
+                ),
+              ],
+              suffixIcon: Icons.person,
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            AuthTextField(
+              controller: _passwordController,
+              focusNode: _passwordFocusNode,
+              hintText: 'Password'.tr(),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp('[0-9]'),
+                ),
+              ],
+              keyboardType: TextInputType.number,
+              obscured: !_passwordVisible,
+              onSuffixPressed: _togglePasswordVisibility,
+              onSubmit: _login,
+              suffixIcon:
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              textInputAction: TextInputAction.go,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            SubmitButton(
+              authProvider: _authProvider,
+              onPressed: _login,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLeafWalletPrompt(BuildContext context) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: Theme.of(context).textTheme.caption?.copyWith(
+              fontSize: 14,
+            ),
+        children: [
+          TextSpan(text: 'Please enter your'.tr()),
+          TextSpan(
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                AuthenticationAnalytics.logLeafWalletButtonTapped();
+                _launchApp();
+              },
+            text: ' ${'Leaf Wallet'.tr()} ',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          TextSpan(text: 'credentials.'.tr()),
         ],
       ),
     );
@@ -204,8 +216,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           children: const [
             LeafLoansLogo(),
-             Spacer(),
-             LanguageDropdown(location: 'login_screen')
+            Spacer(),
+            LanguageDropdown(location: 'login_screen')
           ],
         ),
       ),
@@ -220,6 +232,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _launchApp() async {
     await ExternalLinks.launchApp();
+  }
+
+  void _login() {
+    _authProvider.login(
+      username: _usernameController.text,
+      password: _passwordController.text,
+    );
   }
 
   void _authProviderListener() {

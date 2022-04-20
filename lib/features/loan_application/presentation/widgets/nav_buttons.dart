@@ -25,38 +25,38 @@ class _NavButtonsState extends State<NavButtons> {
   @override
   void initState() {
     super.initState();
-    widget.pageController.addListener(() {
-      setState(() {});
-    });
+    widget.pageController.addListener(_pageControllerListener);
   }
+
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Selector<LoanTypeProvider, bool>(
-      selector: (context, loanProvider) => loanProvider.loading,
-      builder: (context, loading, _) {
+    return Consumer<LoanTypeProvider>(
+      builder: (context, loanTypeProvider, _) {
+        final enabled = loanTypeProvider.canShowTypes;
         return Container(
           height: 50,
           margin: const EdgeInsets.all(20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if ((widget.pageController.page ?? 0) != 0)
+              if (currentPage != 0)
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: loading ? null : widget.onPrev,
+                    onPressed: enabled ? widget.onPrev : null,
                     child: Text(
                       'Previous'.tr(),
                     ),
                   ),
                 ),
-              if ((widget.pageController.page ?? 0) != 0)
+              if (currentPage != 0)
                 const SizedBox(
                   width: 40,
                 ),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: loading ? null : _onNext,
+                  onPressed: enabled ? _onNext : null,
                   child: Text(
                     _getText(),
                   ),
@@ -70,7 +70,7 @@ class _NavButtonsState extends State<NavButtons> {
   }
 
   String _getText() {
-    if (widget.pageController.page != 4) {
+    if (currentPage != 4) {
       return 'Next'.tr();
     } else {
       return 'Submit'.tr();
@@ -78,10 +78,19 @@ class _NavButtonsState extends State<NavButtons> {
   }
 
   void _onNext() {
-    if (widget.pageController.page != 4) {
+    if (currentPage != 4) {
       widget.onNext();
     } else {
       widget.onSubmit();
+    }
+  }
+
+  void _pageControllerListener() {
+    final controller = widget.pageController;
+    if (controller.page != null && controller.page!.round() != currentPage) {
+      setState(() {
+        currentPage = controller.page!.round();
+      });
     }
   }
 }

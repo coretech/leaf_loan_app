@@ -48,32 +48,15 @@ class LoanCurrencyPicker extends StatelessWidget {
           height: 110,
           margin: const EdgeInsets.all(8),
           padding: const EdgeInsets.all(8),
-          child: _buildCurrenciesList(),
+          child: _buildCurrenciesList(context),
         ),
       ],
     );
   }
 
-  Widget _buildCurrenciesList() {
+  Widget _buildCurrenciesList(BuildContext context) {
     if (currencies.isEmpty && !loading) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'No currencies available on your Leaf Wallet Account'.tr(),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          TextButton.icon(
-            onPressed: () {
-              LoanApplicationAnalytics.addCurrencyTapped();
-              _launchApp();
-            },
-            icon: const Icon(Icons.add),
-            label: Text('Add Currencies to Your Wallet'.tr()),
-          ),
-        ],
-      );
+      return const NoCurrencyFound();
     }
     return ListView(
       physics: const BouncingScrollPhysics(
@@ -117,9 +100,5 @@ class LoanCurrencyPicker extends StatelessWidget {
         ),
       );
     }
-  }
-
-  Future<void> _launchApp() async {
-    await ExternalLinks.launchApp();
   }
 }

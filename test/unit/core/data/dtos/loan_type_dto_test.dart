@@ -133,8 +133,8 @@ void main() {
       expect(loanType.maxDuration, 60);
       expect(loanType.interestRate, 1.0);
       expect(loanType.image, 'image');
-      expect(loanType.purpose?.length, 1);
-      expect(loanType.purpose?[0], 'purpose1');
+      expect(loanType.purpose.length, 1);
+      expect(loanType.purpose[0], 'purpose1');
     },
   );
 

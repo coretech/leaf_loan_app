@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_application/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
 class FormContentB extends StatelessWidget {
   const FormContentB({
     Key? key,
-    required this.hasLoanTypes,
     required this.selectedCurrencyIndex,
     required this.selectedLoanTypeIndex,
     required this.selectedDurationInDays,
@@ -19,7 +19,6 @@ class FormContentB extends StatelessWidget {
     required this.onSubmitPressed,
     required this.controller,
   }) : super(key: key);
-  final bool hasLoanTypes;
   final int selectedCurrencyIndex;
   final int selectedLoanTypeIndex;
   final int selectedDurationInDays;
@@ -37,6 +36,27 @@ class FormContentB extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LoanTypeProvider>(
       builder: (context, loanTypeProvider, _) {
+        LoanType? selectedLoanType;
+        final hasLoanTypes = loanTypeProvider.hasLoanTypes;
+        if (hasLoanTypes) {
+          selectedLoanType = loanTypeProvider.loanTypes[selectedLoanTypeIndex];
+        }
+        final hasCurrencies = selectedLoanType?.hasCurrencies ?? false;
+        final hasLoanTypesAndCurrencies = hasCurrencies && hasLoanTypes;
+        LoanCurrency? selectedCurrency;
+        if (hasLoanTypesAndCurrencies) {
+          selectedCurrency =
+              selectedLoanType!.currencies[selectedCurrencyIndex];
+        }
+
+        if (loanTypeProvider.errorMessage != null) {
+          return Center(
+            child: CustomErrorWidget(
+              message: loanTypeProvider.genericErrorMessage,
+              onRetry: loanTypeProvider.getLoanTypes,
+            ),
+          );
+        }
         return PageView(
           controller: controller,
           physics: const NeverScrollableScrollPhysics(),
@@ -53,10 +73,7 @@ class FormContentB extends StatelessWidget {
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: LoanCurrencyPicker(
-                currencies: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].currencies
-                    : [],
+                currencies: hasLoanTypes ? selectedLoanType!.currencies : [],
                 loading: loanTypeProvider.loading,
                 onChanged: onCurrencySelected,
                 selectedIndex: selectedCurrencyIndex,
@@ -67,41 +84,31 @@ class FormContentB extends StatelessWidget {
               child: LoanDurationPicker(
                 durationInDays: selectedDurationInDays,
                 loading: loanTypeProvider.loading,
-                maxDurationInDays: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].maxDuration
-                    : null,
-                minDurationInDays: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].minDuration
-                    : null,
+                maxDurationInDays:
+                    hasLoanTypes ? selectedLoanType!.maxDuration : null,
+                minDurationInDays:
+                    hasLoanTypes ? selectedLoanType!.minDuration : null,
                 onChanged: onDurationInDaysSelected,
               ),
             ),
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: LoanAmountPicker(
-                fiatCode: hasLoanTypes
-                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].fiatCode
+                fiatCode: hasLoanTypesAndCurrencies
+                    ? selectedCurrency!.fiatCode
                     : null,
-                interestRate: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].interestRate
-                    : null,
+                interestRate:
+                    hasLoanTypes ? selectedLoanType!.interestRate : null,
                 loading: loanTypeProvider.loading,
                 loanAmount: loanAmount ??
-                    (hasLoanTypes
-                        ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                            .currencies[selectedCurrencyIndex].maxLoanAmount
+                    (hasLoanTypesAndCurrencies
+                        ? selectedCurrency!.maxLoanAmount
                         : 0),
-                maxAmount: hasLoanTypes
-                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].maxLoanAmount
+                maxAmount: hasLoanTypesAndCurrencies
+                    ? selectedCurrency!.maxLoanAmount
                     : null,
-                minAmount: hasLoanTypes
-                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].minLoanAmount
+                minAmount: hasLoanTypesAndCurrencies
+                    ? selectedCurrency!.minLoanAmount
                     : null,
                 onChanged: onLoanAmountChanged,
               ),
@@ -111,12 +118,7 @@ class FormContentB extends StatelessWidget {
               child: LoanPurposePicker(
                 loading: loanTypeProvider.loading,
                 onChanged: onPurposeSelected,
-                // TODO(Yabsra): fix this monstrosity
-                purposeList: hasLoanTypes
-                    ? loanTypeProvider
-                            .loanTypes[selectedLoanTypeIndex].purpose ??
-                        []
-                    : [],
+                purposeList: hasLoanTypes ? selectedLoanType!.purpose : [],
                 selectedPurpose: selectedPurpose,
               ),
             ),

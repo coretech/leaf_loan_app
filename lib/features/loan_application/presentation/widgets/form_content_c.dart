@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/domain/entities/entities.dart';
+import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +8,6 @@ import 'package:provider/provider.dart';
 class FormContentC extends StatelessWidget {
   const FormContentC({
     Key? key,
-    required this.hasLoanTypes,
     required this.selectedCurrencyIndex,
     required this.selectedLoanTypeIndex,
     required this.selectedDurationInDays,
@@ -22,7 +23,6 @@ class FormContentC extends StatelessWidget {
     required this.onBackPressed,
     required this.currentStep,
   }) : super(key: key);
-  final bool hasLoanTypes;
   final int selectedCurrencyIndex;
   final int selectedLoanTypeIndex;
   final int selectedDurationInDays;
@@ -41,6 +41,30 @@ class FormContentC extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LoanTypeProvider>(
       builder: (context, loanTypeProvider, _) {
+        LoanType? selectedLoanType;
+        final hasLoanTypes = loanTypeProvider.hasLoanTypes;
+        if (hasLoanTypes) {
+          selectedLoanType = loanTypeProvider.loanTypes[selectedLoanTypeIndex];
+        }
+        final hasCurrencies = selectedLoanType?.hasCurrencies ?? false;
+        final hasLoanTypesAndCurrencies = hasCurrencies && hasLoanTypes;
+        LoanCurrency? selectedCurrency;
+        if (hasLoanTypesAndCurrencies) {
+          selectedCurrency =
+              selectedLoanType!.currencies[selectedCurrencyIndex];
+        }
+
+        if (loanTypeProvider.errorMessage != null || !hasLoanTypes) {
+          return Center(
+            child: CustomErrorWidget(
+              message: loanTypeProvider.genericErrorMessage,
+              onRetry: loanTypeProvider.getLoanTypes,
+            ),
+          );
+        }
+        if (!hasLoanTypesAndCurrencies) {
+          return const Center(child: NoCurrencyFound());
+        }
         return Stepper(
           currentStep: currentStep,
           controlsBuilder: (context, details) {
@@ -87,10 +111,7 @@ class FormContentC extends StatelessWidget {
             ),
             Step(
               content: LoanCurrencyPicker(
-                currencies: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].currencies
-                    : [],
+                currencies: hasLoanTypes ? selectedLoanType!.currencies : [],
                 loading: loanTypeProvider.loading,
                 onChanged: onCurrencySelected,
                 selectedIndex: selectedCurrencyIndex,
@@ -106,14 +127,10 @@ class FormContentC extends StatelessWidget {
               content: LoanDurationPicker(
                 durationInDays: selectedDurationInDays,
                 loading: loanTypeProvider.loading,
-                maxDurationInDays: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].maxDuration
-                    : null,
-                minDurationInDays: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].minDuration
-                    : null,
+                maxDurationInDays:
+                    hasLoanTypes ? selectedLoanType!.maxDuration : null,
+                minDurationInDays:
+                    hasLoanTypes ? selectedLoanType!.minDuration : null,
                 onChanged: onDurationInDaysSelected,
                 shouldShowTitle: false,
               ),
@@ -125,27 +142,21 @@ class FormContentC extends StatelessWidget {
             ),
             Step(
               content: LoanAmountPicker(
-                fiatCode: hasLoanTypes
-                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].fiatCode
+                fiatCode: hasLoanTypesAndCurrencies
+                    ? selectedCurrency!.fiatCode
                     : null,
-                interestRate: hasLoanTypes
-                    ? loanTypeProvider
-                        .loanTypes[selectedLoanTypeIndex].interestRate
-                    : null,
+                interestRate:
+                    hasLoanTypes ? selectedLoanType!.interestRate : null,
                 loading: loanTypeProvider.loading,
                 loanAmount: loanAmount ??
-                    (hasLoanTypes
-                        ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                            .currencies[selectedCurrencyIndex].maxLoanAmount
+                    (hasLoanTypesAndCurrencies
+                        ? selectedCurrency!.maxLoanAmount
                         : 0),
-                maxAmount: hasLoanTypes
-                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].maxLoanAmount
+                maxAmount: hasLoanTypesAndCurrencies
+                    ? selectedCurrency!.maxLoanAmount
                     : null,
-                minAmount: hasLoanTypes
-                    ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                        .currencies[selectedCurrencyIndex].minLoanAmount
+                minAmount: hasLoanTypesAndCurrencies
+                    ? selectedCurrency!.minLoanAmount
                     : null,
                 onChanged: onLoanAmountChanged,
                 shouldShowTitle: false,
@@ -160,12 +171,7 @@ class FormContentC extends StatelessWidget {
               content: LoanPurposePicker(
                 loading: loanTypeProvider.loading,
                 onChanged: onPurposeSelected,
-                // TODO(Yabsra): fix this monstrosity
-                purposeList: hasLoanTypes
-                    ? loanTypeProvider
-                            .loanTypes[selectedLoanTypeIndex].purpose ??
-                        []
-                    : [],
+                purposeList: hasLoanTypes ? selectedLoanType!.purpose : [],
                 selectedPurpose: selectedPurpose,
                 shouldShowTitle: false,
               ),

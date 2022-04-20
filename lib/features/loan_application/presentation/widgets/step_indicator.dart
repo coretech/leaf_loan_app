@@ -5,10 +5,10 @@ class StepIndicator extends StatefulWidget {
   const StepIndicator({
     Key? key,
     required this.total,
-    required this.controller,
+    required this.pageController,
   }) : super(key: key);
   final int total;
-  final PageController controller;
+  final PageController pageController;
 
   @override
   _StepIndicatorState createState() => _StepIndicatorState();
@@ -18,10 +18,10 @@ class _StepIndicatorState extends State<StepIndicator> {
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(() {
-      setState(() {});
-    });
+    widget.pageController.addListener(_pageControllerListener);
   }
+
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _StepIndicatorState extends State<StepIndicator> {
                   text: '${'Step'.tr()} ',
                 ),
                 TextSpan(
-                  text: '${(widget.controller.page?.round() ?? 0) + 1}',
+                  text: '${currentPage + 1}',
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
                   ),
@@ -58,5 +58,14 @@ class _StepIndicatorState extends State<StepIndicator> {
         ],
       ),
     );
+  }
+
+  void _pageControllerListener() {
+    final controller = widget.pageController;
+    if (controller.page != null && controller.page!.round() != currentPage) {
+      setState(() {
+        currentPage = controller.page!.round();
+      });
+    }
   }
 }

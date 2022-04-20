@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 class FormContentA extends StatelessWidget {
   const FormContentA({
     Key? key,
-    required this.hasLoanTypes,
     required this.selectedCurrencyIndex,
     required this.selectedLoanTypeIndex,
     required this.selectedDurationInDays,
@@ -20,7 +19,6 @@ class FormContentA extends StatelessWidget {
     required this.onDurationInDaysSelected,
     required this.onSubmitPressed,
   }) : super(key: key);
-  final bool hasLoanTypes;
   final int selectedCurrencyIndex;
   final int selectedLoanTypeIndex;
   final int selectedDurationInDays;
@@ -37,14 +35,31 @@ class FormContentA extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LoanTypeProvider>(
       builder: (context, loanTypeProvider, _) {
-        if (loanTypeProvider.errorMessage != null) {
+        LoanType? selectedLoanType;
+        final hasLoanTypes = loanTypeProvider.hasLoanTypes;
+        if (hasLoanTypes) {
+          selectedLoanType = loanTypeProvider.loanTypes[selectedLoanTypeIndex];
+        }
+        final hasCurrencies = selectedLoanType?.hasCurrencies ?? false;
+        final hasLoanTypesAndCurrencies = hasCurrencies && hasLoanTypes;
+        LoanCurrency? selectedCurrency;
+        if (hasLoanTypesAndCurrencies) {
+          selectedCurrency =
+              selectedLoanType!.currencies[selectedCurrencyIndex];
+        }
+
+        if (loanTypeProvider.errorMessage != null || !hasLoanTypes) {
           return Center(
             child: CustomErrorWidget(
-              message: loanTypeProvider.errorMessage!,
+              message: loanTypeProvider.genericErrorMessage,
               onRetry: loanTypeProvider.getLoanTypes,
             ),
           );
         }
+        if (!hasLoanTypesAndCurrencies) {
+          return const Center(child: NoCurrencyFound());
+        }
+
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
@@ -61,10 +76,7 @@ class FormContentA extends StatelessWidget {
                   selectedIndex: selectedLoanTypeIndex,
                 ),
                 LoanCurrencyPicker(
-                  currencies: hasLoanTypes
-                      ? loanTypeProvider
-                          .loanTypes[selectedLoanTypeIndex].currencies
-                      : [],
+                  currencies: hasLoanTypes ? selectedLoanType!.currencies : [],
                   loading: loanTypeProvider.loading,
                   onChanged: onCurrencySelected,
                   selectedIndex: selectedCurrencyIndex,
@@ -75,41 +87,31 @@ class FormContentA extends StatelessWidget {
                 LoanDurationPicker(
                   durationInDays: selectedDurationInDays,
                   loading: loanTypeProvider.loading,
-                  maxDurationInDays: hasLoanTypes
-                      ? loanTypeProvider
-                          .loanTypes[selectedLoanTypeIndex].maxDuration
-                      : null,
-                  minDurationInDays: hasLoanTypes
-                      ? loanTypeProvider
-                          .loanTypes[selectedLoanTypeIndex].minDuration
-                      : null,
+                  maxDurationInDays:
+                      hasLoanTypes ? selectedLoanType!.maxDuration : null,
+                  minDurationInDays:
+                      hasLoanTypes ? selectedLoanType!.minDuration : null,
                   onChanged: onDurationInDaysSelected,
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 LoanAmountPicker(
-                  fiatCode: hasLoanTypes
-                      ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                          .currencies[selectedCurrencyIndex].fiatCode
+                  fiatCode: hasLoanTypesAndCurrencies
+                      ? selectedCurrency!.fiatCode
                       : null,
-                  interestRate: hasLoanTypes
-                      ? loanTypeProvider
-                          .loanTypes[selectedLoanTypeIndex].interestRate
-                      : null,
+                  interestRate:
+                      hasLoanTypes ? selectedLoanType!.interestRate : null,
                   loading: loanTypeProvider.loading,
                   loanAmount: loanAmount ??
-                      (hasLoanTypes
-                          ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                              .currencies[selectedCurrencyIndex].maxLoanAmount
+                      (hasLoanTypesAndCurrencies
+                          ? selectedCurrency!.maxLoanAmount
                           : 0),
-                  maxAmount: hasLoanTypes
-                      ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                          .currencies[selectedCurrencyIndex].maxLoanAmount
+                  maxAmount: hasLoanTypesAndCurrencies
+                      ? selectedCurrency!.maxLoanAmount
                       : null,
-                  minAmount: hasLoanTypes
-                      ? loanTypeProvider.loanTypes[selectedLoanTypeIndex]
-                          .currencies[selectedCurrencyIndex].minLoanAmount
+                  minAmount: hasLoanTypesAndCurrencies
+                      ? selectedCurrency!.minLoanAmount
                       : null,
                   onChanged: onLoanAmountChanged,
                 ),
@@ -119,11 +121,9 @@ class FormContentA extends StatelessWidget {
                 LoanPurposePicker(
                   loading: loanTypeProvider.loading,
                   onChanged: onPurposeSelected,
-                  // TODO(Yabsra): fix this monstrosity
                   purposeList: hasLoanTypes
                       ? loanTypeProvider
-                              .loanTypes[selectedLoanTypeIndex].purpose ??
-                          []
+                          .loanTypes[selectedLoanTypeIndex].purpose
                       : [],
                   selectedPurpose: selectedPurpose,
                 ),

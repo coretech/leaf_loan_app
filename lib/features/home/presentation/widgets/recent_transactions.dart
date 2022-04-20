@@ -41,11 +41,11 @@ class RecentTransactions extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               HomeAnalytics.homeShowMoreTapped();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => LoanDetailScreen(
-                    loan: loan,
-                  ),
+              Navigator.of(context).pushNamed(
+                LoanDetailScreenAlt.routeName,
+                arguments: LoanDetailScreenAltArgs(
+                  hasActiveLoan: true,
+                  loan: loan,
                 ),
               );
             },

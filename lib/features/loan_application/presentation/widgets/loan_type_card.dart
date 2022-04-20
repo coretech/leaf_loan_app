@@ -25,26 +25,30 @@ class LoanTypeCard extends StatelessWidget {
               ? Theme.of(context).primaryColorLight
               : null,
           elevation: 4,
-          child: InkWell(
-            onTap: () => onSelection(index),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  CachedNetworkImage(
-                    imageUrl: loanType.image,
-                    height: 64,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    loanType.name,
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                          fontSize: 14,
-                        ),
-                  ),
-                ],
+          child: SizedBox(
+            height: 145,
+            width: 145,
+            child: InkWell(
+              onTap: () => onSelection(index),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl: loanType.image,
+                      height: 64,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      loanType.name,
+                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                            fontSize: 14,
+                          ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

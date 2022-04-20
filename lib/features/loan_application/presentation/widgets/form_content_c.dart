@@ -57,7 +57,7 @@ class FormContentC extends StatelessWidget {
         if (loanTypeProvider.errorMessage != null || !hasLoanTypes) {
           return Center(
             child: CustomErrorWidget(
-              message: loanTypeProvider.genericErrorMessage,
+              message: loanTypeProvider.genericErrorMessage.tr(),
               onRetry: loanTypeProvider.getLoanTypes,
             ),
           );

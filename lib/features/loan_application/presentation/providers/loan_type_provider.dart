@@ -24,9 +24,9 @@ class LoanTypeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ignore: use_setters_to_change_properties
   void setErrorMessage({required String? value}) {
     errorMessage = value;
-    notifyListeners();
   }
 
   void clearErrorMessage() {
@@ -53,8 +53,7 @@ class LoanTypeProvider extends ChangeNotifier {
     loanTypes = loanTypesEither.fold(
       (l) {
         setErrorMessage(
-          value: 'Where did we go wrong?'
-              '\nCan you make sure you have internet and try again?',
+          value: genericErrorMessage,
         );
         return [];
       },
@@ -62,4 +61,7 @@ class LoanTypeProvider extends ChangeNotifier {
     );
     setLoading(value: false);
   }
+
+  String genericErrorMessage = 'Where did we go wrong?'
+      '\nCan you make sure you have internet and try again?';
 }

@@ -15,7 +15,7 @@ class LoanType {
     required this.createdAt,
     required this.updatedAt,
   });
-  final List<String>? purpose;
+  final List<String> purpose;
   final String id;
   final String name;
   final String description;
@@ -26,6 +26,8 @@ class LoanType {
   final String image;
   final String createdAt;
   final String updatedAt;
+
+  bool get hasCurrencies => currencies.isNotEmpty;
 
   LoanType copyWith({
     List<String>? purpose,

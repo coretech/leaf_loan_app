@@ -26,12 +26,13 @@ class LoanDurationPicker extends StatefulWidget {
 }
 
 class _LoanDurationPickerState extends State<LoanDurationPicker> {
-  DateTime _selectedDate = DateTime.now().add(
-    const Duration(days: 61),
-  );
+  late DateTime _selectedDate;
 
   @override
   void initState() {
+    _selectedDate = DateTime.now().add(
+      Duration(days: widget.durationInDays),
+    );
     super.initState();
   }
 
@@ -147,7 +148,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
       setState(() {
         _selectedDate = date;
       });
-      widget.onChanged(date.difference(DateTime.now()).inDays);
+      widget.onChanged(date.difference(DateTime.now()).inDays + 1);
     }
   }
 }

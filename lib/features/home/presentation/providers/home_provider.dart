@@ -60,6 +60,7 @@ class HomeProvider extends ChangeNotifier {
     payments = [];
     paymentsLoaded = false;
     loadingPayments = false;
+    // TODO(Yabsra): check this out
     notifyListeners();
   }
 

@@ -181,9 +181,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
             ),
           ),
         ),
-        onChanged: (value) {
-          widget.onChanged(value);
-        },
+        onChanged: widget.onChanged,
       ),
     );
   }

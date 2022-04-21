@@ -21,6 +21,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   String? _selectedPurpose;
   double? _loanAmount;
   int currentStep = 0;
+  int currentPage = 0;
 
   final _remoteConfig = IntegrationIOC.remoteConfig;
 
@@ -33,6 +34,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
       ..addListener(_loanApplicationListener)
       ..init()
       ..getLoanTypes();
+    _pageController.addListener(_pageControllerListener);
   }
 
   @override
@@ -65,7 +67,6 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
             .toLowerCase() ==
         'a') {
       return FormContentA(
-        hasLoanTypes: _hasLoanTypes(),
         loanAmount: _loanAmount,
         onCurrencySelected: _onCurrencySelected,
         onDurationInDaysSelected: _onDurationInDaysSelected,
@@ -89,7 +90,6 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: FormContentB(
-                hasLoanTypes: _hasLoanTypes(),
                 loanAmount: _loanAmount,
                 onCurrencySelected: _onCurrencySelected,
                 onDurationInDaysSelected: _onDurationInDaysSelected,
@@ -107,7 +107,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
           ),
           StepIndicator(
             total: 5,
-            controller: _pageController,
+            pageController: _pageController,
           ),
           NavButtons(
             pageController: _pageController,
@@ -120,11 +120,11 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     } else {
       return FormContentC(
         currentStep: currentStep,
-        hasLoanTypes: _hasLoanTypes(),
         loanAmount: _loanAmount,
         selectedCurrencyIndex: _selectedCurrencyIndex,
         selectedLoanTypeIndex: _selectedLoanTypeIndex,
         selectedDurationInDays: _selectedDurationInDays,
+        selectedPurpose: _selectedPurpose,
         onPurposeSelected: _onPurposeSelected,
         onLoanAmountChanged: _onLoanAmountChanged,
         onLoanTypeSelected: _onLoanTypeSelected,
@@ -138,13 +138,15 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   void _onStepperNext() {
-    if (_amountIsValid() || currentStep != 3) {
+    if (_canGoNext(currentStep)) {
       setState(() {
         currentStep++;
       });
       FocusManager.instance.primaryFocus?.unfocus();
-    } else if (!_amountIsValid() && currentStep == 3) {
+    } else if (!_amountIsValid() && currentPage == 3) {
       showSnackbar('Loan amount is invalid!'.tr());
+    } else if (!_hasValidCurrencies()) {
+      showSnackbar('You need at least one currency to proceed'.tr());
     }
   }
 
@@ -154,8 +156,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     });
   }
 
+  bool _canGoNext([int? current]) {
+    current ??= currentPage;
+    return (_amountIsValid() || current != 3) &&
+        (_hasValidCurrencies() || current != 1);
+  }
+
   void _onNext() {
-    if (_amountIsValid() || _pageController.page != 3) {
+    if (_canGoNext()) {
       setState(() {
         _pageController.nextPage(
           duration: const Duration(milliseconds: 500),
@@ -163,8 +171,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
         );
       });
       FocusManager.instance.primaryFocus?.unfocus();
-    } else if (!_amountIsValid() && _pageController.page == 3) {
+    } else if (!_amountIsValid() && currentPage == 3) {
       showSnackbar('Loan amount is invalid!'.tr());
+    } else if (!_hasValidCurrencies()) {
+      showSnackbar('You need at least one currency to proceed'.tr());
     }
   }
 
@@ -190,11 +200,14 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   }
 
   void _onLoanTypeSelected(int value) {
+    final selectedLoan = _loanTypeProvider.loanTypes[value];
     setState(() {
-      _selectedCurrencyIndex = 0;
       _selectedLoanTypeIndex = value;
-      _loanAmount = _loanTypeProvider
-          .loanTypes[value].currencies[_selectedCurrencyIndex].minLoanAmount;
+      if (selectedLoan.hasCurrencies) {
+        _selectedCurrencyIndex = 0;
+        _loanAmount =
+            selectedLoan.currencies[_selectedCurrencyIndex].minLoanAmount;
+      }
     });
   }
 
@@ -224,7 +237,9 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     if (_canSubmit()) {
       _onSubmit();
     } else {
-      if (_loanAmount == null) {
+      if (!_hasValidCurrencies()) {
+        showSnackbar('You need at least one currency to proceed'.tr());
+      } else if (_loanAmount == null) {
         showSnackbar('Please select loan amount!'.tr());
       } else if (_selectedPurpose == null) {
         showSnackbar('Please select loan purpose!'.tr());
@@ -242,11 +257,25 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   bool _amountIsValid([double? amount]) {
     amount ??= _loanAmount;
-    final currentLoan = _loanTypeProvider
-        .loanTypes[_selectedLoanTypeIndex].currencies[_selectedCurrencyIndex];
-    return amount != null &&
-        amount <= currentLoan.maxLoanAmount &&
-        amount >= currentLoan.minLoanAmount;
+    if (_loanTypeProvider.errorMessage != null) {
+      return false;
+    }
+    final currentLoan = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex];
+    if (currentLoan.hasCurrencies) {
+      final selectedCurrency = currentLoan.currencies[_selectedCurrencyIndex];
+      return amount != null &&
+          amount <= selectedCurrency.maxLoanAmount &&
+          amount >= selectedCurrency.minLoanAmount;
+    }
+    return false;
+  }
+
+  bool _hasValidCurrencies() {
+    if (_loanTypeProvider.errorMessage != null) {
+      return false;
+    }
+    final currentLoan = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex];
+    return currentLoan.hasCurrencies;
   }
 
   void showAmountErrorSnackbar() {
@@ -281,23 +310,23 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     }
   }
 
-  bool _hasLoanTypes() {
-    return _loanTypeProvider.loanTypes.isNotEmpty;
+  void _loanApplicationListener() {
+    if (_loanTypeProvider.loanTypes.isNotEmpty && mounted) {
+      final selectedLoan = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex];
+      setState(() {
+        if (selectedLoan.hasCurrencies) {
+          _loanAmount =
+              selectedLoan.currencies[_selectedCurrencyIndex].minLoanAmount;
+        }
+      });
+    }
   }
 
-  void _loanApplicationListener() {
-    if (_loanTypeProvider.errorMessage != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(_loanTypeProvider.errorMessage!),
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    }
-    if (_loanTypeProvider.loanTypes.isNotEmpty) {
+  void _pageControllerListener() {
+    final controller = _pageController;
+    if (controller.page != null && controller.page!.round() != currentPage) {
       setState(() {
-        _loanAmount = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex]
-            .currencies[_selectedCurrencyIndex].minLoanAmount;
+        currentPage = controller.page!.round();
       });
     }
   }

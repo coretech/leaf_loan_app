@@ -1,19 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 
 class SmartlookIntegration implements Recording {
   @override
   Future<void> init() async {
-    const smartlookEnabled = String.fromEnvironment('SMARTLOOK_ENABLED');
+    const smartlookEnabled = bool.fromEnvironment('SMARTLOOK_ENABLED');
     const projectKey = String.fromEnvironment('SMARTLOOK_PROJECT_KEY');
     assert(
-      smartlookEnabled != 'true' || projectKey.isNotEmpty,
+      !smartlookEnabled || projectKey.isNotEmpty,
       'Smartlook is enabled but api key is not provided',
     );
-    if (smartlookEnabled == 'true' && kReleaseMode) {
-      final options =
-          (SetupOptionsBuilder(projectKey)..StartNewSession = true).build();
+    if (smartlookEnabled) {
+      final options = (SetupOptionsBuilder(projectKey)
+            ..StartNewSession = true
+            ..Fps = 1)
+          .build();
 
       await Smartlook.setupAndStartRecording(options);
       await Smartlook.setEventTrackingMode(EventTrackingMode.FULL_TRACKING);

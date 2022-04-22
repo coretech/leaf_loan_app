@@ -32,3 +32,6 @@ Runner/GeneratedPluginRegistrant.*
 !default.perspectivev3
 
 GoogleService-Info.plist
+
+# Generatied define file
+Define.xcconfig

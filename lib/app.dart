@@ -71,7 +71,8 @@ class _AppState extends State<App> {
                   );
                 }
                 if (settings.name == LoanPaymentScreen.routeName) {
-                  final args = settings.arguments as LoanPaymentScreenArguments?;
+                  final args =
+                      settings.arguments as LoanPaymentScreenArguments?;
                   return MaterialPageRoute(
                     builder: (context) => LoanPaymentScreen(
                       loan: args!.loan,
@@ -119,7 +120,7 @@ class _AppState extends State<App> {
                 ),
               ),
               title: 'Leaf Loans',
-    
+
               darkTheme: ThemeData.dark().copyWith(
                 primaryColor: Colors.green,
                 colorScheme: ColorScheme.dark(
@@ -136,7 +137,7 @@ class _AppState extends State<App> {
               // Returns a locale which will be used by the app
               localeResolutionCallback: (locale, supportedLocales) {
                 // Check if the current device locale is supported
-    
+
                 for (final supportedLocale in supportedLocales) {
                   if (supportedLocale.languageCode == locale?.languageCode) {
                     return supportedLocale;

@@ -1,3 +1,7 @@
+## [0.0.15+29] - 2022-04-22
+## Added
+- Conditionally turning off SmartLook recording based on actions (PIN confirmation and login at the moment)
+
 ## [0.0.14+28] - 2022-04-21
 ### Fixed
 - GSOD which was seen by some users

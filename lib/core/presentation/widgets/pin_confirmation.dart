@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -91,10 +92,15 @@ class _PinConfirmationState extends State<PinConfirmation> {
 }
 
 Future<String?> showPinConfirmationSheet(BuildContext context) async {
-  return showModalBottomSheet(
+  // ignore: unawaited_futures
+  Smartlook.setRenderingMode(SmartlookRenderingMode.no_rendering);
+  final value = await showModalBottomSheet(
     context: context,
     isDismissible: true,
     isScrollControlled: true,
     builder: (context) => const PinConfirmation(),
   );
+  // ignore: unawaited_futures
+  Smartlook.setRenderingMode(SmartlookRenderingMode.native);
+  return value;
 }

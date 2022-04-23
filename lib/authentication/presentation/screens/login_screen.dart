@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:loan_app/authentication/authentication.dart';
 import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/home/presentation/screens/screens.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    Smartlook.setRenderingMode(SmartlookRenderingMode.no_rendering);
     _authProvider = AuthProvider()
       ..loadUsername()
       ..addListener(_authProviderListener);
@@ -250,6 +252,9 @@ class _LoginScreenState extends State<LoginScreen> {
         _usernameController.text,
         'Leaf Wallet Credentials',
       );
+
+      Smartlook.setRenderingMode(SmartlookRenderingMode.native);
+
       Navigator.of(context).pushNamedAndRemoveUntil(
         HomeScreen.routeName,
         (route) => false,

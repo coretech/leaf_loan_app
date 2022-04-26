@@ -12,9 +12,9 @@ class LoanNotificationPayloadDto {
 
   factory LoanNotificationPayloadDto.fromMap(Map<String, dynamic> map) {
     return LoanNotificationPayloadDto(
-      loanId: map['loanid'] ?? '',
-      type: map['type'] ?? '',
-      paymentId: map['paymentId'] ?? '',
+      loanId: map['loanid'] ,
+      type: map['type'] ,
+      paymentId: map['paymentId'] ,
     );
   }
 

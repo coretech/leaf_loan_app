@@ -1,5 +1,3 @@
-import 'package:loan_app/features/user_profile/domain/entities/entities.dart';
-
 class User {
   User({
     required this.id,
@@ -11,7 +9,9 @@ class User {
     required this.phone,
     required this.status,
     required this.updatedAt,
-    required this.userId,
+    required this.firstName,
+    required this.lastName,
+    required this.username,
     this.email,
   });
 
@@ -24,7 +24,9 @@ class User {
   final String phone;
   final String status;
   final String updatedAt;
-  final UserId userId;
+  final String firstName;
+  final String lastName;
+  final String username;
   final String? email;
 
   User copyWith({
@@ -37,7 +39,10 @@ class User {
     String? phone,
     String? status,
     String? updatedAt,
-    UserId? userId,
+    String? street,
+    String? firstName,
+    String? lastName,
+    String? username,
     String? email,
   }) {
     return User(
@@ -50,7 +55,9 @@ class User {
       phone: phone ?? this.phone,
       status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
-      userId: userId ?? this.userId,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      username: username ?? this.username,
       email: email ?? this.email,
     );
   }
@@ -69,7 +76,9 @@ class User {
         other.phone == phone &&
         other.status == status &&
         other.updatedAt == updatedAt &&
-        other.userId == userId &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.username == username &&
         other.email == email;
   }
 
@@ -84,7 +93,9 @@ class User {
         phone.hashCode ^
         status.hashCode ^
         updatedAt.hashCode ^
-        userId.hashCode ^
+        firstName.hashCode ^
+        lastName.hashCode ^
+        username.hashCode ^
         email.hashCode;
   }
 }

@@ -19,14 +19,14 @@ class PaymentDto {
 
   factory PaymentDto.fromMap(Map<String, dynamic> map) {
     return PaymentDto(
-      status: map['status'] ?? '',
-      id: map['id'] ?? '',
-      loanId: map['loanid'] ?? '',
+      status: map['status'] ,
+      id: map['id'] ,
+      loanId: map['loanId'] ,
       principalAmount: map['principalAmount']?.toDouble() ?? 0.0,
       interestAmount: map['interestAmount']?.toDouble() ?? 0.0,
       paymentAmount: map['paymentAmount']?.toDouble() ?? 0.0,
       currency: CurrencyDto.fromMap(map['currency']),
-      createdAt: map['createdAt'] ?? '',
+      createdAt: map['createdAt'] ,
     );
   }
 

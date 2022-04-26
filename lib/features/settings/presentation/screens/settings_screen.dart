@@ -62,7 +62,8 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Share.share(
-                    'Hey there! Download Leaf Loans! http://onelink.to/leafloans',
+                    'Hey there! Download Leaf Loans! http://onelink.to/leafloans'
+                        .tr(),
                   );
                 },
                 title: Text(

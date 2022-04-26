@@ -85,21 +85,23 @@ class LoanDetailProvider extends ChangeNotifier {
   }
 
   Future<void> getPayments() async {
-    final loanId = loan?.id ?? '';
-    clear();
-    setLoading(value: true);
-    final _loansPayments =
-        await _loanPaymentRepo.getLoanPayments(loanId: loanId);
-    _loansPayments.fold(
-      (error) => setErrorMessage(
-        value: "We couldn't get the payments. Please try again.",
-      ),
-      (payments) {
-        this.payments = payments.reversed.toList();
-      },
-    );
-    paymentsLoaded = true;
-    setLoading(value: false);
-    notifyListeners();
+    if (loan != null) {
+      final loanId = loan!.id;
+      clear();
+      setLoading(value: true);
+      final _loansPayments =
+          await _loanPaymentRepo.getLoanPayments(loanId: loanId);
+      _loansPayments.fold(
+        (error) => setErrorMessage(
+          value: "We couldn't get the payments. Please try again.",
+        ),
+        (payments) {
+          this.payments = payments.reversed.toList();
+        },
+      );
+      paymentsLoaded = true;
+      setLoading(value: false);
+      notifyListeners();
+    }
   }
 }

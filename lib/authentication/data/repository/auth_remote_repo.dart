@@ -23,7 +23,7 @@ class AuthRemoteRepo extends AuthenticationRepository {
         data: {
           'username': username,
           'password': password,
-          'devicetoken': deviceToken ?? '',
+          'devicetoken': deviceToken ,
           'model': Platform.operatingSystem,
         },
         url: '$_urlBase/userservice/signin',

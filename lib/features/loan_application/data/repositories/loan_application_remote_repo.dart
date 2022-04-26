@@ -18,7 +18,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required String password,
   }) async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final roundedAmount = double.parse(amount.toStringAsFixed(2));
       final response = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/loans',
@@ -51,7 +51,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required String password,
   }) async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.delete(
         url: '${URLs.baseURL}/loanservice/loans/$loanId',
         headers: Map.fromEntries([

@@ -16,11 +16,11 @@ class LoanCurrencyDto {
 
   factory LoanCurrencyDto.fromMap(Map<String, dynamic> map) {
     return LoanCurrencyDto(
-      id: map['id'] ?? '',
-      fiatCode: map['fiatCode'] ?? '',
-      name: map['name'] ?? '',
-      minLoanAmount: map['minLoanAmount']?.toDouble() ?? 0,
-      maxLoanAmount: map['maxLoanAmount']?.toDouble() ?? 0,
+      id: map['id'] ,
+      fiatCode: map['fiatCode'] ,
+      name: map['name'] ,
+      minLoanAmount: map['minLoanAmount']?.toDouble() ,
+      maxLoanAmount: map['maxLoanAmount']?.toDouble() ,
     );
   }
 

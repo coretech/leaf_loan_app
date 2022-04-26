@@ -10,8 +10,8 @@ class NotificationPayloadDto {
 
   factory NotificationPayloadDto.fromMap(Map<String, dynamic> map) {
     return NotificationPayloadDto(
-      path: map['path'] ?? '',
-      type: map['type'] ?? '',
+      path: map['path'] ,
+      type: map['type'] ,
     );
   }
 

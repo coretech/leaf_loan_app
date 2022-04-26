@@ -16,7 +16,7 @@ class WalletRemoteRepository implements WalletRepository {
   @override
   Future<Either<WalletFailure, List<Wallet>>> getWallet() async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/walletservice/wallets',
         headers: Map.fromEntries([

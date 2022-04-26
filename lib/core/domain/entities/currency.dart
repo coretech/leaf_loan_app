@@ -9,9 +9,9 @@ class Currency {
 
   factory Currency.fromMap(Map<String, dynamic> map) {
     return Currency(
-      id: map['id'] ?? '',
-      fiatCode: map['fiatCode'] ?? '',
-      name: map['name'] ?? '',
+      id: map['id'] ,
+      fiatCode: map['fiatCode'] ,
+      name: map['name'] ,
     );
   }
 

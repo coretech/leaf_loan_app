@@ -96,7 +96,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       onPressed: () {
                                         UserProfileAnalytics
                                             .logEditProfileTapped(
-                                          _userProvider.user?.userId.username,
+                                          _userProvider.user?.username,
                                         );
                                         _launchApp();
                                       },
@@ -126,7 +126,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               TextButton.icon(
                                 onPressed: () {
                                   UserProfileAnalytics.logLogOutTapped(
-                                    _userProvider.user?.userId.username,
+                                    _userProvider.user!.username,
                                   );
                                   AuthIOC.authHelper().logOut();
                                 },

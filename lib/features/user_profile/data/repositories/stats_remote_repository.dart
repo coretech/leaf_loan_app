@@ -17,7 +17,7 @@ class StatsRemoteRepository implements StatsRepository {
   @override
   Future<Either<StatFailure, List<Stat>>> getStats() async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/statistics',
         headers: Map.fromEntries([

@@ -6,4 +6,12 @@ abstract class ScoringDataCollectionService {
   });
 }
 
-class ScoringFailure {}
+class ScoringFailure {
+  ScoringFailure({
+    required this.scoringFailureReason,
+  });
+
+  final ScoringFailureReason scoringFailureReason;
+}
+
+enum ScoringFailureReason { missingPermissions, other, sdkIssue }

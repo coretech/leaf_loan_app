@@ -15,7 +15,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
   @override
   Future<Either<LoanHistoryFailure, List<LoanData>>> getLoans() async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans',
         headers: Map.fromEntries([
@@ -42,7 +42,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
   @override
   Future<Either<LoanHistoryFailure, LoanData>> getActiveLoan() async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans/ongoing',
         headers: Map.fromEntries([
@@ -73,7 +73,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
     String loanId,
   ) async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans/$loanId',
         headers: Map.fromEntries([

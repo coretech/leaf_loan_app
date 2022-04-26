@@ -16,25 +16,25 @@ class UserRemoteRepository extends UserRepository {
   @override
   Future<Either<UserFailure, User>> getUser() async {
     try {
-      final token = await _authHelper.getToken() ?? '';
-      final _response = await _httpHelper.get(
+      final token = await _authHelper.getToken() ;
+      final response = await _httpHelper.get(
         url: '${URLs.baseURL}/userservice/profile',
         headers: Map.fromEntries([
           TokenUtil.generateBearer(token),
         ]),
       );
-      final _responseDto = ResponseDto.fromMap(_response.data);
-      final _userDto = UserDto.fromMap(_responseDto.data);
-      final _user = _userDto.toEntity();
+      final responseDto = ResponseDto.fromMap(response.data);
+      final userDto = UserDto.fromMap(responseDto.data);
+      final user = userDto.toEntity();
       await _localStorage.setString(
         Keys.firstName,
-        _user.userId.firstName,
+        user.firstName,
       );
       await _localStorage.setString(
         Keys.username,
-        _user.userId.username,
+        user.username,
       );
-      return Right(_user);
+      return Right(user);
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
       return left(UserFailure());

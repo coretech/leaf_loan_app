@@ -23,18 +23,18 @@ class LoanDataDto {
 
   factory LoanDataDto.fromMap(Map<String, dynamic> map) {
     return LoanDataDto(
-      status: map['status'] ?? '',
-      id: map['id'] ?? '',
-      loanType: map['loanType'] ?? '',
-      loanPurpose: map['loanPurpose'] ?? '',
+      status: map['status'] ,
+      id: map['id'] ,
+      loanType: map['loanType'] ,
+      loanPurpose: map['loanPurpose'] ,
       currency: CurrencyDto.fromMap(map['currency']),
-      dueDate: map['dueDate'] ?? '',
-      requestedAmount: map['requestedAmount']?.toDouble() ?? 0,
-      interestAmount: map['interestAmount']?.toDouble() ?? 0,
-      totalAmount: map['totalAmount']?.toDouble() ?? 0,
-      remainingAmount: map['remainingAmount']?.toDouble() ?? 0,
-      duration: map['duration']?.toInt() ?? 0,
-      requestDate: map['requestDate'] ?? '',
+      dueDate: map['dueDate'] ,
+      requestedAmount: map['requestedAmount']?.toDouble() ,
+      interestAmount: map['interestAmount']?.toDouble() ,
+      totalAmount: map['totalAmount']?.toDouble() ,
+      remainingAmount: map['remainingAmount']?.toDouble() ,
+      duration: map['duration']?.toInt() ,
+      requestDate: map['requestDate'] ,
     );
   }
 

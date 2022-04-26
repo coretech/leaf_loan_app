@@ -15,7 +15,7 @@ class LoanTypeRemoteRepo implements LoanTypeRepository {
   @override
   Future<Either<LoanTypeError, List<LoanType>>> getLoanTypes() async {
     try {
-      final token = await _authHelper.getToken() ?? '';
+      final token = await _authHelper.getToken() ;
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loantypes',
         headers: Map.fromEntries([

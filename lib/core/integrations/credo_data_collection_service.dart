@@ -56,8 +56,8 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
 
   Future<void> _submitCredoScore(String referenceId) async {
     try {
-      final token = await _authHelper.getToken() ?? '';
-      final userId = await _authHelper.getUserId() ?? '';
+      final token = await _authHelper.getToken() ;
+      final userId = await _authHelper.getUserId() ;
       final _ = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/references',
         data: {

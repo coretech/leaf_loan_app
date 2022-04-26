@@ -14,12 +14,12 @@ class ArticleDto {
 
   factory ArticleDto.fromMap(Map<String, dynamic> map) {
     return ArticleDto(
-      id: map['id'] ?? '',
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      linkUrl: map['linkUrl'] ?? '',
-      imageUrl: map['imageUrl'] ?? '',
-      createdAt: map['createdAt'] ?? '',
+      id: map['id'] ,
+      title: map['title'] ,
+      description: map['description'] ,
+      linkUrl: map['linkUrl'] ,
+      imageUrl: map['imageUrl'] ,
+      createdAt: map['createdAt'] ,
     );
   }
 

@@ -60,8 +60,6 @@ class HomeProvider extends ChangeNotifier {
     payments = [];
     paymentsLoaded = false;
     loadingPayments = false;
-    // TODO(Yabsra): check this out
-    notifyListeners();
   }
 
   Future<void> setActiveLoan(LoanData loan) async {
@@ -73,7 +71,7 @@ class HomeProvider extends ChangeNotifier {
   Future<void> getActiveLoan() async {
     await Future.delayed(Duration.zero);
     clear();
-    // TODO(Yabsra): this is a dirty hack, fix it
+    // TODO(Yabsra): create a local user repo
     if (firstName.isEmpty) {
       firstName =
           (await IntegrationIOC.localStorage().getString(Keys.firstName)) ?? '';

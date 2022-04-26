@@ -11,12 +11,8 @@ class UserDto {
     required this.dob,
     required this.email,
     required this.gender,
-    required this.idNumber,
-    required this.idType,
-    required this.issuingCountry,
     required this.phone,
     required this.status,
-    required this.street,
     required this.updatedAt,
     required this.firstName,
     required this.lastName,
@@ -25,23 +21,19 @@ class UserDto {
 
   factory UserDto.fromMap(Map<String, dynamic> map) {
     return UserDto(
-      id: map['id'] ?? '',
-      city: map['city'] ?? '',
-      country: map['country'] ?? '',
-      createdAt: map['createdAt'] ?? '',
-      dob: map['dob'] ?? '',
-      email: map['email'] ?? '',
-      gender: map['gender'] ?? '',
-      idNumber: map['idNumber'] ?? '',
-      idType: map['idType'] ?? '',
-      issuingCountry: map['issuingCountry'] ?? '',
-      phone: map['phone'] ?? '',
-      status: map['status'] ?? '',
-      street: map['street'] ?? '',
-      updatedAt: map['updatedAt'] ?? '',
-      firstName: map['firstName'] ?? '',
-      lastName: map['lastName'] ?? '',
-      username: map['username'] ?? '',
+      id: map['id'],
+      city: map['city'],
+      country: map['country'],
+      createdAt: map['createdAt'],
+      dob: map['dob'],
+      email: map['email'],
+      gender: map['gender'],
+      phone: map['phone'],
+      status: map['status'],
+      updatedAt: map['updatedAt'],
+      firstName: map['firstName'],
+      lastName: map['lastName'],
+      username: map['username'],
     );
   }
 
@@ -53,14 +45,10 @@ class UserDto {
   final String country;
   final String createdAt;
   final String dob;
-  final String email;
+  final String? email;
   final String gender;
-  final String idNumber;
-  final String idType;
-  final String issuingCountry;
   final String phone;
   final String status;
-  final String street;
   final String updatedAt;
   final String firstName;
   final String lastName;
@@ -77,15 +65,9 @@ class UserDto {
       phone: phone,
       status: status,
       updatedAt: updatedAt,
-      userId: UserId(
-        id: id,
-        status: status,
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      ),
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
       email: email,
     );
   }
@@ -117,12 +99,8 @@ class UserDto {
       dob: dob ?? this.dob,
       email: email ?? this.email,
       gender: gender ?? this.gender,
-      idNumber: idNumber ?? this.idNumber,
-      idType: idType ?? this.idType,
-      issuingCountry: issuingCountry ?? this.issuingCountry,
       phone: phone ?? this.phone,
       status: status ?? this.status,
-      street: street ?? this.street,
       updatedAt: updatedAt ?? this.updatedAt,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -139,12 +117,8 @@ class UserDto {
       'dob': dob,
       'email': email,
       'gender': gender,
-      'idNumber': idNumber,
-      'idType': idType,
-      'issuingCountry': issuingCountry,
       'phone': phone,
       'status': status,
-      'street': street,
       'updatedAt': updatedAt,
       'firstName': firstName,
       'lastName': lastName,
@@ -156,11 +130,11 @@ class UserDto {
 
   @override
   String toString() {
-    return 'UserDto(id: $id, city: $city, country: $country, createdAt: '
-        '$createdAt, dob: $dob, email: $email, gender: $gender, idNumber: '
-        '$idNumber, idType: $idType, issuingCountry: $issuingCountry, phone: '
-        '$phone, status: $status, street: $street, updatedAt: $updatedAt, '
-        'firstName: $firstName, lastName: $lastName, username: $username)';
+    return 'UserDto(id: $id, city: $city, country: $country, '
+        'createdAt: $createdAt, dob: $dob, email: $email, gender: '
+        '$gender, phone: $phone, status: $status, updatedAt: '
+        '$updatedAt, firstName: $firstName, lastName: $lastName, '
+        'username: $username)';
   }
 
   @override
@@ -175,12 +149,8 @@ class UserDto {
         other.dob == dob &&
         other.email == email &&
         other.gender == gender &&
-        other.idNumber == idNumber &&
-        other.idType == idType &&
-        other.issuingCountry == issuingCountry &&
         other.phone == phone &&
         other.status == status &&
-        other.street == street &&
         other.updatedAt == updatedAt &&
         other.firstName == firstName &&
         other.lastName == lastName &&
@@ -196,12 +166,8 @@ class UserDto {
         dob.hashCode ^
         email.hashCode ^
         gender.hashCode ^
-        idNumber.hashCode ^
-        idType.hashCode ^
-        issuingCountry.hashCode ^
         phone.hashCode ^
         status.hashCode ^
-        street.hashCode ^
         updatedAt.hashCode ^
         firstName.hashCode ^
         lastName.hashCode ^

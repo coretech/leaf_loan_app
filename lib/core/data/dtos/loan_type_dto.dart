@@ -22,16 +22,16 @@ class LoanTypeDto {
   factory LoanTypeDto.fromMap(Map<String, dynamic> map) {
     return LoanTypeDto(
       purpose: List<String>.from(map['purpose']),
-      id: map['id'] ?? '',
-      name: map['name'] ?? '',
-      description: map['description'] ?? '',
+      id: map['id'] ,
+      name: map['name'] ,
+      description: map['description'] ,
       currencies: List<LoanCurrencyDto>.from(
         map['currencies']?.map((x) => LoanCurrencyDto.fromMap(x)),
       ),
-      minDuration: map['minDuration']?.toInt() ?? 0,
-      maxDuration: map['maxDuration']?.toInt() ?? 0,
-      interestRate: map['interestRate']?.toDouble() ?? 0,
-      image: map['image'] ?? '',
+      minDuration: map['minDuration']?.toInt() ,
+      maxDuration: map['maxDuration']?.toInt() ,
+      interestRate: map['interestRate']?.toDouble() ,
+      image: map['image'] ,
     );
   }
 

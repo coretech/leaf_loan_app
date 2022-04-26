@@ -15,11 +15,11 @@ class StatDto {
 
   factory StatDto.fromMap(Map<String, dynamic> map) {
     return StatDto(
-      id: map['id'] ?? '',
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      unit: map['unit'] ?? '',
-      value: map['value']?.toInt() ?? 0,
+      id: map['id'] ,
+      title: map['title'] ,
+      description: map['description'] ,
+      unit: map['unit'] ,
+      value: map['value']?.toInt() ,
     );
   }
 

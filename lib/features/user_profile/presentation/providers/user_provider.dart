@@ -21,12 +21,11 @@ class UserProvider extends ChangeNotifier {
   }
 
   String get fullName =>
-      isReady() ? '${user!.userId.firstName} ${user!.userId.lastName}' : '';
+      isReady() ? '${user!.firstName} ${user!.lastName}' : '';
 
-  String get firstName => isReady() ? user!.userId.firstName : '';
+  String get firstName => isReady() ? user!.firstName : '';
 
-  String get usernamePresentation =>
-      isReady() ? '(${user?.userId.username})' : '';
+  String get usernamePresentation => isReady() ? '(${user?.username})' : '';
 
   bool get isVerified => isReady() && user!.status.toLowerCase() == 'active';
 

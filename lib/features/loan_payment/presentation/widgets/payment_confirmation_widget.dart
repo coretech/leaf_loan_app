@@ -96,7 +96,7 @@ class _PaymentConfirmationWidgetState extends State<PaymentConfirmationWidget> {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: _onSubmit,
+                      onPressed: loanPaymentProvider.paying ? null : _onSubmit,
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith(
                           (states) => states.contains(MaterialState.disabled)

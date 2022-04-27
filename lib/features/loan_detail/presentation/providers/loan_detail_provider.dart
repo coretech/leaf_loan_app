@@ -9,10 +9,11 @@ import 'package:loan_app/features/loan_payment/ioc/ioc.dart';
 class LoanDetailProvider extends ChangeNotifier {
   LoanDetailProvider() {
     _eventBus.on<LoanPaymentSuccess>().listen((event) async {
-      final updatedLoan = event.loan;
+      final remainingAmount =
+          loan!.remainingAmount - event.payment.paymentAmount;
       setLoan(
         loan!.copyWith(
-          remainingAmount: updatedLoan.remainingAmount,
+          remainingAmount: remainingAmount,
         ),
       );
       await getPayments();

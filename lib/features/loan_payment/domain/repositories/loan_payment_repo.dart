@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 
 abstract class LoanPaymentRepo {
-  Future<Either<LoanPaymentFailure, LoanData>> payLoan({
+  Future<Either<LoanPaymentFailure, Payment>> payLoan({
     required String loanId,
     required double amount,
     required String currencyId,

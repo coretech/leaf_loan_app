@@ -8,8 +8,6 @@ import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/data/dtos/dtos.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
-import 'package:loan_app/features/loan_history/data/dtos/dtos.dart';
-import 'package:loan_app/features/loan_history/domain/entities/entities.dart';
 import 'package:loan_app/features/loan_payment/data/dtos/dtos.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/payment.dart';
 import 'package:loan_app/features/loan_payment/domain/repositories/repositories.dart';
@@ -23,7 +21,7 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
     String paymentId,
   ) async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/payments/$paymentId',
         headers: Map.fromEntries([
@@ -46,7 +44,7 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
   }) async {
     log('Loan ID now $loanId');
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/payments/loan/$loanId',
         headers: Map.fromEntries([
@@ -72,7 +70,7 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
   @override
   Future<Either<LoanPaymentFailure, List<Payment>>> getUserPayments() async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final _response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/payments',
         headers: Map.fromEntries([
@@ -93,14 +91,14 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
   }
 
   @override
-  Future<Either<LoanPaymentFailure, LoanData>> payLoan({
+  Future<Either<LoanPaymentFailure, Payment>> payLoan({
     required double amount,
     required String currencyId,
     required String loanId,
     required String password,
   }) async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/payments',
         headers: Map.fromEntries([
@@ -116,8 +114,8 @@ class LoanPaymentRemoteRepo implements LoanPaymentRepo {
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final responseDto = ResponseDto.fromMap(response.data);
 
-        final loan = LoanDataDto.fromMap(responseDto.data).toEntity();
-        return Right(loan);
+        final payment = PaymentDto.fromMap(responseDto.data).toEntity();
+        return Right(payment);
       } else {
         return Left(LoanPaymentFailure());
       }

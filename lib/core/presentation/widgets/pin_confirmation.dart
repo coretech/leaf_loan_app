@@ -92,6 +92,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
 }
 
 Future<String?> showPinConfirmationSheet(BuildContext context) async {
+  // TODO(Yabsra): examine the consequences of the unawaited futures
   // ignore: unawaited_futures
   Smartlook.setRenderingMode(SmartlookRenderingMode.no_rendering);
   final value = await showModalBottomSheet(

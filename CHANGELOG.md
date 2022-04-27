@@ -1,3 +1,7 @@
+## [0.0.15+30] - 2022-04-26
+## Added
+- Permissions prompt page for when users deny permissions 
+
 ## [0.0.15+29] - 2022-04-22
 ## Added
 - Conditionally turning off SmartLook recording based on actions (PIN confirmation and login at the moment)

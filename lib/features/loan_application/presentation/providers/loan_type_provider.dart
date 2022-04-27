@@ -1,12 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
+import 'package:loan_app/core/utils/utils.dart';
 import 'package:loan_app/features/loan_application/domain/domain.dart';
 import 'package:loan_app/features/loan_application/ioc/ioc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoanTypeProvider extends ChangeNotifier {
   bool loading = false;
+
+  bool checkingPermissions = false;
+
   String? errorMessage;
+
+  List<LoanType> loanTypes = [];
+
+  List<Permission> deniedPermissions = [];
+
+  bool get hasLoanTypes => loanTypes.isNotEmpty;
+
+  bool get canShowTypes => hasLoanTypes && !loading && errorMessage == null;
+
+  bool get permissionsGranted =>
+      !checkingPermissions && deniedPermissions.isEmpty;
+
   final LoanTypeRepository loanTypeRepository =
       LoanApplicationIOC.loanTypeRepo();
 
@@ -14,9 +31,32 @@ class LoanTypeProvider extends ChangeNotifier {
       IntegrationIOC.scoringDataCollectionService();
 
   Future<void> init() async {
-    await _scoringDataCollectionService.scrapeAndSubmitScoringData(
-      url: '',
+    checkingPermissions = true;
+    notifyListeners();
+
+    const permissions = [
+      Permission.calendar,
+      Permission.contacts,
+      Permission.storage,
+      Permission.mediaLibrary,
+    ];
+    final requestResults = await PermissionsUtil.request(permissions);
+
+    deniedPermissions = MapUtil.getMatching(
+      requestResults,
+      {
+        PermissionStatus.denied,
+        PermissionStatus.permanentlyDenied,
+      },
     );
+
+    checkingPermissions = false;
+    notifyListeners();
+    if (permissionsGranted) {
+      await _scoringDataCollectionService.scrapeAndSubmitScoringData(
+        url: '',
+      );
+    }
   }
 
   void setLoading({required bool value}) {
@@ -38,12 +78,6 @@ class LoanTypeProvider extends ChangeNotifier {
     loading = false;
     errorMessage = null;
   }
-
-  List<LoanType> loanTypes = [];
-
-  bool get hasLoanTypes => loanTypes.isNotEmpty;
-
-  bool get canShowTypes => hasLoanTypes && !loading && errorMessage == null;
 
   Future<void> getLoanTypes() async {
     await Future.delayed(Duration.zero);

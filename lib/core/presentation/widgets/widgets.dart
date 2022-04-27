@@ -7,5 +7,6 @@ export 'custom_loading_widget.dart';
 export 'error_widget.dart';
 export 'langauage_dropdown.dart';
 export 'leaf_loans_logo.dart';
+export 'permission_prompt.dart';
 export 'pin_confirmation.dart';
 export 'shimmer_box.dart';

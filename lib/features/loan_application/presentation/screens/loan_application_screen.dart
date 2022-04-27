@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
+import 'package:loan_app/core/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/loan_application/loan_application.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:provider/provider.dart';
@@ -49,16 +50,24 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0,
                 foregroundColor: Theme.of(context).colorScheme.onSurface,
-                title: Text(
-                  'Apply for a loan'.tr(),
-                ),
+                title: Text(_getAppBarTitle()),
               ),
-              body: _buildContent(),
+              body: _buildContentOrBlocker(),
             );
           },
         );
       },
     );
+  }
+
+  Widget _buildContentOrBlocker() {
+    if (!_loanTypeProvider.permissionsGranted) {
+      return PermissionPrompt(
+        denied: _loanTypeProvider.deniedPermissions,
+      );
+    }
+    
+    return _buildContent();
   }
 
   Widget _buildContent() {
@@ -276,6 +285,13 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     }
     final currentLoan = _loanTypeProvider.loanTypes[_selectedLoanTypeIndex];
     return currentLoan.hasCurrencies;
+  }
+
+  String _getAppBarTitle() {
+    if (_loanTypeProvider.permissionsGranted) {
+      return 'Apply for a loan'.tr();
+    }
+    return 'Permissions Not Granted'.tr();
   }
 
   void showAmountErrorSnackbar() {

@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 class LoanTypeProvider extends ChangeNotifier {
   bool loading = false;
 
-  bool checkingPermissions = false;
+  bool checkingPermissions = true;
 
   String? errorMessage;
 
@@ -31,6 +31,7 @@ class LoanTypeProvider extends ChangeNotifier {
       IntegrationIOC.scoringDataCollectionService();
 
   Future<void> init() async {
+    await Future.delayed(Duration.zero);
     checkingPermissions = true;
     notifyListeners();
 

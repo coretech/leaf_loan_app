@@ -60,6 +60,7 @@ class HomeProvider extends ChangeNotifier {
     payments = [];
     paymentsLoaded = false;
     loadingPayments = false;
+    notifyListeners();
   }
 
   Future<void> setActiveLoan(LoanData loan) async {
@@ -85,17 +86,15 @@ class HomeProvider extends ChangeNotifier {
             value: 'Not sure what went wrong.'
                 '\nAre you connected to the internet?',
           );
-          setLoading(value: false);
-        } else if (error == LoanHistoryFailure.noActiveLoan) {
-          setLoading(value: false);
-          notifyListeners();
         }
+        setLoading(value: false);
       },
       (loanData) async {
         activeLoan = loanData;
         setLoading(value: false);
-        notifyListeners();
-        await getPayments();
+        if (loanStatusFromString(activeLoan!.status) != LoanStatus.pending) {
+          await getPayments();
+        }
       },
     );
   }
@@ -116,6 +115,5 @@ class HomeProvider extends ChangeNotifier {
     loadingPayments = false;
     paymentsLoaded = true;
     setLoading(value: false);
-    notifyListeners();
   }
 }

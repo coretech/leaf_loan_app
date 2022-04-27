@@ -32,6 +32,7 @@ class DioHttpHelper implements HttpHelper {
     bool processResponse = true,
     required String url,
   }) async {
+    
     final metric = _firebasePerformance.newHttpMetric(
       url,
       HttpMethod.Delete,

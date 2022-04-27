@@ -5,15 +5,16 @@ import 'package:loan_app/features/home/presentation/widgets/widgets.dart';
 import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/features/loan_payment/domain/entities/entities.dart';
 import 'package:loan_app/i18n/i18n.dart';
-import 'package:provider/provider.dart';
 
 class ActiveLoanContent extends StatefulWidget {
   const ActiveLoanContent({
     Key? key,
+    required this.homeProvider,
     required this.loadingPayments,
     required this.loan,
     required this.payments,
   }) : super(key: key);
+  final HomeProvider homeProvider;
   final bool loadingPayments;
   final LoanData loan;
   final List<Payment> payments;
@@ -35,8 +36,9 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
         builder: (context, constraint) {
           return RefreshIndicator(
             onRefresh: () async {
-              await Provider.of<HomeProvider>(context, listen: false)
-                  .getActiveLoan();
+              if (!widget.homeProvider.loadingPayments) {
+                await widget.homeProvider.getActiveLoan();
+              }
             },
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(
@@ -88,7 +90,9 @@ class _ActiveLoanContentState extends State<ActiveLoanContent> {
 
     return RefreshIndicator(
       onRefresh: () async {
-        await Provider.of<HomeProvider>(context, listen: false).getActiveLoan();
+        if (!widget.homeProvider.loadingPayments) {
+          await widget.homeProvider.getActiveLoan();
+        }
       },
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(

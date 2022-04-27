@@ -1,3 +1,9 @@
+## [0.0.15+32] - 2022-04-28
+## Added
+- Fetching of previous push notifications on app launch
+## Fixed 
+- Home page showing apply button on very frequent reloads
+
 ## [0.0.15+31] - 2022-04-27
 ## Fixed
 - Payment DTO issue

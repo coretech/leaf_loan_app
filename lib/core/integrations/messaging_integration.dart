@@ -130,6 +130,8 @@ class MessagingIntegration implements MessagingService {
     _firebaseMessaging.onTokenRefresh.listen((token) async {
       await savePushToken(token);
     });
+
+    await _firebaseMessaging.getInitialMessage();
   }
 
   void _parseDataAndCallOnOpen(String? payload) {

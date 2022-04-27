@@ -11,10 +11,6 @@ class LoanHistoryProvider extends ChangeNotifier {
       }
     });
 
-    _eventBus.on<LoanPaymentSuccess>().listen((event) async {
-      await getLoans();
-    });
-
     _eventBus.on<NotificationEvent>().listen((event) async {
       await getLoans();
     });

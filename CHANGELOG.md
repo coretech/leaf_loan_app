@@ -1,3 +1,11 @@
+## [0.0.15+31] - 2022-04-27
+## Fixed
+- Payment DTO issue
+- Redundant notification events on the event bus
+- Permission names
+- Proceed button being enabled while loading
+- Auto focus on PIN field
+
 ## [0.0.15+30] - 2022-04-26
 ## Added
 - Permissions prompt page for when users deny permissions 

@@ -1,10 +1,10 @@
-import 'package:loan_app/features/loan_history/domain/domain.dart';
+import 'package:loan_app/features/loan_payment/domain/domain.dart';
 
 abstract class LoanPaymentEvent {}
 
 class LoanPaymentSuccess {
   LoanPaymentSuccess({
-    required this.loan,
+    required this.payment,
   });
-  LoanData loan;
+  Payment payment;
 }

@@ -32,6 +32,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
           PinCodeTextField(
             appContext: context,
             animationDuration: const Duration(milliseconds: 300),
+            autoFocus: true,
             controller: _otpController,
             keyboardType: TextInputType.number,
             length: 5,
@@ -92,6 +93,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
 }
 
 Future<String?> showPinConfirmationSheet(BuildContext context) async {
+  // TODO(Yabsra): examine the consequences of the unawaited futures
   // ignore: unawaited_futures
   Smartlook.setRenderingMode(SmartlookRenderingMode.no_rendering);
   final value = await showModalBottomSheet(

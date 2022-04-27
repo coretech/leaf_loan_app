@@ -81,8 +81,8 @@ class LoanPaymentProvider extends ChangeNotifier {
       (error) => setErrorMessage(
         value: "Your payment didn't go through. Please try again.",
       ),
-      (loan) {
-        _eventBus.fire(LoanPaymentSuccess(loan: loan));
+      (payment) {
+        _eventBus.fire(LoanPaymentSuccess(payment: payment));
         paid = true;
       },
     );

@@ -14,7 +14,7 @@ class LoanNotificationPayloadDto {
     return LoanNotificationPayloadDto(
       loanId: map['loanid'] ,
       type: map['type'] ,
-      paymentId: map['paymentId'] ,
+      paymentId: map['paymentid'] ,
     );
   }
 

@@ -32,6 +32,7 @@ class _PinConfirmationState extends State<PinConfirmation> {
           PinCodeTextField(
             appContext: context,
             animationDuration: const Duration(milliseconds: 300),
+            autoFocus: true,
             controller: _otpController,
             keyboardType: TextInputType.number,
             length: 5,

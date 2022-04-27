@@ -96,7 +96,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   }
 
   Widget _buildDayCount(BuildContext context, DateTime date) {
-    final dayCount = date.difference(DateTime.now()).inDays.toString();
+    final dayCount = date.difference(DateTime.now()).inDays + 1;
     return Text(
       '$dayCount ${'days'.tr()}',
       style: Theme.of(context).textTheme.bodyText1,
@@ -137,7 +137,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
     final date = await showDatePicker(
       context: context,
       firstDate: DateTime.now().add(
-        Duration(days: widget.minDurationInDays ?? 61),
+        Duration(days: widget.minDurationInDays ?? 60),
       ),
       initialDate: _selectedDate,
       lastDate: DateTime.now().add(

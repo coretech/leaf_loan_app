@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:loan_app/authentication/helpers/helpers.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
@@ -13,9 +14,9 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
   Future<Either<ScoringFailure, String>> scrapeAndSubmitScoringData({
     required String url,
   }) async {
-    // if (kDebugMode) {
-    //   return right('debug');
-    // }
+    if (kDebugMode) {
+      return right('debug');
+    }
     try {
       final credoMethodChannel =
           MethodChannel(MethodChannelNames.credoScraping);

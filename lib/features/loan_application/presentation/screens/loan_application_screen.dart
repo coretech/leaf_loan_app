@@ -18,7 +18,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   late LoanTypeProvider _loanTypeProvider;
   int _selectedCurrencyIndex = 0;
   int _selectedLoanTypeIndex = 0;
-  int _selectedDurationInDays = 61;
+  int _selectedDurationInDays = 60;
   String? _selectedPurpose;
   double? _loanAmount;
   int currentStep = 0;
@@ -252,7 +252,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
         showSnackbar('Please select loan amount!'.tr());
       } else if (_selectedPurpose == null) {
         showSnackbar('Please select loan purpose!'.tr());
-      } else if (_selectedDurationInDays < 61) {
+      } else if (_selectedDurationInDays < 60) {
         showSnackbar('Please select a proper loan duration!'.tr());
       }
     }

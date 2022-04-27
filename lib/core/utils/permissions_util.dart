@@ -30,7 +30,7 @@ abstract class PermissionsUtil {
     Permission.sensors: 'Body Sensors',
     Permission.sms: 'SMS',
     Permission.speech: 'Microphone',
-    Permission.storage: 'External Storage',
+    Permission.storage: 'Files and Media',
     Permission.ignoreBatteryOptimizations: 'Ignore Battery Optimizations',
     Permission.notification: 'Notification',
     Permission.accessMediaLocation: 'Collected Geographic Locations',

@@ -1,3 +1,9 @@
+## [0.0.16+33] - 2022-05-06
+## Changed
+- Smartlook switch to use Firebase Remote Config
+## Fixed
+- Crashes caused when users attempt to log out before profile is loaded
+
 ## [0.0.15+32] - 2022-04-28
 ## Added
 - Fetching of previous push notifications on app launch

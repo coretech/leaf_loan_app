@@ -9,7 +9,7 @@ class InAppUpdater implements Updater {
   Future<UpdateInfo> checkForUpdate() async {
     final appUpdateInfo = await InAppUpdate.checkForUpdate();
     final latestSupportedBuild =
-        remoteConfiguration.getInt('latest_supported_build');
+        remoteConfiguration.getInt(RemoteConfigKeys.latestSupportedBuild);
     final packageInfo = await PackageInfo.fromPlatform();
     final currentBuild = int.parse(packageInfo.buildNumber);
 

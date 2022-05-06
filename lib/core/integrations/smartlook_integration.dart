@@ -1,10 +1,13 @@
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
+import 'package:loan_app/core/constants/constants.dart';
+import 'package:loan_app/core/ioc/ioc.dart';
 
 class SmartlookIntegration implements Recording {
   @override
   Future<void> init() async {
-    const smartlookEnabled = bool.fromEnvironment('SMARTLOOK_ENABLED');
+    final smartlookEnabled =
+        IntegrationIOC.remoteConfig.getBool(RemoteConfigKeys.smartlookEnabled);
     const projectKey = String.fromEnvironment('SMARTLOOK_PROJECT_KEY');
     assert(
       !smartlookEnabled || projectKey.isNotEmpty,

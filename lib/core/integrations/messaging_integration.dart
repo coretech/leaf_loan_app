@@ -152,8 +152,17 @@ class MessagingIntegration implements MessagingService {
         break;
 
       case NotificationType.appUpdate:
+        await IntegrationIOC.updater.startFlexibleUpdate();
+        break;
       case NotificationType.immediateAppUpdate:
+        await IntegrationIOC.updater.performImmediateUpdate();
+        break;
       case NotificationType.navigationWithoutPayload:
+        final notificationPayload =
+            NotificationPayloadDto.fromMap(payload).toEntity();
+        if (routeNames.contains(notificationPayload.path)) {
+          await navigatorKey.currentState?.pushNamed(notificationPayload.path);
+        }
         break;
     }
   }
@@ -170,17 +179,8 @@ class MessagingIntegration implements MessagingService {
         eventBus.fire(PaymentNotificationEvent(payload: notificationPayload));
         break;
       case NotificationType.appUpdate:
-        await IntegrationIOC.updater.startFlexibleUpdate();
-        break;
       case NotificationType.immediateAppUpdate:
-        await IntegrationIOC.updater.performImmediateUpdate();
-        break;
       case NotificationType.navigationWithoutPayload:
-        final notificationPayload =
-            NotificationPayloadDto.fromMap(payload).toEntity();
-        if (routeNames.contains(notificationPayload.path)) {
-          await navigatorKey.currentState?.pushNamed(notificationPayload.path);
-        }
         break;
     }
   }

@@ -24,7 +24,7 @@ class LoanDetailProvider extends ChangeNotifier {
   }
 
   final _loanPaymentRepo = LoanPaymentIOC.loanPaymentRepo();
-  final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo();
+  final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo;
 
   final _eventBus = IntegrationIOC.eventBus;
 

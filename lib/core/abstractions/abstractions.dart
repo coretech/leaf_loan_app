@@ -1,4 +1,5 @@
 export 'analytics.dart';
+export 'dymaic_linking.dart';
 export 'event_bus_abstraction.dart';
 export 'http_helper.dart';
 export 'l10n.dart';

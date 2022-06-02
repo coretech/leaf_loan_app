@@ -14,6 +14,9 @@ class IntegrationIOC {
       ..registerLazySingleton<Analytics>(
         () => FirebaseAnalyticsIntegration(),
       )
+      ..registerLazySingleton<DynamicLinking>(
+        () => FirebaseDynamicLinksIntegration(),
+      )
       ..registerLazySingleton<EventBusAbstraction>(
         () => EvenBusIntegration(),
       )
@@ -89,6 +92,10 @@ class IntegrationIOC {
 
   static Analytics get analytics {
     return _locator.get<Analytics>();
+  }
+
+  static DynamicLinking get dynamicLinking {
+    return _locator.get<DynamicLinking>();
   }
 
   static EventBusAbstraction get eventBus {

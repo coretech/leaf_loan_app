@@ -1,3 +1,4 @@
+export 'analytics/analytics.dart';
 export 'home_screen_arguments.dart';
 export 'providers/providers.dart';
 export 'screens/screens.dart';

@@ -16,7 +16,7 @@ class LoanHistoryProvider extends ChangeNotifier {
     });
   }
 
-  final _loanHistoryRepository = LoanHistoryIOC.loanHistoryRepo();
+  final _loanHistoryRepository = LoanHistoryIOC.loanHistoryRepo;
 
   final _eventBus = IntegrationIOC.eventBus;
 

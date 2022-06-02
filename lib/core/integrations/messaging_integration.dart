@@ -194,7 +194,7 @@ class MessagingIntegration implements MessagingService {
               return LoaderScreen<LoanData>(
                 onDone: _navigateToLoanDetail,
                 loaderProvider: LoaderProvider<LoanData>(
-                  loader: () => LoanHistoryIOC.loanHistoryRepo()
+                  loader: () => LoanHistoryIOC.loanHistoryRepo
                       .getLoanById(payload.loanId),
                 )..load(),
               );
@@ -209,7 +209,7 @@ class MessagingIntegration implements MessagingService {
               return LoaderScreen<LoanData>(
                 onDone: _navigateToLoanTransactions,
                 loaderProvider: LoaderProvider<LoanData>(
-                  loader: () => LoanHistoryIOC.loanHistoryRepo()
+                  loader: () => LoanHistoryIOC.loanHistoryRepo
                       .getLoanById(payload.loanId),
                 )..load(),
               );

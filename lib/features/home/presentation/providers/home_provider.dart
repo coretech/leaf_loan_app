@@ -33,7 +33,7 @@ class HomeProvider extends ChangeNotifier {
   bool paymentsLoaded = false;
 
   final _loanPaymentRepo = LoanPaymentIOC.loanPaymentRepo();
-  final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo();
+  final _loanHistoryRepo = LoanHistoryIOC.loanHistoryRepo;
 
   final _eventBus = IntegrationIOC.eventBus;
 

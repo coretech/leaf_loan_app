@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:loan_app/authentication/authentication.dart';
+import 'package:loan_app/core/helpers/helpers.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/features/features.dart';
 import 'package:loan_app/i18n/i18n.dart';
@@ -30,6 +31,9 @@ class _AppState extends State<App> {
   void initState() {
     IntegrationIOC.analytics.logAppOpen();
     IntegrationIOC.recording.init();
+    final dynamicLinkHelper = DynamicLinkHelper(navigator: widget.navigatorKey);
+    IntegrationIOC.dynamicLinking.init(dynamicLinkHelper.onLink);
+
     super.initState();
   }
 

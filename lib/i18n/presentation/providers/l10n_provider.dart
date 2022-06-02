@@ -17,7 +17,7 @@ class L10nProvider extends ChangeNotifier {
     if (language != null) {
       _locale = Locale.fromSubtags(languageCode: language);
     } else {
-      _locale = WidgetsBinding.instance.window.locale;
+      _locale = WidgetsBinding.instance?.window.locale;
     }
 
     notifyListeners();

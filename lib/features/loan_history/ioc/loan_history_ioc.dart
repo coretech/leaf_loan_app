@@ -16,7 +16,7 @@ class LoanHistoryIOC {
       );
   }
 
-  static LoanHistoryRepository loanHistoryRepo() {
+  static LoanHistoryRepository get loanHistoryRepo {
     return _locator.get<LoanHistoryRepository>();
   }
 

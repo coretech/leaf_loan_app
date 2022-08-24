@@ -56,7 +56,7 @@ class _LoanDetailScreenAltState extends State<LoanDetailScreenAlt> {
               backgroundColor: Colors.red,
             ),
           );
-          SchedulerBinding.instance?.addPostFrameCallback((_) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
             Navigator.of(context).pop();
           });
         }

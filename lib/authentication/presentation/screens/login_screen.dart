@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    Smartlook.setRenderingMode(SmartlookRenderingMode.no_rendering);
+    Smartlook.instance.preferences.setRenderingMode(RenderingMode.no_rendering);
     _authProvider = AuthProvider()
       ..loadUsername()
       ..addListener(_authProviderListener);
@@ -253,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'Leaf Wallet Credentials',
       );
 
-      Smartlook.setRenderingMode(SmartlookRenderingMode.native);
+      Smartlook.instance.preferences.setRenderingMode(RenderingMode.native);
 
       Navigator.of(context).pushNamedAndRemoveUntil(
         HomeScreen.routeName,

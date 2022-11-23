@@ -45,14 +45,15 @@ class MessagingIntegration implements MessagingService {
     //FLUTTER LOCAL NOTIFICATIONS
     const initializationSettingsAndroid =
         AndroidInitializationSettings('ic_stat');
-    const initializationSettingsIOS = IOSInitializationSettings();
+    const initializationSettingsIOS = DarwinInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: _parseDataAndCallOnOpen,
+      onDidReceiveNotificationResponse: _parseDataAndCallOnOpen,
+      onDidReceiveBackgroundNotificationResponse: _parseDataAndCallOnOpen,
     );
 
     //Android notification properties
@@ -66,7 +67,7 @@ class MessagingIntegration implements MessagingService {
     );
 
     //iOS notification properties
-    const iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
       presentSound: true,
       presentAlert: true,
       presentBadge: true,
@@ -134,9 +135,9 @@ class MessagingIntegration implements MessagingService {
     await _firebaseMessaging.getInitialMessage();
   }
 
-  void _parseDataAndCallOnOpen(String? payload) {
-    if (payload != null) {
-      final payloadMap = json.decode(payload);
+  void _parseDataAndCallOnOpen(NotificationResponse notification) {
+    if (notification.payload != null) {
+      final payloadMap = json.decode(notification.payload!);
       onNotificationOpened(payloadMap);
     }
   }

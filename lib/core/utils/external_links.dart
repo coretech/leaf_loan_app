@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:external_app_launcher/external_app_launcher.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ExternalLinks {
   static Future<void> launchApp() async {
@@ -15,15 +15,15 @@ class ExternalLinks {
 
   static Future<void> callPhoneNumber(String phoneNumber) async {
     final url = 'tel:$phoneNumber';
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     }
   }
 
   static Future<void> sendEmail(String email) async {
     final url = 'mailto:$email';
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
     }
   }
 
@@ -32,17 +32,23 @@ class ExternalLinks {
     final whatsappURLIos = 'https://wa.me/$number';
     if (Platform.isIOS) {
       // for iOS phone only
-      if (await canLaunch(whatsappURLIos)) {
-        await launch(whatsappURLIos, forceSafariVC: false);
+      if (await canLaunchUrlString(whatsappURLIos)) {
+        await launchUrlString(
+          whatsappURLIos,
+          mode: LaunchMode.externalNonBrowserApplication,
+        );
       } else {
-        await launch(whatsappURLIos);
+        await launchUrlString(whatsappURLIos);
       }
     } else {
       // android , web
-      if (await canLaunch(whatsappURlAndroid)) {
-        await launch(whatsappURlAndroid);
+      if (await canLaunchUrlString(whatsappURlAndroid)) {
+        await launchUrlString(
+          whatsappURlAndroid,
+          mode: LaunchMode.externalNonBrowserApplication,
+        );
       } else {
-        await launch(whatsappURLIos);
+        await launchUrlString(whatsappURLIos);
       }
     }
   }

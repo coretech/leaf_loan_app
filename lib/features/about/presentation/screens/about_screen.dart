@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:package_info/package_info.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class _AboutScreenState extends State<AboutScreen> {
               color: Theme.of(context).colorScheme.secondary,
             ),
             onTap: () async {
-              await launch(
+              await launchUrlString(
                 'https://leafglobalfintech.com/leaf-loans-terms/',
               );
             },
@@ -53,7 +53,7 @@ class _AboutScreenState extends State<AboutScreen> {
               color: Theme.of(context).colorScheme.secondary,
             ),
             onTap: () async {
-              await launch(
+              await launchUrlString(
                 'https://leafglobalfintech.com/leaf-loans-privacy-policy/',
               );
             },

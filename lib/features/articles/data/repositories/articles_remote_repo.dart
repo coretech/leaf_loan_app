@@ -16,7 +16,7 @@ class ArticlesRemoteRepo implements ArticlesRepository {
   @override
   Future<Either<ArticlesFailure, List<Article>>> getArticles() async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/articles',
         headers: Map.fromEntries([
@@ -30,13 +30,13 @@ class ArticlesRemoteRepo implements ArticlesRepository {
               (article) => ArticleDto.fromMap(article).toEntity(),
             )
             .toList();
-        return Right(articles);
+        return right(articles);
       } else {
-        return Left(ArticlesFailure());
+        return left(ArticlesFailure());
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return Left(ArticlesFailure());
+      return left(ArticlesFailure());
     }
   }
 }

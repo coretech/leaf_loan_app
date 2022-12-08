@@ -12,7 +12,6 @@ class LoanAmountPicker extends StatefulWidget {
     Key? key,
     required this.fiatCode,
     required this.interestRate,
-    required this.loading,
     required this.loanAmount,
     required this.maxAmount,
     required this.minAmount,
@@ -21,12 +20,45 @@ class LoanAmountPicker extends StatefulWidget {
   }) : super(key: key);
   final String? fiatCode;
   final double? interestRate;
-  final bool loading;
   final double loanAmount;
   final double? maxAmount;
   final double? minAmount;
   final ValueChanged<double> onChanged;
   final bool shouldShowTitle;
+
+  static Widget shimmer(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: ShimmerBox(width: ScreenSize.of(context).width, height: 25),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                ShimmerBox(
+                  width: 100,
+                  height: 40,
+                ),
+                ShimmerBox(
+                  width: 100,
+                  height: 40,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   State<LoanAmountPicker> createState() => _LoanAmountPickerState();
@@ -89,22 +121,16 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
             style: Theme.of(context).textTheme.caption,
           ),
         ),
-        if (!widget.loading)
-          Slider(
-            divisions: (widget.maxAmount! - widget.minAmount!).toInt() + 1,
-            label: '${Formatter.formatMoney(widget.loanAmount)}'
-                ' ${widget.fiatCode!}',
-            max: widget.maxAmount!,
-            min: widget.minAmount!,
-            onChanged: !widget.loading ? _onValueChanged : null,
-            onChangeEnd: (_) => LoanApplicationAnalytics.sliderUsed(),
-            value: _sliderValue,
-          )
-        else
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: ShimmerBox(width: ScreenSize.of(context).width, height: 25),
-          ),
+        Slider(
+          divisions: (widget.maxAmount! - widget.minAmount!).toInt() + 1,
+          label: '${Formatter.formatMoney(widget.loanAmount)}'
+              ' ${widget.fiatCode!}',
+          max: widget.maxAmount!,
+          min: widget.minAmount!,
+          onChanged: _onValueChanged,
+          onChangeEnd: (_) => LoanApplicationAnalytics.sliderUsed(),
+          value: _sliderValue,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
@@ -114,129 +140,110 @@ class _LoanAmountPickerState extends State<LoanAmountPicker> {
         const SizedBox(
           height: 20,
         ),
-        if (!widget.loading)
-          Center(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  runAlignment: WrapAlignment.spaceBetween,
-                  runSpacing: 20,
-                  spacing: 40,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          '${Formatter.formatMoney(widget.loanAmount)}'
-                          ' ${widget.fiatCode}',
-                          style: Theme.of(context).textTheme.headline6,
+        Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.spaceBetween,
+                runSpacing: 20,
+                spacing: 40,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        '${Formatter.formatMoney(widget.loanAmount)}'
+                        ' ${widget.fiatCode}',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      Text(
+                        'Amount'.tr(),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        '${_getInterest()} ${widget.fiatCode}',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      Text(
+                        '${'Interest'.tr()} (${widget.interestRate ?? 0}%)',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 20,
+                    ),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: _amountController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        Text(
-                          'Amount'.tr(),
+                        errorMaxLines: 3,
+                        prefixText: '${widget.fiatCode} ',
+                        prefixStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      ),
+                      focusNode: _amountFocusNode,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d+\.?\d{0,2}'),
                         ),
                       ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          '${_getInterest()} ${widget.fiatCode}',
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        Text(
-                          '${'Interest'.tr()} (${widget.interestRate ?? 0}%)',
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 20,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
                       ),
-                      child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: _amountController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          errorMaxLines: 3,
-                          prefixText: '${widget.fiatCode} ',
-                          prefixStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                        ),
-                        focusNode: _amountFocusNode,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d+\.?\d{0,2}'),
-                          ),
-                        ],
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        onChanged: (value) {
-                          final amount = double.tryParse(value);
-                          if (amount == null) {
-                            widget.onChanged(widget.minAmount!);
-                          } else {
-                            widget.onChanged(amount);
-                          }
-                        },
-                        onTap: LoanApplicationAnalytics.amountFieldUsed,
-                        validator: (value) {
-                          final amount = double.tryParse(value ?? '0');
-                          if (amount == null || amount < widget.minAmount!) {
-                            return 'Amount must be greater than or equal'
-                                ' to ${widget.minAmount}!';
-                          } else if (amount > widget.maxAmount!) {
-                            return 'Amount must be less than or equal'
-                                ' to ${widget.maxAmount}!';
-                          }
-                          return null;
-                        },
-                      ),
+                      onChanged: (value) {
+                        final amount = double.tryParse(value);
+                        if (amount == null) {
+                          widget.onChanged(widget.minAmount!);
+                        } else {
+                          widget.onChanged(amount);
+                        }
+                      },
+                      onTap: LoanApplicationAnalytics.amountFieldUsed,
+                      validator: (value) {
+                        final amount = double.tryParse(value ?? '0');
+                        if (amount == null || amount < widget.minAmount!) {
+                          return 'Amount must be greater than or equal'
+                              ' to ${widget.minAmount}!';
+                        } else if (amount > widget.maxAmount!) {
+                          return 'Amount must be less than or equal'
+                              ' to ${widget.maxAmount}!';
+                        }
+                        return null;
+                      },
                     ),
-                    Text(
-                      '${_getTotal()}'
-                      ' ${widget.fiatCode}',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    Text('Total'.tr()),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  Text(
+                    '${_getTotal()}'
+                    ' ${widget.fiatCode}',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Text('Total'.tr()),
+                ],
+              ),
+            ],
           ),
+        ),
       ],
     );
   }
 
   Widget _getAmountLabels(BuildContext context) {
-    if (widget.loading) {
-      return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
-            ShimmerBox(
-              width: 100,
-              height: 40,
-            ),
-            ShimmerBox(
-              width: 100,
-              height: 40,
-            ),
-          ],
-        ),
-      );
-    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -7,7 +7,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:loan_app/app.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
-import 'package:loan_app/features/features_ioc.dart';
+import 'package:loan_app/features/features_ioc_initializer.dart';
 import 'package:loan_app/i18n/ioc/ioc.dart';
 
 Future<void> main() async {
@@ -26,7 +26,7 @@ Future<void> main() async {
   await FirebaseRemoteConfig.instance.fetchAndActivate();
   await IntegrationIOC.init();
   await IntegrationIOC.messagingService.init(navigatorKey);
-  await FeaturesIOC.init();
+  await FeaturesIocInitializer.init();
   await LocalizationIOC.init();
 
   await runZonedGuarded<Future<void>>(

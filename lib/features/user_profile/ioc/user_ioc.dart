@@ -1,10 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:loan_app/features/user_profile/data/data.dart';
-import 'package:loan_app/features/user_profile/data/repositories/stats_remote_repository.dart';
-import 'package:loan_app/features/user_profile/data/repositories/wallet_remote_repository.dart';
 import 'package:loan_app/features/user_profile/domain/domain.dart';
 
-class UserIOC {
+class UserIoc {
   static final _locator = GetIt.instance;
 
   static Future<void> init() async {

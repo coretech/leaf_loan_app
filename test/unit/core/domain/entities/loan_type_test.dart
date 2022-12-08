@@ -1,6 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
 
+final loanLevel = LoanLevel(
+  id: 'id',
+  name: 'name',
+  description: 'description',
+);
+
 void main() {
   test(
     'Given values required to make a LoanType, '
@@ -24,11 +30,10 @@ void main() {
         maxDuration: 60,
         interestRate: 1,
         image: 'image',
-        createdAt: '2020-01-01',
-        updatedAt: '2020-01-01',
         purpose: [
           'purpose1',
         ],
+        loanLevel: loanLevel,
       );
       expect(loanType, isA<LoanType>());
     },
@@ -48,11 +53,10 @@ void main() {
         maxDuration: 60,
         interestRate: 1,
         image: 'image',
-        createdAt: '2020-01-01',
-        updatedAt: '2020-01-01',
         purpose: [
           'purpose1',
         ],
+        loanLevel: loanLevel,
       );
       final newLoanType = loanType.copyWith(
         description: 'new description',
@@ -66,8 +70,6 @@ void main() {
       expect(newLoanType.maxDuration, 60);
       expect(newLoanType.interestRate, 1);
       expect(newLoanType.image, 'image');
-      expect(newLoanType.createdAt, '2020-01-01');
-      expect(newLoanType.updatedAt, '2020-01-01');
       expect(newLoanType.purpose, [
         'purpose1',
       ]);
@@ -88,11 +90,10 @@ void main() {
         maxDuration: 60,
         interestRate: 1,
         image: 'image',
-        createdAt: '2020-01-01',
-        updatedAt: '2020-01-01',
         purpose: [
           'purpose1',
         ],
+        loanLevel: loanLevel,
       );
       final loanType2 = LoanType(
         id: 'id',
@@ -103,11 +104,10 @@ void main() {
         maxDuration: 60,
         interestRate: 1,
         image: 'image',
-        createdAt: '2020-01-01',
-        updatedAt: '2020-01-01',
         purpose: [
           'purpose1',
         ],
+        loanLevel: loanLevel,
       );
       expect(loanType1 == loanType2, true);
     },
@@ -127,11 +127,10 @@ void main() {
         maxDuration: 60,
         interestRate: 1,
         image: 'image',
-        createdAt: '2020-01-01',
-        updatedAt: '2020-01-01',
         purpose: [
           'purpose1',
         ],
+        loanLevel: loanLevel,
       );
       final hashCode = loanType.hashCode;
       expect(hashCode, isA<int>());

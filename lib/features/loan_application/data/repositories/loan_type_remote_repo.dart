@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_dynamic_calls, unnecessary_lambdas
+
 import 'package:dartz/dartz.dart';
 import 'package:loan_app/authentication/helpers/helpers.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/abstractions/abstractions.dart';
 import 'package:loan_app/core/constants/constants.dart';
 import 'package:loan_app/core/data/dtos/dtos.dart';
+import 'package:loan_app/core/data/mappers/loan_type_mapper.dart';
 import 'package:loan_app/core/domain/domain.dart';
 import 'package:loan_app/core/ioc/ioc.dart';
 import 'package:loan_app/core/utils/utils.dart';
@@ -15,7 +18,7 @@ class LoanTypeRemoteRepo implements LoanTypeRepository {
   @override
   Future<Either<LoanTypeError, List<LoanType>>> getLoanTypes() async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loantypes',
         headers: Map.fromEntries([
@@ -27,16 +30,16 @@ class LoanTypeRemoteRepo implements LoanTypeRepository {
         final responseDto = ResponseDto.fromMap(response.data);
         final loanTypes = (responseDto.data as List<dynamic>)
             .map(
-              (loanType) => LoanTypeDto.fromMap(loanType).toEntity(),
+              (loanType) => LoanTypeMapper.fromMap(loanType),
             )
             .toList();
-        return Right(loanTypes);
+        return right(loanTypes);
       } else {
-        return Left(LoanTypeError());
+        return left(LoanTypeError());
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return Left(LoanTypeError());
+      return left(LoanTypeError());
     }
   }
 }

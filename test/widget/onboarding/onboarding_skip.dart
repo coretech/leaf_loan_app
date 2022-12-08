@@ -44,7 +44,7 @@ void main() {
     ).thenAnswer(
       (invocation) async {},
     );
-    await FeaturesIOC.init();
+    await FeaturesIocInitializer.init();
     await LocalizationIOC.init();
   });
   testWidgets(

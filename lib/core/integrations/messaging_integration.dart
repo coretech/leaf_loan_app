@@ -10,6 +10,13 @@ import 'package:loan_app/features/loan_detail/presentation/screens/screens.dart'
 import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/features/loan_history/ioc/ioc.dart';
 
+void _parseDataAndCallOnOpen(NotificationResponse notification) {
+  if (notification.payload != null) {
+    final payloadMap = json.decode(notification.payload!);
+    IntegrationIOC.messagingService.onNotificationOpened(payloadMap);
+  }
+}
+
 ////Read this for background messaging issues (if any) on android
 ///https://github.com/FirebaseExtended/flutterfire/issues/2223
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -135,13 +142,7 @@ class MessagingIntegration implements MessagingService {
     await _firebaseMessaging.getInitialMessage();
   }
 
-  void _parseDataAndCallOnOpen(NotificationResponse notification) {
-    if (notification.payload != null) {
-      final payloadMap = json.decode(notification.payload!);
-      onNotificationOpened(payloadMap);
-    }
-  }
-
+  @override
   Future<void> onNotificationOpened(Map<String, dynamic> payload) async {
     final loanType = notificationTypeFromString(payload['type']);
     switch (loanType) {

@@ -28,7 +28,9 @@ class _MaxLoanAmountTextState extends State<MaxLoanAmountText> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    LoanApplicationIOC.loanTypeProvider.getLoanTypes();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      LoanApplicationIOC.loanTypesProvider.fetch();
+    });
   }
 
   @override
@@ -45,11 +47,12 @@ class _MaxLoanAmountTextState extends State<MaxLoanAmountText> {
         );
       },
       child: ChangeNotifierProvider.value(
-        value: LoanApplicationIOC.loanTypeProvider,
+        value: LoanApplicationIOC.loanTypesProvider,
         builder: (context, _) {
-          return Consumer<LoanTypeProvider>(
-            builder: (context, provider, _) {
-              if (provider.canShowTypes && currentAmount != null) {
+          return Selector<LoanTypesProvider, LoanTypesState>(
+            selector: (_, provider) => provider.state,
+            builder: (context, state, _) {
+              if (state is LoanTypesLoaded && currentAmount != null) {
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
                   transitionBuilder: (child, animation) {
@@ -73,15 +76,14 @@ class _MaxLoanAmountTextState extends State<MaxLoanAmountText> {
   }
 
   void _init() {
-    LoanApplicationIOC.loanTypeProvider.addListener(() {
-      final loanTypeProvider = LoanApplicationIOC.loanTypeProvider;
-      if (loanTypeProvider.canShowTypes) {
-        for (final loanType in loanTypeProvider.loanTypes) {
+    LoanApplicationIOC.loanTypesProvider.addListener(() {
+      final loanTypeProvider = LoanApplicationIOC.loanTypesProvider;
+      final state = loanTypeProvider.state;
+      if (state is LoanTypesLoaded) {
+        for (final loanType in state.loanTypes) {
           for (final currency in loanType.currencies) {
-            if ((maxAmounts[currency.fiatCode] ?? 0) <
-                currency.maxLoanAmount) {
-              maxAmounts[currency.fiatCode] =
-                  currency.maxLoanAmount;
+            if ((maxAmounts[currency.fiatCode] ?? 0) < currency.maxLoanAmount) {
+              maxAmounts[currency.fiatCode] = currency.maxLoanAmount;
             }
           }
         }

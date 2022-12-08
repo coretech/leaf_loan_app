@@ -90,6 +90,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   children: [
                                     const NameWidget(),
                                     const _ProvideDivider(),
+                                    const LoanLevelIndicator(),
                                     const ContactInfo(),
                                     const SizedBox(height: 20),
                                     TextButton.icon(

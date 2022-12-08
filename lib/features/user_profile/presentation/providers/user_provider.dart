@@ -3,7 +3,7 @@ import 'package:loan_app/features/user_profile/domain/domain.dart';
 import 'package:loan_app/features/user_profile/ioc/ioc.dart';
 
 class UserProvider extends ChangeNotifier {
-  final UserRepository _userRepository = UserIOC.userRepo();
+  final UserRepository _userRepository = UserIoc.userRepo();
 
   bool loading = false;
   User? _user;

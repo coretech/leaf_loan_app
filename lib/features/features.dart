@@ -1,7 +1,7 @@
 export 'about/about.dart';
 export 'articles/articles.dart';
 export 'contact_us/contact_us.dart';
-export 'features_ioc.dart';
+export 'features_ioc_initializer.dart';
 export 'home/home.dart';
 export 'loan_application/loan_application.dart';
 export 'loan_detail/loan_detail.dart';

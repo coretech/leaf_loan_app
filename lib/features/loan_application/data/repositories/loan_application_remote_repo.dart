@@ -18,7 +18,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required String password,
   }) async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final roundedAmount = double.parse(amount.toStringAsFixed(2));
       final response = await _httpHelper.post(
         url: '${URLs.baseURL}/loanservice/loans',
@@ -35,13 +35,13 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
         },
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
-        return const Right(true);
+        return right(true);
       } else {
-        return Left(LoanApplicationFailure());
+        return left(LoanApplicationFailure());
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return Left(LoanApplicationFailure());
+      return left(LoanApplicationFailure());
     }
   }
 
@@ -51,7 +51,7 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
     required String password,
   }) async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.delete(
         url: '${URLs.baseURL}/loanservice/loans/$loanId',
         headers: Map.fromEntries([
@@ -60,13 +60,13 @@ class LoanApplicationRemoteRepo extends LoanApplicationRepository {
         ]),
       );
       if (response.statusCode < 400 && response.statusCode >= 200) {
-        return const Right(true);
+        return right(true);
       } else {
-        return Left(LoanCancellationFailure());
+        return left(LoanCancellationFailure());
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return Left(LoanCancellationFailure());
+      return left(LoanCancellationFailure());
     }
   }
 }

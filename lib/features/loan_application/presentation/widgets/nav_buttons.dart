@@ -6,16 +6,16 @@ import 'package:provider/provider.dart';
 class NavButtons extends StatefulWidget {
   const NavButtons({
     Key? key,
-    required this.pageController,
-    required this.onSubmit,
     required this.onNext,
     required this.onPrev,
+    required this.onSubmit,
+    required this.pageController,
   }) : super(key: key);
 
-  final PageController pageController;
-  final VoidCallback onSubmit;
   final VoidCallback onNext;
   final VoidCallback onPrev;
+  final VoidCallback onSubmit;
+  final PageController pageController;
 
   @override
   State<NavButtons> createState() => _NavButtonsState();
@@ -32,9 +32,8 @@ class _NavButtonsState extends State<NavButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoanTypeProvider>(
+    return Consumer<LoanTypesProvider>(
       builder: (context, loanTypeProvider, _) {
-        final enabled = loanTypeProvider.canShowTypes;
         return Container(
           height: 50,
           margin: const EdgeInsets.all(20),
@@ -44,7 +43,7 @@ class _NavButtonsState extends State<NavButtons> {
               if (currentPage != 0)
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: enabled ? widget.onPrev : null,
+                    onPressed: widget.onPrev,
                     child: Text(
                       'Previous'.tr(),
                     ),
@@ -56,7 +55,7 @@ class _NavButtonsState extends State<NavButtons> {
                 ),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: enabled ? _onNext : null,
+                  onPressed: _onNext,
                   child: Text(
                     _getText(),
                   ),

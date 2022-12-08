@@ -20,7 +20,6 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
   @override
   void didChangeDependencies() {
     _permissionsProvider.request();
-    _loanTypesProvider.fetch();
     _loanLevelsProvider.fetchForLoggedInUser();
     super.didChangeDependencies();
   }

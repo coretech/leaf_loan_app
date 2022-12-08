@@ -32,6 +32,13 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
   void initState() {
     super.initState();
     _pageController.addListener(_pageControllerListener);
+    widget.provider.addListener(_loanApplicationListener);
+  }
+
+  @override
+  void didChangeDependencies() {
+    widget.provider.fetch();
+    super.didChangeDependencies();
   }
 
   @override
@@ -324,6 +331,19 @@ class _LoanApplicationFormState extends State<LoanApplicationForm> {
           ),
         );
         Navigator.of(context).pop();
+      }
+    }
+  }
+
+  void _loanApplicationListener() {
+    final state = widget.provider.state;
+    if (state is LoanTypesLoaded) {
+      if (state.loanTypes.isNotEmpty) {
+        final selectedLoan = state.loanTypes[_selectedLoanTypeIndex];
+        if (selectedLoan.hasCurrencies) {
+          _loanAmount =
+              selectedLoan.currencies[_selectedCurrencyIndex].minLoanAmount;
+        }
       }
     }
   }

@@ -1,4 +1,11 @@
-## [0.0.16+34] - 2022-05-06
+## [0.0.17+36] - 2022-12-15
+## Added
+- Loan levels
+## Changed
+- Dependencies
+- Loan Application page code
+
+## [0.0.16+34] - 2022-05-06 
 ## Changed
 - Smartlook switch to use Firebase Remote Config
 ## Fixed

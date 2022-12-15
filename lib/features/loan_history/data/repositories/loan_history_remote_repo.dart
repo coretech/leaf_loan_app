@@ -15,7 +15,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
   @override
   Future<Either<LoanHistoryFailure, List<LoanData>>> getLoans() async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans',
         headers: Map.fromEntries([
@@ -29,20 +29,20 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
             return LoanDataDto.fromMap(data).toEntity();
           },
         ).toList();
-        return Right(loanData);
+        return right(loanData);
       } else {
-        return const Left(LoanHistoryFailure.error);
+        return left(LoanHistoryFailure.error);
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return const Left(LoanHistoryFailure.error);
+      return left(LoanHistoryFailure.error);
     }
   }
 
   @override
   Future<Either<LoanHistoryFailure, LoanData>> getActiveLoan() async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans/ongoing',
         headers: Map.fromEntries([
@@ -52,19 +52,19 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final responseDto = ResponseDto.fromMap(response.data);
         if (responseDto.data != null) {
-          return Right(LoanDataDto.fromMap(responseDto.data).toEntity());
+          return right(LoanDataDto.fromMap(responseDto.data).toEntity());
         } else {
-          return const Left(LoanHistoryFailure.noActiveLoan);
+          return left(LoanHistoryFailure.noActiveLoan);
         }
       } else {
         if (response.statusCode == 404) {
-          return const Left(LoanHistoryFailure.noActiveLoan);
+          return left(LoanHistoryFailure.noActiveLoan);
         }
-        return const Left(LoanHistoryFailure.error);
+        return left(LoanHistoryFailure.error);
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return const Left(LoanHistoryFailure.error);
+      return left(LoanHistoryFailure.error);
     }
   }
 
@@ -73,7 +73,7 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
     String loanId,
   ) async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/loans/$loanId',
         headers: Map.fromEntries([
@@ -83,13 +83,13 @@ class LoanHistoryRemoteRepo extends LoanHistoryRepository {
       if (response.statusCode < 400 && response.statusCode >= 200) {
         final responseDto = ResponseDto.fromMap(response.data);
         if (responseDto.data != null) {
-          return Right(LoanDataDto.fromMap(responseDto.data).toEntity());
+          return right(LoanDataDto.fromMap(responseDto.data).toEntity());
         }
       }
-      return const Left(LoanHistoryFailure.noActiveLoan);
+      return left(LoanHistoryFailure.noActiveLoan);
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return const Left(LoanHistoryFailure.error);
+      return left(LoanHistoryFailure.error);
     }
   }
 }

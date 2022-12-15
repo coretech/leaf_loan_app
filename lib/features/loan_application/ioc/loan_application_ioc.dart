@@ -12,12 +12,15 @@ class LoanApplicationIOC {
       ..registerLazySingleton<LoanApplicationRepository>(
         () => LoanApplicationRemoteRepo(),
       )
-      ..registerLazySingleton<LoanTypeProvider>(
-        () => LoanTypeProvider(),
+      ..registerLazySingleton<LoanTypesProvider>(
+        () => LoanTypesProvider(),
+      )
+      ..registerLazySingleton<PermissionsProvider>(
+        () => PermissionsProvider(),
       );
   }
 
-  static LoanTypeRepository loanTypeRepo() {
+  static LoanTypeRepository get loanTypeRepo {
     return _locator.get<LoanTypeRepository>();
   }
 
@@ -25,7 +28,11 @@ class LoanApplicationIOC {
     return _locator.get<LoanApplicationRepository>();
   }
 
-  static LoanTypeProvider get loanTypeProvider {
-    return _locator.get<LoanTypeProvider>();
+  static LoanTypesProvider get loanTypesProvider {
+    return _locator.get<LoanTypesProvider>();
+  }
+
+  static PermissionsProvider get permissionsProvider {
+    return _locator.get<PermissionsProvider>();
   }
 }

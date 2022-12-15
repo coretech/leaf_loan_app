@@ -10,6 +10,13 @@ import 'package:loan_app/features/loan_detail/presentation/screens/screens.dart'
 import 'package:loan_app/features/loan_history/domain/domain.dart';
 import 'package:loan_app/features/loan_history/ioc/ioc.dart';
 
+void _parseDataAndCallOnOpen(NotificationResponse notification) {
+  if (notification.payload != null) {
+    final payloadMap = json.decode(notification.payload!);
+    IntegrationIOC.messagingService.onNotificationOpened(payloadMap);
+  }
+}
+
 ////Read this for background messaging issues (if any) on android
 ///https://github.com/FirebaseExtended/flutterfire/issues/2223
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -45,14 +52,15 @@ class MessagingIntegration implements MessagingService {
     //FLUTTER LOCAL NOTIFICATIONS
     const initializationSettingsAndroid =
         AndroidInitializationSettings('ic_stat');
-    const initializationSettingsIOS = IOSInitializationSettings();
+    const initializationSettingsIOS = DarwinInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: _parseDataAndCallOnOpen,
+      onDidReceiveNotificationResponse: _parseDataAndCallOnOpen,
+      onDidReceiveBackgroundNotificationResponse: _parseDataAndCallOnOpen,
     );
 
     //Android notification properties
@@ -66,7 +74,7 @@ class MessagingIntegration implements MessagingService {
     );
 
     //iOS notification properties
-    const iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
       presentSound: true,
       presentAlert: true,
       presentBadge: true,
@@ -134,13 +142,7 @@ class MessagingIntegration implements MessagingService {
     await _firebaseMessaging.getInitialMessage();
   }
 
-  void _parseDataAndCallOnOpen(String? payload) {
-    if (payload != null) {
-      final payloadMap = json.decode(payload);
-      onNotificationOpened(payloadMap);
-    }
-  }
-
+  @override
   Future<void> onNotificationOpened(Map<String, dynamic> payload) async {
     final loanType = notificationTypeFromString(payload['type']);
     switch (loanType) {

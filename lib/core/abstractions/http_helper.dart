@@ -43,4 +43,6 @@ class HttpResponse {
 
   final int statusCode;
   final dynamic data;
+
+  bool get isOk => statusCode < 400 && statusCode >= 200;
 }

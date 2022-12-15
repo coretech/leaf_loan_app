@@ -17,7 +17,7 @@ class StatsRemoteRepository implements StatsRepository {
   @override
   Future<Either<StatFailure, List<Stat>>> getStats() async {
     try {
-      final token = await _authHelper.getToken() ;
+      final token = await _authHelper.getToken();
       final response = await _httpHelper.get(
         url: '${URLs.baseURL}/loanservice/statistics',
         headers: Map.fromEntries([
@@ -31,13 +31,13 @@ class StatsRemoteRepository implements StatsRepository {
             return StatDto.fromMap(data).toEntity();
           },
         ).toList();
-        return Right(stats);
+        return right(stats);
       } else {
-        return Left(StatFailure());
+        return left(StatFailure());
       }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
-      return Left(StatFailure());
+      return left(StatFailure());
     }
   }
 }

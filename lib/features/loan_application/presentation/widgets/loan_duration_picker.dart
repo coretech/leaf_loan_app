@@ -8,18 +8,32 @@ class LoanDurationPicker extends StatefulWidget {
   const LoanDurationPicker({
     Key? key,
     required this.durationInDays,
-    required this.loading,
     required this.maxDurationInDays,
     required this.minDurationInDays,
     required this.onChanged,
     this.shouldShowTitle = true,
   }) : super(key: key);
   final int durationInDays;
-  final bool loading;
   final int? maxDurationInDays;
   final int? minDurationInDays;
   final ValueChanged<int> onChanged;
   final bool shouldShowTitle;
+
+  static Widget shimmer() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const [
+        ShimmerBox(
+          width: 150,
+          height: 20,
+        ),
+        ShimmerBox(
+          width: 30,
+          height: 20,
+        ),
+      ],
+    );
+  }
 
   @override
   _LoanDurationPickerState createState() => _LoanDurationPickerState();
@@ -71,7 +85,7 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
         ),
         Center(
           child: ElevatedButton(
-            onPressed: !widget.loading ? () => _pickDate(context) : null,
+            onPressed: () => _pickDate(context),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith(
                 (states) => states.contains(MaterialState.disabled)
@@ -104,33 +118,17 @@ class _LoanDurationPickerState extends State<LoanDurationPicker> {
   }
 
   Widget _buildSelectedDate() {
-    if (widget.loading) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          ShimmerBox(
-            width: 150,
-            height: 20,
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            Formatter.formatDate(_selectedDate),
+            style: Theme.of(context).textTheme.subtitle1,
           ),
-          ShimmerBox(
-            width: 30,
-            height: 20,
-          ),
-        ],
-      );
-    } else {
-      return Row(
-        children: [
-          Expanded(
-            child: Text(
-              Formatter.formatDate(_selectedDate),
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          _buildDayCount(context, _selectedDate),
-        ],
-      );
-    }
+        ),
+        _buildDayCount(context, _selectedDate),
+      ],
+    );
   }
 
   Future<void> _pickDate(BuildContext context) async {

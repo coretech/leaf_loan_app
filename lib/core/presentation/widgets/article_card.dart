@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loan_app/core/domain/entities/entities.dart';
 import 'package:loan_app/features/articles/articles.dart';
 import 'package:loan_app/i18n/i18n.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard({
@@ -41,12 +41,12 @@ class ArticleCard extends StatelessWidget {
                   //button to read the article
                   TextButton(
                     style: TextButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: Theme.of(context).colorScheme.secondary,
                     ),
                     child: Text('Read more'.tr()),
                     onPressed: () {
                       ArticlesAnalytics.articleOpened(article.id);
-                      launch(
+                      launchUrlString(
                         article.url,
                       );
                     },

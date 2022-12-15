@@ -3,7 +3,7 @@ import 'package:loan_app/features/user_profile/domain/domain.dart';
 import 'package:loan_app/features/user_profile/ioc/ioc.dart';
 
 class StatsProvider extends ChangeNotifier {
-  final _statsRepository = UserIOC.statsRepo;
+  final _statsRepository = UserIoc.statsRepo;
 
   List<Stat> _stats = [];
 

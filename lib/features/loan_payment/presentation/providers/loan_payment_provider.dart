@@ -18,7 +18,7 @@ class LoanPaymentProvider extends ChangeNotifier {
   String? walletErrorMessage;
 
   final _loanTypeRepository = LoanPaymentIOC.loanPaymentRepo();
-  final _walletRepository = UserIOC.walletRepo();
+  final _walletRepository = UserIoc.walletRepo();
   final _eventBus = IntegrationIOC.eventBus;
 
   void setLoading({required bool value}) {

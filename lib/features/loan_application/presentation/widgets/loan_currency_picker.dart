@@ -8,18 +8,51 @@ import 'package:loan_app/i18n/i18n.dart';
 class LoanCurrencyPicker extends StatelessWidget {
   const LoanCurrencyPicker({
     Key? key,
-    required this.loading,
     required this.currencies,
-    required this.selectedIndex,
     required this.onChanged,
+    required this.selectedIndex,
     this.shouldShowTitle = true,
   }) : super(key: key);
 
-  final bool loading;
   final List<LoanCurrency> currencies;
-  final int selectedIndex;
   final ValueChanged<int> onChanged;
+  final int selectedIndex;
   final bool shouldShowTitle;
+
+  static Widget shimmer(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const ShimmerBox(
+          height: 30,
+          padding: EdgeInsets.only(
+            top: 5,
+            bottom: 10,
+            left: 10,
+          ),
+          width: 280,
+        ),
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.filled(
+              3,
+              const ShimmerBox(
+                height: 120,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                width: 100,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +88,7 @@ class LoanCurrencyPicker extends StatelessWidget {
   }
 
   Widget _buildCurrenciesList(BuildContext context) {
-    if (currencies.isEmpty && !loading) {
+    if (currencies.isEmpty) {
       return const NoCurrencyFound();
     }
     return ListView(
@@ -68,37 +101,26 @@ class LoanCurrencyPicker extends StatelessWidget {
   }
 
   List<Widget> _getCurrencies() {
-    if (!loading) {
-      final currencyCards = <Widget>[];
-      for (var i = 0; i < currencies.length; i++) {
-        final currency = currencies[i];
-        final code =
-            CountryUtil.getCode(CurrencyUtil.getCountryName(currency.fiatCode));
-        final flag = Flag.fromString(
-          code?.toLowerCase() ?? 'rw',
-          height: 25,
-          width: 50,
-        );
-        currencyCards.add(
-          LoanCurrencyCard(
-            currency: currency,
-            flag: flag,
-            index: i,
-            onTap: onChanged,
-            selectedIndex: selectedIndex,
-          ),
-        );
-      }
-      return currencyCards;
-    } else {
-      return List.filled(
-        3,
-        const ShimmerBox(
-          height: 100,
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          width: 90,
+    final currencyCards = <Widget>[];
+    for (var i = 0; i < currencies.length; i++) {
+      final currency = currencies[i];
+      final code =
+          CountryUtil.getCode(CurrencyUtil.getCountryName(currency.fiatCode));
+      final flag = Flag.fromString(
+        code?.toLowerCase() ?? 'rw',
+        height: 25,
+        width: 50,
+      );
+      currencyCards.add(
+        LoanCurrencyCard(
+          currency: currency,
+          flag: flag,
+          index: i,
+          onTap: onChanged,
+          selectedIndex: selectedIndex,
         ),
       );
     }
+    return currencyCards;
   }
 }

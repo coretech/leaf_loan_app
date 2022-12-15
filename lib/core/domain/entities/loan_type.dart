@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:loan_app/core/domain/entities/entities.dart';
 
 class LoanType {
@@ -8,24 +9,22 @@ class LoanType {
     required this.name,
     required this.description,
     required this.currencies,
+    required this.loanLevel,
     required this.minDuration,
     required this.maxDuration,
     required this.interestRate,
     required this.image,
-    required this.createdAt,
-    required this.updatedAt,
   });
   final List<String> purpose;
   final String id;
   final String name;
   final String description;
   final List<LoanCurrency> currencies;
+  final LoanLevel loanLevel;
   final int minDuration;
   final int maxDuration;
   final double interestRate;
   final String image;
-  final String createdAt;
-  final String updatedAt;
 
   bool get hasCurrencies => currencies.isNotEmpty;
 
@@ -35,6 +34,7 @@ class LoanType {
     String? name,
     String? description,
     List<LoanCurrency>? currencies,
+    LoanLevel? loanLevel,
     int? minDuration,
     int? maxDuration,
     double? interestRate,
@@ -48,12 +48,11 @@ class LoanType {
       name: name ?? this.name,
       description: description ?? this.description,
       currencies: currencies ?? this.currencies,
+      loanLevel: loanLevel ?? this.loanLevel,
       minDuration: minDuration ?? this.minDuration,
       maxDuration: maxDuration ?? this.maxDuration,
       interestRate: interestRate ?? this.interestRate,
       image: image ?? this.image,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -70,9 +69,7 @@ class LoanType {
         other.minDuration == minDuration &&
         other.maxDuration == maxDuration &&
         other.interestRate == interestRate &&
-        other.image == image &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
+        other.image == image;
   }
 
   @override
@@ -85,8 +82,6 @@ class LoanType {
         minDuration.hashCode ^
         maxDuration.hashCode ^
         interestRate.hashCode ^
-        image.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
+        image.hashCode;
   }
 }

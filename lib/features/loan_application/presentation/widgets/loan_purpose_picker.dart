@@ -6,13 +6,11 @@ import 'package:loan_app/i18n/i18n.dart';
 class LoanPurposePicker extends StatefulWidget {
   const LoanPurposePicker({
     Key? key,
-    required this.loading,
     required this.onChanged,
     required this.purposeList,
     required this.selectedPurpose,
     this.shouldShowTitle = true,
   }) : super(key: key);
-  final bool loading;
   final ValueChanged<String> onChanged;
   final List<String> purposeList;
   final String? selectedPurpose;
@@ -77,7 +75,7 @@ class _LoanPurposePickerState extends State<LoanPurposePicker> {
           ),
         ),
         ElevatedButton(
-          onPressed: !widget.loading ? _selectPurpose : null,
+          onPressed: _selectPurpose,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith(
               (states) => states.contains(MaterialState.disabled)

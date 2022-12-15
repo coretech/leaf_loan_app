@@ -13,27 +13,21 @@ class SmartlookIntegration implements Recording {
       !smartlookEnabled || projectKey.isNotEmpty,
       'Smartlook is enabled but api key is not provided',
     );
-    if (smartlookEnabled) {
-      final options = (SetupOptionsBuilder(projectKey)
-            ..StartNewSession = true
-            ..Fps = 1)
-          .build();
+    final smartlook = Smartlook.instance;
 
-      await Smartlook.setupAndStartRecording(options);
-      await Smartlook.setEventTrackingMode(EventTrackingMode.FULL_TRACKING);
-      await Smartlook.getDashboardSessionUrl(true);
-    }
+    await smartlook.start();
+    await smartlook.preferences.setProjectKey(projectKey);
   }
 
   @override
   Future<void> setUserInfo(String username) async {
-    await Smartlook.setUserIdentifier(
+    await Smartlook.instance.user.setIdentifier(
       username,
     );
   }
 
   @override
   void dispose() {
-    Smartlook.stopRecording();
+    Smartlook.instance.stop();
   }
 }

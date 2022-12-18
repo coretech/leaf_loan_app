@@ -35,3 +35,4 @@ GoogleService-Info.plist
 
 # Generatied define file
 Define.xcconfig
+./build

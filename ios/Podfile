@@ -33,9 +33,9 @@ target 'Runner' do
 
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'FirebaseFirestore'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '8.0.0'
 end
 
 post_install do |installer|

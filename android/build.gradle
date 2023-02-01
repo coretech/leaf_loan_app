@@ -1,3 +1,18 @@
+
+def dartEnvironmentVariables = [
+    CREDO_TOKEN: ''
+];
+
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+            def byteArray = Base64.getDecoder().decode(entry)
+            def decodedString = new String(byteArray)
+            def pair = decodedString.split('=')
+            [(pair.first()): pair.last()]
+	}
+}
 buildscript {
     ext.kotlin_version = '1.6.10'
     repositories {
@@ -18,6 +33,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://dl.cloudsmith.io/$dartEnvironmentVariables.CREDO_TOKEN/credolab/common-sdk/maven/" }
     }
 }
 

@@ -169,6 +169,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
+  credoappsdk_common:
+    dependency: "direct main"
+    description:
+      name: credoappsdk_common
+      url: "https://dart.cloudsmith.io/credolab/hybrid/"
+    source: hosted
+    version: "4.0.0"
   cross_file:
     dependency: transitive
     description:

@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
-import 'package:loan_app/core/utils/utils.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/features/loan_application/presentation/presentation.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionsProvider extends ChangeNotifier {
   PermissionsState state = PermissionsInitial();
+  final _scoringDataCollectionService =
+      IntegrationIOC.scoringDataCollectionService();
 
   Future<void> request() async {
     try {
@@ -34,11 +36,9 @@ class PermissionsProvider extends ChangeNotifier {
       }
 
       notifyListeners();
-      // if (permissionsGranted) {
-      //   await _scoringDataCollectionService.scrapeAndSubmitScoringData(
-      //     url: '',
-      //   );
-      // }
+      if (deniedPermissions.isEmpty) {
+        await _scoringDataCollectionService.scrapeAndSubmitScoringData();
+      }
     } catch (e) {
       state = PermissionsError(
         'Some error occurred while requesting permissions',

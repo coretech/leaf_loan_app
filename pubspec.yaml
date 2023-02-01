@@ -23,8 +23,11 @@ environment:
 dependencies:
     cached_network_image: ^3.1.0+1
     carousel_slider: ^4.0.0
-    # The following adds the Cupertino Icons font to your application.
-    # Use with the CupertinoIcons class for iOS style icons.
+    credoappsdk_common:
+        hosted:
+            name: credoappsdk_common
+            url: https://dart.cloudsmith.io/credolab/hybrid/
+        version: 4.0.0
     cupertino_icons: ^1.0.3
     
     dartz: ^0.10.0

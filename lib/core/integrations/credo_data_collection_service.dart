@@ -1,6 +1,5 @@
+import 'package:credoappsdk_common/credoappsdk.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:loan_app/authentication/helpers/helpers.dart';
 import 'package:loan_app/authentication/ioc/ioc.dart';
 import 'package:loan_app/core/core.dart';
@@ -11,38 +10,24 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
   final HttpHelper _httpHelper = IntegrationIOC.httpHelper();
 
   @override
-  Future<Either<ScoringFailure, String>> scrapeAndSubmitScoringData({
-    required String url,
-  }) async {
-    if (kDebugMode) {
-      return right('debug');
-    }
+  Future<Either<ScoringFailure, String>> scrapeAndSubmitScoringData() async {
     try {
-      final credoMethodChannel =
-          MethodChannel(MethodChannelNames.credoScraping);
-
+      const authKey = String.fromEnvironment('CREDO_AUTH_KEY');
+      const url = String.fromEnvironment('CREDO_URL');
       const uuid = Uuid();
       final referenceNumber = uuid.v4();
-      const authKey = String.fromEnvironment('CREDO_AUTH_KEY');
-      const credoUrl = String.fromEnvironment('CREDO_URL');
-      late String storedReferenceNumber;
-      final result = await credoMethodChannel.invokeMethod(
-        'submitCredoLabsData',
-        {
-          'authKey': authKey,
-          'referenceNumber': referenceNumber,
-          'url': credoUrl,
-        },
-      );
-      storedReferenceNumber = result.toString();
-      await _submitCredoScore(storedReferenceNumber);
-      return right(storedReferenceNumber);
-    } on PlatformException {
-      return left(
-        ScoringFailure(
-          scoringFailureReason: ScoringFailureReason.sdkIssue,
-        ),
-      );
+      final result = await Credoappsdk.execute(url, authKey, referenceNumber);
+      if (result.isFailure) {
+        print('Error: ${result.code} ${result.message}');
+        return left(
+          ScoringFailure(
+            scoringFailureReason: ScoringFailureReason.sdkIssue,
+          ),
+        );
+      } else {
+        await _submitCredoScore(referenceNumber);
+        return right(result.code);
+      }
     } catch (e, stacktrace) {
       await IntegrationIOC.logger().logError(e, stacktrace);
       return left(

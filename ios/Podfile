@@ -1,4 +1,4 @@
-source 'https://dl.cloudsmith.io/$TOKEN/credolab/common-sdk/cocoapods/index.git'
+source 'https://dl.cloudsmith.io/$CREDO_TOKEN/credolab/common-sdk/cocoapods/index.git'
 # Uncomment this line to define a global platform for your project
 platform :ios, '10.0'
 

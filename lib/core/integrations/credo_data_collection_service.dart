@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:credoappsdk_common/credoappsdk.dart';
 import 'package:dartz/dartz.dart';
 import 'package:loan_app/authentication/helpers/helpers.dart';
@@ -18,7 +20,7 @@ class CredoDataCollectionService implements ScoringDataCollectionService {
       final referenceNumber = uuid.v4();
       final result = await Credoappsdk.execute(url, authKey, referenceNumber);
       if (result.isFailure) {
-        print('Error: ${result.code} ${result.message}');
+        log('Error: ${result.code} ${result.message}');
         return left(
           ScoringFailure(
             scoringFailureReason: ScoringFailureReason.sdkIssue,

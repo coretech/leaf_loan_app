@@ -8,6 +8,42 @@ class PermissionsProvider extends ChangeNotifier {
   final _scoringDataCollectionService =
       IntegrationIOC.scoringDataCollectionService();
 
+  Future<void> getPermissionStatus() async {
+    try {
+      state = RequestingPermissions();
+      notifyListeners();
+
+      const permissions = [
+        Permission.calendar,
+        Permission.contacts,
+        Permission.storage,
+        Permission.mediaLibrary,
+      ];
+      return PermissionsUtil.getPermissionStatus(permissions).then((value) {
+        final deniedPermissions = MapUtil.getMatching(
+          value,
+          {
+            PermissionStatus.denied,
+            PermissionStatus.permanentlyDenied,
+          },
+        );
+
+        if (deniedPermissions.isEmpty) {
+          state = PermissionsGranted();
+        } else {
+          state = PermissionsDenied(deniedPermissions);
+        }
+
+        notifyListeners();
+      });
+    } catch (e) {
+      state = PermissionsError(
+        'Some error occurred while requesting permissions',
+      );
+      notifyListeners();
+    }
+  }
+
   Future<void> request() async {
     try {
       state = RequestingPermissions();

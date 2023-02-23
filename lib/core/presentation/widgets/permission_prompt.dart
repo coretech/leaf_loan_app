@@ -7,9 +7,9 @@ import 'package:permission_handler/permission_handler.dart';
 class PermissionPrompt extends StatelessWidget {
   const PermissionPrompt({
     Key? key,
-    required this.denied,
+    required this.permissions,
   }) : super(key: key);
-  final List<Permission> denied;
+  final Map<Permission, PermissionStatus> permissions;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,10 @@ class PermissionPrompt extends StatelessWidget {
   }
 
   Widget _buildDeniedPermissions(BuildContext context) {
-    final names =
-        denied.map(PermissionsUtil.getName).where((e) => e != null).toList();
+    final names = permissions.keys
+        .map(PermissionsUtil.getName)
+        .where((e) => e != null)
+        .toList();
     final joinedNames = names.join(', ');
     return Column(
       children: [

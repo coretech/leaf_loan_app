@@ -10,6 +10,16 @@ abstract class PermissionsUtil {
     return givenPermissions;
   }
 
+  static Future<Map<Permission, PermissionStatus>> getPermissionStatus(
+    List<Permission> permissions,
+  ) async {
+    final permissionStatuses = permissions.map((e) async => e.status);
+    return Future.wait(permissionStatuses).then((value) {
+      final permissionStatusMap = Map.fromIterables(permissions, value);
+      return permissionStatusMap;
+    });
+  }
+
   static String? getName(Permission permission) {
     if (Platform.isAndroid) {
       return _androidPermissionNames[permission];

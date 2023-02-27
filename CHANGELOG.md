@@ -1,3 +1,7 @@
+## [0.0.19+40] - 2022-02-27
+## Added
+- Prompt page before asking for permissions
+
 ## [0.0.18+39] - 2022-02-01
 ## Fixed
 - Credo SDK

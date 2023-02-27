@@ -19,23 +19,26 @@ class PermissionsProvider extends ChangeNotifier {
         Permission.storage,
         Permission.mediaLibrary,
       ];
-      return PermissionsUtil.getPermissionStatus(permissions).then((value) {
-        final deniedPermissions = MapUtil.getMatching(
-          value,
-          {
-            PermissionStatus.denied,
-            PermissionStatus.permanentlyDenied,
-          },
-        );
+      final permissionStatuses = await PermissionsUtil.getPermissionStatus(
+        permissions,
+      );
 
-        if (deniedPermissions.isEmpty) {
-          state = PermissionsGranted();
-        } else {
-          state = PermissionsDenied(deniedPermissions);
-        }
+      final deniedPermissions = MapUtil.getMatching(
+        permissionStatuses,
+        {
+          PermissionStatus.denied,
+          PermissionStatus.permanentlyDenied,
+          PermissionStatus.values
+        },
+      );
 
-        notifyListeners();
-      });
+      if (deniedPermissions.isEmpty) {
+        state = PermissionsGranted();
+      } else {
+        state = NotAllPermissionsGranted(permissionStatuses);
+      }
+
+      notifyListeners();
     } catch (e) {
       state = PermissionsError(
         'Some error occurred while requesting permissions',
@@ -68,7 +71,7 @@ class PermissionsProvider extends ChangeNotifier {
       if (deniedPermissions.isEmpty) {
         state = PermissionsGranted();
       } else {
-        state = PermissionsDenied(deniedPermissions);
+        state = NotAllPermissionsGranted(requestResults);
       }
 
       notifyListeners();

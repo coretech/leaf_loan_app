@@ -8,10 +8,10 @@ class RequestingPermissions extends PermissionsState {}
 
 class PermissionsGranted extends PermissionsState {}
 
-class PermissionsDenied extends PermissionsState {
-  PermissionsDenied(this.deniedPermissions);
+class NotAllPermissionsGranted extends PermissionsState {
+  NotAllPermissionsGranted(this.permissionStatuses);
 
-  final List<Permission> deniedPermissions;
+  final Map<Permission, PermissionStatus> permissionStatuses;
 }
 
 class PermissionsError extends PermissionsState {

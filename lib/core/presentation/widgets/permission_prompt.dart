@@ -71,14 +71,15 @@ class _PermissionPromptState extends State<PermissionPrompt>
   Widget _buildPermissionsPermissions(BuildContext context) {
     return Column(
       children: [
-        const Text(
+        Text(
           'By enabling access to Contacts, Calendar, '
-          'Storage, and Installed applications, we will collect data '
-          'to better evaluate your application for Leaf Loans. '
-          'This information is only accessed once and collected '
-          'in the form of metadata, not personal data. '
-          'The metadata is shared and used by Credolab only '
-          'to make a more accurate credit decision.',
+                  'Storage, and Installed applications, we will collect data '
+                  'to better evaluate your application for Leaf Loans. '
+                  'This information is only accessed once and collected '
+                  'in the form of metadata, not personal data. '
+                  'The metadata is shared and used by Credolab only '
+                  'to make a more accurate credit decision.'
+              .tr(),
         ),
         Flexible(
           child: ListView(
@@ -194,8 +195,9 @@ class _PermissionDeniedSheet extends StatelessWidget {
                           'Go to app settings and grant it manually'
                       .tr()
                   : 'Looks like there are some permissions you '
-                      'have denied. '
-                      'Go to app settings and grant them manually.',
+                          'have denied. '
+                          'Go to app settings and grant them manually.'
+                      .tr(),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
@@ -208,7 +210,7 @@ class _PermissionDeniedSheet extends StatelessWidget {
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
               },
-              child: const Text('Open App Settings'),
+              child: Text('Open App Settings'.tr()),
             ),
             const Spacer(),
           ],

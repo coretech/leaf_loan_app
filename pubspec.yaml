@@ -71,8 +71,8 @@ dependencies:
 
 dependency_overrides:
     analyzer: ^3.2.0
-    json_annotation: ^4.4.0
     dio: ^4.0.4
+    json_annotation: ^4.4.0
 
 dev_dependencies:
     dart_code_metrics: ^5.0.1

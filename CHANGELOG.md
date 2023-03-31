@@ -1,3 +1,11 @@
+## [0.0.19+42] - 2022-03-31
+## Fixed
+- Credo scraping
+
+## [0.0.19+41] - 2022-02-27
+## Added
+- Prompt page before asking for permissions
+
 ## [0.0.18+39] - 2022-02-01
 ## Fixed
 - Credo SDK

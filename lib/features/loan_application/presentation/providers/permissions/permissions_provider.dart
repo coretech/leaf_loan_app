@@ -8,6 +8,46 @@ class PermissionsProvider extends ChangeNotifier {
   final _scoringDataCollectionService =
       IntegrationIOC.scoringDataCollectionService();
 
+  Future<void> getPermissionStatus() async {
+    try {
+      state = RequestingPermissions();
+      notifyListeners();
+
+      const permissions = [
+        Permission.calendar,
+        Permission.contacts,
+        Permission.storage,
+        Permission.mediaLibrary,
+      ];
+      final permissionStatuses = await PermissionsUtil.getPermissionStatus(
+        permissions,
+      );
+
+      final deniedPermissions = MapUtil.getMatching(
+        permissionStatuses,
+        {
+          PermissionStatus.denied,
+          PermissionStatus.permanentlyDenied,
+          PermissionStatus.values
+        },
+      );
+
+      if (deniedPermissions.isEmpty) {
+        state = PermissionsGranted();
+        await scrapeData();
+      } else {
+        state = NotAllPermissionsGranted(permissionStatuses);
+      }
+
+      notifyListeners();
+    } catch (e) {
+      state = PermissionsError(
+        'Some error occurred while requesting permissions',
+      );
+      notifyListeners();
+    }
+  }
+
   Future<void> request() async {
     try {
       state = RequestingPermissions();
@@ -32,16 +72,27 @@ class PermissionsProvider extends ChangeNotifier {
       if (deniedPermissions.isEmpty) {
         state = PermissionsGranted();
       } else {
-        state = PermissionsDenied(deniedPermissions);
+        state = NotAllPermissionsGranted(requestResults);
       }
 
       notifyListeners();
       if (deniedPermissions.isEmpty) {
-        await _scoringDataCollectionService.scrapeAndSubmitScoringData();
+        await scrapeData();
       }
     } catch (e) {
       state = PermissionsError(
         'Some error occurred while requesting permissions',
+      );
+      notifyListeners();
+    }
+  }
+
+  Future<void> scrapeData() async {
+    try {
+      await _scoringDataCollectionService.scrapeAndSubmitScoringData();
+    } catch (e) {
+      state = PermissionsError(
+        'Some error occurred while collecting scoring data',
       );
       notifyListeners();
     }

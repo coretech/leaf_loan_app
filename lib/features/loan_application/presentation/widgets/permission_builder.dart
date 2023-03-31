@@ -6,12 +6,13 @@ import 'package:provider/provider.dart';
 class PermissionBuilder extends StatelessWidget {
   const PermissionBuilder({
     Key? key,
-    required this.onDenied,
+    required this.onNotAllAllowed,
     required this.onError,
     required this.onGranted,
     required this.provider,
   }) : super(key: key);
-  final Widget Function(BuildContext, List<Permission>) onDenied;
+  final Widget Function(BuildContext, Map<Permission, PermissionStatus>)
+      onNotAllAllowed;
   final Widget Function(BuildContext, String) onError;
   final Widget Function(BuildContext) onGranted;
   final PermissionsProvider provider;
@@ -28,8 +29,8 @@ class PermissionBuilder extends StatelessWidget {
               return onGranted(context);
             }
 
-            if (state is PermissionsDenied) {
-              return onDenied(context, state.deniedPermissions);
+            if (state is NotAllPermissionsGranted) {
+              return onNotAllAllowed(context, state.permissionStatuses);
             }
 
             if (state is PermissionsError) {

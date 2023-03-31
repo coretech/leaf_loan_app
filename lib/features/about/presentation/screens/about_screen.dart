@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loan_app/core/core.dart';
 import 'package:loan_app/i18n/i18n.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -39,7 +40,8 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             onTap: () async {
               await launchUrlString(
-                'https://leafglobalfintech.com/leaf-loans-terms/',
+                IntegrationIOC.remoteConfig
+                    .getString(RemoteConfigKeys.termsAndConditionsUrl),
               );
             },
             title: Text(
@@ -54,7 +56,8 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             onTap: () async {
               await launchUrlString(
-                'https://leafglobalfintech.com/leaf-loans-privacy-policy/',
+                IntegrationIOC.remoteConfig
+                    .getString(RemoteConfigKeys.privacyPolicyUrl),
               );
             },
             title: Text(

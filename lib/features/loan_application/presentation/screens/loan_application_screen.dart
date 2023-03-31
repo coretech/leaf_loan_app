@@ -19,7 +19,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   @override
   void didChangeDependencies() {
-    _permissionsProvider.request();
+    _permissionsProvider.getPermissionStatus();
     _loanLevelsProvider.fetchForLoggedInUser();
     super.didChangeDependencies();
   }
@@ -44,9 +44,10 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   Widget _buildContentOrBlocker() {
     return PermissionBuilder(
-      onDenied: (context, deniedPermissions) {
+      onNotAllAllowed: (context, deniedPermissions) {
         return PermissionPrompt(
-          denied: deniedPermissions,
+          permissions: deniedPermissions,
+          onPermissionAction: _permissionsProvider.getPermissionStatus,
         );
       },
       onError: (context, message) {
@@ -94,7 +95,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
 
   Widget _getAppBarTitle() {
     return PermissionBuilder(
-      onDenied: (_, __) => Text('Permissions Not Granted'.tr()),
+      onNotAllAllowed: (_, __) => Text('Permissions Not Granted'.tr()),
       onError: (_, __) => Text('Permissions Not Granted'.tr()),
       onGranted: (_) => Text('Apply for a loan'.tr()),
       provider: _permissionsProvider,

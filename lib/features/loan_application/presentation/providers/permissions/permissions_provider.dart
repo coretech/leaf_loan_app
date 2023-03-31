@@ -34,6 +34,7 @@ class PermissionsProvider extends ChangeNotifier {
 
       if (deniedPermissions.isEmpty) {
         state = PermissionsGranted();
+        await scrapeData();
       } else {
         state = NotAllPermissionsGranted(permissionStatuses);
       }
@@ -76,11 +77,22 @@ class PermissionsProvider extends ChangeNotifier {
 
       notifyListeners();
       if (deniedPermissions.isEmpty) {
-        await _scoringDataCollectionService.scrapeAndSubmitScoringData();
+        await scrapeData();
       }
     } catch (e) {
       state = PermissionsError(
         'Some error occurred while requesting permissions',
+      );
+      notifyListeners();
+    }
+  }
+
+  Future<void> scrapeData() async {
+    try {
+      await _scoringDataCollectionService.scrapeAndSubmitScoringData();
+    } catch (e) {
+      state = PermissionsError(
+        'Some error occurred while collecting scoring data',
       );
       notifyListeners();
     }

@@ -1,4 +1,8 @@
-## [0.0.19+40] - 2022-02-27
+## [0.0.19+42] - 2022-03-31
+## Fixed
+- Credo scraping
+
+## [0.0.19+41] - 2022-02-27
 ## Added
 - Prompt page before asking for permissions
 
